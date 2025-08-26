@@ -72,22 +72,24 @@ logs/
 tmp/
 temp/
 
-# AI/Assistant related - keeping my workflow private
-CLAUDE.md
-claude.md
+# Development tools and configs
 .claude/
 *.claude.*
-.ai/
-.assistant/
-*-ai-*
-*-claude-*
 .copilot/
 .cursor/
+.vscode-server/
+*.code-workspace
 
-# Personal notes and scratch work
+# Personal workspace
 notes.md
 TODO.personal
 scratch/
 .personal/
 *.draft
 .drafts/
+.claude-context.md
+.context/
+*-context.*
+.session-notes/
+.workspace/
+.tools/
