@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  landing:
+    build:
+      context: .
+      dockerfile: docker/production/Dockerfile
+      args:
+        - APP_NAME=landing
+    container_name: anbu-landing-prod
+    ports:
+      - '80:3000'
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  docs-hub:
+    build:
+      context: .
+      dockerfile: docker/production/Dockerfile
+      args:
+        - APP_NAME=docs-hub
+    container_name: anbu-docs-hub-prod
+    ports:
+      - '3001:3000'
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  solutions-portal:
+    build:
+      context: .
+      dockerfile: docker/production/Dockerfile
+      args:
+        - APP_NAME=solutions-portal
+    container_name: anbu-solutions-portal-prod
+    ports:
+      - '3002:3000'
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: anbu-nginx
+    ports:
+      - '443:443'
+      - '80:80'
+    volumes:
+      - ./docker/production/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - landing
+      - docs-hub
+      - solutions-portal
+    restart: unless-stopped
+
+networks:
+  default:
+    name: anbu-network-prod

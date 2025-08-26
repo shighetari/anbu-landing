@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Production
+dist/
+build/
+.next/
+out/
+
+# Coverage
+coverage/
+
+# Misc
+.git/
+.husky/
+.turbo/
+.vercel/
+
+# Generated
+*.generated.*
+*.min.js
+*.min.css

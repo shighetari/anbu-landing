@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  landing:
+    build:
+      context: .
+      dockerfile: docker/development/Dockerfile
+      target: dev
+      args:
+        - APP_NAME=landing
+    container_name: anbu-landing
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./apps/landing:/app/apps/landing
+      - ./packages:/app/packages
+      - /app/node_modules
+      - /app/apps/landing/node_modules
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+    command: pnpm dev --filter=landing
+
+  docs-hub:
+    build:
+      context: .
+      dockerfile: docker/development/Dockerfile
+      target: dev
+      args:
+        - APP_NAME=docs-hub
+    container_name: anbu-docs-hub
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./apps/docs-hub:/app/apps/docs-hub
+      - ./packages:/app/packages
+      - /app/node_modules
+      - /app/apps/docs-hub/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - WATCHPACK_POLLING=true
+    command: pnpm dev --filter=docs-hub
+
+  solutions-portal:
+    build:
+      context: .
+      dockerfile: docker/development/Dockerfile
+      target: dev
+      args:
+        - APP_NAME=solutions-portal
+    container_name: anbu-solutions-portal
+    ports:
+      - '3002:3002'
+    volumes:
+      - ./apps/solutions-portal:/app/apps/solutions-portal
+      - ./packages:/app/packages
+      - /app/node_modules
+      - /app/apps/solutions-portal/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - WATCHPACK_POLLING=true
+    command: pnpm dev --filter=solutions-portal
+
+networks:
+  default:
+    name: anbu-network

@@ -1,0 +1,134 @@
+name: CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  deploy-landing:
+    name: Deploy Landing Page
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build landing app
+        run: pnpm turbo build --filter=landing
+        env:
+          NEXT_PUBLIC_APP_URL: ${{ secrets.PRODUCTION_URL }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.API_URL }}
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_LANDING }}
+          vercel-args: '--prod'
+          working-directory: ./apps/landing
+
+  deploy-docs-hub:
+    name: Deploy Documentation Hub
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build docs-hub app
+        run: pnpm turbo build --filter=docs-hub
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_DOCS }}
+          vercel-args: '--prod'
+          working-directory: ./apps/docs-hub
+
+  deploy-solutions-portal:
+    name: Deploy Solutions Portal
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build solutions-portal app
+        run: pnpm turbo build --filter=solutions-portal
+
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_SOLUTIONS }}
+          vercel-args: '--prod'
+          working-directory: ./apps/solutions-portal
+
+  notify:
+    name: Deployment Notification
+    needs: [deploy-landing, deploy-docs-hub, deploy-solutions-portal]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Send notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            Deployment Status: ${{ job.status }}
+            Landing: ${{ needs.deploy-landing.result }}
+            Docs Hub: ${{ needs.deploy-docs-hub.result }}
+            Solutions Portal: ${{ needs.deploy-solutions-portal.result }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        if: always()

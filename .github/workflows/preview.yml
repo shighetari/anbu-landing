@@ -1,0 +1,98 @@
+name: Preview Deployment
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  deploy-preview:
+    name: Deploy Preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Get changed apps
+        id: changed
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            landing:
+              - 'apps/landing/**'
+              - 'packages/**'
+            docs-hub:
+              - 'apps/docs-hub/**'
+              - 'packages/**'
+            solutions-portal:
+              - 'apps/solutions-portal/**'
+              - 'packages/**'
+
+      - name: Build and Deploy Landing Preview
+        if: steps.changed.outputs.landing == 'true'
+        run: |
+          pnpm turbo build --filter=landing
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} \
+            --scope=${{ secrets.VERCEL_ORG_ID }} \
+            --yes \
+            ./apps/landing
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_LANDING }}
+
+      - name: Build and Deploy Docs Hub Preview
+        if: steps.changed.outputs.docs-hub == 'true'
+        run: |
+          pnpm turbo build --filter=docs-hub
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} \
+            --scope=${{ secrets.VERCEL_ORG_ID }} \
+            --yes \
+            ./apps/docs-hub
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_DOCS }}
+
+      - name: Build and Deploy Solutions Portal Preview
+        if: steps.changed.outputs.solutions-portal == 'true'
+        run: |
+          pnpm turbo build --filter=solutions-portal
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} \
+            --scope=${{ secrets.VERCEL_ORG_ID }} \
+            --yes \
+            ./apps/solutions-portal
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID_SOLUTIONS }}
+
+      - name: Comment PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `🚀 Preview deployments are ready!\n\n` +
+              `- Landing: [Preview URL](https://anbu-landing-pr-${{ github.event.pull_request.number }}.vercel.app)\n` +
+              `- Docs Hub: [Preview URL](https://anbu-docs-pr-${{ github.event.pull_request.number }}.vercel.app)\n` +
+              `- Solutions Portal: [Preview URL](https://anbu-solutions-pr-${{ github.event.pull_request.number }}.vercel.app)`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

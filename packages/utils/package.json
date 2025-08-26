@@ -1,0 +1,22 @@
+{
+  "name": "@anbu/utils",
+  "version": "0.0.1",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./cn": "./cn.ts",
+    "./format": "./format.ts",
+    "./constants": "./constants.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  }
+}
