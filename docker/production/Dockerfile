@@ -1,5 +1,5 @@
 # Production Multi-stage Dockerfile for ANBU Landing Page Monorepo
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@8.15.0 --activate
@@ -36,7 +36,7 @@ ARG APP_NAME
 RUN pnpm turbo build --filter=${APP_NAME}
 
 # Runner stage
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 
