@@ -93,3 +93,8 @@ scratch/
 .session-notes/
 .workspace/
 .tools/
+
+# Context documentation
+docs/CONTEXT_SUMMARY.md
+docs/*-context.md
+docs/*.context.md

@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --anbu-black: #000000;
+  --anbu-gold: #FFD700;
+  --anbu-gold-accent: #FFA500;
+  --anbu-marble: #F8F8F8;
+  --anbu-gray: #2C2C2C;
+  --background: #000000;
+  --foreground: #F8F8F8;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--anbu-black);
+  color: var(--anbu-marble);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Marble texture gradient - I love this effect */
+.marble-bg {
+  background: linear-gradient(135deg, #000000 0%, #2C2C2C 50%, #000000 100%);
+  background-size: 200% 200%;
+  animation: marbleFlow 15s ease infinite;
+}
+
+@keyframes marbleFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Gold glow effect - sick hover animation */
+.gold-glow {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.gold-glow:hover {
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+}
+
+/* Glassmorphism - keeping it premium */
+.glass {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Gold text gradient */
+.gold-gradient {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
