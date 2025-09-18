@@ -1,0 +1,65 @@
+# Dropbox Sync Exclusions for ANBU Landing Page
+# NOTE: Dropbox doesn't officially support .dropboxignore files
+# You must manually exclude these folders using Selective Sync in Dropbox settings
+# 
+# To exclude these folders:
+# 1. Right-click Dropbox icon in system tray
+# 2. Click Preferences/Settings
+# 3. Go to "Sync" tab
+# 4. Click "Selective Sync" or "Choose folders to sync"
+# 5. Uncheck these folders within your ANBU_Landing_Page project:
+
+# Platform-specific dependencies (MUST EXCLUDE)
+node_modules/
+**/node_modules/
+
+# Build outputs (SHOULD EXCLUDE)
+.next/
+**/.next/
+dist/
+**/dist/
+build/
+**/build/
+out/
+**/out/
+
+# Cache directories (SHOULD EXCLUDE)
+.turbo/
+**/.turbo/
+.cache/
+**/.cache/
+.parcel-cache/
+**/.parcel-cache/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Lock files (BE CAREFUL - these should sync but can cause conflicts)
+# If you have issues, exclude these and manage manually:
+# pnpm-lock.yaml
+# package-lock.json
+# yarn.lock
+
+# Docker volumes (MUST EXCLUDE)
+docker/volumes/
+.docker/
+
+# IDE specific
+.idea/
+.vscode-server/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IMPORTANT NOTES:
+# ================
+# 1. After excluding node_modules, you MUST run 'pnpm install' on each machine
+# 2. The pnpm-lock.yaml file SHOULD sync to maintain consistency
+# 3. If you get conflicts on pnpm-lock.yaml, accept the most recent version
+# 4. Always use Docker for development to avoid platform issues
+# 5. Run 'pnpm docker:setup' when switching machines

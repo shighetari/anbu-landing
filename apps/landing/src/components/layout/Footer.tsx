@@ -4,6 +4,8 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Github, Twitter, Linkedin, Mail, Heart } from 'lucide-react'
 
+import Container from '@/components/ui/Container'
+
 const socialLinks = [
   { name: 'GitHub', icon: Github, href: 'https://github.com/shighetari' },
   { name: 'Twitter', icon: Twitter, href: '#' },
@@ -36,10 +38,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-anbu-black border-t border-anbu-gold/20 pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="border-t border-anbu-gold/20 bg-anbu-black pt-16 pb-8">
+      <Container size="md" className="flex w-full flex-col gap-12">
         {/* Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <motion.div
@@ -139,7 +141,7 @@ export default function Footer() {
             </div>
           </motion.div>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }

@@ -1,4 +1,6 @@
-version: '3.8'
+#version: '3.8'
+# The version field is now obsolete in newer Docker Compose versions (v2+)
+# so I'm just removing it to clean things up - I'm getting old.
 
 services:
   landing:
@@ -6,62 +8,40 @@ services:
       context: .
       dockerfile: docker/development/Dockerfile
       target: dev
-      args:
-        - APP_NAME=landing
     container_name: anbu-landing
     ports:
       - '3000:3000'
     volumes:
+      # Mount source code for hot reload (cross-platform compatible)
       - ./apps/landing:/app/apps/landing
       - ./packages:/app/packages
+      # Exclude node_modules to use container's version
       - /app/node_modules
       - /app/apps/landing/node_modules
+      # Mount pnpm store for faster installs
+      - pnpm-store:/root/.local/share/pnpm/store
     environment:
       - NODE_ENV=development
-      - WATCHPACK_POLLING=true
+      # File watching settings (automatically adjusted per platform)
+      - WATCHPACK_POLLING=${WATCHPACK_POLLING:-true}
+      - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING:-true}
+      # Polling interval for better performance
+      - CHOKIDAR_INTERVAL=1000
+      - WATCHPACK_POLL=1000
     command: pnpm dev --filter=landing
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-  docs-hub:
-    build:
-      context: .
-      dockerfile: docker/development/Dockerfile
-      target: dev
-      args:
-        - APP_NAME=docs-hub
-    container_name: anbu-docs-hub
-    ports:
-      - '3001:3001'
-    volumes:
-      - ./apps/docs-hub:/app/apps/docs-hub
-      - ./packages:/app/packages
-      - /app/node_modules
-      - /app/apps/docs-hub/node_modules
-    environment:
-      - NODE_ENV=development
-      - PORT=3001
-      - WATCHPACK_POLLING=true
-    command: pnpm dev --filter=docs-hub
-
-  solutions-portal:
-    build:
-      context: .
-      dockerfile: docker/development/Dockerfile
-      target: dev
-      args:
-        - APP_NAME=solutions-portal
-    container_name: anbu-solutions-portal
-    ports:
-      - '3002:3002'
-    volumes:
-      - ./apps/solutions-portal:/app/apps/solutions-portal
-      - ./packages:/app/packages
-      - /app/node_modules
-      - /app/apps/solutions-portal/node_modules
-    environment:
-      - NODE_ENV=development
-      - PORT=3002
-      - WATCHPACK_POLLING=true
-    command: pnpm dev --filter=solutions-portal
+volumes:
+  pnpm-store:
+    driver: local
 
 networks:
   default:

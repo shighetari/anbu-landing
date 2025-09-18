@@ -1,0 +1,35 @@
+# Docker Compose Override for Local Development
+# Copy this file to docker-compose.override.yml and customize as needed
+# docker-compose.override.yml is gitignored so your local settings won't be committed
+
+version: '3.8'
+
+services:
+  landing:
+    # Override environment variables for local development
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+      # Add your local environment variables here
+      # - NEXT_PUBLIC_API_URL=http://localhost:4000
+      # - DATABASE_URL=postgresql://user:pass@localhost:5432/db
+    
+    # Override ports if needed (e.g., if 3000 is already in use)
+    # ports:
+    #   - '3001:3000'
+    
+    # Mount additional volumes for local development
+    # volumes:
+    #   - ./local-data:/app/data
+    
+    # Override command for debugging
+    # command: pnpm dev --filter=landing --debug
+    
+    # Increase memory limits if needed
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 2G
+    #     reservations:
+    #       memory: 1G

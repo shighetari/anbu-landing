@@ -2,30 +2,41 @@
 **/node_modules
 **/.pnp
 **/.pnp.js
+**/.yarn
 
 # Testing
 **/coverage
 **/*.lcov
+**/.nyc_output
 
-# Next.js
+# Next.js & Build outputs
 **/.next
 **/out
 **/build
 **/dist
+**/*.tsbuildinfo
+**/next-env.d.ts
 
 # Misc
 **/.DS_Store
 **/*.pem
+**/Thumbs.db
+**/desktop.ini
 
-# Debug
+# Debug & Logs
+**/*.log
 **/npm-debug.log*
 **/yarn-debug.log*
 **/yarn-error.log*
 **/pnpm-debug.log*
+**/lerna-debug.log*
+**/logs/
 
 # Local env files
 **/.env
 **/.env*.local
+**/.env.development
+**/.env.production
 
 # Vercel
 **/.vercel
@@ -36,18 +47,67 @@
 # Git
 .git
 .gitignore
+.gitattributes
 
 # IDE
-.vscode
-.idea
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+.vscode-server/
+*.code-workspace
 
 # Docker
 docker-compose*.yml
 Dockerfile*
+.dockerignore
 
 # Documentation
 README.md
 docs/
+**/*.md
 
 # CI/CD
 .github/
+.gitlab-ci.yml
+.circleci/
+
+# Cache
+**/.cache
+**/.parcel-cache
+**/.eslintcache
+**/.stylelintcache
+
+# Temporary
+**/tmp
+**/temp
+
+# Development tools
+.claude/
+*.claude.*
+CLAUDE.md
+CLAUDE.local.md
+.copilot/
+.cursor/
+
+# Personal workspace
+notes.md
+TODO.personal
+scratch/
+.personal/
+*.draft
+.drafts/
+
+# Windows artifacts
+nul
+**/*.exe
+**/*.dll
+**/*.so
+**/*.dylib
+
+# Explicitly include lockfiles (don't ignore these!)
+!pnpm-lock.yaml
+!package-lock.json
+!yarn.lock

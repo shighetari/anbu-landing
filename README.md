@@ -78,27 +78,87 @@ pnpm dev
 | `pnpm lint` | Lint all apps and packages |
 | `pnpm typecheck` | Type check all TypeScript files |
 | `pnpm format` | Format code with Prettier |
-| `pnpm docker:dev` | Start development with Docker |
-| `pnpm docker:prod` | Start production with Docker |
+| `pnpm clean` | Clean all build artifacts and node_modules |
 
 ## 🐳 Docker Support
 
-### Development with Docker
+I've optimized our Docker setup for cross-platform development with hot reload enabled for Windows, macOS, and Linux.
+
+### Quick Start with Docker
 
 ```bash
-# Start all services
-pnpm docker:dev
+# First-time setup (detects your platform automatically)
+pnpm docker:setup
 
-# Stop all services
-pnpm docker:down
+# Start just the landing page with hot reload
+pnpm docker:landing  # Note: it's pnpm, not pnmp
+
+# View logs in real-time
+pnpm docker:landing:logs
+
+# Access the container shell for debugging
+pnpm docker:landing:shell
 ```
 
-### Production Deployment
+📚 **[Full Docker Development Guide](docs/DOCKER_GUIDE.md)** - Comprehensive platform-specific instructions
+
+### Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm docker:landing` | Start landing app with hot reload |
+| `pnpm docker:landing:build` | Rebuild landing container (no cache) |
+| `pnpm docker:landing:rebuild` | Rebuild and start landing app |
+| `pnpm docker:landing:logs` | View landing app logs |
+| `pnpm docker:landing:shell` | Access landing container shell |
+| `pnpm docker:dev` | Start all services in detached mode |
+| `pnpm docker:stop` | Stop all containers |
+| `pnpm docker:down` | Stop and remove containers |
+| `pnpm docker:clean` | Remove everything (containers, volumes, images) |
+| `pnpm docker:prune` | Clean up all unused Docker resources |
+
+### Windows Hot Reload Setup
+
+The Docker configuration is optimized for Windows with:
+- `WATCHPACK_POLLING=true` for file watching
+- Delegated volume mounts for better performance
+- Proper node_modules exclusion to avoid conflicts
+
+### Local Development Customization
+
+I've included a `docker-compose.override.yml.example` file for local customization:
 
 ```bash
-# Build and run production containers
-pnpm docker:prod
+# Copy the example to create your local override
+cp docker-compose.override.yml.example docker-compose.override.yml
+
+# Edit to add your local environment variables or port changes
 ```
+
+### Troubleshooting Docker
+
+If you experience issues with hot reload on Windows:
+
+1. **Ensure Docker Desktop is using WSL 2**:
+   - Open Docker Desktop Settings
+   - Go to General → Use WSL 2 based engine
+
+2. **File watching not working**:
+   ```bash
+   # Rebuild the container
+   pnpm docker:landing:rebuild
+   ```
+
+3. **Port conflicts**:
+   - Edit `docker-compose.override.yml` to use a different port
+
+4. **Clean slate**:
+   ```bash
+   # Remove everything and start fresh
+   pnpm docker:clean
+   pnpm docker:landing:build
+   pnpm docker:landing
+   ```
 
 ## 🌳 Git Workflow
 

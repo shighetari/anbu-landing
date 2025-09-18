@@ -1,165 +1,110 @@
 'use client'
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import { Code2, Users, Zap, Shield } from 'lucide-react'
+import { ShieldCheck, Sparkles, Trophy, Zap } from 'lucide-react'
 
-const features = [
+import Container from '@/components/ui/Container'
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
+import { ShineBorder } from '@/components/ui/shine-border'
+import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section'
+import { LogoLoop } from '@/components/reactbits/logo-loop'
+import { PixelImage } from '@/components/ui/pixel-image'
+
+const differentiators = [
   {
-    icon: Code2,
     title: 'Clean Code',
-    description: 'We write maintainable, scalable code following industry best practices.',
+    description: 'Modular architectures, automated quality gates, and documentation aligned to regulated teams.',
+    icon: Trophy,
   },
   {
-    icon: Users,
     title: 'Client Focused',
-    description: 'Your success is our priority. We build solutions tailored to your needs.',
+    description:
+      'We align roadmaps with business KPIs so every launch reinforces revenue, retention, or operational leverage.',
+    icon: Sparkles,
   },
   {
-    icon: Zap,
     title: 'Performance',
-    description: 'Lightning-fast applications optimized for the best user experience.',
+    description: 'Observability-first engineering with SLO dashboards, chaos drills, and rapid rollback tooling.',
+    icon: Zap,
   },
   {
-    icon: Shield,
     title: 'Security First',
-    description: 'Enterprise-grade security built into every solution we deliver.',
+    description: 'Zero trust defaults, threat modeling, and compliance-ready release practices baked into delivery.',
+    icon: ShieldCheck,
   },
+]
+
+const techStack = [
+  { render: <span className="text-sm font-semibold text-white/80">Next.js</span>, alt: 'Next.js' },
+  { render: <span className="text-sm font-semibold text-white/80">React</span>, alt: 'React' },
+  { render: <span className="text-sm font-semibold text-white/80">Tailwind</span>, alt: 'Tailwind' },
+  { render: <span className="text-sm font-semibold text-white/80">AWS</span>, alt: 'AWS' },
+  { render: <span className="text-sm font-semibold text-white/80">Edge AI</span>, alt: 'Edge AI' },
+  { render: <span className="text-sm font-semibold text-white/80">Supabase</span>, alt: 'Supabase' },
 ]
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-anbu-black">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Content Side */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6">
-              <span className="text-anbu-marble">Why Choose </span>
-              <span className="gold-gradient">ANBU</span>
-            </h2>
-            
-            <p className="text-lg text-anbu-marble/70 mb-8">
-              We're not just another digital agency. We're innovators, problem solvers, 
-              and partners in your digital journey. With cutting-edge technology and a 
-              passion for excellence, we transform ideas into reality.
-            </p>
-
-            <div className="space-y-6">
-              {features.map((feature, index) => {
-                const Icon = feature.icon
-                return (
-                  <motion.div
-                    key={feature.title}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    className="flex items-start space-x-4"
-                  >
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-lg bg-anbu-gold/20 flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-anbu-gold" />
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-anbu-marble mb-2">
-                        {feature.title}
-                      </h3>
-                      <p className="text-anbu-marble/70">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
-          </motion.div>
-
-          {/* Visual Side - Stats or Image */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
-            <div className="glass rounded-xl p-8 lg:p-12">
-              <div className="grid grid-cols-2 gap-8">
-                <div className="text-center">
-                  <motion.div
-                    className="text-4xl lg:text-5xl font-bold gold-gradient mb-2"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                  >
-                    50+
-                  </motion.div>
-                  <p className="text-anbu-marble/70">Projects Delivered</p>
-                </div>
-                <div className="text-center">
-                  <motion.div
-                    className="text-4xl lg:text-5xl font-bold gold-gradient mb-2"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                  >
-                    100%
-                  </motion.div>
-                  <p className="text-anbu-marble/70">Client Satisfaction</p>
-                </div>
-                <div className="text-center">
-                  <motion.div
-                    className="text-4xl lg:text-5xl font-bold gold-gradient mb-2"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                  >
-                    24/7
-                  </motion.div>
-                  <p className="text-anbu-marble/70">Support Available</p>
-                </div>
-                <div className="text-center">
-                  <motion.div
-                    className="text-4xl lg:text-5xl font-bold gold-gradient mb-2"
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                  >
-                    5★
-                  </motion.div>
-                  <p className="text-anbu-marble/70">Average Rating</p>
-                </div>
-              </div>
-
-              {/* CTA */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="mt-12 text-center"
-              >
-                <button className="px-8 py-4 bg-anbu-gold text-anbu-black font-semibold rounded-lg hover:bg-anbu-gold-accent transition-all duration-300 gold-glow w-full">
-                  Start Your Project
-                </button>
-              </motion.div>
-            </div>
-
-            {/* Background decoration */}
-            <div className="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-gradient-to-r from-anbu-gold/5 to-anbu-gold-accent/5 blur-3xl rounded-full" />
-          </motion.div>
-        </div>
+    <GradualBlurSection className="relative overflow-hidden py-28" id="about">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
+      <div className="absolute inset-0 opacity-30 mix-blend-screen" aria-hidden>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_70%,rgba(255,215,0,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(255,165,0,0.12),transparent_60%)]" />
       </div>
-    </section>
+
+      <Container size="md" className="relative grid w-full gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="flex flex-col gap-8">
+          <div className="space-y-6">
+            <AnimatedGradientText
+              className="inline-block text-sm uppercase tracking-[0.4em] text-anbu-gold"
+              colorFrom="#FFDA67"
+              colorTo="#FFA533"
+            >
+              Why choose anbu
+            </AnimatedGradientText>
+            <h2 className="font-display text-4xl font-bold text-white sm:text-5xl">
+              Boutique execution with enterprise governance
+            </h2>
+            <p className="text-base text-white/70 sm:text-lg">
+              We embed alongside product, engineering, and operations leaders to create software that looks
+              extraordinary, behaves predictably, and scales effortlessly. Every engagement arrives with measurable
+              outcomes and a comprehensive enablement plan.
+            </p>
+          </div>
+
+          <LogoLoop
+            logos={techStack}
+            speed={28}
+            className="mt-4"
+            fadeEdges
+          />
+
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-2">
+            {differentiators.map((item) => (
+              <div key={item.title} className="relative overflow-hidden rounded-xl border border-white/10 bg-black/70 p-6">
+                <ShineBorder
+                  borderWidth={2}
+                  duration={14}
+                  shineColor={["#FFD700", "#FF9F3C", "#FFE27A"]}
+                />
+                <item.icon className="h-8 w-8 text-anbu-gold" />
+                <h3 className="mt-4 text-lg font-semibold text-white">{item.title}</h3>
+                <p className="mt-2 text-sm text-white/60">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative mx-auto flex flex-col items-center gap-8">
+          <PixelImage
+            src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=80"
+            grid="6x4"
+          />
+          <p className="max-w-md text-center text-sm text-white/60">
+            Premium journeys deserve artifacts worth showcasing. Our teams combine research, prototyping, development,
+            and change management to deliver results clients are proud to demo.
+          </p>
+        </div>
+      </Container>
+    </GradualBlurSection>
   )
 }
