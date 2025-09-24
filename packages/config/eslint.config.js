@@ -1,10 +1,16 @@
-const eslintConfig = {
-  root: true,
-  extends: ['eslint:recommended'],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
-}
+import js from '@eslint/js'
 
-module.exports = eslintConfig
+export default [
+  {
+    ignores: ['node_modules/**'],
+  },
+  js.configs.recommended,
+  {
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+  },
+]

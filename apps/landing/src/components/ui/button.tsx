@@ -5,12 +5,13 @@ import { motion, MotionProps } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 // I'm creating a versatile button component with multiple variants
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, MotionProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
-  size?: 'sm' | 'md' | 'lg'
-  fullWidth?: boolean
-  children: React.ReactNode
-}
+type ButtonProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'> &
+  MotionProps & {
+    variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
+    size?: 'sm' | 'md' | 'lg'
+    fullWidth?: boolean
+    children: React.ReactNode
+  }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ 

@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@context7/mcp-server-context7"
+      ],
+      "env": {}
+    },
+    "tavily": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@tavily/mcp-server-tavily"
+      ],
+      "env": {
+        "TAVILY_API_KEY": "your-tavily-api-key-here"
+      }
+    },
+    "notion": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "notion-mcp-server"
+      ],
+      "env": {
+        "NOTION_TOKEN": "your-notion-integration-token-here"
+      }
+    }
+  }
+}

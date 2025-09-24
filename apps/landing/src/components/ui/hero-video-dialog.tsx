@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { Play, XIcon } from "lucide-react";
+import { useState } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { Play, XIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 type AnimationStyle =
   | "from-bottom"
@@ -14,26 +14,30 @@ type AnimationStyle =
   | "from-right"
   | "fade"
   | "top-in-bottom-out"
-  | "left-in-right-out";
+  | "left-in-right-out"
 
-interface HeroVideoProps {
-  animationStyle?: AnimationStyle;
-  videoSrc: string;
-  thumbnailSrc: string;
-  thumbnailAlt?: string;
-  className?: string;
+interface HeroVideoDialogProps {
+  animationStyle?: AnimationStyle
+  videoSrc: string
+  thumbnailSrc: string
+  thumbnailAlt?: string
+  className?: string
 }
 
-const animationVariants = {
+const animationVariants: Record<AnimationStyle, {
+  initial: any
+  animate: any
+  exit: any
+}> = {
   "from-bottom": {
     initial: { y: "100%", opacity: 0 },
     animate: { y: 0, opacity: 1 },
     exit: { y: "100%", opacity: 0 },
   },
   "from-center": {
-    initial: { scale: 0.5, opacity: 0 },
+    initial: { scale: 0.8, opacity: 0 },
     animate: { scale: 1, opacity: 1 },
-    exit: { scale: 0.5, opacity: 0 },
+    exit: { scale: 0.9, opacity: 0 },
   },
   "from-top": {
     initial: { y: "-100%", opacity: 0 },
@@ -65,7 +69,14 @@ const animationVariants = {
     animate: { x: 0, opacity: 1 },
     exit: { x: "100%", opacity: 0 },
   },
-};
+}
+
+function buildEmbedSrc(src: string) {
+  if (!src) return ""
+  return src.includes("?")
+    ? `${src}&modestbranding=1&rel=0`
+    : `${src}?modestbranding=1&rel=0`
+}
 
 export function HeroVideoDialog({
   animationStyle = "from-center",
@@ -73,84 +84,72 @@ export function HeroVideoDialog({
   thumbnailSrc,
   thumbnailAlt = "Video thumbnail",
   className,
-}: HeroVideoProps) {
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const selectedAnimation = animationVariants[animationStyle];
+}: HeroVideoDialogProps) {
+  const [open, setOpen] = useState(false)
+
+  const animation = animationVariants[animationStyle]
+  const embedSrc = buildEmbedSrc(videoSrc)
 
   return (
     <div className={cn("relative", className)}>
       <button
         type="button"
-        aria-label="Play video"
-        className="group relative cursor-pointer border-0 bg-transparent p-0"
-        onClick={() => setIsVideoOpen(true)}
+        onClick={() => setOpen(true)}
+        className="group relative block w-full overflow-hidden rounded-[32px] border border-white/12 bg-black/40 shadow-[0_45px_140px_rgba(0,0,0,0.55)] backdrop-blur transition duration-300 hover:border-white/20 hover:shadow-[0_55px_160px_rgba(255,195,110,0.25)]"
       >
         <img
           src={thumbnailSrc}
           alt={thumbnailAlt}
           width={1920}
           height={1080}
-          className="w-full rounded-md border shadow-lg transition-all duration-200 ease-out group-hover:brightness-[0.8]"
+          className="aspect-video w-full object-cover"
+          loading="lazy"
         />
-        <div className="absolute inset-0 flex scale-[0.9] items-center justify-center rounded-2xl transition-all duration-200 ease-out group-hover:scale-100">
-          <div className="flex size-28 items-center justify-center rounded-full bg-primary/10 backdrop-blur-md">
-            <div
-              className={`relative flex size-20 scale-100 items-center justify-center rounded-full bg-gradient-to-b from-primary/30 to-primary shadow-md transition-all duration-200 ease-out group-hover:scale-[1.2]`}
-            >
-              <Play
-                className="size-8 scale-100 fill-white text-white transition-transform duration-200 ease-out group-hover:scale-105"
-                style={{
-                  filter:
-                    "drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06))",
-                }}
-              />
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white/10 backdrop-blur-xl transition duration-300 group-hover:scale-105">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#FFD36E] via-[#FFB85A] to-[#FF995F] shadow-[0_0_45px_rgba(255,195,110,0.45)]">
+              <Play className="h-7 w-7 fill-black text-black" />
             </div>
           </div>
         </div>
       </button>
+
       <AnimatePresence>
-        {isVideoOpen && (
+        {open && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
-                setIsVideoOpen(false);
-              }
-            }}
-            onClick={() => setIsVideoOpen(false)}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur"
+            onClick={() => setOpen(false)}
           >
             <motion.div
-              {...selectedAnimation}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="relative mx-4 aspect-video w-full max-w-4xl md:mx-0"
+              {...animation}
+              transition={{ type: "spring", damping: 28, stiffness: 260 }}
+              className="relative mx-4 w-full max-w-5xl overflow-hidden rounded-3xl border border-white/20"
+              onClick={(event) => event.stopPropagation()}
             >
-              <motion.button
-                className="absolute -top-16 right-0 rounded-full bg-neutral-900/50 p-2 text-xl text-white ring-1 backdrop-blur-md dark:bg-neutral-100/50 dark:text-black"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  setIsVideoOpen(false);
-                }}
+              <button
+                type="button"
+                aria-label="Close video"
+                onClick={() => setOpen(false)}
+                className="absolute -top-12 right-0 rounded-full bg-black/70 p-2 text-white shadow-md backdrop-blur"
               >
-                <XIcon className="size-5" />
-              </motion.button>
-              <div className="relative isolate z-[1] size-full overflow-hidden rounded-2xl border-2 border-white">
-                <iframe
-                  src={videoSrc}
-                  title="Hero Video player"
-                  className="size-full rounded-2xl"
-                  allowFullScreen
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                ></iframe>
-              </div>
+                <XIcon className="h-5 w-5" />
+              </button>
+
+              <iframe
+                key={embedSrc}
+                src={embedSrc}
+                title="Hero video"
+                className="aspect-video w-full"
+                allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              />
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </div>
-  );
+  )
 }

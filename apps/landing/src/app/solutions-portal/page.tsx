@@ -1,76 +1,568 @@
-import Link from 'next/link'
+'use client'
 
-const upcomingSolutions = [
+import { useEffect, useRef, useState } from 'react'
+import type React from 'react'
+import Link from 'next/link'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowUpRight, BookOpen, Bot, Sparkles } from 'lucide-react'
+
+import { SparklesCore } from '@/components/aceternity/sparkles'
+import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect'
+import Container from '@/components/ui/Container'
+import { BlurFadeText } from '@/components/magicui/blur-fade-text'
+import { ShinyText } from '@/components/magicui/shiny-text'
+import { cn } from '@/lib/utils'
+
+const VIDEO_STOP_TIME = 7.2
+
+type PortalDestination = {
+  id: string
+  title: string
+  subtitle: string
+  description: string
+  href: string
+  status: string
+  statusTone: 'emerald' | 'amber' | 'violet'
+  accent: string
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+  shimmer: string[]
+}
+
+const portalDestinations: PortalDestination[] = [
   {
-    title: 'Digital Experience Platform',
-    description: "A modular platform that pairs enterprise-grade content management with ANBU's luxury-grade UI system.",
-    status: 'In design'
+    id: 'docs-hub',
+    title: 'Docs Intelligence',
+    subtitle: 'Knowledge Graph & API Guides',
+    description:
+      'Vector-search SDKs. Automation recipes. Engineering enablement.',
+    href: '/docs-hub',
+    status: 'Live preview',
+    statusTone: 'emerald',
+    accent: '#38bdf8',
+    icon: BookOpen,
+    shimmer: ['#38bdf8', '#22d3ee', '#6366f1'],
   },
   {
-    title: 'Analytics Command Center',
-    description: 'Unified dashboards, executive insights, and anomaly detection tailored to premium service organizations.',
-    status: 'Prototype'
+    id: 'marketing',
+    title: 'Marketing Studio',
+    subtitle: 'Campaign Systems & Brand Motion',
+    description:
+      'Premium campaigns. Cinematic storytelling. Full service stack.',
+    href: '/social-hub',
+    status: 'Client ready',
+    statusTone: 'amber',
+    accent: '#f59e0b',
+    icon: Sparkles,
+    shimmer: ['#fbbf24', '#f97316', '#facc15'],
   },
   {
-    title: 'Client Concierge Tools',
-    description: 'Workflow automations, client portals, and communication suites crafted for high-touch teams.',
-    status: 'Research'
+    id: 'command-console',
+    title: 'Command Console',
+    subtitle: 'Automation & Delivery Ops',
+    description:
+      'Unified console. Orchestrating pods. Full observability.',
+    href: '/docs-hub',
+    status: 'In build',
+    statusTone: 'violet',
+    accent: '#a855f7',
+    icon: Bot,
+    shimmer: ['#c084fc', '#a855f7', '#6366f1'],
   },
 ]
 
-export default function SolutionsPortalLanding() {
-  return (
-    <main className="min-h-screen bg-black text-anbu-marble">
-      <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 opacity-[0.12]" aria-hidden>
-          <div
-            className="h-full w-full"
-            style={{
-              background:
-                'linear-gradient(135deg, rgba(255, 215, 0, 0.08), transparent 60%), radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.12), transparent 55%)',
-            }}
-          />
-        </div>
+const statusToneStyles: Record<PortalDestination['statusTone'], string> = {
+  emerald: 'border-emerald-400/40 bg-emerald-400/15 text-emerald-200',
+  amber: 'border-amber-400/40 bg-amber-400/15 text-amber-200',
+  violet: 'border-violet-400/40 bg-violet-400/15 text-violet-200',
+}
 
-        <div className="relative mx-auto max-w-4xl text-center space-y-6">
-          <p className="text-sm uppercase tracking-[0.35em] text-anbu-gold/80">Solutions portal</p>
-          <h1 className="text-4xl sm:text-5xl font-display font-bold">A curated suite of ANBU offerings</h1>
-          <p className="mx-auto max-w-2xl text-base sm:text-lg text-anbu-marble/70">
-            We're building a premium experience for partners to discover, configure, and deploy ANBU solutions. Explore the roadmap and reach out if you'd like to pilot upcoming releases.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
-            <Link
-              href="mailto:contact@anbu.ai"
-              className="inline-flex items-center justify-center rounded-md bg-anbu-gold px-6 py-3 text-sm font-semibold text-black transition hover:bg-anbu-gold-accent"
+function PortalCard({ portal }: { portal: PortalDestination }) {
+  const StatusTone = statusToneStyles[portal.statusTone]
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <motion.div
+      key={portal.id}
+      variants={{
+        hidden: { opacity: 0, y: 40, scale: 0.96 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: {
+            type: 'spring',
+            stiffness: 260,
+            damping: 24,
+            duration: 0.6
+          }
+        }
+      }}
+      whileHover={{ y: -8 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+      className="relative h-full"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Link
+        href={portal.href}
+        className="group relative block h-full w-full"
+        aria-label={`Open ${portal.title}`}
+      >
+        {/* Animated border gradient */}
+        <div className="absolute -inset-[1px] rounded-[25px] opacity-60 blur-sm"
+          style={{
+            background: `linear-gradient(135deg, ${portal.accent}, transparent, ${portal.accent})`,
+            animation: 'gradient-shift 8s ease infinite',
+            backgroundSize: '200% 200%'
+          }}
+        />
+
+        {/* Main card container */}
+        <div className="relative flex h-full min-h-[320px] sm:min-h-[340px] lg:min-h-[360px] w-full max-w-full sm:max-w-[340px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[380px] flex-col overflow-hidden rounded-[20px] sm:rounded-[24px] border border-white/10 bg-gradient-to-br from-black/95 via-black/90 to-black/85 p-5 sm:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
+
+          {/* Background effects layer */}
+          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[24px]">
+            {/* Accent gradient */}
+            <motion.div
+              className="absolute -inset-10"
+              style={{
+                background: `radial-gradient(circle at 30% 20%, ${portal.accent}20 0%, transparent 50%)`,
+              }}
+              animate={{
+                scale: isHovered ? 1.1 : 1,
+                opacity: isHovered ? 0.8 : 0.5
+              }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            />
+
+            {/* Sparkles with reduced density */}
+            <SparklesCore
+              id={`${portal.id}-sparkles`}
+              background="transparent"
+              particleColor={portal.accent}
+              className="h-full w-full opacity-50"
+              particleDensity={12}
+              minSize={0.3}
+              maxSize={0.8}
+            />
+
+            {/* Bottom gradient fade */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+
+            {/* Hover glow effect */}
+            <motion.div
+              className="absolute inset-0"
+              style={{
+                background: `radial-gradient(circle at 50% 50%, ${portal.accent}10 0%, transparent 70%)`,
+              }}
+              animate={{
+                opacity: isHovered ? [0.3, 0.6, 0.3] : 0,
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          </div>
+
+          {/* Content */}
+          <div className="relative z-10 flex h-full flex-col items-center text-center">
+            {/* Status Badge */}
+            <div className="mb-4 w-full flex justify-center">
+              <span
+                className={cn(
+                  'inline-flex items-center rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.25em]',
+                  StatusTone,
+                )}
+              >
+                {portal.status}
+              </span>
+            </div>
+
+            {/* Icon */}
+            <motion.div
+              className="relative grid size-12 place-items-center rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent mb-4"
+              style={{
+                boxShadow: isHovered ? `0 0 30px ${portal.accent}25` : `0 0 15px ${portal.accent}10`
+              }}
+              animate={{
+                rotate: isHovered ? [0, 5, 0] : 0,
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             >
-              Join the pilot program
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center rounded-md border border-anbu-gold/40 px-6 py-3 text-sm font-semibold text-anbu-gold transition hover:border-anbu-gold hover:text-anbu-gold"
+              <portal.icon className="h-5 w-5" style={{ color: portal.accent }} />
+              {/* Icon glow */}
+              <div className="absolute inset-0 rounded-xl"
+                style={{
+                  background: `radial-gradient(circle, ${portal.accent}20, transparent)`,
+                  filter: 'blur(6px)'
+                }}
+              />
+            </motion.div>
+
+            {/* Title section */}
+            <div className="mb-auto space-y-3">
+              <motion.p
+                className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50"
+                animate={{
+                  letterSpacing: isHovered ? '0.35em' : '0.3em',
+                  opacity: isHovered ? 0.8 : 0.5
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {portal.subtitle}
+              </motion.p>
+
+              <h3 className="text-2xl font-display font-bold text-white sm:text-3xl">
+                {isHovered ? (
+                  <TextGenerateEffect
+                    words={portal.title}
+                    className="text-2xl sm:text-3xl font-bold"
+                    duration={0.3}
+                  />
+                ) : (
+                  <ShinyText className="inline-block text-white" speed={4}>
+                    {portal.title}
+                  </ShinyText>
+                )}
+              </h3>
+
+              <motion.p
+                className="text-balance text-[13px] leading-relaxed text-white/60"
+                animate={{
+                  opacity: isHovered ? 0.9 : 0.6
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                {portal.description}
+              </motion.p>
+            </div>
+
+            {/* CTA */}
+            <motion.div
+              className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-anbu-gold"
+              animate={{
+                x: isHovered ? 8 : 0,
+                letterSpacing: isHovered ? '0.15em' : '0.1em'
+              }}
+              transition={{ duration: 0.3, ease: 'easeOut' }}
             >
-              Return to main site
-            </Link>
+              Enter workspace
+              <ArrowUpRight className="h-4 w-4" />
+            </motion.div>
           </div>
         </div>
+      </Link>
+
+      {/* CSS animation for gradient shift */}
+      <style jsx>{`
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+      `}</style>
+    </motion.div>
+  )
+}
+
+export default function SolutionsPortalLanding() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [mounted, setMounted] = useState(false)
+  const [videoFinished, setVideoFinished] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start']
+  })
+
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -50])
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3])
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+    const video = videoRef.current
+    if (!video) return
+
+    setVideoFinished(false)
+
+    let removeUserInteractionListeners: (() => void) | null = null
+
+    const attemptPlay = () => {
+      const promise = video.play()
+      if (!promise || typeof promise.then !== 'function') {
+        return
+      }
+      promise.catch(() => {
+        const retry = () => {
+          video.play().catch(() => null)
+          removeUserInteractionListeners?.()
+        }
+        const handlePointer = () => retry()
+        const handleKey = () => retry()
+        removeUserInteractionListeners = () => {
+          window.removeEventListener('pointerdown', handlePointer)
+          window.removeEventListener('keydown', handleKey)
+          removeUserInteractionListeners = null
+        }
+        window.addEventListener('pointerdown', handlePointer, { once: true })
+        window.addEventListener('keydown', handleKey, { once: true })
+      })
+    }
+
+    const primePlayback = () => {
+      setVideoFinished(false)
+      video.currentTime = 0
+      attemptPlay()
+    }
+
+    if (video.readyState >= 2) {
+      primePlayback()
+    } else {
+      const onLoaded = () => {
+        primePlayback()
+      }
+      video.addEventListener('loadeddata', onLoaded, { once: true })
+      removeUserInteractionListeners = () => {
+        video.removeEventListener('loadeddata', onLoaded)
+      }
+    }
+
+    return () => {
+      removeUserInteractionListeners?.()
+    }
+  }, [mounted])
+
+  const handleTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    const video = event.currentTarget
+    if (video.currentTime >= VIDEO_STOP_TIME) {
+      video.pause()
+      video.currentTime = VIDEO_STOP_TIME
+      setVideoFinished(true)
+    }
+  }
+
+  return (
+    <main className="min-h-screen bg-black text-anbu-marble">
+      <section className="relative flex min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] lg:min-h-[65vh] items-center justify-center overflow-hidden">
+        {mounted && !videoFinished ? (
+          <video
+            ref={videoRef}
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            playsInline
+            preload="auto"
+            onTimeUpdate={handleTimeUpdate}
+            poster="/anbu_hero.png"
+          >
+            <source src="/Create_a_marketing_202509100024_evwzi.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            src="/anbu_hero.png"
+            alt="ANBU Solutions Portal"
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        )}
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/65 to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.18)_0%,_transparent_55%)]" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center"
+        >
+          <span
+            className="inline-flex items-center justify-center gap-3 rounded-full border border-white/20 bg-black/70 px-6 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.45em] text-white/80 text-center backdrop-blur"
+          >
+            <motion.span
+              aria-hidden
+              animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.08, 1] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+              className="h-1 w-8 rounded-full bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/60 to-anbu-gold/20"
+            />
+            ANBU SOLUTIONS PORTAL
+            <motion.span
+              aria-hidden
+              animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.08, 1] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+              className="h-1 w-8 rounded-full bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/60 to-anbu-gold/20"
+            />
+          </span>
+        </motion.div>
       </section>
 
-      <section className="relative px-4 pb-24 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl space-y-6">
-          {upcomingSolutions.map((solution) => (
-            <div key={solution.title} className="glass rounded-xl border border-anbu-gold/20 p-6">
-              <div className="flex flex-col gap-3 text-left sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <h2 className="text-xl font-semibold text-anbu-gold">{solution.title}</h2>
-                  <p className="mt-3 max-w-2xl text-sm text-anbu-marble/70">{solution.description}</p>
-                </div>
-                <span className="inline-flex h-8 items-center justify-center rounded-full border border-anbu-gold/40 px-4 text-xs font-semibold uppercase tracking-[0.2em] text-anbu-gold/70">
-                  {solution.status}
-                </span>
-              </div>
+      <section ref={sectionRef} id="portals" className="relative overflow-hidden py-8 sm:py-10 md:py-12 lg:py-16">
+        <motion.div
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#0c0c0c] to-black"
+          style={{ opacity }}
+          aria-hidden
+        />
+        <motion.div
+          className="absolute inset-0 -z-20 opacity-30"
+          style={{ y: parallaxY }}
+          animate={{
+            background: [
+              'radial-gradient(circle at 20% 50%, rgba(255,215,0,0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 80% 50%, rgba(255,215,0,0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 20% 50%, rgba(255,215,0,0.1) 0%, transparent 50%)',
+            ]
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <SparklesCore
+            id="solutions-portal-sparkles"
+            background="transparent"
+            particleColor="#FFD700"
+            particleDensity={12}
+            minSize={0.6}
+            maxSize={1.2}
+            className="h-full w-full"
+          />
+        </motion.div>
+
+        <Container size="lg">
+          <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12">
+            <div className="mx-auto max-w-3xl text-center space-y-3 sm:space-y-4">
+              <BlurFadeText delay={0} duration={0.6}>
+                <motion.p
+                  animate={{
+                    letterSpacing: ['0.35em', '0.4em', '0.35em'],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                  className="text-xs uppercase text-anbu-gold/70"
+                >
+                  Portal directory
+                </motion.p>
+              </BlurFadeText>
+
+              <BlurFadeText delay={0.1} duration={0.7}>
+                <h2 className="text-balance text-3xl font-display font-semibold text-white sm:text-4xl">
+                  Choose the workspace that aligns with your next move
+                </h2>
+              </BlurFadeText>
+
+              <BlurFadeText delay={0.2} duration={0.7}>
+                <p className="text-balance text-sm leading-relaxed text-white/70 sm:text-base">
+                  <ShinyText className="inline text-white/90" speed={7}>
+                    MagicUI. React Bits. Custom motion.
+                  </ShinyText>
+                  {' '}Guiding partners to success.
+                </p>
+              </BlurFadeText>
             </div>
-          ))}
-        </div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.15,
+                  }
+                }
+              }}
+              className="grid w-full max-w-7xl mx-auto gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 justify-items-center px-4 sm:px-6 lg:px-8"
+            >
+              {portalDestinations.map((portal) => (
+                <PortalCard key={portal.id} portal={portal} />
+              ))}
+            </motion.div>
+
+            {/* Impact Metrics Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, type: 'spring', stiffness: 100 }}
+              className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+            >
+              {/* Background glow */}
+              <div className="absolute inset-0 rounded-[20px] bg-gradient-to-r from-anbu-gold/10 via-transparent to-anbu-gold/10 opacity-30 blur-3xl" />
+
+              {/* Metrics Grid */}
+              <div className="relative grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                {[
+                  { value: '12+', label: 'Active Portals', accent: '#38bdf8' },
+                  { value: '99.9%', label: 'Uptime SLA', accent: '#f59e0b' },
+                  { value: '24/7', label: 'Operations', accent: '#a855f7' },
+                  { value: '<50ms', label: 'Response Time', accent: '#FFD700' }
+                ].map((metric, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    whileHover={{ y: -4, scale: 1.02 }}
+                    className="relative group"
+                  >
+                    {/* Card background */}
+                    <div className="absolute inset-0 rounded-[16px] bg-gradient-to-br from-white/[0.03] to-transparent" />
+                    <div
+                      className="absolute inset-0 rounded-[16px] opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                      style={{
+                        background: `radial-gradient(circle at center, ${metric.accent}, transparent)`
+                      }}
+                    />
+
+                    {/* Content */}
+                    <div className="relative rounded-[16px] border border-white/[0.08] bg-black/40 backdrop-blur-xl p-4 sm:p-5 lg:p-6 text-center">
+                      <motion.div
+                        className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2"
+                        style={{ color: metric.accent }}
+                        animate={{
+                          textShadow: [
+                            `0 0 20px ${metric.accent}00`,
+                            `0 0 30px ${metric.accent}40`,
+                            `0 0 20px ${metric.accent}00`,
+                          ]
+                        }}
+                        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                      >
+                        {metric.value}
+                      </motion.div>
+                      <p className="text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+                        {metric.label}
+                      </p>
+                    </div>
+
+                    {/* Animated border */}
+                    <motion.div
+                      className="absolute inset-0 rounded-[16px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: `linear-gradient(135deg, transparent, ${metric.accent}30, transparent)`,
+                        filter: 'blur(1px)'
+                      }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Bottom tagline */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="mt-8 sm:mt-10 lg:mt-12 text-center"
+              >
+                <p className="text-xs sm:text-sm text-white/40 font-medium uppercase tracking-[0.25em]">
+                  Powering digital excellence since deployment
+                </p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </Container>
       </section>
     </main>
   )

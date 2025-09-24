@@ -6,117 +6,390 @@ import {
   Layers3,
   Sparkles,
 } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 import Container from '@/components/ui/Container'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { BentoCard, BentoGrid } from '@/components/ui/bento-grid'
-import { ShineBorder } from '@/components/ui/shine-border'
+import { BentoGrid, BentoCard } from '@/components/ui/bento-grid'
+import { Meteors } from '@/components/aceternity/meteors'
+import { SparklesCore } from '@/components/aceternity/sparkles'
 import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section'
+import { BlurFadeText } from '@/components/magicui/blur-fade-text'
+import { ShinyText } from '@/components/magicui/shiny-text'
+import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect'
 
 const services = [
   {
     id: 'portal',
-    name: 'ANBU Solutions Portal',
-    description:
-      'Configured delivery pipelines, concierge onboarding, and cross-team observability under one polished workspace.',
+    name: 'Solutions Portal',
+    description: 'Unified ops & monitoring',
     href: '/solutions-portal',
-    cta: 'Launch portal',
+    cta: 'Enter portal',
     icon: Globe2,
     tooltip: 'Portal',
-    gradient: 'from-[#FFD700]/40 via-[#FFAF3B]/20 to-transparent',
+    accentColor: '#FFB700',
   },
   {
     id: 'experience',
-    name: 'Experience Engineering',
-    description:
-      'Product strategy, interface systems, and motion design shaped to premium brand expectations.',
+    name: 'Experience Design',
+    description: 'Motion-first interfaces',
     href: '/#contact',
-    cta: 'Plan a build',
+    cta: 'Book session',
     icon: Sparkles,
     tooltip: 'Experience',
-    gradient: 'from-[#FFED4E]/50 via-[#FFE9A0]/20 to-transparent',
+    accentColor: '#C084FC',
   },
   {
     id: 'data',
-    name: 'Intelligence & Data Ops',
-    description:
-      'Analytics command centers, revenue telemetry, and automated executive reporting with governed access.',
+    name: 'Data Intelligence',
+    description: 'Real-time analytics',
     href: '/docs-hub',
-    cta: 'Review documentation',
+    cta: 'View insights',
     icon: Layers3,
     tooltip: 'Intelligence',
-    gradient: 'from-[#F0D18A]/45 via-[#FFBD59]/20 to-transparent',
+    accentColor: '#0EA5E9',
   },
   {
     id: 'automation',
-    name: 'Automation Architecture',
-    description:
-      'Workflow orchestration, AI-assisted agent tooling, and high-availability runtimes tuned for service organizations.',
+    name: 'Automation',
+    description: 'Self-running workflows',
     href: '/#contact',
-    cta: 'Design an automation track',
+    cta: 'Start automating',
     icon: CircuitBoard,
     tooltip: 'Automation',
-    gradient: 'from-[#FFE07A]/45 via-[#FFD700]/15 to-transparent',
+    accentColor: '#EA580C',
   },
 ]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.3
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 12,
+      duration: 0.6
+    }
+  }
+}
+
+// I'm creating sick animated gradient backgrounds for each card
+const AnimatedGradientBackground = ({ color, variant }: { color: string, variant: string }) => {
+  const gradientVariants = {
+    portal: (
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          background: [
+            `linear-gradient(45deg, ${color}30 0%, transparent 50%, ${color}20 100%)`,
+            `linear-gradient(135deg, ${color}20 0%, ${color}30 50%, transparent 100%)`,
+            `linear-gradient(225deg, transparent 0%, ${color}30 50%, ${color}20 100%)`,
+            `linear-gradient(315deg, ${color}20 0%, transparent 50%, ${color}30 100%)`,
+          ],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+    ),
+    experience: (
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(circle at 20% 50%, ${color}25 0%, transparent 50%), radial-gradient(circle at 80% 80%, ${color}20 0%, transparent 50%)`,
+        }}
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+    ),
+    data: (
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          background: [
+            `conic-gradient(from 0deg at 50% 50%, transparent 0deg, ${color}25 90deg, transparent 180deg, ${color}20 270deg, transparent 360deg)`,
+            `conic-gradient(from 180deg at 50% 50%, transparent 0deg, ${color}20 90deg, transparent 180deg, ${color}25 270deg, transparent 360deg)`,
+          ],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+    ),
+    automation: (
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, ${color}15 10px, ${color}15 20px)`,
+          }}
+          animate={{
+            backgroundPosition: ["0px 0px", "20px 20px"],
+          }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            background: `radial-gradient(circle at center, ${color}20 0%, transparent 70%)`,
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.5, 1, 0.5],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
+    ),
+  }
+
+  return gradientVariants[variant as keyof typeof gradientVariants] || gradientVariants.portal
+}
 
 export default function ServicesSection() {
   return (
     <GradualBlurSection
       id="services"
-      className="relative overflow-hidden py-28"
+      className="relative overflow-hidden py-20 sm:py-24 md:py-28 lg:py-36 w-full flex justify-center"
     >
+      {/* Enhanced background gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505] to-black" />
-      <div className="absolute inset-0 opacity-40 mix-blend-screen" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,215,0,0.08),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_0%,rgba(255,168,0,0.08),transparent_60%)]" />
+      <div className="absolute inset-0 opacity-30 mix-blend-screen" aria-hidden>
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              "radial-gradient(circle at 20% 20%, rgba(255,215,0,0.08), transparent 55%)",
+              "radial-gradient(circle at 80% 80%, rgba(255,215,0,0.08), transparent 55%)",
+              "radial-gradient(circle at 50% 50%, rgba(255,215,0,0.08), transparent 55%)",
+            ],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
       </div>
 
-      <Container size="md" className="relative flex w-full flex-col gap-16">
-        <div className="mx-auto max-w-3xl text-center">
-          <AnimatedGradientText
-            className="text-sm uppercase tracking-[0.45em] text-anbu-gold"
-            colorFrom="#FFED4E"
-            colorTo="#FF9D2E"
-            speed={1.2}
+      <Container size="lg" className="relative flex flex-col items-center gap-12 md:gap-14 lg:gap-20">
+        {/* Enhanced header section */}
+        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-5 md:space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            Core capabilities
-          </AnimatedGradientText>
-          <h2 className="mt-6 font-display text-4xl font-bold text-white sm:text-5xl md:text-6xl">
-            Systems that engineer measurable luxury
+            <ShinyText
+              className="text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-anbu-gold font-medium"
+              speed={6}
+            >
+              What I Build
+            </ShinyText>
+          </motion.div>
+
+          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white">
+            <TextGenerateEffect
+              words="Premium Digital Solutions"
+              className=""
+              duration={0.8}
+            />
           </h2>
-          <p className="mt-4 text-base text-white/70 sm:text-lg">
-            Every engagement combines meticulous experience design with resilient delivery infrastructure so
-            stakeholders can launch, iterate, and scale with certainty.
-          </p>
+
+          <BlurFadeText delay={0.3} duration={0.7}>
+            <p className="text-sm md:text-base lg:text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
+              We build scalable products that perform.
+            </p>
+          </BlurFadeText>
         </div>
 
-        <BentoGrid className="grid-cols-1 md:grid-cols-2">
-          {services.map((service) => (
-            <BentoCard
-              key={service.id}
-              name={service.name}
-              Icon={service.icon}
-              description={service.description}
-              href={service.href}
-              cta={service.cta}
-              tooltip={service.tooltip}
-              className="relative bg-black/75 text-white transition-shadow hover:shadow-[0_20px_60px_rgba(255,215,0,0.12)]"
-              background={
-                <div className="pointer-events-none absolute inset-0">
-                  <div
-                    className={`absolute inset-0 rounded-xl bg-gradient-to-br ${service.gradient}`}
-                  />
-                  <ShineBorder
-                    borderWidth={2}
-                    duration={12}
-                    shineColor={["#FFD700", "#FFB347", "#FFE27A"]}
-                  />
-                </div>
-              }
-            />
-          ))}
-        </BentoGrid>
+        {/* Enhanced cards grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="w-full"
+        >
+          <BentoGrid className="mt-8 md:mt-10 lg:mt-12 sm:auto-rows-[13rem] md:auto-rows-[14rem] lg:auto-rows-[15rem] lg:grid-cols-4">
+            {/* Portal Card */}
+            <motion.div
+              key={services[0].id}
+              variants={itemVariants}
+              whileHover={{
+                y: -12,
+                scale: 1.02,
+                transition: { type: 'spring', stiffness: 220, damping: 18 }
+              }}
+              whileTap={{ scale: 0.97 }}
+              className="h-full"
+            >
+              <BentoCard
+                name={services[0].name}
+                className="col-span-1"
+                background={
+                  <div className="absolute inset-0 overflow-hidden">
+                    <AnimatedGradientBackground color={services[0].accentColor} variant="portal" />
+                    <SparklesCore
+                      id="portal-sparkles"
+                      background="transparent"
+                      particleColor={services[0].accentColor}
+                      className="h-full w-full"
+                      particleDensity={22}
+                      minSize={0.5}
+                      maxSize={1.1}
+                    />
+                  </div>
+                }
+                Icon={services[0].icon}
+                description={services[0].description}
+                href={services[0].href}
+                cta={services[0].cta}
+                tooltip={services[0].tooltip}
+                accentColor={services[0].accentColor}
+              />
+            </motion.div>
+
+            {/* Experience Card */}
+            <motion.div
+              key={services[1].id}
+              variants={itemVariants}
+              whileHover={{
+                y: -12,
+                scale: 1.02,
+                transition: { type: 'spring', stiffness: 220, damping: 18 }
+              }}
+              whileTap={{ scale: 0.97 }}
+              className="h-full"
+            >
+              <BentoCard
+                name={services[1].name}
+                className="col-span-1"
+                background={
+                  <div className="absolute inset-0 overflow-hidden">
+                    <AnimatedGradientBackground color={services[1].accentColor} variant="experience" />
+                    <Meteors number={6} />
+                  </div>
+                }
+                Icon={services[1].icon}
+                description={services[1].description}
+                href={services[1].href}
+                cta={services[1].cta}
+                tooltip={services[1].tooltip}
+                accentColor={services[1].accentColor}
+              />
+            </motion.div>
+
+            {/* Data Ops Card */}
+            <motion.div
+              key={services[2].id}
+              variants={itemVariants}
+              whileHover={{
+                y: -12,
+                scale: 1.02,
+                transition: { type: 'spring', stiffness: 220, damping: 18 }
+              }}
+              whileTap={{ scale: 0.97 }}
+              className="h-full"
+            >
+              <BentoCard
+                name={services[2].name}
+                className="col-span-1"
+                background={
+                  <div className="absolute inset-0 overflow-hidden">
+                    <AnimatedGradientBackground color={services[2].accentColor} variant="data" />
+                    <motion.div
+                      className="absolute inset-0"
+                      animate={{
+                        backgroundImage: [
+                          `linear-gradient(0deg, transparent, ${services[2].accentColor}10)`,
+                          `linear-gradient(180deg, transparent, ${services[2].accentColor}10)`,
+                        ],
+                      }}
+                      transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' }}
+                    />
+                  </div>
+                }
+                Icon={services[2].icon}
+                description={services[2].description}
+                href={services[2].href}
+                cta={services[2].cta}
+                tooltip={services[2].tooltip}
+                accentColor={services[2].accentColor}
+              />
+            </motion.div>
+
+            {/* Automation Card */}
+            <motion.div
+              key={services[3].id}
+              variants={itemVariants}
+              whileHover={{
+                y: -12,
+                scale: 1.02,
+                transition: { type: 'spring', stiffness: 220, damping: 18 }
+              }}
+              whileTap={{ scale: 0.97 }}
+              className="h-full"
+            >
+              <BentoCard
+                name={services[3].name}
+                className="col-span-1"
+                background={
+                  <div className="absolute inset-0 overflow-hidden">
+                    <AnimatedGradientBackground color={services[3].accentColor} variant="automation" />
+                    <SparklesCore
+                      id="automation-sparkles"
+                      background="transparent"
+                      particleColor={services[3].accentColor}
+                      className="h-full w-full"
+                      particleDensity={18}
+                      minSize={0.35}
+                      maxSize={1.0}
+                    />
+                  </div>
+                }
+                Icon={services[3].icon}
+                description={services[3].description}
+                href={services[3].href}
+                cta={services[3].cta}
+                tooltip={services[3].tooltip}
+                accentColor={services[3].accentColor}
+              />
+            </motion.div>
+          </BentoGrid>
+        </motion.div>
       </Container>
     </GradualBlurSection>
   )

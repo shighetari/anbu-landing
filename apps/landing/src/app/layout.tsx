@@ -4,10 +4,9 @@ import "../styles/globals.css";
 import Navigation from '@/components/layout/Navigation'
 import Footer from '@/components/layout/Footer'
 import { ScrollProgress } from '@/components/ui/scroll-progress'
-import { Dock, DockIcon } from '@/components/ui/dock'
+import { GlobalDock } from '@/components/layout/GlobalDock'
 import { ClickSparkOverlay } from '@/components/reactbits/click-spark-overlay'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import Link from 'next/link'
 import { ArrowRight, Compass, Home, MessagesSquare, Sparkles } from 'lucide-react'
 
 // I'm loading the Nerd Font locally for optimal performance
@@ -88,42 +87,44 @@ export default function RootLayout({
         <ClickSparkOverlay />
         <Navigation />
         {children}
-        <div className="pointer-events-none fixed bottom-6 left-1/2 z-40 -translate-x-1/2">
-          <Dock className="pointer-events-auto border-white/10 bg-black/70" iconMagnification={64}>
-            <DockIcon>
-              <Link href="/#home" className="flex h-full w-full items-center justify-center text-white/80">
-                <Home className="h-5 w-5" />
-              </Link>
-            </DockIcon>
-            <DockIcon>
-              <Link href="/#services" className="flex h-full w-full items-center justify-center text-white/80">
-                <Compass className="h-5 w-5" />
-              </Link>
-            </DockIcon>
-            <DockIcon>
-              <Link href="/social-hub" className="flex h-full w-full items-center justify-center text-white/80">
-                <Sparkles className="h-5 w-5" />
-              </Link>
-            </DockIcon>
-            <DockIcon>
-              <Link href="/#about" className="flex h-full w-full items-center justify-center text-white/80">
+        <GlobalDock
+          items={[
+            {
+              title: "Home",
+              icon: <Home className="h-full w-full" />,
+              href: "/#home",
+            },
+            {
+              title: "Services",
+              icon: <Compass className="h-full w-full" />,
+              href: "/#services",
+            },
+            {
+              title: "Marketing Studio",
+              icon: <Sparkles className="h-full w-full" />,
+              href: "/social-hub",
+            },
+            {
+              title: "Insight",
+              icon: (
                 <AnimatedGradientText className="text-xs uppercase" colorFrom="#FFD700" colorTo="#FF8A3C">
-                  Insight
+                  AI
                 </AnimatedGradientText>
-              </Link>
-            </DockIcon>
-            <DockIcon>
-              <Link href="/#contact" className="flex h-full w-full items-center justify-center text-white/80">
-                <MessagesSquare className="h-5 w-5" />
-              </Link>
-            </DockIcon>
-            <DockIcon>
-              <Link href="/solutions-portal" className="flex h-full w-full items-center justify-center text-white/80">
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </DockIcon>
-          </Dock>
-        </div>
+              ),
+              href: "/#about",
+            },
+            {
+              title: "Contact",
+              icon: <MessagesSquare className="h-full w-full" />,
+              href: "/#contact",
+            },
+            {
+              title: "Solutions Portal",
+              icon: <ArrowRight className="h-full w-full" />,
+              href: "/solutions-portal",
+            },
+          ]}
+        />
         <Footer />
       </body>
     </html>

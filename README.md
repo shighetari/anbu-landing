@@ -48,22 +48,26 @@ Our design system features a sophisticated **black and gold with marble aestheti
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/shighetari/anbu-landing.git
 cd anbu-landing
 ```
 
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 3. Copy environment variables:
+
 ```bash
 cp .env.example .env.local
 ```
 
 4. Start development server:
+
 ```bash
 pnpm dev
 ```
@@ -120,6 +124,7 @@ pnpm docker:landing:shell
 ### Windows Hot Reload Setup
 
 The Docker configuration is optimized for Windows with:
+
 - `WATCHPACK_POLLING=true` for file watching
 - Delegated volume mounts for better performance
 - Proper node_modules exclusion to avoid conflicts
@@ -144,6 +149,7 @@ If you experience issues with hot reload on Windows:
    - Go to General → Use WSL 2 based engine
 
 2. **File watching not working**:
+
    ```bash
    # Rebuild the container
    pnpm docker:landing:rebuild
@@ -153,6 +159,7 @@ If you experience issues with hot reload on Windows:
    - Edit `docker-compose.override.yml` to use a different port
 
 4. **Clean slate**:
+
    ```bash
    # Remove everything and start fresh
    pnpm docker:clean
@@ -269,7 +276,7 @@ This project is proprietary software owned by ANBU Solutions. All rights reserve
 ## 📞 Contact
 
 - Website: [anbu.ai](https://anbu.ai)
-- Email: contact@anbu.ai
+- Email: <contact@anbu.ai>
 
 ## 🙏 Acknowledgments
 

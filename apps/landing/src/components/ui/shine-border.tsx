@@ -1,31 +1,17 @@
-"use client";
+"use client"
 
-import * as React from "react";
+import * as React from "react"
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
 interface ShineBorderProps extends React.HTMLAttributes<HTMLDivElement> {
-  /**
-   * Width of the border in pixels
-   * @default 1
-   */
-  borderWidth?: number;
-  /**
-   * Duration of the animation in seconds
-   * @default 14
-   */
-  duration?: number;
-  /**
-   * Color of the border, can be a single color or an array of colors
-   * @default "#000000"
-   */
-  shineColor?: string | string[];
+  borderWidth?: number
+  duration?: number
+  shineColor?: string | string[]
 }
 
 /**
- * Shine Border
- *
- * An animated background border effect component with configurable properties.
+ * Shine Border — animated border wrapper that keeps inner content interactive.
  */
 export function ShineBorder({
   borderWidth = 1,
@@ -33,31 +19,41 @@ export function ShineBorder({
   shineColor = "#000000",
   className,
   style,
+  children,
   ...props
 }: ShineBorderProps) {
+  const gradient = Array.isArray(shineColor) ? shineColor.join(",") : shineColor
+
   return (
     <div
-      style={
-        {
-          "--border-width": `${borderWidth}px`,
-          "--duration": `${duration}s`,
-          backgroundImage: `radial-gradient(transparent,transparent, ${
-            Array.isArray(shineColor) ? shineColor.join(",") : shineColor
-          },transparent,transparent)`,
-          backgroundSize: "300% 300%",
-          mask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
-          WebkitMask: `linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)`,
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-          padding: "var(--border-width)",
-          ...style,
-        } as React.CSSProperties
-      }
-      className={cn(
-        "pointer-events-none absolute inset-0 size-full rounded-[inherit] will-change-[background-position] motion-safe:animate-shine",
-        className,
-      )}
+      className={cn("relative overflow-hidden", className)}
+      style={style}
       {...props}
-    />
-  );
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[inherit]"
+        style={{
+          padding: `${borderWidth}px`,
+        }}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 rounded-[inherit] will-change-[background-position] motion-safe:animate-shine"
+          style={{
+            backgroundImage: `radial-gradient(transparent, transparent, ${gradient}, transparent, transparent)`,
+            backgroundSize: "300% 300%",
+            animationDuration: `${duration}s`,
+            mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+        />
+      </div>
+
+      <div className="relative z-[1] h-full w-full">
+        {children}
+      </div>
+    </div>
+  )
 }

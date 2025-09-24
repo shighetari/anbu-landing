@@ -62,8 +62,8 @@ export const AnimatedSpan = ({
   return (
     <motion.div
       ref={elementRef}
-      initial={{ opacity: 0, y: -5 }}
-      animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: -5 }}
+      initial={{ opacity: 0 }}
+      animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.3, delay: sequence ? 0 : delay / 1000 }}
       className={cn("grid text-sm font-normal tracking-tight", className)}
       onAnimationComplete={() => {
@@ -90,7 +90,7 @@ interface TypingAnimationProps extends MotionProps {
 export const TypingAnimation = ({
   children,
   className,
-  duration = 60,
+  duration = 50,
   delay = 0,
   as: Component = "span",
   startOnView = true,
@@ -172,10 +172,17 @@ export const TypingAnimation = ({
   return (
     <MotionComponent
       ref={elementRef}
-      className={cn("text-sm font-normal tracking-tight", className)}
+      className={cn("text-sm font-normal tracking-tight relative", className)}
       {...props}
     >
       {displayedText}
+      {started && displayedText.length < children.length && (
+        <motion.span
+          className="inline-block w-[2px] h-4 bg-anbu-gold ml-[1px] align-middle"
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+        />
+      )}
     </MotionComponent>
   );
 };
@@ -226,24 +233,130 @@ export const Terminal = ({
   }, [children, sequence]);
 
   const content = (
-    <div
+    <motion.div
       ref={containerRef}
       className={cn(
-        'z-0 w-full max-w-xl rounded-2xl border border-white/10 bg-neutral-950/90 p-6 text-left text-white shadow-[0_22px_65px_rgba(0,0,0,0.55)]',
+        'relative z-0 w-full max-w-xl text-left text-white group',
         className,
       )}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="flex flex-col gap-3 rounded-xl border border-white/5 bg-black/40 px-5 py-4">
-        <div className="flex items-center gap-2">
-          <span className="h-3 w-3 rounded-full bg-red-500/80"></span>
-          <span className="h-3 w-3 rounded-full bg-yellow-400/80"></span>
-          <span className="h-3 w-3 rounded-full bg-green-500/75"></span>
-        </div>
+      {/* Glow effect */}
+      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/10 to-anbu-gold/20 opacity-0 blur-md transition-all duration-500 group-hover:opacity-100" />
+
+      {/* Matrix rain effect background */}
+      <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-10">
+        <motion.div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 2px,
+              rgba(255, 215, 0, 0.03) 2px,
+              rgba(255, 215, 0, 0.03) 4px
+            )`,
+            backgroundSize: '100% 100%',
+          }}
+          animate={{
+            backgroundPosition: ['0% 0%', '0% 100%'],
+          }}
+          transition={{
+            duration: 15,
+            ease: "linear",
+            repeat: Infinity,
+          }}
+        />
       </div>
-      <pre className="mt-4 max-h-[300px] overflow-auto rounded-xl bg-black/35 px-5 py-6 text-[13px]">
-        <code className="grid gap-y-2">{wrappedChildren}</code>
-      </pre>
-    </div>
+
+      {/* Terminal window */}
+      <div className="relative rounded-2xl border border-white/10 bg-gradient-to-b from-neutral-950/95 to-black/95 p-6 shadow-[0_22px_65px_rgba(0,0,0,0.55)] backdrop-blur-xl">
+        {/* Terminal header with glowing border */}
+        <motion.div
+          className="relative flex flex-col gap-3 rounded-xl border border-white/5 bg-gradient-to-r from-black/60 via-black/40 to-black/60 px-5 py-4 overflow-hidden"
+        >
+          {/* Animated border beam */}
+          <motion.div
+            className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-anbu-gold/50 to-transparent"
+            animate={{
+              x: ["-100%", "100%"],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+          <div className="flex items-center gap-2">
+            <motion.span
+              className="h-3 w-3 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+              whileHover={{ scale: 1.2 }}
+              animate={{
+                boxShadow: [
+                  "0 0 8px rgba(239,68,68,0.5)",
+                  "0 0 12px rgba(239,68,68,0.7)",
+                  "0 0 8px rgba(239,68,68,0.5)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <motion.span
+              className="h-3 w-3 rounded-full bg-yellow-400/80 shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+              whileHover={{ scale: 1.2 }}
+              animate={{
+                boxShadow: [
+                  "0 0 8px rgba(251,191,36,0.5)",
+                  "0 0 12px rgba(251,191,36,0.7)",
+                  "0 0 8px rgba(251,191,36,0.5)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+            />
+            <motion.span
+              className="h-3 w-3 rounded-full bg-green-500/75 shadow-[0_0_8px_rgba(34,197,94,0.5)]"
+              whileHover={{ scale: 1.2 }}
+              animate={{
+                boxShadow: [
+                  "0 0 8px rgba(34,197,94,0.5)",
+                  "0 0 12px rgba(34,197,94,0.7)",
+                  "0 0 8px rgba(34,197,94,0.5)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+            />
+          </div>
+          <div className="absolute top-2 left-1/2 -translate-x-1/2">
+            <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">anbu@terminal</span>
+          </div>
+        </motion.div>
+
+        {/* Terminal content with enhanced styling */}
+        <pre className="relative mt-4 max-h-[300px] overflow-auto rounded-xl bg-gradient-to-b from-black/50 to-black/30 px-5 py-6 text-[13px] font-mono scrollbar-thin scrollbar-track-transparent scrollbar-thumb-anbu-gold/20 hover:scrollbar-thumb-anbu-gold/30">
+          {/* Scanline effect */}
+          <motion.div
+            className="pointer-events-none absolute inset-0 opacity-[0.03]"
+            style={{
+              background: `linear-gradient(
+                transparent 50%,
+                rgba(255, 215, 0, 0.1) 50%
+              )`,
+              backgroundSize: '100% 4px',
+            }}
+            animate={{
+              backgroundPosition: ['0px 0px', '0px 4px'],
+            }}
+            transition={{
+              duration: 0.5,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+          <code className="relative grid gap-y-2">{wrappedChildren}</code>
+        </pre>
+      </div>
+    </motion.div>
   );
 
   if (!sequence) return content;

@@ -1,69 +1,373 @@
-import Link from 'next/link'
+'use client'
 
-const highlights = [
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Search, Bot, Zap, Database, Code, BookOpen } from 'lucide-react'
+
+import Container from '@/components/ui/Container'
+import { TypewriterEffectSmooth } from '@/components/aceternity/typewriter-effect'
+import { BackgroundBeams } from '@/components/aceternity/background-beams'
+import { SparklesCore } from '@/components/aceternity/sparkles'
+import { NeonGradientCard } from '@/components/ui/neon-gradient-card'
+import { ShimmerButton } from '@/components/ui/shimmer-button'
+import { CardSpotlight } from '@/components/aceternity/card-spotlight'
+import { Terminal, TypingAnimation, AnimatedSpan } from '@/components/ui/terminal'
+import { NumberTicker } from '@/components/ui/number-ticker'
+import { BorderBeam } from '@/components/ui/border-beam'
+import { Meteors } from '@/components/aceternity/meteors'
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
+import { BlurFadeText } from '@/components/magicui/blur-fade-text'
+import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect'
+import { ShinyText } from '@/components/magicui/shiny-text'
+
+const features = [
   {
-    title: 'API Reference',
-    description: 'Endpoints, schemas, and integration guides to help your team ship faster.',
+    title: 'AI-Powered Search',
+    description: 'Vector database integration with intelligent semantic search across all documentation.',
+    icon: Search,
+    gradient: 'from-purple-500 to-pink-500',
+    bgGradient: 'from-purple-500/10 via-purple-500/5 to-pink-500/10',
   },
   {
-    title: 'Design System',
-    description: 'Tokens, components, and UX patterns that keep ANBU experiences consistent.',
+    title: 'RAG Chatbots',
+    description: 'Conversational AI assistants trained on your specific codebase and documentation.',
+    icon: Bot,
+    gradient: 'from-cyan-500 to-blue-500',
+    bgGradient: 'from-cyan-500/10 via-cyan-500/5 to-blue-500/10',
   },
   {
-    title: 'Playbooks',
-    description: 'Implementation blueprints for common digital transformation challenges.',
+    title: 'Real-time API Playground',
+    description: 'Interactive testing environment with live code examples and instant feedback.',
+    icon: Zap,
+    gradient: 'from-amber-500 to-orange-500',
+    bgGradient: 'from-amber-500/10 via-amber-500/5 to-orange-500/10',
   },
+  {
+    title: 'Vector Knowledge Base',
+    description: 'Embeddings-powered knowledge graphs for connecting related concepts.',
+    icon: Database,
+    gradient: 'from-green-500 to-emerald-500',
+    bgGradient: 'from-green-500/10 via-green-500/5 to-emerald-500/10',
+  },
+  {
+    title: 'Interactive Code Examples',
+    description: 'Executable code snippets with real-time output and customizable parameters.',
+    icon: Code,
+    gradient: 'from-red-500 to-rose-500',
+    bgGradient: 'from-red-500/10 via-red-500/5 to-rose-500/10',
+  },
+  {
+    title: 'Design System Explorer',
+    description: 'Visual component library with live previews and design token documentation.',
+    icon: BookOpen,
+    gradient: 'from-indigo-500 to-violet-500',
+    bgGradient: 'from-indigo-500/10 via-indigo-500/5 to-violet-500/10',
+  },
+]
+
+const stats = [
+  { value: 500, suffix: '+', label: 'API endpoints documented' },
+  { value: 200, suffix: '+', label: 'code examples' },
+  { value: 50, suffix: '+', label: 'design components' },
+  { value: 99.9, suffix: '%', label: 'uptime guarantee' },
+]
+
+const typewriterWords = [
+  { text: "Your", className: "text-white" },
+  { text: "AI-Powered", className: "text-anbu-gold" },
+  { text: "Documentation", className: "text-anbu-gold" },
+  { text: "Hub", className: "text-anbu-gold" },
 ]
 
 export default function DocsHubLanding() {
   return (
-    <main className="min-h-screen bg-black text-anbu-marble">
-      <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 opacity-[0.15]" aria-hidden>
-          <div
-            className="h-full w-full"
-            style={{
-              background:
-                'radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.18), transparent 55%), radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.08), transparent 60%)',
-            }}
+    <div className="min-h-screen bg-black">
+      <main className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble">
+        {/* Background Effects */}
+        <div className="absolute inset-0">
+          <BackgroundBeams className="opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black/80" />
+        </div>
+
+        {/* Sparkles Background */}
+        <div className="absolute inset-0 w-full h-full">
+          <SparklesCore
+            id="tsparticlesfullpage"
+            background="transparent"
+            minSize={0.6}
+            maxSize={1.4}
+            particleDensity={100}
+            className="w-full h-full"
+            particleColor="#FFD700"
           />
         </div>
 
-        <div className="relative mx-auto max-w-5xl text-center space-y-6">
-          <p className="text-sm uppercase tracking-[0.35em] text-anbu-gold/80">Documentation hub</p>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold">
-            Everything you need to build with ANBU
-          </h1>
-          <p className="mx-auto max-w-3xl text-base sm:text-lg text-anbu-marble/70">
-            The hub is under active construction. In the meantime, explore a snapshot of what's coming and contact us if you need early access to our internal playbooks.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
-            <Link
-              href="mailto:contact@anbu.ai"
-              className="inline-flex items-center justify-center rounded-md bg-anbu-gold px-6 py-3 text-sm font-semibold text-black transition hover:bg-anbu-gold-accent"
+        {/* Hero Section */}
+        <section className="relative min-h-screen flex items-center justify-center px-4">
+          <div className="w-full max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8 text-center"
             >
-              Request documentation access
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center rounded-md border border-anbu-gold/40 px-6 py-3 text-sm font-semibold text-anbu-gold transition hover:border-anbu-gold hover:text-anbu-gold"
-            >
-              Return to main site
-            </Link>
-          </div>
-        </div>
-      </section>
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="flex justify-center"
+                >
+                  <ShinyText className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] text-anbu-gold/80 font-medium">
+                    Coming Soon
+                  </ShinyText>
+                </motion.div>
 
-      <section className="relative px-4 pb-24 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2">
-          {highlights.map((item) => (
-            <div key={item.title} className="glass rounded-xl border border-anbu-gold/20 p-6">
-              <h2 className="text-xl font-semibold text-anbu-gold">{item.title}</h2>
-              <p className="mt-3 text-sm text-anbu-marble/70">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
+                <div className="flex justify-center">
+                  <TypewriterEffectSmooth
+                    words={typewriterWords}
+                    className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold"
+                  />
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="flex justify-center"
+                >
+                  <BlurFadeText
+                    text="Experience intelligent documentation with vector search, RAG chatbots, and instant code examples. The future of developer documentation is here."
+                    className="max-w-3xl text-base sm:text-lg lg:text-xl text-white/70 leading-relaxed px-4"
+                    animationDelay={0.8}
+                  />
+                </motion.div>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.8 }}
+                className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6 sm:pt-8"
+              >
+                <ShimmerButton
+                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em]"
+                  background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+                  borderRadius="0.75rem"
+                >
+                  <span className="text-black font-bold">Get Early Access</span>
+                </ShimmerButton>
+
+                <ShimmerButton
+                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-gold"
+                  background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
+                  borderRadius="0.75rem"
+                  shimmerColor="#FFD700"
+                >
+                  <Link href="/" className="text-anbu-gold">
+                    Return to Main Site
+                  </Link>
+                </ShimmerButton>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="relative py-12 sm:py-16 lg:py-20">
+          <Container size="lg">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
+            >
+              {stats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="text-center p-4"
+                >
+                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">
+                    <AnimatedGradientText
+                      colorFrom="#FFD700"
+                      colorTo="#FFA500"
+                      speed={2}
+                      className="inline-block"
+                    >
+                      <NumberTicker
+                        value={stat.value}
+                        startValue={0}
+                        delay={0.5}
+                        decimalPlaces={stat.suffix === '%' ? 1 : 0}
+                      />
+                      {stat.suffix}
+                    </AnimatedGradientText>
+                  </div>
+                  <p className="text-xs sm:text-sm text-white/60 uppercase tracking-wider px-2">{stat.label}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </Container>
+        </section>
+
+        {/* AI Features Showcase */}
+        <section className="relative py-12 sm:py-16 lg:py-20">
+          <Container size="lg">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-8 sm:mb-12 lg:mb-16"
+            >
+              <AnimatedGradientText
+                colorFrom="#FFD700"
+                colorTo="#FF9D2E"
+                speed={1.5}
+                className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold mb-4 sm:mb-6 block"
+              >
+                AI-Powered Documentation Experience
+              </AnimatedGradientText>
+              <TextGenerateEffect
+                words="Revolutionary features that will transform how you interact with documentation"
+                className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-white/70 px-4"
+              />
+            </motion.div>
+
+            <NeonGradientCard
+              className="w-full"
+              contentClassName="bg-black/90 p-4 sm:p-6 lg:p-10"
+              neonColors={{ firstColor: '#FFD700', secondColor: '#FF9D2E' }}
+              borderSize={2}
+            >
+              <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={feature.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <CardSpotlight className="h-full">
+                      <div className="relative p-4 sm:p-5 lg:p-6 h-full flex flex-col">
+                        <div className={`inline-flex p-2 sm:p-2.5 lg:p-3 rounded-lg bg-gradient-to-br ${feature.gradient} mb-3 sm:mb-4 w-fit`}>
+                          <feature.icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                        </div>
+                        <AnimatedGradientText
+                          colorFrom={feature.gradient.includes('purple') ? '#a855f7' : feature.gradient.includes('cyan') ? '#06b6d4' : feature.gradient.includes('amber') ? '#f59e0b' : feature.gradient.includes('green') ? '#10b981' : feature.gradient.includes('red') ? '#ef4444' : '#6366f1'}
+                          colorTo={feature.gradient.includes('purple') ? '#ec4899' : feature.gradient.includes('cyan') ? '#3b82f6' : feature.gradient.includes('amber') ? '#ea580c' : feature.gradient.includes('green') ? '#10b981' : feature.gradient.includes('red') ? '#f43f5e' : '#8b5cf6'}
+                          speed={2}
+                          className="text-base sm:text-lg lg:text-xl font-semibold mb-2 sm:mb-3 block"
+                        >
+                          {feature.title}
+                        </AnimatedGradientText>
+                        <p className="text-white/60 text-xs sm:text-sm leading-relaxed flex-grow">{feature.description}</p>
+                        <BorderBeam size={250} duration={12} delay={3} />
+                      </div>
+                    </CardSpotlight>
+                  </motion.div>
+                ))}
+              </div>
+            </NeonGradientCard>
+          </Container>
+        </section>
+
+        {/* Terminal Demo */}
+        <section className="relative py-12 sm:py-16 lg:py-20">
+          <Container size="lg">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-8 sm:mb-10 lg:mb-12"
+            >
+              <ShinyText className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold mb-4 sm:mb-6 inline-block">
+                See It In Action
+              </ShinyText>
+              <BlurFadeText
+                text="Experience how our AI assistant will help you find answers instantly"
+                className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-white/70 px-4"
+                animationDelay={0.2}
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto px-4"
+            >
+              <Terminal className="border border-white/10 bg-black/90 shadow-2xl mx-auto max-w-full overflow-x-auto">
+                <TypingAnimation className="font-mono text-xs sm:text-sm text-anbu-gold/80" startOnView>
+                  $ ask-anbu "How do I implement authentication with Next.js?"
+                </TypingAnimation>
+                <AnimatedSpan className="font-mono text-[0.65rem] sm:text-xs text-cyan-400">🤖 Searching knowledge base...</AnimatedSpan>
+                <AnimatedSpan className="font-mono text-[0.65rem] sm:text-xs text-cyan-400">📚 Found 12 relevant articles</AnimatedSpan>
+                <TypingAnimation className="font-mono text-[0.65rem] sm:text-xs text-green-400" delay={1000}>
+                  ✅ Here's a step-by-step guide with code examples:
+                </TypingAnimation>
+                <TypingAnimation className="font-mono text-[0.65rem] sm:text-xs text-white/80" delay={1500}>
+                  🔗 /docs/auth/nextjs-setup
+                </TypingAnimation>
+                <TypingAnimation className="font-mono text-[0.65rem] sm:text-xs text-white/80" delay={2000}>
+                  🔗 /examples/auth-middleware
+                </TypingAnimation>
+                <TypingAnimation className="font-mono text-[0.65rem] sm:text-xs text-anbu-gold" delay={2500}>
+                  → Want me to create a custom implementation for your use case?
+                </TypingAnimation>
+              </Terminal>
+            </motion.div>
+          </Container>
+        </section>
+
+        {/* CTA Section */}
+        <section className="relative py-12 sm:py-16 lg:py-20">
+          <Container size="lg">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center relative px-4"
+            >
+              <Meteors number={20} />
+              <AnimatedGradientText
+                colorFrom="#FFD700"
+                colorTo="#FFA500"
+                speed={1}
+                className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold mb-4 sm:mb-6 block"
+              >
+                Be Among the First to Experience the Future
+              </AnimatedGradientText>
+              <TextGenerateEffect
+                words="Join our early access program and help shape the next generation of developer documentation."
+                className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-white/70 mb-6 sm:mb-8"
+              />
+
+              <div className="flex justify-center">
+                <Link href="mailto:contact@anbu.ai?subject=Docs Hub Early Access Request">
+                  <ShimmerButton
+                    className="px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em]"
+                    background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+                    borderRadius="0.75rem"
+                  >
+                    <span className="text-black font-bold">Request Early Access</span>
+                  </ShimmerButton>
+                </Link>
+              </div>
+            </motion.div>
+          </Container>
+        </section>
+      </main>
+
+    </div>
   )
 }

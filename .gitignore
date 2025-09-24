@@ -35,6 +35,18 @@ lerna-debug.log*
 .env.development
 .env.production
 
+# MCP Configuration (contains API keys)
+.mcp.json
+
+# Platform-specific environment files
+.env.windows
+.env.macos
+.env.linux
+
+# Playwright test artifacts
+.playwright-mcp/
+test-results/
+
 # Vercel
 .vercel
 

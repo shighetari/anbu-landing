@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 /* I'm properly importing Tailwind layers */
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -16,12 +17,54 @@
     --anbu-gray: #2C2C2C;
     --background: #000000;
     --foreground: #F8F8F8;
+
+    /* Compact fluid spacing system - I'm implementing tighter, professional scaling */
+    --space-xs: clamp(0.25rem, 0.5vw, 0.375rem);
+    --space-sm: clamp(0.5rem, 0.75vw, 0.625rem);
+    --space-md: clamp(0.75rem, 1vw, 1rem);
+    --space-lg: clamp(1rem, 1.5vw, 1.5rem);
+    --space-xl: clamp(1.5rem, 2vw, 2rem);
+    --space-2xl: clamp(2rem, 2.5vw, 3rem);
+    --space-3xl: clamp(2.5rem, 3vw, 3.5rem);
+    --space-4xl: clamp(3rem, 4vw, 4rem);
+    --space-5xl: clamp(3.5rem, 5vw, 5rem);
+    --space-6xl: clamp(4rem, 6vw, 6rem);
+
+    /* Compact hero spacing for better viewport utilization */
+    --hero-top-spacing: clamp(2rem, 4vh + 1rem, 4rem);
+    --hero-content-spacing: clamp(0.5rem, 1vh + 0.25rem, 1rem);
+
+    /* Sleeker navbar positioning */
+    --navbar-top: clamp(0.25rem, 0.5vh, 1rem);
+    --navbar-height: clamp(3rem, 6vh, 4rem);
+
+    /* Refined compact typography scale - I'm making this tighter and more professional */
+    --text-xs: clamp(0.625rem, 0.7vw + 0.4rem, 0.75rem);
+    --text-sm: clamp(0.75rem, 0.85vw + 0.5rem, 0.875rem);
+    --text-base: clamp(0.875rem, 1vw + 0.6rem, 1rem);
+    --text-lg: clamp(1rem, 1.2vw + 0.7rem, 1.125rem);
+    --text-xl: clamp(1.125rem, 1.5vw + 0.75rem, 1.375rem);
+    --text-2xl: clamp(1.375rem, 2vw + 0.875rem, 1.75rem);
+    --text-3xl: clamp(1.625rem, 2.5vw + 1rem, 2.25rem);
+    --text-4xl: clamp(2rem, 3vw + 1.25rem, 3rem);
+    --text-5xl: clamp(2.5rem, 4vw + 1.5rem, 3.75rem);
+    --text-hero: clamp(2rem, 5vw + 0.75rem, 4.5rem);
+
+    /* Line height adjustments for better readability */
+    --leading-tight: 1.25;
+    --leading-normal: 1.6;
+    --leading-relaxed: 1.8;
+    --leading-loose: 2;
   }
 
   * {
     box-sizing: border-box;
-    padding: 0;
+  }
+
+  /* Reset only for specific elements, not globally */
+  body {
     margin: 0;
+    padding: 0;
   }
 
   html {
@@ -32,12 +75,20 @@
     background: var(--anbu-black);
     color: var(--anbu-marble);
     font-family: 'Inter', sans-serif;
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
     overflow-x: hidden;
     min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Montserrat', sans-serif;
+    line-height: var(--leading-tight);
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    line-height: var(--leading-relaxed);
   }
 }
 
@@ -86,7 +137,7 @@
     @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
 
-  /* Section spacing - responsive */
+  /* Compact section spacing - I'm making this tighter for better content density */
   .section-padding {
     @apply py-12 sm:py-16 md:py-20 lg:py-24;
   }
@@ -116,6 +167,96 @@
 }
 
 @layer utilities {
+  /* Fluid spacing utilities - I'm making these responsive to any screen */
+  .fluid-pt-hero {
+    padding-top: var(--hero-top-spacing);
+  }
+
+  .fluid-mt-content {
+    margin-top: var(--hero-content-spacing);
+  }
+
+  .fluid-top-nav {
+    top: var(--navbar-top);
+  }
+
+  /* Fluid padding utilities */
+  .fluid-p-xs { padding: var(--space-xs); }
+  .fluid-p-sm { padding: var(--space-sm); }
+  .fluid-p-md { padding: var(--space-md); }
+  .fluid-p-lg { padding: var(--space-lg); }
+  .fluid-p-xl { padding: var(--space-xl); }
+  .fluid-p-2xl { padding: var(--space-2xl); }
+  .fluid-p-3xl { padding: var(--space-3xl); }
+
+  .fluid-px-sm { padding-left: var(--space-sm); padding-right: var(--space-sm); }
+  .fluid-px-md { padding-left: var(--space-md); padding-right: var(--space-md); }
+  .fluid-px-lg { padding-left: var(--space-lg); padding-right: var(--space-lg); }
+  .fluid-px-xl { padding-left: var(--space-xl); padding-right: var(--space-xl); }
+
+  .fluid-py-sm { padding-top: var(--space-sm); padding-bottom: var(--space-sm); }
+  .fluid-py-md { padding-top: var(--space-md); padding-bottom: var(--space-md); }
+  .fluid-py-lg { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
+  .fluid-py-xl { padding-top: var(--space-xl); padding-bottom: var(--space-xl); }
+  .fluid-py-2xl { padding-top: var(--space-2xl); padding-bottom: var(--space-2xl); }
+  .fluid-py-3xl { padding-top: var(--space-3xl); padding-bottom: var(--space-3xl); }
+  .fluid-py-4xl { padding-top: var(--space-4xl); padding-bottom: var(--space-4xl); }
+
+  /* Fluid margin utilities */
+  .fluid-mt-sm { margin-top: var(--space-sm); }
+  .fluid-mt-md { margin-top: var(--space-md); }
+  .fluid-mt-lg { margin-top: var(--space-lg); }
+  .fluid-mt-xl { margin-top: var(--space-xl); }
+  .fluid-mt-2xl { margin-top: var(--space-2xl); }
+
+  .fluid-mb-sm { margin-bottom: var(--space-sm); }
+  .fluid-mb-md { margin-bottom: var(--space-md); }
+  .fluid-mb-lg { margin-bottom: var(--space-lg); }
+  .fluid-mb-xl { margin-bottom: var(--space-xl); }
+
+  /* Fluid gap utilities */
+  .fluid-gap-sm { gap: var(--space-sm); }
+  .fluid-gap-md { gap: var(--space-md); }
+  .fluid-gap-lg { gap: var(--space-lg); }
+  .fluid-gap-xl { gap: var(--space-xl); }
+  .fluid-gap-2xl { gap: var(--space-2xl); }
+
+  .fluid-text-xs {
+    font-size: var(--text-xs);
+  }
+
+  .fluid-text-sm {
+    font-size: var(--text-sm);
+  }
+
+  .fluid-text-base {
+    font-size: var(--text-base);
+  }
+
+  .fluid-text-lg {
+    font-size: var(--text-lg);
+  }
+
+  .fluid-text-xl {
+    font-size: var(--text-xl);
+  }
+
+  .fluid-text-hero {
+    font-size: var(--text-hero);
+  }
+
+  .fluid-space-y-md > * + * {
+    margin-top: var(--space-md);
+  }
+
+  .fluid-space-y-lg > * + * {
+    margin-top: var(--space-lg);
+  }
+
+  .fluid-space-y-xl > * + * {
+    margin-top: var(--space-xl);
+  }
+
   /* Custom animations */
   @keyframes marbleFlow {
     0%, 100% { background-position: 0% 50%; }
@@ -130,6 +271,77 @@
   @keyframes glow {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.8; }
+  }
+
+  /* I'm adding sick animated gradients for the service cards */
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes gradientRotate {
+    0% {
+      background: linear-gradient(0deg, var(--gradient-from) 0%, var(--gradient-via) 50%, var(--gradient-to) 100%);
+    }
+    25% {
+      background: linear-gradient(90deg, var(--gradient-from) 0%, var(--gradient-via) 50%, var(--gradient-to) 100%);
+    }
+    50% {
+      background: linear-gradient(180deg, var(--gradient-from) 0%, var(--gradient-via) 50%, var(--gradient-to) 100%);
+    }
+    75% {
+      background: linear-gradient(270deg, var(--gradient-from) 0%, var(--gradient-via) 50%, var(--gradient-to) 100%);
+    }
+    100% {
+      background: linear-gradient(360deg, var(--gradient-from) 0%, var(--gradient-via) 50%, var(--gradient-to) 100%);
+    }
+  }
+
+  @keyframes gradientPulse {
+    0%, 100% {
+      opacity: 0.4;
+      filter: brightness(1);
+    }
+    50% {
+      opacity: 0.7;
+      filter: brightness(1.2);
+    }
+  }
+
+  @keyframes borderGlow {
+    0%, 100% {
+      border-color: rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+    }
+    50% {
+      border-color: rgba(255, 215, 0, 0.3);
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+    }
+  }
+
+  @keyframes gradientWave {
+    0% {
+      background-position: 0% 0%;
+    }
+    25% {
+      background-position: 50% 25%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    75% {
+      background-position: 50% 75%;
+    }
+    100% {
+      background-position: 0% 100%;
+    }
   }
 
   @keyframes fadeInUp {
@@ -150,6 +362,23 @@
     100% {
       background-position: 200% 50%;
     }
+  }
+
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .bg-300\% {
+    background-size: 300% 300%;
+  }
+
+  .animate-gradient {
+    animation: gradient 3s ease infinite;
   }
 
   /* I'm adding luxury navbar animations */
@@ -220,6 +449,28 @@
   }
 }
 
+/* Custom responsive adjustments for laptop screens with limited height */
+@media (max-height: 950px) and (min-width: 1024px) {
+  .hero-section-laptop {
+    padding-top: 8rem !important;
+    margin-top: 2rem !important;
+  }
+}
+
+@media (max-height: 850px) and (min-width: 1024px) {
+  .hero-section-laptop {
+    padding-top: 9rem !important;
+    margin-top: 2.5rem !important;
+  }
+}
+
+@media (max-height: 750px) and (min-width: 1024px) {
+  .hero-section-laptop {
+    padding-top: 10rem !important;
+    margin-top: 3rem !important;
+  }
+}
+
 /* Custom scrollbar styling */
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
@@ -264,6 +515,32 @@
     }
   }
   --animate-gradient: gradient 8s linear infinite;
+  @keyframes gradient {
+  to {
+    background-position: var(--bg-size, 300%) 0;
+    }
+  }
+  --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
+  --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+  @keyframes shimmer-slide {
+  to {
+    transform: translate(calc(100cqw - 100%), 0);
+    }
+  }
+  @keyframes spin-around {
+  0% {
+    transform: translateZ(0) rotate(0);
+    }
+  15%, 35% {
+    transform: translateZ(0) rotate(90deg);
+    }
+  65%, 85% {
+    transform: translateZ(0) rotate(270deg);
+    }
+  100% {
+    transform: translateZ(0) rotate(360deg);
+    }
+  }
   @keyframes gradient {
   to {
     background-position: var(--bg-size, 300%) 0;
