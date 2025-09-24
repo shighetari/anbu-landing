@@ -110,7 +110,7 @@ const stats = [
   { value: 15, suffix: '%', label: 'Avg. Engagement' },
 ]
 
-const sectionBase = 'relative py-32 sm:py-40 lg:py-48 w-full flex justify-center'
+const sectionBase = 'relative py-16 sm:py-24 lg:py-32 w-full flex justify-center'
 
 function SectionWrapper({
   children,
@@ -149,7 +149,7 @@ function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay }}
       viewport={{ once: true, amount: 0.4 }}
-      className={cn('mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center mb-52 sm:mb-64 lg:mb-72', className)}
+      className={cn('mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center mb-12 sm:mb-16 lg:mb-20', className)}
     >
       {eyebrow ? <div className="flex justify-center">{eyebrow}</div> : null}
       {typeof title === 'string' ? (
@@ -272,7 +272,7 @@ export default function SocialHubPage() {
         </section>
 
         {/* Video Showcase */}
-        <SectionWrapper className="mt-24 sm:mt-32 lg:mt-40 !mb-64 sm:!mb-72 lg:!mb-20" containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24">
+        <SectionWrapper className="mt-12 sm:mt-16 lg:mt-20" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -281,7 +281,7 @@ export default function SocialHubPage() {
             }
             title="Featured Production"
             description="Launch films that convert. Modular cuts for YouTube, LinkedIn, paid social."
-            className="!mb-64 sm:!mb-72 lg:!mb-20"
+            className=""
           />
 
           <motion.div
@@ -307,7 +307,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Stats Section */}
-        <SectionWrapper className="mt-24 sm:mt-32 lg:mt-40" containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24">
+        <SectionWrapper className="mt-12 sm:mt-16 lg:mt-20" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -316,7 +316,7 @@ export default function SocialHubPage() {
             }
             title="Engineered for measurable growth"
             description="Real results. Real impact."
-            className="!mb-64 sm:!mb-72 lg:!mb-5"
+            className=""
           />
 
           <motion.div
@@ -333,7 +333,7 @@ export default function SocialHubPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="rounded-2xl border border-white/12 bg-white/[0.04] px-8 py-10 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur !mb-64 sm:!mb-72 lg:!mb-10"
+                className="rounded-2xl border border-white/12 bg-white/[0.04] px-8 py-10 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur"
               >
                 <div className="text-3xl lg:text-4xl font-bold">
                   <ShinyText className="text-anbu-gold">
@@ -364,13 +364,13 @@ export default function SocialHubPage() {
             }
             title="Transform your social presence"
             description="Pick your rhythm: automated clips or fully managed campaigns."
-            className="!mb-64 sm:!mb-72 lg:!mb-10"
+            className=""
           />
           <SocialPricingCards />
         </SectionWrapper>
 
         {/* Additional Services */}
-        <SectionWrapper className="relative mt-48 sm:mt-56 lg:mt-64 py-32 sm:py-40 lg:py-48 !mb-64 sm:!mb-72 lg:!mb-20 overflow-visible">
+        <SectionWrapper className="relative mt-16 sm:mt-20 lg:mt-24 py-16 sm:py-24 lg:py-32 overflow-visible">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -379,15 +379,15 @@ export default function SocialHubPage() {
             }
             title="Services ANBU offers"
             description="Live production. Commerce support. On-brand analytics. Mix and match."
-            className="!mb-64 sm:!mb-72 lg:!mb-20"
+            className=""
           />
-          <div className="pt-20 sm:pt-24 lg:pt-32 pb-32 sm:pb-40 lg:pb-48">
+          <div className="pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-20 lg:pb-24">
             <AdditionalServices />
           </div>
         </SectionWrapper>
 
         {/* Video Gallery */}
-        <SectionWrapper className="mt-80 sm:mt-96 lg:mt-[120px]" containerClassName="text-center space-y-20 sm:space-y-28 lg:space-y-32">
+        <SectionWrapper className="mt-20 sm:mt-24 lg:mt-32" containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -396,7 +396,7 @@ export default function SocialHubPage() {
             }
             title="Launch films"
             description="Recent work. Platform-optimized. Always premium."
-            className="mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center !mb-64 sm:!mb-72 lg:!mb-20"
+            className="mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center"
           />
 
           <div className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
@@ -408,7 +408,7 @@ export default function SocialHubPage() {
                 transition={{ duration: 0.6, delay: index * 0.12 }}
                 viewport={{ once: true }}
               >
-                <CardContainer className="inter-var max-w-sm mx-auto h-full !mb-64 sm:!mb-72 lg:!mb-20">
+                <CardContainer className="inter-var max-w-sm mx-auto h-full">
                   <CardBody className="relative flex h-full min-h-[520px] flex-col justify-between gap-5 rounded-[26px] border border-white/12 bg-black/60 p-8 sm:p-10 shadow-[0_16px_60px_rgba(0,0,0,0.55)] backdrop-blur">
                     <div className="flex flex-col gap-4">
                       <CardItem
@@ -460,7 +460,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Campaign Blueprints & Analytics */}
-        <SectionWrapper className="mt-32 sm:mt-40 lg:mt-48 " containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24">
+        <SectionWrapper className="mt-16 sm:mt-20 lg:mt-24" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -469,7 +469,7 @@ export default function SocialHubPage() {
             }
             title="Strategy-to-screen workflows"
             description="Blueprint narratives, pipe analytics into the next edit cycle, and keep brand, story, and KPIs aligned."
-            className="!mb-64 sm:!mb-72 lg:!mb-20"
+            className=""
           />
 
           <div className="mx-auto grid w-full max-w-5xl gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
@@ -498,7 +498,7 @@ export default function SocialHubPage() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <WobbleCard containerClassName="col-span-1 min-h-[320px] max-w-xl mx-auto !mb-64 sm:!mb-72 lg:!mb-10">
+              <WobbleCard containerClassName="col-span-1 min-h-[320px] max-w-xl mx-auto">
                 <div className="mx-auto flex max-w-prose flex-col items-center space-y-4 text-center">
                   <h2 className="text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
                     Performance Analytics
@@ -514,7 +514,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Testimonials */}
-        <SectionWrapper className="mt-32 sm:mt-40 lg:mt-48" containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24">
+        <SectionWrapper className="mt-16 sm:mt-20 lg:mt-24" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -523,7 +523,7 @@ export default function SocialHubPage() {
             }
             title="ANBU trusted for cinematic storytelling"
             description="What revenue, growth, and product leaders say."
-            className="!mb-64 sm:!mb-72 lg:!mb-20"
+            className=""
           />
 
           <div className="mx-auto max-w-4xl">
@@ -536,7 +536,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* CTA Section */}
-        <SectionWrapper className="mt-32 sm:mt-40 lg:mt-48" containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24">
+        <SectionWrapper className="mt-16 sm:mt-20 lg:mt-24" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

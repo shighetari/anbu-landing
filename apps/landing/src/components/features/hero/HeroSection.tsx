@@ -73,8 +73,8 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.1),transparent_70%)]" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/35 to-black/80" />
 
-      <div className="relative z-30 flex min-h-screen flex-col justify-center pt-16 sm:pt-18 md:pt-20 lg:pt-16 pb-20">
-        <Container size="md" className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
+      <div className="relative z-30 flex min-h-screen flex-col justify-center pt-20 sm:pt-24 md:pt-28 lg:pt-16 pb-16 sm:pb-20">
+        <Container size="lg" className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -118,7 +118,7 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              className="relative flex w-full flex-col items-center justify-center gap-4 sm:gap-6 lg:gap-8 sm:flex-row mt-8 sm:mt-10"
+              className="relative flex w-full flex-col items-center justify-center gap-4 sm:gap-5 md:flex-row md:gap-6 lg:gap-8 mt-8 sm:mt-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
@@ -137,9 +137,9 @@ export default function HeroSection() {
               >
                 <MovingBorderButton
                   borderRadius="1rem"
-                  containerClassName="min-w-[240px] w-full sm:w-auto"
+                  containerClassName="min-w-[200px] sm:min-w-[240px] w-full md:w-auto"
                   borderClassName="bg-[radial-gradient(var(--anbu-gold)_40%,transparent_60%)] opacity-[0.7] group-hover:opacity-[0.9] transition-opacity duration-700"
-                  className="px-12 lg:px-16 py-5 lg:py-6 text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.15em] shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_15px_40px_rgba(255,215,0,0.3)] transition-all duration-700 ease-out"
+                  className="px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-xs sm:text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_15px_40px_rgba(255,215,0,0.3)] transition-all duration-700 ease-out"
                   duration={4000}
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 >
@@ -198,11 +198,11 @@ export default function HeroSection() {
                 }}
               >
                 <StarBorderButton
-                  className="min-w-[220px] w-full sm:w-auto px-12 lg:px-16 py-5 lg:py-6 text-sm lg:text-base shadow-[0_10px_30px_rgba(255,215,0,0.15)] hover:shadow-[0_15px_35px_rgba(255,215,0,0.25)] transition-all duration-700 ease-out"
+                  className="min-w-[180px] sm:min-w-[220px] w-full md:w-auto px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-xs sm:text-sm lg:text-base shadow-[0_10px_30px_rgba(255,215,0,0.15)] hover:shadow-[0_15px_35px_rgba(255,215,0,0.25)] transition-all duration-700 ease-out"
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                   glow={true}
                 >
-                  <span className="flex items-center gap-4 font-bold uppercase tracking-[0.15em] pointer-events-none">
+                  <span className="flex items-center gap-3 sm:gap-4 font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] pointer-events-none">
                     <div className="transition-transform duration-500 ease-out group-hover:scale-110">
                       <Briefcase className="w-4 h-4 lg:w-5 lg:h-5" />
                     </div>
@@ -234,7 +234,7 @@ export default function HeroSection() {
                 neonColors={{ firstColor: '#FFD700', secondColor: '#FF9D2E' }}
                 borderSize={2}
               >
-                <div className="grid gap-8 sm:grid-cols-3">
+                <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-3">
                   {heroHighlights.map((item) => (
                     <motion.div
                       key={item.label}
@@ -265,7 +265,7 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div
-              className="w-full max-w-3xl flex justify-center mt-10 sm:mt-12 md:mt-14 lg:mt-16"
+              className="w-full max-w-2xl sm:max-w-3xl flex justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-16"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1.05 }}
@@ -290,7 +290,7 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-8 sm:bottom-12 md:bottom-16 lg:bottom-24 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] sm:tracking-[0.4em] text-anbu-gold/70"
+            className="absolute bottom-6 sm:bottom-10 md:bottom-14 lg:bottom-24 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em] lg:tracking-[0.4em] text-anbu-gold/70"
             onClick={scrollToServices}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

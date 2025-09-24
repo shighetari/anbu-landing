@@ -11,6 +11,10 @@ import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect
 import Container from '@/components/ui/Container'
 import { BlurFadeText } from '@/components/magicui/blur-fade-text'
 import { ShinyText } from '@/components/magicui/shiny-text'
+import WordRotate from '@/components/magicui/word-rotate'
+import AnimatedGradientText from '@/components/magicui/animated-gradient-text'
+import SparklesText from '@/components/magicui/sparkles-text'
+import TypingAnimation from '@/components/magicui/typing-animation'
 import { cn } from '@/lib/utils'
 
 const VIDEO_STOP_TIME = 7.2
@@ -119,7 +123,7 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
         />
 
         {/* Main card container */}
-        <div className="relative flex h-full min-h-[320px] sm:min-h-[340px] lg:min-h-[360px] w-full max-w-full sm:max-w-[340px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[380px] flex-col overflow-hidden rounded-[20px] sm:rounded-[24px] border border-white/10 bg-gradient-to-br from-black/95 via-black/90 to-black/85 p-5 sm:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
+        <div className="relative flex h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[320px] w-full max-w-full sm:max-w-[340px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[380px] flex-col overflow-hidden rounded-[20px] sm:rounded-[24px] border border-white/10 bg-gradient-to-br from-black/95 via-black/90 to-black/85 p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
 
           {/* Background effects layer */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[24px]">
@@ -346,7 +350,7 @@ export default function SolutionsPortalLanding() {
 
   return (
     <main className="min-h-screen bg-black text-anbu-marble">
-      <section className="relative flex min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] lg:min-h-[65vh] items-center justify-center overflow-hidden">
+      <section className="relative flex min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh] lg:min-h-[55vh] items-center justify-center overflow-hidden">
         {mounted && !videoFinished ? (
           <video
             ref={videoRef}
@@ -398,7 +402,7 @@ export default function SolutionsPortalLanding() {
         </motion.div>
       </section>
 
-      <section ref={sectionRef} id="portals" className="relative overflow-hidden py-8 sm:py-10 md:py-12 lg:py-16">
+      <section ref={sectionRef} id="portals" className="relative overflow-hidden py-6 sm:py-8 md:py-10 lg:py-12">
         <motion.div
           className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#0c0c0c] to-black"
           style={{ opacity }}
@@ -428,33 +432,66 @@ export default function SolutionsPortalLanding() {
         </motion.div>
 
         <Container size="lg">
-          <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12">
-            <div className="mx-auto max-w-3xl text-center space-y-3 sm:space-y-4">
+          <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+            <div className="mx-auto max-w-2xl text-center space-y-2 sm:space-y-3">
               <BlurFadeText delay={0} duration={0.6}>
-                <motion.p
-                  animate={{
-                    letterSpacing: ['0.35em', '0.4em', '0.35em'],
-                  }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="text-xs uppercase text-anbu-gold/70"
-                >
-                  Portal directory
-                </motion.p>
+                <AnimatedGradientText className="inline-flex">
+                  <SparklesText
+                    text="✨ ENTERPRISE PORTALS"
+                    className="text-[10px] font-bold uppercase tracking-[0.35em]"
+                    sparkleColor="#FFD700"
+                    sparklesCount={3}
+                  />
+                </AnimatedGradientText>
               </BlurFadeText>
 
               <BlurFadeText delay={0.1} duration={0.7}>
-                <h2 className="text-balance text-3xl font-display font-semibold text-white sm:text-4xl">
-                  Choose the workspace that aligns with your next move
+                <h2 className="text-balance text-xl font-display font-semibold sm:text-2xl lg:text-3xl">
+                  <span className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    Your next
+                  </span>
+                  {' '}
+                  <WordRotate
+                    words={[
+                      'breakthrough',
+                      'transformation',
+                      'evolution',
+                      'advantage',
+                      'innovation',
+                      'success story',
+                      'market edge',
+                      'growth phase',
+                      'expansion',
+                      'disruption'
+                    ]}
+                    className="bg-gradient-to-r from-anbu-gold via-amber-400 to-anbu-gold bg-clip-text text-transparent inline-block font-bold animate-gradient bg-[length:200%_auto]"
+                    duration={2500}
+                  />
+                  {' '}
+                  <span className="bg-gradient-to-r from-white/70 via-white/90 to-white bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    starts here
+                  </span>
                 </h2>
               </BlurFadeText>
 
               <BlurFadeText delay={0.2} duration={0.7}>
-                <p className="text-balance text-sm leading-relaxed text-white/70 sm:text-base">
-                  <ShinyText className="inline text-white/90" speed={7}>
-                    MagicUI. React Bits. Custom motion.
-                  </ShinyText>
-                  {' '}Guiding partners to success.
-                </p>
+                <div className="flex flex-col items-center gap-1">
+                  <TypingAnimation
+                    text="Three paths. Unlimited potential."
+                    className="text-xs sm:text-sm text-transparent bg-clip-text bg-gradient-to-r from-white/50 via-white/70 to-white/50 font-medium"
+                    duration={0.04}
+                    delay={0.5}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.8, duration: 0.5 }}
+                  >
+                    <ShinyText className="text-[10px] uppercase tracking-widest text-anbu-gold/60" speed={3}>
+                      Select your workspace below
+                    </ShinyText>
+                  </motion.div>
+                </div>
               </BlurFadeText>
             </div>
 
@@ -471,7 +508,7 @@ export default function SolutionsPortalLanding() {
                   }
                 }
               }}
-              className="grid w-full max-w-7xl mx-auto gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 justify-items-center px-4 sm:px-6 lg:px-8"
+              className="grid w-full max-w-7xl mx-auto gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 justify-items-center px-4 sm:px-6 lg:px-8"
             >
               {portalDestinations.map((portal) => (
                 <PortalCard key={portal.id} portal={portal} />

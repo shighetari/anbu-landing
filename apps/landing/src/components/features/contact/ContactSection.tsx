@@ -57,7 +57,7 @@ export default function ContactSection() {
   return (
     <GradualBlurSection
       id="contact"
-      className="relative py-16 sm:py-20 md:py-24 lg:py-32 w-full flex justify-center bg-black"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 w-full flex justify-center bg-black"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black" />
       <div className="absolute inset-0 opacity-20 mix-blend-screen" aria-hidden>
@@ -65,7 +65,7 @@ export default function ContactSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,168,0,0.08),transparent_55%)]" />
       </div>
 
-      <Container size="lg" className="relative flex flex-col items-center gap-10 lg:gap-14 text-center">
+      <Container size="lg" className="relative flex flex-col items-center gap-8 lg:gap-12 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -100,7 +100,7 @@ export default function ContactSection() {
           </motion.div>
         </motion.div>
 
-        <div className="grid w-full max-w-3xl mx-auto gap-6 lg:gap-8 md:grid-cols-2">
+        <div className="grid w-full max-w-3xl mx-auto gap-4 md:gap-6 lg:gap-8 md:grid-cols-2">
           {contactOptions.map((option, index) => (
             <motion.div
               key={option.title}

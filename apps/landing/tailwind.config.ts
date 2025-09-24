@@ -39,8 +39,13 @@ const config: Config = {
         'spin-slow': 'spin 8s linear infinite',
         'meteor-effect': 'meteor 5s linear infinite',
         'shiny-text': 'shiny-text 8s infinite',
+        'gradient': 'gradient 8s linear infinite',
       },
       keyframes: {
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
         marbleFlow: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },

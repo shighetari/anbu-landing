@@ -15,6 +15,9 @@ import {
 import { useEffect, useState, useRef } from 'react'
 
 import { cn } from '@/lib/utils'
+import { useClickOutside } from '@/hooks/useClickOutside'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import { useFocusTrap } from '@/hooks/useFocusTrap'
 
 type MegaItem = {
   title: string
@@ -127,6 +130,11 @@ export default function Navigation() {
   const [scrollVelocity, setScrollVelocity] = useState(0)
   const prevY = useRef(0)
 
+  // Custom hooks for mobile menu
+  const mobileMenuRef = useClickOutside<HTMLDivElement>(() => setMobileOpen(false), mobileOpen)
+  const focusTrapRef = useFocusTrap<HTMLDivElement>(mobileOpen)
+  useLockBodyScroll(mobileOpen)
+
   useEffect(() => {
     const handler = () => {
       const scrollY = window.scrollY
@@ -144,6 +152,17 @@ export default function Navigation() {
   useEffect(() => {
     setMobileOpen(false)
   }, [pathname])
+
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileOpen) {
+        setMobileOpen(false)
+      }
+    }
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [mobileOpen])
 
   const handleNavigate = () => {
     setMobileOpen(false)
@@ -213,11 +232,34 @@ export default function Navigation() {
         </div>
 
         <button
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-anbu-gold md:hidden"
-          onClick={() => setMobileOpen((prev) => !prev)}
+          className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-anbu-gold/10 md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle navigation"
+          aria-expanded={mobileOpen}
         >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          <AnimatePresence mode="wait">
+            {mobileOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X className="h-5 w-5" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Menu className="h-5 w-5" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </button>
 
         <AnimatePresence>
@@ -227,22 +269,45 @@ export default function Navigation() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.75 }}
                 exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
                 className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm md:hidden"
+                onClick={() => setMobileOpen(false)}
+                aria-hidden="true"
               />
               <motion.div
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.2 }}
+                ref={(el) => {
+                  if (el) {
+                    (mobileMenuRef as any).current = el;
+                    (focusTrapRef as any).current = el;
+                  }
+                }}
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 25,
+                  duration: 0.3
+                }}
                 className="absolute left-1/2 top-[calc(100%+0.75rem)] z-40 w-[min(92vw,380px)] -translate-x-1/2 md:hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile navigation menu"
               >
-                <div className="fluid-space-y-md rounded-3xl border border-white/12 bg-black/90 fluid-p-lg shadow-[0_32px_70px_rgba(0,0,0,0.55)] backdrop-blur-xl">
-                  {NAV_ITEMS.map((item) => (
-                    <div key={item.label} className="fluid-space-y-sm">
+                <div className="fluid-space-y-md rounded-3xl border border-white/12 bg-black/95 fluid-p-lg shadow-[0_32px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
+                  {NAV_ITEMS.map((item, index) => (
+                    <motion.div
+                      key={item.label}
+                      className="fluid-space-y-sm"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                    >
                       <Link
                         href={item.href}
                         onClick={handleNavigate}
-                        className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 fluid-px-lg fluid-py-md fluid-text-sm font-medium text-anbu-marble transition hover:border-[#FFD700]/25 hover:bg-white/10"
+                        className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 fluid-px-lg fluid-py-md fluid-text-sm font-medium text-anbu-marble transition-all duration-300 hover:border-[#FFD700]/25 hover:bg-white/10 hover:scale-[1.02] active:scale-[0.98]"
                       >
                         {item.label}
                         <span className="fluid-text-xs uppercase tracking-[0.2em] lg:tracking-[0.28em] text-anbu-gold/70">Go</span>
@@ -300,15 +365,21 @@ export default function Navigation() {
                           })}
                         </div>
                       ) : null}
-                    </div>
+                    </motion.div>
                   ))}
-                  <Link
-                    href="/#contact"
-                    onClick={handleNavigate}
-                    className="flex items-center justify-center rounded-full bg-anbu-gold fluid-px-lg fluid-py-sm fluid-text-sm font-semibold text-black shadow-[0_12px_30px_rgba(255,215,0,0.35)] transition hover:bg-anbu-gold-accent"
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: NAV_ITEMS.length * 0.05 + 0.1 }}
                   >
-                    Start A Project
-                  </Link>
+                    <Link
+                      href="/#contact"
+                      onClick={handleNavigate}
+                      className="flex items-center justify-center rounded-full bg-anbu-gold fluid-px-lg fluid-py-sm fluid-text-sm font-semibold text-black shadow-[0_12px_30px_rgba(255,215,0,0.35)] transition-all duration-300 hover:bg-anbu-gold-accent hover:scale-[1.05] active:scale-[0.95]"
+                    >
+                      Start A Project
+                    </Link>
+                  </motion.div>
                 </div>
               </motion.div>
             </>

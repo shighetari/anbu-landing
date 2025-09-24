@@ -181,7 +181,7 @@ export default function ServicesSection() {
   return (
     <GradualBlurSection
       id="services"
-      className="relative overflow-hidden py-20 sm:py-24 md:py-28 lg:py-36 w-full flex justify-center"
+      className="relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24 w-full flex justify-center"
     >
       {/* Enhanced background gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505] to-black" />
@@ -203,9 +203,9 @@ export default function ServicesSection() {
         />
       </div>
 
-      <Container size="lg" className="relative flex flex-col items-center gap-12 md:gap-14 lg:gap-20">
+      <Container size="lg" className="relative flex flex-col items-center gap-8 md:gap-12 lg:gap-16">
         {/* Enhanced header section */}
-        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-5 md:space-y-6">
+        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-4 md:space-y-5">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -243,7 +243,7 @@ export default function ServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
           className="w-full"
         >
-          <BentoGrid className="mt-8 md:mt-10 lg:mt-12 sm:auto-rows-[13rem] md:auto-rows-[14rem] lg:auto-rows-[15rem] lg:grid-cols-4">
+          <BentoGrid className="mt-4 md:mt-6 lg:mt-8 auto-rows-[11rem] sm:auto-rows-[12rem] md:auto-rows-[13rem] lg:auto-rows-[15rem] lg:grid-cols-4">
             {/* Portal Card */}
             <motion.div
               key={services[0].id}

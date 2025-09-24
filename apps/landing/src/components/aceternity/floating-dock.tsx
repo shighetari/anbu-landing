@@ -41,47 +41,80 @@ const FloatingDockMobile = ({
     <div className={cn("relative block md:hidden", className)}>
       <AnimatePresence>
         {open && (
-          <motion.div
-            layoutId="nav"
-            className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2"
-          >
-            {items.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 10,
-                  transition: {
-                    delay: idx * 0.05,
-                  },
-                }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}
-              >
-                <a
-                  href={item.href}
-                  key={item.title}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-black/60 backdrop-blur-xl border border-anbu-gold/30 hover:border-anbu-gold/60 hover:bg-black/70 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all duration-300"
-                >
-                  <div className="h-5 w-5 text-anbu-gold hover:text-white transition-colors duration-300">
-                    {item.icon}
-                  </div>
-                </a>
-              </motion.div>
-            ))}
-          </motion.div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[-1]"
+              onClick={() => setOpen(false)}
+            />
+            {/* Horizontal dock container - positioned above the button */}
+            <motion.div
+              layoutId="dock-mobile"
+              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3"
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            >
+              <div className="flex items-center gap-2 rounded-full bg-black/80 backdrop-blur-2xl border border-anbu-gold/30 px-3 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
+                {items.map((item, idx) => (
+                  <motion.a
+                    key={item.title}
+                    href={item.href}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      transition: {
+                        delay: idx * 0.05,
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 25
+                      }
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0,
+                      transition: {
+                        delay: (items.length - 1 - idx) * 0.03
+                      }
+                    }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="relative group flex h-10 w-10 items-center justify-center rounded-full bg-white/5 hover:bg-anbu-gold/20 border border-white/10 hover:border-anbu-gold/50 transition-all duration-300"
+                    onClick={() => setOpen(false)}
+                  >
+                    <div className="h-5 w-5 text-anbu-gold group-hover:text-white transition-colors duration-300">
+                      {item.icon}
+                    </div>
+                    {/* Tooltip */}
+                    <motion.span
+                      initial={{ opacity: 0, y: 5, scale: 0.8 }}
+                      whileHover={{ opacity: 1, y: -8, scale: 1 }}
+                      className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none whitespace-nowrap rounded-md bg-black/90 border border-anbu-gold/30 px-2 py-1 text-xs text-white"
+                    >
+                      {item.title}
+                    </motion.span>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-      <button
+      <motion.button
         onClick={() => setOpen(!open)}
         className="flex h-12 w-12 items-center justify-center rounded-full bg-black/60 backdrop-blur-xl border border-anbu-gold/30 hover:border-anbu-gold/60 hover:bg-black/70 hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] transition-all duration-300"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        animate={{ rotate: open ? 180 : 0 }}
+        transition={{ duration: 0.3 }}
       >
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-anbu-gold hover:text-white transition-colors duration-300" />
-      </button>
+        <IconLayoutNavbarCollapse className="h-5 w-5 text-anbu-gold" />
+      </motion.button>
     </div>
   );
 };
