@@ -1,5 +1,5 @@
 # Development Dockerfile for ANBU Landing Page Monorepo
-FROM node:20-alpine AS base
+FROM node:24-alpine AS base
 
 # Install pnpm and required tools (wget for health checks, git for dependencies)
 RUN apk add --no-cache git curl wget && \
