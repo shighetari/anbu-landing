@@ -96,7 +96,7 @@ export default function SocialPricingCards() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="grid gap-8 sm:gap-10 md:gap-12 lg:gap-16 md:grid-cols-2 lg:grid-cols-3 justify-items-center"
+      className="grid gap-6 sm:gap-8 lg:gap-12 md:grid-cols-2 lg:grid-cols-3 justify-items-center"
     >
       {pricingTiers.map((tier, index) => (
         <motion.div
@@ -107,7 +107,7 @@ export default function SocialPricingCards() {
         >
           <WobbleCard
             containerClassName={cn(
-              "relative h-full min-h-[650px] w-full rounded-[28px] border border-white/10 bg-black/60 backdrop-blur",
+              "relative h-full min-h-0 sm:min-h-[550px] lg:min-h-[600px] xl:min-h-[650px] w-full rounded-[28px] border border-white/10 bg-black/60 backdrop-blur",
               tier.highlighted && "ring-2 ring-anbu-gold/60"
             )}
           >
@@ -127,15 +127,15 @@ export default function SocialPricingCards() {
               `bg-gradient-to-br ${tier.gradient}`
             )} />
 
-            <div className="relative flex h-full flex-col justify-between gap-6 p-9 sm:p-11">
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-col items-center gap-4 text-center">
+            <div className="relative flex h-full flex-col justify-between gap-4 sm:gap-6 p-6 sm:p-8 lg:p-10">
+              <div className="flex flex-col gap-4 sm:gap-6">
+                <div className="flex flex-col items-center gap-3 sm:gap-4 text-center">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-anbu-gold/15 text-anbu-gold">
                     <tier.icon className="h-6 w-6" />
                   </span>
                   <div className="space-y-2">
-                    <h3 className="text-xl font-semibold text-white">{tier.name}</h3>
-                    <p className="text-sm leading-[1.7] text-white/80 min-h-[3rem]">{tier.description}</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white">{tier.name}</h3>
+                    <p className="text-sm leading-[1.7] text-white/80 min-h-0 sm:min-h-[3rem]">{tier.description}</p>
                   </div>
                 </div>
 
@@ -145,7 +145,7 @@ export default function SocialPricingCards() {
                 </div>
               </div>
 
-              <ul className="mx-auto w-full max-w-xs space-y-3 border-t border-white/10 pt-7 text-left flex-grow">
+              <ul className="mx-auto w-full max-w-xs space-y-2 sm:space-y-3 border-t border-white/10 pt-4 sm:pt-6 text-left flex-grow">
                 {tier.features.map((feature, i) => (
                   <motion.li
                     key={i}
