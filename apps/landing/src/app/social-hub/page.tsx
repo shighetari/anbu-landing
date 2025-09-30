@@ -115,7 +115,7 @@ const sectionBase = 'relative py-16 sm:py-24 lg:py-32 w-full flex justify-center
 function SectionWrapper({
   children,
   className,
-  containerClassName = 'space-y-16 sm:space-y-20 lg:space-y-24',
+  containerClassName = 'space-y-12 sm:space-y-16 lg:space-y-20',
 }: {
   children: ReactNode
   className?: string
@@ -149,7 +149,7 @@ function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay }}
       viewport={{ once: true, amount: 0.4 }}
-      className={cn('mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center mb-12 sm:mb-16 lg:mb-20', className)}
+      className={cn('mx-auto w-full max-w-3xl space-y-6 sm:space-y-8 text-center mb-10 sm:mb-12 lg:mb-16', className)}
     >
       {eyebrow ? <div className="flex justify-center">{eyebrow}</div> : null}
       {typeof title === 'string' ? (

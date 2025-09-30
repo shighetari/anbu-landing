@@ -73,13 +73,13 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.1),transparent_70%)]" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/35 to-black/80" />
 
-      <div className="relative z-30 flex min-h-[100dvh] flex-col justify-center pt-16 sm:pt-20 md:pt-24 lg:pt-16 pb-12 sm:pb-16 md:pb-20">
+      <div className="relative z-30 flex min-h-[100dvh] flex-col justify-center pt-20 sm:pt-24 md:pt-20 lg:pt-16 pb-8 sm:pb-12 md:pb-16">
         <Container size="lg" className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex w-full flex-col items-center space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10 text-center"
+            className="flex w-full flex-col items-center space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 text-center"
           >
             <div className="mt-0 sm:mt-2 md:mt-3">
               <TypewriterEffectSmooth
@@ -118,7 +118,7 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              className="relative flex w-full flex-col items-center justify-center gap-3 sm:gap-4 md:flex-row md:gap-5 lg:gap-6 mt-4 sm:mt-6 md:mt-8 lg:mt-10"
+              className="relative flex w-full flex-col items-center justify-center gap-3 sm:gap-4 md:flex-row md:gap-5 lg:gap-6 mt-3 sm:mt-4 md:mt-6 lg:mt-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
@@ -126,13 +126,23 @@ export default function HeroSection() {
               {/* Primary CTA with MovingBorderButton and refined effects */}
               <motion.div
                 className="relative group"
-                whileHover={{ scale: 1.005 }}
-                whileTap={{ scale: 0.995 }}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
                 transition={{
                   type: 'spring',
                   stiffness: 250,
                   damping: 25,
                   mass: 1
+                }}
+                animate={{
+                  boxShadow: [
+                    '0 10px 30px rgba(255,215,0,0.2)',
+                    '0 12px 35px rgba(255,215,0,0.25)',
+                    '0 10px 30px rgba(255,215,0,0.2)'
+                  ]
+                }}
+                style={{
+                  transition: 'box-shadow 2s ease-in-out'
                 }}
               >
                 <MovingBorderButton
@@ -187,9 +197,9 @@ export default function HeroSection() {
 
               {/* Secondary CTA with StarBorderButton */}
               <motion.div
-                className="group"
-                whileHover={{ scale: 1.005 }}
-                whileTap={{ scale: 0.995 }}
+                className="group opacity-95 hover:opacity-100"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 transition={{
                   type: 'spring',
                   stiffness: 250,
@@ -223,7 +233,7 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div
-              className="w-full max-w-4xl mt-6 sm:mt-8 md:mt-10 lg:mt-12"
+              className="w-full max-w-4xl mt-4 sm:mt-6 md:mt-8 lg:mt-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.9 }}
@@ -265,24 +275,24 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div
-              className="w-full max-w-2xl sm:max-w-3xl flex justify-center mt-4 sm:mt-6 md:mt-8 lg:mt-12"
+              className="w-full max-w-2xl sm:max-w-3xl flex justify-center mt-3 sm:mt-4 md:mt-6 lg:mt-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1.05 }}
             >
               <Terminal className="border border-white/10 bg-neutral-950/90 shadow-[0_20px_50px_rgba(0,0,0,0.55)] w-full max-w-2xl p-3 sm:p-4 lg:p-6">
-                <div className="font-mono text-[11px] sm:text-[12px] md:text-[13px] text-anbu-gold/80 flex items-center gap-2">
+                <div className="font-mono text-xs sm:text-[13px] md:text-sm text-anbu-gold/80 flex items-center gap-2">
                   <ArchIcon size="md" />
                   <TypingAnimation startOnView>
                     arch linux ➜ sudo pacman -S anbu-suite
                   </TypingAnimation>
                 </div>
-                <AnimatedSpan className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#9AE6FF]">resolving packages...</AnimatedSpan>
-                <AnimatedSpan className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#9AE6FF]">syncing premium ui system...</AnimatedSpan>
-                <TypingAnimation className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#7CFFAE]" delay={900}>
+                <AnimatedSpan className="font-mono text-[11px] sm:text-xs md:text-sm text-[#9AE6FF]">resolving packages...</AnimatedSpan>
+                <AnimatedSpan className="font-mono text-[11px] sm:text-xs md:text-sm text-[#9AE6FF]">syncing premium ui system...</AnimatedSpan>
+                <TypingAnimation className="font-mono text-[11px] sm:text-xs md:text-sm text-[#7CFFAE]" delay={900}>
                   ✅ deployment ready for production teams
                 </TypingAnimation>
-                <TypingAnimation className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#F7D774]" delay={1400}>
+                <TypingAnimation className="font-mono text-[11px] sm:text-xs md:text-sm text-[#F7D774]" delay={1400}>
                   → open docs/roadmap to preview upcoming mod
                 </TypingAnimation>
               </Terminal>
@@ -290,11 +300,13 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-4 sm:bottom-6 md:bottom-10 lg:bottom-16 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 sm:gap-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] md:tracking-[0.3em] lg:tracking-[0.4em] text-anbu-gold/70"
+            className="absolute bottom-6 sm:bottom-8 md:bottom-12 lg:bottom-16 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 sm:gap-2 text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] text-anbu-gold/80 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-full border border-anbu-gold/20 hover:bg-black/50 hover:border-anbu-gold/40 transition-all duration-300"
             onClick={scrollToServices}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             <span className="hidden sm:block">Scroll</span>
             <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 animate-bounce text-[#FFD700]" />

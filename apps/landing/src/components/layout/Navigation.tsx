@@ -321,7 +321,7 @@ export default function Navigation() {
                         className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 fluid-px-lg fluid-py-md fluid-text-sm font-medium text-anbu-marble transition-all duration-300 hover:border-[#FFD700]/25 hover:bg-white/10 hover:scale-[1.02] active:scale-[0.98]"
                       >
                         {item.label}
-                        <span className="fluid-text-xs uppercase tracking-[0.2em] lg:tracking-[0.28em] text-anbu-gold/70">Go</span>
+                        <span className="fluid-text-xs uppercase tracking-[0.15em] lg:tracking-[0.2em] text-anbu-gold/70">Go</span>
                       </Link>
                       {item.mega ? (
                         <div className="space-y-3 border-l border-white/10 pl-4 mt-3">

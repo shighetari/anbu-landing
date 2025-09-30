@@ -109,13 +109,13 @@ export default function DocsHubLanding() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center px-4">
+        <section className="relative min-h-[90vh] flex items-center justify-center px-4 py-16 sm:py-20">
           <div className="w-full max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="space-y-8 text-center"
+              className="space-y-6 sm:space-y-8 text-center"
             >
               <div className="space-y-6">
                 <motion.div
@@ -124,7 +124,7 @@ export default function DocsHubLanding() {
                   transition={{ delay: 0.2 }}
                   className="flex justify-center"
                 >
-                  <ShinyText className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] text-anbu-gold/80 font-medium">
+                  <ShinyText className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-anbu-gold/80 font-medium">
                     Coming Soon
                   </ShinyText>
                 </motion.div>
