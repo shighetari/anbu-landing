@@ -125,7 +125,7 @@ export default function HeroSection() {
             >
               {/* Primary CTA with MovingBorderButton and refined effects */}
               <motion.div
-                className="relative group"
+                className="relative group shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_12px_35px_rgba(255,215,0,0.25)] transition-shadow duration-700"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 transition={{
@@ -133,16 +133,6 @@ export default function HeroSection() {
                   stiffness: 250,
                   damping: 25,
                   mass: 1
-                }}
-                animate={{
-                  boxShadow: [
-                    '0 10px 30px rgba(255,215,0,0.2)',
-                    '0 12px 35px rgba(255,215,0,0.25)',
-                    '0 10px 30px rgba(255,215,0,0.2)'
-                  ]
-                }}
-                style={{
-                  transition: 'box-shadow 2s ease-in-out'
                 }}
               >
                 <MovingBorderButton
