@@ -7,7 +7,7 @@ import { AnimatedTooltip } from "@/components/reactbits/animated-tooltip";
 import { ShinyText } from "@/components/magicui/shiny-text";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { cn } from "@/lib/utils";
-import { buttonVariants, animationVariants } from "@/lib/button-variants";
+import { buttonVariants, animationVariants, buttonSizes } from "@/lib/button-variants";
 
 interface BentoGridProps extends ComponentPropsWithoutRef<"div"> {
   children: ReactNode;
@@ -31,9 +31,8 @@ const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
   return (
     <div
       className={cn(
-        "grid w-full auto-rows-auto sm:auto-rows-[12rem] md:auto-rows-[13rem] lg:auto-rows-[14rem] xl:auto-rows-[15rem]",
-        "grid-cols-1 sm:grid-cols-2",
-        "gap-3 sm:gap-4 md:gap-5 lg:gap-6",
+        "grid w-full",
+        "auto-rows-[10rem] sm:auto-rows-[11rem] md:auto-rows-[12rem] lg:auto-rows-[13rem] xl:auto-rows-[14rem]",
         className,
       )}
       {...props}
@@ -67,7 +66,7 @@ const BentoCard = ({
       "transition-all duration-500 ease-out",
       "hover:scale-[1.02] hover:shadow-[0_18px_40px_rgba(255,215,0,0.18)] motion-safe:hover:-translate-y-2",
       "hover:border-anbu-gold/40",
-      "min-h-[200px] sm:min-h-[210px] md:min-h-[200px] lg:min-h-0",
+      "min-h-[9rem] sm:min-h-[10rem] md:min-h-[11rem] lg:min-h-0",
       "backdrop-blur-sm",
       className,
     )}
@@ -102,8 +101,8 @@ const BentoCard = ({
     </div>
 
     <div className="relative z-10 flex flex-col h-full">
-      <div className="p-4 sm:p-5 md:p-4 lg:p-5 xl:p-6 flex flex-col items-center text-center flex-1">
-        <div className="flex transform-gpu flex-col items-center gap-3 sm:gap-4 lg:gap-4 transition-all duration-700">
+      <div className="p-2.5 sm:p-3 md:p-4 lg:p-5 xl:p-6 flex flex-col items-center text-center flex-1">
+        <div className="flex transform-gpu flex-col items-center gap-1.5 sm:gap-2 md:gap-3 lg:gap-4 transition-all duration-700">
           <motion.div
             className="relative"
             whileHover={{ rotate: 360, scale: 1.1 }}
@@ -126,20 +125,20 @@ const BentoCard = ({
               <div className="relative inline-flex">
                 <AnimatedTooltip label={tooltip}>
                   <Icon
-                    className="h-8 w-8 sm:h-9 sm:w-9 lg:h-8 lg:w-8 xl:h-9 xl:w-9 transform-gpu transition-all duration-700 ease-out"
+                    className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-8 lg:w-8 xl:h-9 xl:w-9 transform-gpu transition-all duration-700 ease-out"
                     style={{ color: accentColor }}
                   />
                 </AnimatedTooltip>
               </div>
             ) : (
               <Icon
-                className="relative h-8 w-8 sm:h-9 sm:w-9 lg:h-8 lg:w-8 xl:h-9 xl:w-9 transform-gpu transition-all duration-700 ease-out"
+                className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-8 lg:w-8 xl:h-9 xl:w-9 transform-gpu transition-all duration-700 ease-out"
                 style={{ color: accentColor }}
               />
             )}
           </motion.div>
 
-          <ShinyText className="text-sm sm:text-base md:text-sm lg:text-base xl:text-lg font-bold" speed={3}>
+          <ShinyText className="text-xs sm:text-sm md:text-base lg:text-base xl:text-lg font-bold" speed={3}>
             <motion.span
               className="bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent"
               whileHover={{
@@ -154,14 +153,14 @@ const BentoCard = ({
           <motion.p
             initial={{ opacity: 0.7 }}
             whileHover={{ opacity: 1 }}
-            className="max-w-lg text-xs sm:text-sm md:text-xs lg:text-sm leading-relaxed text-white/80 group-hover:text-white/95 transition-all duration-500 px-2"
+            className="max-w-lg text-[10px] sm:text-xs md:text-sm lg:text-sm leading-relaxed text-white/80 group-hover:text-white/95 transition-all duration-500 px-1 sm:px-2"
           >
             {description}
           </motion.p>
         </div>
       </div>
 
-      <div className="relative z-20 p-4 sm:p-5 md:p-4 lg:p-5 mt-auto">
+      <div className="relative z-20 p-3 sm:p-4 md:p-5 lg:p-6 mt-auto">
         <motion.div
           className="flex w-full justify-center items-center"
           initial={{ opacity: 0.9, y: 0 }}
@@ -174,7 +173,7 @@ const BentoCard = ({
               className={cn(
                 buttonVariants.ghost.className,
                 "w-full",
-                "text-xs sm:text-sm lg:text-sm px-4 py-2 lg:px-5 lg:py-2.5",
+                "text-[11px] sm:text-xs md:text-sm lg:text-sm px-6 py-3 sm:px-7 sm:py-3.5 lg:px-8 lg:py-4",
                 "font-semibold",
                 "border border-white/20 hover:border-white/40",
                 "bg-black/60 hover:bg-black/80 backdrop-blur-sm",

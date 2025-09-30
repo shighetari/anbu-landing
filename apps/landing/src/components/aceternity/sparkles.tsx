@@ -55,7 +55,13 @@ export const SparklesCore = (props: SparklesProps) => {
   }, [particleDensity, minSize, maxSize])
 
   return (
-    <div className={cn("absolute inset-0", className)}>
+    <div
+      className={cn("absolute inset-0 pointer-events-none", className)}
+      style={{
+        contain: 'layout style paint',
+        willChange: 'transform'
+      }}
+    >
       <svg
         className="absolute inset-0 h-full w-full"
         style={{ background }}

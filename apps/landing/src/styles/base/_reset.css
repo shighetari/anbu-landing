@@ -26,8 +26,8 @@ html {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   
-  /* Smooth scrolling */
-  scroll-behavior: smooth;
+  /* Smooth scrolling removed - handled in globals.css */
+  /* scroll-behavior: smooth; */
   
   /* Better font rendering */
   -webkit-font-smoothing: antialiased;

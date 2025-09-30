@@ -181,7 +181,7 @@ export default function ServicesSection() {
   return (
     <GradualBlurSection
       id="services"
-      className="relative overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24 w-full flex justify-center"
+      className="relative overflow-hidden py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 w-full flex justify-center"
     >
       {/* Enhanced background gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505] to-black" />
@@ -203,9 +203,9 @@ export default function ServicesSection() {
         />
       </div>
 
-      <Container size="lg" className="relative flex flex-col items-center gap-8 md:gap-12 lg:gap-16">
+      <Container size="lg" className="relative flex flex-col items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 px-4 sm:px-6 lg:px-8">
         {/* Enhanced header section */}
-        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-4 md:space-y-5">
+        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-3 sm:space-y-4 md:space-y-5">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -213,14 +213,14 @@ export default function ServicesSection() {
             transition={{ duration: 0.6 }}
           >
             <ShinyText
-              className="text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-anbu-gold font-medium"
+              className="text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-[0.2em] text-anbu-gold font-medium"
               speed={6}
             >
               What I Build
             </ShinyText>
           </motion.div>
 
-          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white">
+          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white">
             <TextGenerateEffect
               words="Premium Digital Solutions"
               className=""
@@ -229,7 +229,7 @@ export default function ServicesSection() {
           </h2>
 
           <BlurFadeText delay={0.3} duration={0.7}>
-            <p className="text-sm md:text-base lg:text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/70 max-w-xl mx-auto leading-relaxed px-4 sm:px-0">
               We build scalable products that perform.
             </p>
           </BlurFadeText>
@@ -243,7 +243,7 @@ export default function ServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
           className="w-full"
         >
-          <BentoGrid className="mt-4 md:mt-6 lg:mt-8 auto-rows-[11rem] sm:auto-rows-[12rem] md:auto-rows-[13rem] lg:auto-rows-[15rem] lg:grid-cols-4">
+          <BentoGrid className="mt-4 sm:mt-6 md:mt-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
             {/* Portal Card */}
             <motion.div
               key={services[0].id}

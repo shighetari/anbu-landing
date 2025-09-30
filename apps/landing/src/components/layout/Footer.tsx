@@ -176,7 +176,7 @@ export default function Footer() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-black to-black border border-anbu-gold/20 hover:border-anbu-gold/50 transition-all duration-300 overflow-hidden">
+                <div className="relative px-8 py-4 rounded-full bg-gradient-to-r from-black to-black border border-anbu-gold/20 hover:border-anbu-gold/50 transition-all duration-300 overflow-hidden">
                   {/* Animated background */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-anbu-gold/0 via-anbu-gold/10 to-anbu-gold/0"

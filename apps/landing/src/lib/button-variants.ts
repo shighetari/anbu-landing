@@ -1,5 +1,21 @@
 import { type ShimmerButtonProps } from '@/components/ui/shimmer-button'
 
+// Standardized button sizes with proper padding
+export const buttonSizes = {
+  xs: 'px-4 py-2 text-xs',
+  sm: 'px-6 py-3 text-sm',
+  md: 'px-8 py-4 text-sm',
+  lg: 'px-10 py-5 text-base',
+  xl: 'px-12 py-6 text-base',
+  // Responsive sizes that adapt to screen
+  responsive: {
+    sm: 'px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm',
+    md: 'px-8 py-4 sm:px-10 sm:py-5 text-sm sm:text-base',
+    lg: 'px-10 py-5 sm:px-12 sm:py-6 lg:px-14 lg:py-7 text-sm sm:text-base lg:text-lg',
+    xl: 'px-12 py-6 sm:px-14 sm:py-7 lg:px-16 lg:py-8 text-base sm:text-lg lg:text-xl',
+  }
+}
+
 export const buttonVariants = {
   primary: {
     shimmerColor: '#FFD700',

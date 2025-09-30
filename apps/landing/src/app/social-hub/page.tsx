@@ -178,7 +178,13 @@ function SectionHeading({
 export default function SocialHubPage() {
   return (
     <div className="min-h-screen bg-black">
-      <main className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble">
+      <main
+        className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
+        style={{
+          overscrollBehaviorY: 'contain',
+          touchAction: 'pan-y'
+        }}
+      >
         {/* Background Effects */}
         <div className="absolute inset-0">
           <BackgroundBeams className="opacity-20" />
@@ -425,7 +431,7 @@ export default function SocialHubPage() {
                         {video.description}
                       </CardItem>
                     </div>
-                    <CardItem translateZ="100" className="w-full overflow-hidden rounded-2xl">
+                    <CardItem translateZ="50" className="w-full overflow-hidden rounded-2xl">
                       <img
                         src={video.thumbnail}
                         height="1000"

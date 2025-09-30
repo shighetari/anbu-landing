@@ -82,7 +82,13 @@ const typewriterWords = [
 export default function DocsHubLanding() {
   return (
     <div className="min-h-screen bg-black">
-      <main className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble">
+      <main
+        className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
+        style={{
+          overscrollBehaviorY: 'contain',
+          touchAction: 'pan-y'
+        }}
+      >
         {/* Background Effects */}
         <div className="absolute inset-0">
           <BackgroundBeams className="opacity-40" />
@@ -96,7 +102,7 @@ export default function DocsHubLanding() {
             background="transparent"
             minSize={0.6}
             maxSize={1.4}
-            particleDensity={100}
+            particleDensity={35}
             className="w-full h-full"
             particleColor="#FFD700"
           />
@@ -347,10 +353,12 @@ export default function DocsHubLanding() {
               >
                 Be Among the First to Experience the Future
               </AnimatedGradientText>
-              <TextGenerateEffect
-                words="Join our early access program and help shape the next generation of developer documentation."
-                className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-white/70 mb-6 sm:mb-8"
-              />
+              <div className="flex justify-center w-full">
+                <TextGenerateEffect
+                  words="Join our early access program and help shape the next generation of developer documentation."
+                  className="max-w-2xl text-center mx-auto text-sm sm:text-base lg:text-lg text-white/70 mb-6 sm:mb-8 block"
+                />
+              </div>
 
               <div className="flex justify-center">
                 <Link href="mailto:contact@anbu.ai?subject=Docs Hub Early Access Request">

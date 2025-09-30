@@ -20,7 +20,7 @@ import { TypewriterEffectSmooth } from '@/components/aceternity/typewriter-effec
 import { SparklesCore } from '@/components/aceternity/sparkles'
 import { ArchIcon } from '@/components/icons/ArchIcon'
 import { cn } from '@/lib/utils'
-import { buttonVariants, animationVariants } from '@/lib/button-variants'
+import { buttonVariants, animationVariants, buttonSizes } from '@/lib/button-variants'
 
 const heroHighlights = [
   {
@@ -60,7 +60,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen-dynamic w-full overflow-hidden bg-gradient-to-b from-[#080808] via-[#020202] to-[#080808] text-anbu-marble flex justify-center"
+      className="relative min-h-[100dvh] w-full overflow-hidden bg-gradient-to-b from-[#080808] via-[#020202] to-[#080808] text-anbu-marble flex justify-center"
     >
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,215,0,0.16),transparent_55%)]" />
@@ -73,23 +73,23 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.1),transparent_70%)]" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/35 to-black/80" />
 
-      <div className="relative z-30 flex min-h-screen flex-col justify-center pt-20 sm:pt-24 md:pt-28 lg:pt-16 pb-16 sm:pb-20">
+      <div className="relative z-30 flex min-h-[100dvh] flex-col justify-center pt-16 sm:pt-20 md:pt-24 lg:pt-16 pb-12 sm:pb-16 md:pb-20">
         <Container size="lg" className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex w-full flex-col items-center space-y-8 sm:space-y-10 md:space-y-12 text-center"
+            className="flex w-full flex-col items-center space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10 text-center"
           >
-            <div className="mt-2 sm:mt-3 md:mt-4">
+            <div className="mt-0 sm:mt-2 md:mt-3">
               <TypewriterEffectSmooth
                 words={typewriterWords}
-                className="text-xs sm:text-sm md:text-base tracking-[0.3em] sm:tracking-[0.35em] md:tracking-[0.4em] uppercase"
+                className="text-[10px] sm:text-xs md:text-sm lg:text-base tracking-[0.25em] sm:tracking-[0.3em] md:tracking-[0.35em] lg:tracking-[0.4em] uppercase"
               />
             </div>
 
             <motion.h1
-              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-none"
+              className="font-display text-[1.75rem] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-[1.1]"
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.35 }}
@@ -105,7 +105,7 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="max-w-3xl text-white/80 text-sm sm:text-base md:text-lg lg:text-xl px-4 sm:px-6 lg:px-0"
+              className="max-w-3xl text-white/80 text-[0.8rem] leading-[1.6] sm:text-sm md:text-base lg:text-lg xl:text-xl px-2 sm:px-4 md:px-6 lg:px-0"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
@@ -118,7 +118,7 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              className="relative flex w-full flex-col items-center justify-center gap-4 sm:gap-5 md:flex-row md:gap-6 lg:gap-8 mt-8 sm:mt-10"
+              className="relative flex w-full flex-col items-center justify-center gap-3 sm:gap-4 md:flex-row md:gap-5 lg:gap-6 mt-4 sm:mt-6 md:mt-8 lg:mt-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
@@ -137,9 +137,9 @@ export default function HeroSection() {
               >
                 <MovingBorderButton
                   borderRadius="1rem"
-                  containerClassName="min-w-[200px] sm:min-w-[240px] w-full md:w-auto"
+                  containerClassName="min-w-[160px] sm:min-w-[200px] md:min-w-[240px] w-full md:w-auto"
                   borderClassName="bg-[radial-gradient(var(--anbu-gold)_40%,transparent_60%)] opacity-[0.7] group-hover:opacity-[0.9] transition-opacity duration-700"
-                  className="px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-xs sm:text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_15px_40px_rgba(255,215,0,0.3)] transition-all duration-700 ease-out"
+                  className="px-8 sm:px-10 md:px-14 lg:px-16 py-4 sm:py-5 md:py-6 lg:py-7 text-[11px] sm:text-xs md:text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.1em] sm:tracking-[0.12em] md:tracking-[0.15em] shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_15px_40px_rgba(255,215,0,0.3)] transition-all duration-700 ease-out"
                   duration={4000}
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 >
@@ -198,7 +198,7 @@ export default function HeroSection() {
                 }}
               >
                 <StarBorderButton
-                  className="min-w-[180px] sm:min-w-[220px] w-full md:w-auto px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-xs sm:text-sm lg:text-base shadow-[0_10px_30px_rgba(255,215,0,0.15)] hover:shadow-[0_15px_35px_rgba(255,215,0,0.25)] transition-all duration-700 ease-out"
+                  className="min-w-[160px] sm:min-w-[200px] md:min-w-[240px] w-full md:w-auto px-8 sm:px-10 md:px-14 lg:px-16 py-4 sm:py-5 md:py-6 lg:py-7 text-[11px] sm:text-xs md:text-sm lg:text-base shadow-[0_10px_30px_rgba(255,215,0,0.15)] hover:shadow-[0_15px_35px_rgba(255,215,0,0.25)] transition-all duration-700 ease-out"
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                   glow={true}
                 >
@@ -223,7 +223,7 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div
-              className="w-full max-w-4xl mt-10 sm:mt-12 md:mt-14"
+              className="w-full max-w-4xl mt-6 sm:mt-8 md:mt-10 lg:mt-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.9 }}
@@ -234,7 +234,7 @@ export default function HeroSection() {
                 neonColors={{ firstColor: '#FFD700', secondColor: '#FF9D2E' }}
                 borderSize={2}
               >
-                <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-3">
+                <div className="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-3">
                   {heroHighlights.map((item) => (
                     <motion.div
                       key={item.label}
@@ -265,7 +265,7 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div
-              className="w-full max-w-2xl sm:max-w-3xl flex justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-16"
+              className="w-full max-w-2xl sm:max-w-3xl flex justify-center mt-4 sm:mt-6 md:mt-8 lg:mt-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1.05 }}
@@ -290,14 +290,14 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div
-            className="absolute bottom-6 sm:bottom-10 md:bottom-14 lg:bottom-24 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em] lg:tracking-[0.4em] text-anbu-gold/70"
+            className="absolute bottom-4 sm:bottom-6 md:bottom-10 lg:bottom-16 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 sm:gap-2 text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] md:tracking-[0.3em] lg:tracking-[0.4em] text-anbu-gold/70"
             onClick={scrollToServices}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.2 }}
           >
-            <span>Scroll</span>
-            <ChevronDown className="h-6 w-6 animate-bounce text-[#FFD700]" />
+            <span className="hidden sm:block">Scroll</span>
+            <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 animate-bounce text-[#FFD700]" />
           </motion.div>
         </Container>
       </div>

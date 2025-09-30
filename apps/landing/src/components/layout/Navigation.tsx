@@ -151,6 +151,9 @@ export default function Navigation() {
 
   useEffect(() => {
     setMobileOpen(false)
+    // Failsafe: ensure body scroll is unlocked on route change
+    document.body.style.overflow = ''
+    document.body.style.paddingRight = ''
   }, [pathname])
 
   // Handle escape key
@@ -163,6 +166,14 @@ export default function Navigation() {
     document.addEventListener('keydown', handleEscape)
     return () => document.removeEventListener('keydown', handleEscape)
   }, [mobileOpen])
+
+  // Failsafe: Clear any stuck body styles on component unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.paddingRight = ''
+    }
+  }, [])
 
   const handleNavigate = () => {
     setMobileOpen(false)
@@ -442,7 +453,7 @@ function DesktopMenuItem({
       <Link
         href={item.href}
         className={cn(
-          'group relative inline-flex items-center rounded-full px-4 lg:px-6 py-2 lg:py-2.5 text-xs font-semibold uppercase tracking-[0.12em] lg:tracking-[0.15em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.15)]',
+          'group relative inline-flex items-center rounded-full px-4 lg:px-6 py-2 lg:py-2.5 text-xs font-semibold uppercase tracking-[0.12em] lg:tracking-[0.15em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] min-h-[40px] touch-manipulation',
           isActive && 'bg-white/5 text-anbu-gold',
         )}
       >
