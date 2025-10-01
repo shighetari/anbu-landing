@@ -20,10 +20,12 @@ const socialLinks = [
 ]
 
 const quickLinks = [
-  { name: 'About', href: '#about' },
-  { name: 'Services', href: '#services' },
-  { name: 'Docs', href: '/docs-hub' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Discover', href: '/#home' },
+  { name: 'Solutions', href: '/solutions' },
+  { name: 'Resources', href: '/resources' },
+  { name: 'Docs Hub', href: '/resources/docs-hub' },
+  { name: 'Command Console', href: '/solutions/command-console' },
+  { name: 'Contact', href: '/contact' },
 ]
 
 // Social icon with micro animations
@@ -134,8 +136,7 @@ export default function Footer() {
                 {quickLinks.map((link, index) => (
                   <Magnet
                     key={link.name}
-                    distance={20}
-                    springOptions={{ bounce: 0.1 }}
+                    strength={0.3}
                   >
                     <motion.a
                       href={link.href}
