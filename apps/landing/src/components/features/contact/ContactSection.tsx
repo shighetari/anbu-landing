@@ -57,7 +57,7 @@ export default function ContactSection() {
   return (
     <GradualBlurSection
       id="contact"
-      className="relative py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 w-full flex justify-center bg-black"
+      className="relative py-6 sm:py-9 md:py-12 lg:py-14 xl:py-16 w-full flex justify-center bg-black"
     >
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black" />
       <div className="absolute inset-0 opacity-20 mix-blend-screen" aria-hidden>
@@ -65,12 +65,12 @@ export default function ContactSection() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,168,0,0.08),transparent_55%)]" />
       </div>
 
-      <Container size="lg" className="relative flex flex-col items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12 text-center px-4 sm:px-6 lg:px-8">
+      <Container size="sm" className="relative flex w-full flex-col items-center gap-5 sm:gap-7 md:gap-9 lg:gap-10 text-center px-3 sm:px-4 lg:px-5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 w-full"
+          className="flex flex-col items-center space-y-3 sm:space-y-4 md:space-y-5 lg:space-y-6 w-full max-w-2xl mx-auto"
         >
           <ShinyText className="inline-flex items-center justify-center px-3 py-1 text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] md:tracking-[0.3em] lg:tracking-[0.35em] text-anbu-gold" speed={5}>
             Connect
@@ -80,7 +80,7 @@ export default function ContactSection() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="flex flex-col items-center space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8 w-full"
+            className="flex flex-col items-center space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-7 w-full"
           >
             <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">
               <TextGenerateEffect
@@ -92,7 +92,7 @@ export default function ContactSection() {
             </h2>
             <div className="space-y-2">
               <BlurFadeText delay={0.2} duration={0.6}>
-                <p className="max-w-xl mx-auto text-xs sm:text-sm md:text-base lg:text-lg text-white/80 leading-relaxed px-2 sm:px-4">
+                <p className="max-w-lg mx-auto text-xs sm:text-sm md:text-base lg:text-lg text-white/80 leading-relaxed px-2 sm:px-3">
                   Let's discuss your vision.
                 </p>
               </BlurFadeText>
@@ -100,7 +100,7 @@ export default function ContactSection() {
           </motion.div>
         </motion.div>
 
-        <div className="grid w-full max-w-3xl mx-auto gap-4 sm:gap-5 md:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2">
+        <div className="grid w-full max-w-2xl mx-auto gap-3 sm:gap-4 md:gap-5 lg:gap-6 grid-cols-[repeat(auto-fit,minmax(260px,1fr))]">
           {contactOptions.map((option, index) => (
             <motion.div
               key={option.title}
@@ -117,7 +117,7 @@ export default function ContactSection() {
                   href={option.href}
                   target={option.href.startsWith('http') ? '_blank' : undefined}
                   rel={option.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="group relative block h-full p-6 sm:p-7 md:p-8 lg:p-10 text-center"
+                  className="group relative block h-full p-5 sm:p-6 md:p-7 lg:p-8 text-center"
                   onClick={option.href.startsWith('mailto') ? handleContactClick : undefined}
                   whileHover={{ scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -135,11 +135,11 @@ export default function ContactSection() {
                       {/* Enhanced icon glow effect */}
                       <div className={`absolute inset-0 blur-2xl bg-gradient-to-br ${option.iconGradient} opacity-40 group-hover:opacity-80 transition-all duration-700 rounded-full scale-150`} />
                       <motion.span
-                        className={`relative flex h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 lg:h-20 lg:w-20 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br ${option.iconGradient} text-white shadow-2xl`}
+                        className={`relative flex h-11 w-11 sm:h-12 sm:w-12 md:h-14 md:w-14 lg:h-16 lg:w-16 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br ${option.iconGradient} text-white shadow-2xl`}
                         whileHover={{ rotate: 360 }}
                         transition={{ duration: 0.7 }}
                       >
-                        <option.icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-10 lg:w-10" />
+                        <option.icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 lg:h-8 lg:w-8" />
                       </motion.span>
                     </motion.div>
                     <div className="space-y-2 sm:space-y-3 md:space-y-4">
@@ -210,13 +210,13 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-4 sm:mt-6 md:mt-8 lg:mt-10"
+          className="mt-3 sm:mt-4 md:mt-5 lg:mt-6"
         >
           <ShimmerButton
             {...buttonVariants.cta}
             className={cn(
               buttonVariants.cta.className,
-              "px-8 sm:px-10 md:px-12 lg:px-14 py-4 sm:py-5 lg:py-6 text-xs sm:text-sm lg:text-base"
+              "px-6 sm:px-8 md:px-9 lg:px-10 py-3.5 sm:py-4 lg:py-5 text-xs sm:text-sm lg:text-base"
             )}
             onClick={() => {
               handleContactClick()
