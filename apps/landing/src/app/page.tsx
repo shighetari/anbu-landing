@@ -6,7 +6,7 @@ import { SectionDivider } from '@/components/ui/section-divider'
 
 export default function Home() {
   return (
-    <main className="relative flex flex-col items-center min-h-screen">
+    <main id="main-content" className="relative flex flex-col items-center min-h-screen">
       <HeroSection />
 
       <div className="w-full py-4 sm:py-6 lg:py-8">

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, MessageSquare } from 'lucide-react'
 
@@ -5,6 +6,12 @@ import Container from '@/components/ui/Container'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
 import { BlurFadeText } from '@/components/magicui/blur-fade-text'
 import ContactSection from '@/components/features/contact/ContactSection'
+import { brandButton } from '@/lib/brand'
+
+export const metadata: Metadata = {
+  title: 'ANBU Contact — Engage the Command Desk',
+  description: 'Share a brief, align on timelines, and open a dialogue with the ANBU delivery team.',
+}
 
 export default function ContactPage() {
   return (
@@ -12,7 +19,7 @@ export default function ContactPage() {
       <Container size="lg" className="relative flex flex-col gap-6 px-4 sm:px-6 lg:px-8 pb-10">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 self-start rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/70 transition hover:border-anbu-gold/40 hover:text-anbu-gold"
+          className={brandButton({ variant: 'secondary', size: 'sm', className: 'self-start px-4 text-[0.68rem]' })}
         >
           <ArrowLeft className="h-4 w-4" /> Back to overview
         </Link>

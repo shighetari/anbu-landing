@@ -83,11 +83,8 @@ export default function DocsHubLanding() {
   return (
     <div className="min-h-screen bg-black">
       <main
+        id="main-content"
         className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
-        style={{
-          overscrollBehaviorY: 'contain',
-          touchAction: 'pan-y'
-        }}
       >
         {/* Background Effects */}
         <div className="absolute inset-0">
@@ -143,10 +140,11 @@ export default function DocsHubLanding() {
                   className="flex justify-center"
                 >
                   <BlurFadeText
-                    text="Experience intelligent documentation with vector search, RAG chatbots, and instant code examples. The future of developer documentation is here."
                     className="max-w-3xl text-base sm:text-lg lg:text-xl text-white/70 leading-relaxed px-4"
-                    animationDelay={0.8}
-                  />
+                    delay={0.8}
+                  >
+                    Experience intelligent documentation with vector search, RAG chatbots, and instant code examples. The future of developer documentation is here.
+                  </BlurFadeText>
                 </motion.div>
               </div>
 
@@ -156,24 +154,26 @@ export default function DocsHubLanding() {
                 transition={{ delay: 0.8 }}
                 className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6 sm:pt-8"
               >
-                <ShimmerButton
-                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em]"
-                  background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
-                  borderRadius="0.75rem"
-                >
-                  <span className="text-black font-bold">Get Early Access</span>
-                </ShimmerButton>
+                <Link href="/contact?topic=docs-hub">
+                  <ShimmerButton
+                    className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-black"
+                    background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+                    borderRadius="0.75rem"
+                  >
+                    Get Early Access
+                  </ShimmerButton>
+                </Link>
 
-                <ShimmerButton
-                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-gold"
-                  background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
-                  borderRadius="0.75rem"
-                  shimmerColor="#FFD700"
-                >
-                  <Link href="/" className="text-anbu-gold">
+                <Link href="/">
+                  <ShimmerButton
+                    className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-gold"
+                    background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
+                    borderRadius="0.75rem"
+                    shimmerColor="#FFD700"
+                  >
                     Return to Main Site
-                  </Link>
-                </ShimmerButton>
+                  </ShimmerButton>
+                </Link>
               </motion.div>
             </motion.div>
           </div>
@@ -298,10 +298,11 @@ export default function DocsHubLanding() {
                 See It In Action
               </ShinyText>
               <BlurFadeText
-                text="Experience how our AI assistant will help you find answers instantly"
                 className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-white/70 px-4"
-                animationDelay={0.2}
-              />
+                delay={0.2}
+              >
+                Experience how our AI assistant will help you find answers instantly
+              </BlurFadeText>
             </motion.div>
 
             <motion.div
@@ -363,11 +364,11 @@ export default function DocsHubLanding() {
               <div className="flex justify-center">
                 <Link href="mailto:contact@anbu.ai?subject=Docs Hub Early Access Request">
                   <ShimmerButton
-                    className="px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em]"
+                    className="px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-black"
                     background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
                     borderRadius="0.75rem"
                   >
-                    <span className="text-black font-bold">Request Early Access</span>
+                    Request Early Access
                   </ShimmerButton>
                 </Link>
               </div>

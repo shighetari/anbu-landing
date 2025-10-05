@@ -8,9 +8,8 @@ export const BackgroundBeams = React.memo(({ className }: { className?: string }
   // Reduced number of beams for better performance
   const beams = [
     { initialX: 10, translateX: 10, duration: 7, repeatDelay: 3, delay: 2 },
-    { initialX: 600, translateX: 600, duration: 3, repeatDelay: 3, delay: 4 },
-    { initialX: 100, translateX: 100, duration: 7, repeatDelay: 7, className: "h-6" },
-    { initialX: 800, translateX: 800, duration: 11, repeatDelay: 2, className: "h-20" },
+    { initialX: 480, translateX: 480, duration: 5, repeatDelay: 4, delay: 4 },
+    { initialX: 820, translateX: 820, duration: 9, repeatDelay: 3, className: "h-14" },
   ]
 
   return (

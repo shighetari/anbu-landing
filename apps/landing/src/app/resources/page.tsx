@@ -19,6 +19,35 @@ import { ShinyText } from '@/components/magicui/shiny-text'
 import { BlurFadeText } from '@/components/magicui/blur-fade-text'
 import { SparklesCore } from '@/components/aceternity/sparkles'
 import { cn } from '@/lib/utils'
+import { brandButton } from '@/lib/brand'
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+}
+
+const highlightVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 140, damping: 18 },
+  },
+}
+
+const quickActionVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: index * 0.08 + 0.1, duration: 0.4, ease: 'easeOut' },
+  }),
+}
 
 const resourceHighlights = [
   {
@@ -51,7 +80,7 @@ const resourceHighlights = [
     gradient: 'from-emerald-300 via-teal-400 to-cyan-500',
     microcopy: 'Downloadable PDFs and Notion-ready templates',
   },
-]
+] as const
 
 const quickActions = [
   {
@@ -72,7 +101,7 @@ const quickActions = [
     href: '/docs/SECURITY.md',
     icon: ShieldCheck,
   },
-]
+] as const
 
 export default function ResourcesPage() {
   return (
@@ -85,14 +114,21 @@ export default function ResourcesPage() {
           minSize={0.5}
           maxSize={1.2}
           particleColor="#FFD700"
-          particleDensity={26}
+          particleDensity={22}
           className="h-full w-full opacity-55"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+        {/* bottom color lift (to match Solutions page polish) */}
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-52 bg-gradient-to-t from-anbu-gold/25 via-anbu-gold/12 to-transparent" />
       </div>
 
       <Container size="lg" className="relative px-4 sm:px-6 lg:px-8">
-        <header className="flex flex-col items-center gap-6 text-center">
+        <motion.header
+          className="flex flex-col items-center gap-6 text-center"
+          initial="hidden"
+          animate="visible"
+          variants={headerVariants}
+        >
           <ShinyText className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-anbu-gold" speed={5}>
             Resource Center
           </ShinyText>
@@ -111,19 +147,19 @@ export default function ResourcesPage() {
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-anbu-gold/50 bg-anbu-gold px-6 py-2 text-sm font-semibold text-black shadow-[0_12px_30px_rgba(255,215,0,0.25)] transition hover:translate-y-[-2px] hover:shadow-[0_18px_40px_rgba(255,215,0,0.35)]"
+              className={brandButton({ variant: 'primary', size: 'lg' })}
             >
               Talk with us
               <ArrowUpRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/#services"
-              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-semibold text-white/85 transition hover:border-anbu-gold/40 hover:text-anbu-gold"
+              href="/solutions#design"
+              className={brandButton({ variant: 'secondary', size: 'lg' })}
             >
               Return to journey map
             </Link>
           </div>
-        </header>
+        </motion.header>
 
         <section className="mt-16 grid gap-6 sm:gap-8">
           <motion.div
@@ -141,26 +177,23 @@ export default function ResourcesPage() {
               return (
                 <motion.article
                   key={resource.title}
-                  variants={{
-                    hidden: { opacity: 0, y: 30 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { type: 'spring', stiffness: 120, damping: 18 },
-                    },
-                  }}
-                  whileHover={{ y: -6 }}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-b from-white/[0.04] via-black/[0.35] to-black/75 p-6"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-b from-white/[0.04] via-black/[0.35] to-black/75 p-8 sm:p-10 pt-14 sm:pt-16 transition-all duration-300 hover:-translate-y-1 hover:border-anbu-gold/25 hover:shadow-[0_0_0_1px_rgba(255,215,0,0.25)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]"
+                  variants={highlightVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: '0px 0px -80px 0px' }}
                 >
                   <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden>
                     <div className={cn('absolute inset-0 blur-3xl', `bg-gradient-to-br ${resource.gradient}`)} />
                   </div>
+                  {/* subtle top highlight for polish */}
+                  <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-                  <div className="relative flex items-center justify-between">
-                    <span className={cn('rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-white/80 bg-white/10 border border-white/15', `bg-gradient-to-r ${resource.gradient}`)}>
+                  <div className="relative mt-4 sm:mt-6 flex items-center justify-between px-1">
+                    <span className={cn('inline-block mt-0 rounded-full px-3 py-1 text-[10px] leading-none uppercase tracking-[0.3em] text-white/85 backdrop-blur-[2px] border border-white/15 shadow-[0_0_20px_rgba(0,0,0,0.15)]', `bg-gradient-to-r ${resource.gradient}`)}>
                       {resource.status}
                     </span>
-                    <FileText className="h-4 w-4 text-white/40" />
+                    <FileText className="mt-0 h-4 w-4 text-white/55" />
                   </div>
 
                   <div className="relative mt-6 flex items-center gap-3">
@@ -180,7 +213,8 @@ export default function ResourcesPage() {
 
                   <Link
                     href={resource.href}
-                    className="relative mt-8 inline-flex items-center gap-2 self-start rounded-full border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/70 transition group-hover:border-anbu-gold/50 group-hover:text-anbu-gold"
+                    aria-label={`Explore ${resource.title}`}
+                    className={cn('relative mt-8 self-start', brandButton({ variant: 'ghost', size: 'sm', className: 'group-hover:border-anbu-gold/60 group-hover:text-anbu-gold' }))}
                   >
                     Explore
                     <ArrowUpRight className="h-4 w-4" />
@@ -209,14 +243,16 @@ export default function ResourcesPage() {
             <div className="grid gap-4 sm:grid-cols-2">
               {quickActions.map((action, index) => {
                 const Icon = action.icon
+                const isExternal = action.href.startsWith('http')
                 return (
                   <motion.div
                     key={action.label}
-                    className="group relative flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/70 p-5"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    className="group relative flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/70 p-5 transition-all duration-300 hover:border-white/20 hover:bg-white/5"
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    variants={quickActionVariants}
+                    custom={index}
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-anbu-gold/10 text-anbu-gold">
                       <Icon className="h-5 w-5" />
@@ -225,7 +261,10 @@ export default function ResourcesPage() {
                     <p className="text-sm text-white/60 leading-relaxed">{action.description}</p>
                     <Link
                       href={action.href}
-                      className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-anbu-gold/80 hover:text-anbu-gold"
+                      aria-label={`Open ${action.label}`}
+                      className={brandButton({ variant: 'ghost', size: 'sm', className: 'px-3 py-1.5 tracking-[0.25em] text-anbu-gold/85 hover:text-anbu-gold' })}
+                      target={isExternal ? '_blank' : undefined}
+                      rel={isExternal ? 'noreferrer' : undefined}
                     >
                       Open
                       <ArrowUpRight className="h-4 w-4" />
@@ -240,4 +279,3 @@ export default function ResourcesPage() {
     </div>
   )
 }
-

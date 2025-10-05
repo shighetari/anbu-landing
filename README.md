@@ -28,6 +28,14 @@ This is a monorepo containing the ANBU Solutions landing page and related applic
 - **`packages/config`** - Shared configuration files
 - **`packages/utils`** - Shared utility functions
 
+## ✅ UX Navigation To-Do
+
+- [ ] Validate new journey routes (`/solutions`, `/resources`, `/contact`) in browser and capture polish issues.
+- [ ] Confirm mega menu + mobile nav microinteractions meet performance and accessibility targets.
+- [ ] Align CTA copy and section headings across new pages with brand voice.
+- [ ] Add analytics/events for journey CTAs before launch.
+- [ ] Update Playwright coverage for journey navigation paths once UI stabilizes.
+
 ## 🎨 Design System
 
 Our design system features a sophisticated **black and gold with marble aesthetic**:

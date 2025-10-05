@@ -17,6 +17,7 @@ import { ShinyText } from '@/components/magicui/shiny-text'
 import { BlurFadeText } from '@/components/magicui/blur-fade-text'
 import { SparklesCore } from '@/components/aceternity/sparkles'
 import { cn } from '@/lib/utils'
+import { brandButton } from '@/lib/brand'
 
 const journeyStages = [
   {
@@ -44,6 +45,34 @@ const journeyStages = [
     href: '/resources',
   },
 ]
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+}
+
+const suiteCardVariants = {
+  hidden: { opacity: 0, y: 30, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: 'spring', stiffness: 120, damping: 20 },
+  },
+}
+
+const stageVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: index * 0.08 + 0.1, duration: 0.4, ease: 'easeOut' },
+  }),
+}
 
 const suites = [
   {
@@ -119,15 +148,22 @@ export default function SolutionsPage() {
           minSize={0.5}
           maxSize={1.15}
           particleColor="#FFD700"
-          particleDensity={24}
+          particleDensity={22}
           className="h-full w-full opacity-60"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        {/* bottom color lift (enhanced) */}
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-anbu-gold/30 via-anbu-gold/15 to-transparent" />
       </div>
 
       <main className="relative">
         <Container size="lg" className="px-4 sm:px-6 lg:px-8">
-          <header className="flex flex-col items-center text-center gap-6 sm:gap-8">
+          <motion.header
+            className="flex flex-col items-center text-center gap-6 sm:gap-8"
+            initial="hidden"
+            animate="visible"
+            variants={headerVariants}
+          >
             <ShinyText className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-anbu-gold" speed={5}>
               Suite Overview
             </ShinyText>
@@ -146,19 +182,19 @@ export default function SolutionsPage() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/#services"
-                className="inline-flex items-center justify-center rounded-full border border-anbu-gold/50 bg-anbu-gold px-6 py-2 text-sm font-semibold text-black shadow-[0_12px_30px_rgba(255,215,0,0.25)] transition hover:translate-y-[-2px] hover:shadow-[0_18px_40px_rgba(255,215,0,0.35)]"
+                className={brandButton({ variant: 'primary', size: 'lg' })}
               >
                 Compare with Services
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-semibold text-white/85 transition hover:border-anbu-gold/40 hover:text-anbu-gold"
+                className={brandButton({ variant: 'secondary', size: 'lg' })}
               >
                 Start a project
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </div>
-          </header>
+          </motion.header>
 
           <section className="mt-16 grid gap-6 sm:gap-8 lg:gap-10">
             <motion.div
@@ -178,26 +214,24 @@ export default function SolutionsPage() {
                 return (
                   <motion.article
                     key={suite.label}
-                    variants={{
-                      hidden: { opacity: 0, y: 30 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { type: 'spring', stiffness: 120, damping: 20 },
-                      },
-                    }}
+                    variants={suiteCardVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '0px 0px -80px 0px' }}
                     whileHover={{ y: -6 }}
-                    className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-b from-white/[0.04] via-black/[0.35] to-black/80 p-6 sm:p-7"
+                    className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-b from-white/[0.04] via-black/[0.35] to-black/80 p-8 sm:p-10 pt-14 sm:pt-16 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] transition-all duration-300 hover:border-anbu-gold/25 hover:shadow-[0_0_0_1px_rgba(255,215,0,0.25)]"
                   >
                     <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden>
                       <div className={cn('absolute inset-0 blur-3xl', `bg-gradient-to-br ${suite.gradient}`)} />
                     </div>
+                    {/* subtle top highlight for polish */}
+                    <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-                    <div className="relative flex items-center justify-between">
-                      <div className={cn('rounded-full px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-white/80 bg-white/10 border border-white/15', `bg-gradient-to-r ${suite.gradient}`)}>
+                    <div className="relative mt-4 sm:mt-6 flex items-center justify-between px-1">
+                      <div className={cn('inline-block mt-0 rounded-full px-3 py-1 text-[10px] leading-none uppercase tracking-[0.3em] text-white/85 backdrop-blur-[2px] border border-white/15 shadow-[0_0_20px_rgba(0,0,0,0.15)]', `bg-gradient-to-r ${suite.gradient}`)}>
                         {suite.eyebrow}
                       </div>
-                      <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">
+                      <span className="mt-0 rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 whitespace-nowrap backdrop-blur-[2px]">
                         {suite.status}
                       </span>
                     </div>
@@ -226,7 +260,8 @@ export default function SolutionsPage() {
 
                     <Link
                       href={suite.href}
-                      className="relative mt-8 inline-flex items-center gap-2 self-start rounded-full border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/70 transition group-hover:border-anbu-gold/50 group-hover:text-anbu-gold"
+                      aria-label={`Explore ${suite.label}`}
+                      className={cn('relative mt-8 self-start', brandButton({ variant: 'ghost', size: 'sm', className: 'group-hover:border-anbu-gold/60 group-hover:text-anbu-gold' }))}
                     >
                       Explore
                       <ArrowUpRight className="h-4 w-4" />
@@ -258,11 +293,12 @@ export default function SolutionsPage() {
                 {journeyStages.map((stage, index) => (
                   <motion.div
                     key={stage.id}
-                    className="group relative flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/70 p-5"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    className="group relative flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/70 p-5 transition-all duration-300 hover:border-white/20 hover:bg-white/5"
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    variants={stageVariants}
+                    custom={index}
                   >
                     <span className="text-[11px] uppercase tracking-[0.28em] text-anbu-gold/80">
                       {String(index + 1).padStart(2, '0')}
@@ -271,7 +307,8 @@ export default function SolutionsPage() {
                     <p className="text-sm text-white/60 leading-relaxed">{stage.description}</p>
                     <Link
                       href={stage.href}
-                      className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-anbu-gold/80 hover:text-anbu-gold"
+                      aria-label={`View the ${stage.title} stage`}
+                      className={brandButton({ variant: 'ghost', size: 'sm', className: 'px-3 py-1.5 tracking-[0.25em] text-anbu-gold/85 hover:text-anbu-gold' })}
                     >
                       View stage
                       <ArrowUpRight className="h-4 w-4" />
@@ -286,4 +323,3 @@ export default function SolutionsPage() {
     </div>
   )
 }
-

@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronDown, ArrowRight, Briefcase, Rocket, Clock, Shield, TrendingUp } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -12,14 +12,15 @@ import { DecryptedText } from '@/components/reactbits/decrypted-text'
 import { Button as MovingBorderButton } from '@/components/aceternity/moving-border'
 import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { StarBorderButton } from '@/components/reactbits/star-border-button'
+import { useScrolling } from '@/hooks/useScrolling'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { ShinyText } from '@/components/magicui/shiny-text'
 import { NumberTicker } from '@/components/ui/number-ticker'
-import { BackgroundBeams } from '@/components/aceternity/background-beams'
 import { TypewriterEffectSmooth } from '@/components/aceternity/typewriter-effect'
 import { SparklesCore } from '@/components/aceternity/sparkles'
 import { ArchIcon } from '@/components/icons/ArchIcon'
 import { cn } from '@/lib/utils'
+import { brandButton } from '@/lib/brand'
 import { buttonVariants, animationVariants, buttonSizes } from '@/lib/button-variants'
 
 const heroHighlights = [
@@ -53,6 +54,9 @@ const typewriterWords = [
 ]
 
 export default function HeroSection() {
+  const isScrolling = useScrolling()
+  const prefersReducedMotion = useReducedMotion()
+
   const scrollToServices = () => {
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -62,16 +66,15 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-[100dvh] w-full overflow-hidden bg-gradient-to-b from-[#080808] via-[#020202] to-[#080808] text-anbu-marble flex justify-center"
     >
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,215,0,0.16),transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_45%,rgba(255,168,0,0.12),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_65%)]" />
-      </div>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 hero-gradient-layer"
+      />
 
-      <BackgroundBeams className="absolute inset-0 opacity-30" />
-
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.1),transparent_70%)]" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/35 to-black/80" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/80"
+      />
 
       <div className="relative z-30 flex min-h-[100dvh] flex-col justify-center pt-20 sm:pt-24 md:pt-20 lg:pt-16 pb-8 sm:pb-12 md:pb-16">
         <Container size="lg" className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
@@ -110,15 +113,11 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              We craft premium product journeys for executive teams that expect precision.
-              <span className="text-anbu-gold/90">
-                {' '}Interfaces, data orchestration, and scale-ready automation
-              </span>{' '}
-              delivered by a studio that pairs enterprise discipline with atelier-level detail.
+              We turn ambitious ideas into <span className="text-anbu-gold/90">precision‑built, scalable products</span>—combining cinematic interfaces, data intelligence, and automation to ship fast with confidence.
             </motion.p>
 
             <motion.div
-              className="relative flex w-full flex-col items-center justify-center gap-3 sm:gap-4 md:flex-row md:gap-5 lg:gap-6 mt-3 sm:mt-4 md:mt-6 lg:mt-8"
+              className="relative flex w-full flex-col items-center justify-center gap-2.5 sm:gap-3 md:flex-row md:gap-4 lg:gap-5 mt-3 sm:mt-4 md:mt-6 lg:mt-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
@@ -137,9 +136,9 @@ export default function HeroSection() {
               >
                 <MovingBorderButton
                   borderRadius="1rem"
-                  containerClassName="min-w-[160px] sm:min-w-[200px] md:min-w-[240px] w-full md:w-auto"
-                  borderClassName="bg-[radial-gradient(var(--anbu-gold)_40%,transparent_60%)] opacity-[0.7] group-hover:opacity-[0.9] transition-opacity duration-700"
-                  className="px-8 sm:px-10 md:px-14 lg:px-16 py-4 sm:py-5 md:py-6 lg:py-7 text-[11px] sm:text-xs md:text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.1em] sm:tracking-[0.12em] md:tracking-[0.15em] shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_15px_40px_rgba(255,215,0,0.3)] transition-all duration-700 ease-out"
+                  containerClassName="min-w-[140px] sm:min-w-[180px] md:min-w-[200px] w-full md:w-auto"
+                  borderClassName="bg-[radial-gradient(var(--anbu-gold)_40%,transparent_60%)] opacity-[0.65] group-hover:opacity-[0.9] transition-opacity duration-700"
+                  className="px-5 sm:px-7 md:px-9 lg:px-10 py-3 sm:py-3.5 md:py-4 lg:py-4.5 text-[11px] sm:text-xs md:text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.08em] sm:tracking-[0.1em] md:tracking-[0.12em] shadow-[0_8px_24px_rgba(255,215,0,0.2)] hover:shadow-[0_12px_36px_rgba(255,215,0,0.28)] transition-all duration-700 ease-out"
                   duration={4000}
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 >
@@ -155,7 +154,7 @@ export default function HeroSection() {
                       maxSize={0.8}
                     />
                   </div>
-                  <span className="relative z-10 flex items-center gap-4 pointer-events-none">
+                  <span className="relative z-10 flex items-center gap-3 pointer-events-none">
                     <div className="transition-transform duration-500 ease-out group-hover:rotate-12">
                       <Rocket className="w-4 h-4 lg:w-5 lg:h-5 text-anbu-gold" />
                     </div>
@@ -198,11 +197,11 @@ export default function HeroSection() {
                 }}
               >
                 <StarBorderButton
-                  className="min-w-[160px] sm:min-w-[200px] md:min-w-[240px] w-full md:w-auto px-8 sm:px-10 md:px-14 lg:px-16 py-4 sm:py-5 md:py-6 lg:py-7 text-[11px] sm:text-xs md:text-sm lg:text-base shadow-[0_10px_30px_rgba(255,215,0,0.15)] hover:shadow-[0_15px_35px_rgba(255,215,0,0.25)] transition-all duration-700 ease-out"
+                  className="min-w-[140px] sm:min-w-[180px] md:min-w-[200px] w-full md:w-auto px-5 sm:px-7 md:px-9 lg:px-10 py-3 sm:py-3.5 md:py-4 lg:py-4.5 text-[11px] sm:text-xs md:text-sm lg:text-base shadow-[0_8px_24px_rgba(255,215,0,0.15)] hover:shadow-[0_12px_30px_rgba(255,215,0,0.22)] transition-all duration-700 ease-out"
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                   glow={true}
                 >
-                  <span className="flex items-center gap-3 sm:gap-4 font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] pointer-events-none">
+                  <span className="flex items-center gap-2.5 sm:gap-3.5 font-bold uppercase tracking-[0.1em] sm:tracking-[0.12em] pointer-events-none">
                     <div className="transition-transform duration-500 ease-out group-hover:scale-110">
                       <Briefcase className="w-4 h-4 lg:w-5 lg:h-5" />
                     </div>
@@ -289,18 +288,44 @@ export default function HeroSection() {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            className="absolute bottom-6 sm:bottom-8 md:bottom-12 lg:bottom-16 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-1 sm:gap-2 text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.25em] text-anbu-gold/80 bg-black/30 backdrop-blur-sm px-3 py-2 rounded-full border border-anbu-gold/20 hover:bg-black/50 hover:border-anbu-gold/40 transition-all duration-300"
+          <motion.button
+            type="button"
+            className={cn(
+              'absolute bottom-6 sm:bottom-8 md:bottom-12 lg:bottom-16 left-1/2 -translate-x-1/2 pointer-events-auto',
+              brandButton({
+                variant: 'ghost',
+                size: 'sm',
+                className:
+                  'flex-col gap-1 px-3 py-2 sm:px-4 sm:py-3 text-[0.65rem] sm:text-[0.7rem] tracking-[0.28em] text-anbu-gold/85 border-white/20 bg-black/40 backdrop-blur-md hover:bg-black/55',
+              }),
+            )}
+            aria-label="Scroll to the services section"
             onClick={scrollToServices}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: isScrolling ? 0 : 1, y: isScrolling ? 10 : 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 1 }}
+            whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
+            whileTap={{ scale: 0.94 }}
+            style={{ pointerEvents: isScrolling ? 'none' : 'auto' }}
           >
             <span className="hidden sm:block">Scroll</span>
-            <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 animate-bounce text-[#FFD700]" />
-          </motion.div>
+            <motion.span
+              aria-hidden
+              animate={
+                prefersReducedMotion
+                  ? { opacity: 1 }
+                  : { y: [0, 6, 0] }
+              }
+              transition={
+                prefersReducedMotion
+                  ? undefined
+                  : { repeat: Infinity, duration: 1.6, ease: 'easeInOut' }
+              }
+              className="flex items-center justify-center rounded-full bg-anbu-gold/20 p-1"
+            >
+              <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFD700]" />
+            </motion.span>
+          </motion.button>
         </Container>
       </div>
 

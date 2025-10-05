@@ -17,7 +17,7 @@ export const CardContainer = ({
   const ref = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
   const isScrolling = useScrolling()
-  const rafRef = useRef<number>()
+  const rafRef = useRef<number | undefined>(undefined)
 
   const x = useMotionValue(0)
   const y = useMotionValue(0)

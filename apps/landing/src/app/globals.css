@@ -110,6 +110,14 @@
 }
 
 @layer components {
+  .hero-gradient-layer {
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(255, 215, 0, 0.14), transparent 55%),
+      radial-gradient(circle at 80% 45%, rgba(255, 168, 0, 0.1), transparent 60%),
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 68%);
+    background-size: cover;
+  }
+
   /* Marble texture gradient - I love this effect */
   .marble-bg {
     background: linear-gradient(135deg, #000000 0%, #2C2C2C 50%, #000000 100%);

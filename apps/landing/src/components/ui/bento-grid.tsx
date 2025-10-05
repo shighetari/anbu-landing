@@ -173,7 +173,7 @@ const BentoCard = ({
               className={cn(
                 buttonVariants.ghost.className,
                 "w-full",
-                "text-[11px] sm:text-xs md:text-sm lg:text-sm px-6 py-3 sm:px-7 sm:py-3.5 lg:px-8 lg:py-4",
+                "text-[11px] sm:text-xs md:text-sm lg:text-sm px-5 py-2.5 sm:px-6 sm:py-3 lg:px-7 lg:py-3.5",
                 "font-semibold",
                 "border border-white/20 hover:border-white/40",
                 "bg-black/60 hover:bg-black/80 backdrop-blur-sm",

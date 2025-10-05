@@ -1,0 +1,12 @@
+# ANBU Solutions - Robots.txt
+# I'm configuring crawling permissions for search engines
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://anbu.ai/sitemap.xml
+
+# Disallow admin/private paths if needed in future
+# Disallow: /admin/
+# Disallow: /api/

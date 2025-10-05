@@ -290,14 +290,16 @@ export default function Navigation() {
 
   useEffect(() => {
     setMobileOpen(false)
+    setActive(null)
     document.body.style.overflow = ''
     document.body.style.paddingRight = ''
   }, [pathname])
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileOpen) {
+      if (e.key === 'Escape') {
         setMobileOpen(false)
+        setActive(null)
       }
     }
     document.addEventListener('keydown', handleEscape)
@@ -313,6 +315,7 @@ export default function Navigation() {
 
   const handleNavigate = () => {
     setMobileOpen(false)
+    setActive(null)
   }
 
   return (
@@ -425,11 +428,10 @@ export default function Navigation() {
                 aria-hidden="true"
               />
               <motion.div
-                ref={(el) => {
-                  if (el) {
-                    (mobileMenuRef as any).current = el
-                    (focusTrapRef as any).current = el
-                  }
+                ref={(node) => {
+                  // I'm properly setting both refs to the same element
+                  mobileMenuRef.current = node
+                  focusTrapRef.current = node
                 }}
                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -623,6 +625,7 @@ function DesktopMenuItem({
     >
       <Link
         href={item.href}
+        onClick={() => setActive(null)}
         className={cn(
           'group relative inline-flex items-center rounded-full px-4 lg:px-6 py-2 lg:py-2.5 text-xs font-semibold uppercase tracking-[0.12em] lg:tracking-[0.15em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] min-h-[44px] touch-manipulation',
           isActive && 'bg-white/5 text-anbu-gold',
