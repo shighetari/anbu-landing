@@ -16,7 +16,6 @@ import AnimatedGradientText from '@/components/magicui/animated-gradient-text'
 import SparklesText from '@/components/magicui/sparkles-text'
 import TypingAnimation from '@/components/magicui/typing-animation'
 import { cn } from '@/lib/utils'
-import { brandButton } from '@/lib/brand'
 
 const VIDEO_STOP_TIME = 7.2
 
@@ -243,10 +242,10 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
 
             {/* CTA */}
             <motion.div
-              className={brandButton({ variant: 'ghost', size: 'sm', className: 'mt-6 border-white/20 bg-black/40 px-4 py-1.5 tracking-[0.18em] text-anbu-gold/85' })}
+              className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-anbu-gold"
               animate={{
                 x: isHovered ? 8 : 0,
-                letterSpacing: isHovered ? '0.2em' : '0.16em'
+                letterSpacing: isHovered ? '0.15em' : '0.1em'
               }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
@@ -350,7 +349,7 @@ export default function SolutionsPortalLanding() {
   }
 
   return (
-    <main id="main-content" className="min-h-screen bg-black text-anbu-marble">
+    <main className="min-h-screen bg-black text-anbu-marble">
       <section className="relative flex min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh] lg:min-h-[55vh] items-center justify-center overflow-hidden">
         {mounted && !videoFinished ? (
           <video

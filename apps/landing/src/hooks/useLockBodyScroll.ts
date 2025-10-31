@@ -5,12 +5,7 @@ import { useEffect } from 'react'
  */
 export function useLockBodyScroll(enabled: boolean = true) {
   useEffect(() => {
-    if (!enabled) {
-      // Ensure body scroll is unlocked when disabled
-      document.body.style.overflow = ''
-      document.body.style.paddingRight = ''
-      return
-    }
+    if (!enabled) return
 
     // Save original body style
     const originalStyle = window.getComputedStyle(document.body).overflow
@@ -25,10 +20,10 @@ export function useLockBodyScroll(enabled: boolean = true) {
       document.body.style.paddingRight = `${scrollbarWidth}px`
     }
 
-    // Cleanup - ensure we properly restore original values
+    // Cleanup
     return () => {
-      document.body.style.overflow = originalStyle || ''
-      document.body.style.paddingRight = originalPaddingRight || ''
+      document.body.style.overflow = originalStyle
+      document.body.style.paddingRight = originalPaddingRight
     }
   }, [enabled])
 }

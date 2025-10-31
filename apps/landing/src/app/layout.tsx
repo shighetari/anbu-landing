@@ -3,13 +3,11 @@ import localFont from 'next/font/local'
 import "../styles/globals.css";
 import Navigation from '@/components/layout/Navigation'
 import Footer from '@/components/layout/Footer'
-import SkipNav from '@/components/layout/SkipNav'
 import { ScrollProgress } from '@/components/ui/scroll-progress'
 import { GlobalDock } from '@/components/layout/GlobalDock'
 import { ClickSparkOverlay } from '@/components/reactbits/click-spark-overlay'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { ArrowRight, BookOpen, Compass, Home, MessagesSquare } from 'lucide-react'
-import { ScrollReset } from '@/components/layout/ScrollReset'
+import { ArrowRight, Compass, Home, MessagesSquare, Sparkles } from 'lucide-react'
 
 // I'm loading the Nerd Font locally for optimal performance
 const jetbrainsMono = localFont({
@@ -85,8 +83,6 @@ export default function RootLayout({
       <body
         className={`${jetbrainsMono.variable} font-sans antialiased bg-black text-anbu-marble`}
       >
-        <ScrollReset />
-        <SkipNav />
         <ScrollProgress />
         <ClickSparkOverlay />
         <Navigation />
@@ -94,38 +90,38 @@ export default function RootLayout({
         <GlobalDock
           items={[
             {
-              title: "Discover",
+              title: "Home",
               icon: <Home className="h-full w-full" />,
               href: "/#home",
             },
             {
-              title: "Solutions",
+              title: "Services",
               icon: <Compass className="h-full w-full" />,
-              href: "/solutions",
+              href: "/#services",
             },
             {
-              title: "Resources",
-              icon: <BookOpen className="h-full w-full" />,
-              href: "/resources",
+              title: "Marketing Studio",
+              icon: <Sparkles className="h-full w-full" />,
+              href: "/social-hub",
             },
             {
-              title: "Docs Hub",
+              title: "Insight",
               icon: (
                 <AnimatedGradientText className="text-xs uppercase" colorFrom="#FFD700" colorTo="#FF8A3C">
-                  Docs
+                  AI
                 </AnimatedGradientText>
               ),
-              href: "/resources/docs-hub",
+              href: "/#about",
             },
             {
-              title: "Engage",
+              title: "Contact",
               icon: <MessagesSquare className="h-full w-full" />,
-              href: "/contact",
+              href: "/#contact",
             },
             {
-              title: "Command",
+              title: "Solutions Portal",
               icon: <ArrowRight className="h-full w-full" />,
-              href: "/solutions/command-console",
+              href: "/solutions-portal",
             },
           ]}
         />

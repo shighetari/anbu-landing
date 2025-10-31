@@ -24,7 +24,6 @@ import { Meteors } from '@/components/aceternity/meteors'
 import SocialPricingCards from '@/components/features/social/SocialPricingCards'
 import AdditionalServices from '@/components/features/social/AdditionalServices'
 import { cn } from '@/lib/utils'
-import { brandButton } from '@/lib/brand'
 
 const socialPlatforms = [
   {
@@ -111,45 +110,19 @@ const stats = [
   { value: 15, suffix: '%', label: 'Avg. Engagement' },
 ]
 
-const heroHighlights = [
-  {
-    title: 'Conversion sprints',
-    description: 'Script-to-launch in 21 days with pre-built nurture flows',
-    icon: <TrendingUp className="h-4 w-4" />,
-    accentFrom: '#FFD16A',
-    accentTo: '#FF8C37',
-  },
-  {
-    title: 'Multi-platform ops',
-    description: 'YouTube, LinkedIn, paid social, and partner enablement cuts',
-    icon: <BarChart3 className="h-4 w-4" />,
-    accentFrom: '#38bdf8',
-    accentTo: '#22d3ee',
-  },
-  {
-    title: 'Insight loop',
-    description: 'Performance diagnostics after every drop with next-step prompts',
-    icon: <Eye className="h-4 w-4" />,
-    accentFrom: '#a855f7',
-    accentTo: '#fb7185',
-  },
-]
-
 const sectionBase = 'relative py-16 sm:py-24 lg:py-32 w-full flex justify-center'
 
 function SectionWrapper({
   children,
   className,
-  containerClassName = 'space-y-12 sm:space-y-16 lg:space-y-20',
-  id,
+  containerClassName = 'space-y-16 sm:space-y-20 lg:space-y-24',
 }: {
   children: ReactNode
   className?: string
   containerClassName?: string
-  id?: string
 }) {
   return (
-    <GradualBlurSection id={id} className={cn(sectionBase, className)}>
+    <GradualBlurSection className={cn(sectionBase, className)}>
       <Container size="lg" className={cn('flex flex-col items-center justify-center text-center', containerClassName)}>
         {children}
       </Container>
@@ -176,7 +149,7 @@ function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay }}
       viewport={{ once: true, amount: 0.4 }}
-      className={cn('mx-auto w-full max-w-3xl space-y-6 sm:space-y-8 text-center mb-10 sm:mb-12 lg:mb-16', className)}
+      className={cn('mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center mb-12 sm:mb-16 lg:mb-20', className)}
     >
       {eyebrow ? <div className="flex justify-center">{eyebrow}</div> : null}
       {typeof title === 'string' ? (
@@ -205,14 +178,7 @@ function SectionHeading({
 export default function SocialHubPage() {
   return (
     <div className="min-h-screen bg-black">
-      <main
-        id="main-content"
-        className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
-        style={{
-          overscrollBehaviorY: 'contain',
-          touchAction: 'pan-y',
-        }}
-      >
+      <main className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble">
         {/* Background Effects */}
         <div className="absolute inset-0">
           <BackgroundBeams className="opacity-20" />
@@ -249,24 +215,24 @@ export default function SocialHubPage() {
                       colorFrom="#FFED4E"
                       colorTo="#FF9D2E"
                     >
-                      Marketing Studio
+                      Social Showcase
                     </AnimatedGradientText>
                   </motion.div>
 
                   <div className="relative inline-flex flex-col items-center gap-2">
                     <TextCascade
                       as="span"
-                      text="Turn scrolls into"
-                      className="text-balance text-4xl font-semibold sm:text-6xl lg:text-[4rem]"
-                      gradientClassName="bg-gradient-to-r from-[#FFE5A0] via-[#FFD16A] to-[#FF8C37] text-transparent bg-clip-text"
+                      text="Broadcast-ready"
+                      className="text-balance text-4xl sm:text-6xl lg:text-[4rem] font-semibold"
+                      gradientClassName="text-white"
                       delay={0.2}
                       stagger={0.06}
                     />
                     <TextCascade
                       as="span"
-                      text="sales-ready demand"
-                      className="text-balance text-3xl font-semibold sm:text-5xl lg:text-[3.4rem]"
-                      gradientClassName="bg-gradient-to-r from-[#9AE6FF] via-[#7BDFF2] to-[#C084FC] text-transparent bg-clip-text"
+                      text="storytelling"
+                      className="text-balance text-3xl sm:text-5xl lg:text-[3.4rem] font-semibold text-white/95"
+                      gradientClassName="text-white/95"
                       delay={0.28}
                       stagger={0.05}
                     />
@@ -276,93 +242,28 @@ export default function SocialHubPage() {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="mx-auto max-w-2xl px-4 text-center text-base leading-[1.75] text-white/90 sm:px-6 sm:text-lg sm:leading-[1.85] lg:text-xl"
+                    className="mx-auto max-w-2xl text-center text-base sm:text-lg lg:text-xl text-white/90 leading-[1.75] sm:leading-[1.85] px-4 sm:px-6"
                   >
-                    Cinematic edits engineered with conversion psychology, automation, and analytics—so every drop opens
-                    pipeline, not just eyes.
+                    <span className="font-semibold text-anbu-gold">Tech-credible.</span>{' '}
+                    <span className="font-semibold text-white">Cinema-grade.</span>{' '}
+                    From explainers to reels—every edit upholds ANBU's premium standard.
                   </motion.p>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.75, duration: 0.5, type: 'spring', stiffness: 110 }}
-                    className="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-5"
-                  >
-                    <a
-                      href="/contact"
-                      className={brandButton({
-                        variant: 'primary',
-                        size: 'lg',
-                        className: 'w-full sm:w-auto shadow-[0_18px_45px_rgba(255,173,51,0.35)]',
-                      })}
-                    >
-                      Book a Call
-                    </a>
-                    <a
-                      href="#showreel"
-                      className={brandButton({
-                        variant: 'secondary',
-                        size: 'lg',
-                        className: 'w-full sm:w-auto text-white/85 hover:text-anbu-gold',
-                      })}
-                    >
-                      Watch Reel
-                    </a>
-                  </motion.div>
-
-                  <motion.ul
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.85, duration: 0.6 }}
-                    className="grid w-full max-w-3xl gap-4 sm:grid-cols-3"
-                  >
-                    {heroHighlights.map((highlight, index) => (
-                      <motion.li
-                        key={highlight.title}
-                        initial={{ opacity: 0, y: 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ delay: index * 0.12, duration: 0.6 }}
-                        className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-6 text-left shadow-[0_18px_45px_rgba(0,0,0,0.45)] backdrop-blur"
-                      >
-                        <span
-                          className="pointer-events-none absolute inset-0 opacity-70"
-                          style={{
-                            background: `linear-gradient(135deg, ${highlight.accentFrom}1a, ${highlight.accentTo}24)`,
-                          }}
-                        />
-                        <div className="relative flex flex-col gap-2">
-                          <span className="flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-white/70">
-                            {highlight.icon}
-                            {highlight.title}
-                          </span>
-                          <AnimatedGradientText
-                            colorFrom={highlight.accentFrom}
-                            colorTo={highlight.accentTo}
-                            className="text-sm font-semibold leading-relaxed text-white"
-                          >
-                            {highlight.description}
-                          </AnimatedGradientText>
-                        </div>
-                      </motion.li>
-                    ))}
-                  </motion.ul>
                 </div>
 
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.95, duration: 0.6, type: 'spring', stiffness: 120, damping: 20 }}
-                  className="flex flex-wrap justify-center gap-3 text-[0.65rem] uppercase tracking-[0.28em] text-white/75 sm:gap-4"
+                  transition={{ delay: 0.85, duration: 0.6, type: 'spring', stiffness: 120, damping: 20 }}
+                  className="flex flex-wrap justify-center gap-4 sm:gap-5 text-[0.65rem] uppercase tracking-[0.28em] text-white/70"
                 >
-                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
-                    Launch Blueprints
+                  <span className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3 backdrop-blur-sm">
+                    Premium Production
                   </span>
-                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
-                    Sales Enablement Cuts
+                  <span className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3 backdrop-blur-sm">
+                    Lifecycle Campaigns
                   </span>
-                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
-                    Performance Dashboards
+                  <span className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3 backdrop-blur-sm">
+                    Intelligent Automation
                   </span>
                 </motion.div>
               </motion.div>
@@ -371,11 +272,7 @@ export default function SocialHubPage() {
         </section>
 
         {/* Video Showcase */}
-        <SectionWrapper
-          id="showreel"
-          className="mt-12 sm:mt-16 lg:mt-20"
-          containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20"
-        >
+        <SectionWrapper className="mt-12 sm:mt-16 lg:mt-20" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -458,7 +355,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* NEW: Service Offerings Section */}
-        <SectionWrapper id="pricing" className="mt-32 sm:mt-40 lg:mt-48">
+        <SectionWrapper className="mt-32 sm:mt-40 lg:mt-48">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -528,7 +425,7 @@ export default function SocialHubPage() {
                         {video.description}
                       </CardItem>
                     </div>
-                    <CardItem translateZ="50" className="w-full overflow-hidden rounded-2xl">
+                    <CardItem translateZ="100" className="w-full overflow-hidden rounded-2xl">
                       <img
                         src={video.thumbnail}
                         height="1000"

@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ChevronDown, ArrowRight, Briefcase, Rocket, Clock, Shield, TrendingUp } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
@@ -12,16 +12,15 @@ import { DecryptedText } from '@/components/reactbits/decrypted-text'
 import { Button as MovingBorderButton } from '@/components/aceternity/moving-border'
 import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { StarBorderButton } from '@/components/reactbits/star-border-button'
-import { useScrolling } from '@/hooks/useScrolling'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { ShinyText } from '@/components/magicui/shiny-text'
 import { NumberTicker } from '@/components/ui/number-ticker'
+import { BackgroundBeams } from '@/components/aceternity/background-beams'
 import { TypewriterEffectSmooth } from '@/components/aceternity/typewriter-effect'
 import { SparklesCore } from '@/components/aceternity/sparkles'
 import { ArchIcon } from '@/components/icons/ArchIcon'
 import { cn } from '@/lib/utils'
-import { brandButton } from '@/lib/brand'
-import { buttonVariants, animationVariants, buttonSizes } from '@/lib/button-variants'
+import { buttonVariants, animationVariants } from '@/lib/button-variants'
 
 const heroHighlights = [
   {
@@ -54,9 +53,6 @@ const typewriterWords = [
 ]
 
 export default function HeroSection() {
-  const isScrolling = useScrolling()
-  const prefersReducedMotion = useReducedMotion()
-
   const scrollToServices = () => {
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -64,35 +60,36 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-[100dvh] w-full overflow-hidden bg-gradient-to-b from-[#080808] via-[#020202] to-[#080808] text-anbu-marble flex justify-center"
+      className="relative min-h-screen-dynamic w-full overflow-hidden bg-gradient-to-b from-[#080808] via-[#020202] to-[#080808] text-anbu-marble flex justify-center"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 hero-gradient-layer"
-      />
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,215,0,0.16),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_45%,rgba(255,168,0,0.12),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_65%)]" />
+      </div>
 
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/80"
-      />
+      <BackgroundBeams className="absolute inset-0 opacity-30" />
 
-      <div className="relative z-30 flex min-h-[100dvh] flex-col justify-center pt-20 sm:pt-24 md:pt-20 lg:pt-16 pb-8 sm:pb-12 md:pb-16">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,215,0,0.1),transparent_70%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/35 to-black/80" />
+
+      <div className="relative z-30 flex min-h-screen flex-col justify-center pt-20 sm:pt-24 md:pt-28 lg:pt-16 pb-16 sm:pb-20">
         <Container size="lg" className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex w-full flex-col items-center space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 text-center"
+            className="flex w-full flex-col items-center space-y-8 sm:space-y-10 md:space-y-12 text-center"
           >
-            <div className="mt-0 sm:mt-2 md:mt-3">
+            <div className="mt-2 sm:mt-3 md:mt-4">
               <TypewriterEffectSmooth
                 words={typewriterWords}
-                className="text-[10px] sm:text-xs md:text-sm lg:text-base tracking-[0.25em] sm:tracking-[0.3em] md:tracking-[0.35em] lg:tracking-[0.4em] uppercase"
+                className="text-xs sm:text-sm md:text-base tracking-[0.3em] sm:tracking-[0.35em] md:tracking-[0.4em] uppercase"
               />
             </div>
 
             <motion.h1
-              className="font-display text-[1.75rem] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-semibold leading-[1.1]"
+              className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-none"
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.35 }}
@@ -108,25 +105,29 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              className="max-w-3xl text-white/80 text-[0.8rem] leading-[1.6] sm:text-sm md:text-base lg:text-lg xl:text-xl px-2 sm:px-4 md:px-6 lg:px-0"
+              className="max-w-3xl text-white/80 text-sm sm:text-base md:text-lg lg:text-xl px-4 sm:px-6 lg:px-0"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
-              We turn ambitious ideas into <span className="text-anbu-gold/90">precision‑built, scalable products</span>—combining cinematic interfaces, data intelligence, and automation to ship fast with confidence.
+              We craft premium product journeys for executive teams that expect precision.
+              <span className="text-anbu-gold/90">
+                {' '}Interfaces, data orchestration, and scale-ready automation
+              </span>{' '}
+              delivered by a studio that pairs enterprise discipline with atelier-level detail.
             </motion.p>
 
             <motion.div
-              className="relative flex w-full flex-col items-center justify-center gap-2.5 sm:gap-3 md:flex-row md:gap-4 lg:gap-5 mt-3 sm:mt-4 md:mt-6 lg:mt-8"
+              className="relative flex w-full flex-col items-center justify-center gap-4 sm:gap-5 md:flex-row md:gap-6 lg:gap-8 mt-8 sm:mt-10"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
               {/* Primary CTA with MovingBorderButton and refined effects */}
               <motion.div
-                className="relative group shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_12px_35px_rgba(255,215,0,0.25)] transition-shadow duration-700"
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
+                className="relative group"
+                whileHover={{ scale: 1.005 }}
+                whileTap={{ scale: 0.995 }}
                 transition={{
                   type: 'spring',
                   stiffness: 250,
@@ -136,9 +137,9 @@ export default function HeroSection() {
               >
                 <MovingBorderButton
                   borderRadius="1rem"
-                  containerClassName="min-w-[140px] sm:min-w-[180px] md:min-w-[200px] w-full md:w-auto"
-                  borderClassName="bg-[radial-gradient(var(--anbu-gold)_40%,transparent_60%)] opacity-[0.65] group-hover:opacity-[0.9] transition-opacity duration-700"
-                  className="px-5 sm:px-7 md:px-9 lg:px-10 py-3 sm:py-3.5 md:py-4 lg:py-4.5 text-[11px] sm:text-xs md:text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.08em] sm:tracking-[0.1em] md:tracking-[0.12em] shadow-[0_8px_24px_rgba(255,215,0,0.2)] hover:shadow-[0_12px_36px_rgba(255,215,0,0.28)] transition-all duration-700 ease-out"
+                  containerClassName="min-w-[200px] sm:min-w-[240px] w-full md:w-auto"
+                  borderClassName="bg-[radial-gradient(var(--anbu-gold)_40%,transparent_60%)] opacity-[0.7] group-hover:opacity-[0.9] transition-opacity duration-700"
+                  className="px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-xs sm:text-sm lg:text-base bg-gradient-to-br from-neutral-950 via-black to-neutral-900 backdrop-blur-xl border border-anbu-gold/20 font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] shadow-[0_10px_30px_rgba(255,215,0,0.2)] hover:shadow-[0_15px_40px_rgba(255,215,0,0.3)] transition-all duration-700 ease-out"
                   duration={4000}
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
                 >
@@ -154,7 +155,7 @@ export default function HeroSection() {
                       maxSize={0.8}
                     />
                   </div>
-                  <span className="relative z-10 flex items-center gap-3 pointer-events-none">
+                  <span className="relative z-10 flex items-center gap-4 pointer-events-none">
                     <div className="transition-transform duration-500 ease-out group-hover:rotate-12">
                       <Rocket className="w-4 h-4 lg:w-5 lg:h-5 text-anbu-gold" />
                     </div>
@@ -186,9 +187,9 @@ export default function HeroSection() {
 
               {/* Secondary CTA with StarBorderButton */}
               <motion.div
-                className="group opacity-95 hover:opacity-100"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className="group"
+                whileHover={{ scale: 1.005 }}
+                whileTap={{ scale: 0.995 }}
                 transition={{
                   type: 'spring',
                   stiffness: 250,
@@ -197,11 +198,11 @@ export default function HeroSection() {
                 }}
               >
                 <StarBorderButton
-                  className="min-w-[140px] sm:min-w-[180px] md:min-w-[200px] w-full md:w-auto px-5 sm:px-7 md:px-9 lg:px-10 py-3 sm:py-3.5 md:py-4 lg:py-4.5 text-[11px] sm:text-xs md:text-sm lg:text-base shadow-[0_8px_24px_rgba(255,215,0,0.15)] hover:shadow-[0_12px_30px_rgba(255,215,0,0.22)] transition-all duration-700 ease-out"
+                  className="min-w-[180px] sm:min-w-[220px] w-full md:w-auto px-8 sm:px-12 lg:px-16 py-4 sm:py-5 lg:py-6 text-xs sm:text-sm lg:text-base shadow-[0_10px_30px_rgba(255,215,0,0.15)] hover:shadow-[0_15px_35px_rgba(255,215,0,0.25)] transition-all duration-700 ease-out"
                   onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
                   glow={true}
                 >
-                  <span className="flex items-center gap-2.5 sm:gap-3.5 font-bold uppercase tracking-[0.1em] sm:tracking-[0.12em] pointer-events-none">
+                  <span className="flex items-center gap-3 sm:gap-4 font-bold uppercase tracking-[0.12em] sm:tracking-[0.15em] pointer-events-none">
                     <div className="transition-transform duration-500 ease-out group-hover:scale-110">
                       <Briefcase className="w-4 h-4 lg:w-5 lg:h-5" />
                     </div>
@@ -222,7 +223,7 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div
-              className="w-full max-w-4xl mt-4 sm:mt-6 md:mt-8 lg:mt-10"
+              className="w-full max-w-4xl mt-10 sm:mt-12 md:mt-14"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.85, delay: 0.9 }}
@@ -233,7 +234,7 @@ export default function HeroSection() {
                 neonColors={{ firstColor: '#FFD700', secondColor: '#FF9D2E' }}
                 borderSize={2}
               >
-                <div className="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-3">
+                <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-3">
                   {heroHighlights.map((item) => (
                     <motion.div
                       key={item.label}
@@ -264,68 +265,40 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.div
-              className="w-full max-w-2xl sm:max-w-3xl flex justify-center mt-3 sm:mt-4 md:mt-6 lg:mt-8"
+              className="w-full max-w-2xl sm:max-w-3xl flex justify-center mt-8 sm:mt-10 md:mt-12 lg:mt-16"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 1.05 }}
             >
               <Terminal className="border border-white/10 bg-neutral-950/90 shadow-[0_20px_50px_rgba(0,0,0,0.55)] w-full max-w-2xl p-3 sm:p-4 lg:p-6">
-                <div className="font-mono text-xs sm:text-[13px] md:text-sm text-anbu-gold/80 flex items-center gap-2">
+                <div className="font-mono text-[11px] sm:text-[12px] md:text-[13px] text-anbu-gold/80 flex items-center gap-2">
                   <ArchIcon size="md" />
                   <TypingAnimation startOnView>
                     arch linux ➜ sudo pacman -S anbu-suite
                   </TypingAnimation>
                 </div>
-                <AnimatedSpan className="font-mono text-[11px] sm:text-xs md:text-sm text-[#9AE6FF]">resolving packages...</AnimatedSpan>
-                <AnimatedSpan className="font-mono text-[11px] sm:text-xs md:text-sm text-[#9AE6FF]">syncing premium ui system...</AnimatedSpan>
-                <TypingAnimation className="font-mono text-[11px] sm:text-xs md:text-sm text-[#7CFFAE]" delay={900}>
+                <AnimatedSpan className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#9AE6FF]">resolving packages...</AnimatedSpan>
+                <AnimatedSpan className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#9AE6FF]">syncing premium ui system...</AnimatedSpan>
+                <TypingAnimation className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#7CFFAE]" delay={900}>
                   ✅ deployment ready for production teams
                 </TypingAnimation>
-                <TypingAnimation className="font-mono text-[11px] sm:text-xs md:text-sm text-[#F7D774]" delay={1400}>
+                <TypingAnimation className="font-mono text-[10px] sm:text-[11px] md:text-xs text-[#F7D774]" delay={1400}>
                   → open docs/roadmap to preview upcoming mod
                 </TypingAnimation>
               </Terminal>
             </motion.div>
           </motion.div>
 
-          <motion.button
-            type="button"
-            className={cn(
-              'absolute bottom-6 sm:bottom-8 md:bottom-12 lg:bottom-16 left-1/2 -translate-x-1/2 pointer-events-auto',
-              brandButton({
-                variant: 'ghost',
-                size: 'sm',
-                className:
-                  'flex-col gap-1 px-3 py-2 sm:px-4 sm:py-3 text-[0.65rem] sm:text-[0.7rem] tracking-[0.28em] text-anbu-gold/85 border-white/20 bg-black/40 backdrop-blur-md hover:bg-black/55',
-              }),
-            )}
-            aria-label="Scroll to the services section"
+          <motion.div
+            className="absolute bottom-6 sm:bottom-10 md:bottom-14 lg:bottom-24 left-1/2 -translate-x-1/2 cursor-pointer flex flex-col items-center gap-2 text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.3em] lg:tracking-[0.4em] text-anbu-gold/70"
             onClick={scrollToServices}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: isScrolling ? 0 : 1, y: isScrolling ? 10 : 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 1 }}
-            whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
-            whileTap={{ scale: 0.94 }}
-            style={{ pointerEvents: isScrolling ? 'none' : 'auto' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
           >
-            <span className="hidden sm:block">Scroll</span>
-            <motion.span
-              aria-hidden
-              animate={
-                prefersReducedMotion
-                  ? { opacity: 1 }
-                  : { y: [0, 6, 0] }
-              }
-              transition={
-                prefersReducedMotion
-                  ? undefined
-                  : { repeat: Infinity, duration: 1.6, ease: 'easeInOut' }
-              }
-              className="flex items-center justify-center rounded-full bg-anbu-gold/20 p-1"
-            >
-              <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFD700]" />
-            </motion.span>
-          </motion.button>
+            <span>Scroll</span>
+            <ChevronDown className="h-6 w-6 animate-bounce text-[#FFD700]" />
+          </motion.div>
         </Container>
       </div>
 
