@@ -125,6 +125,19 @@ Always run these before considering a task complete:
 - **Glassmorphism**: Strategic use of backdrop-blur and transparency for depth
 - **Flexibility Over Rigidity**: Patterns are guidelines, not rules - always prioritize what works best
 
+#### 🚨 CRITICAL: Chrome DevTools Screenshot Guidelines
+
+**NEVER take full-page screenshots** - they create massive files that get rejected by the Claude API.
+
+**Correct approach**:
+- ✅ **ALWAYS use viewport-only screenshots**: `mcp__chrome-devtools__take_screenshot` (default)
+- ✅ **Scroll and capture multiple viewport screenshots** to see different sections
+- ✅ **Trigger lazy loading** by scrolling through page before capturing screenshots
+- ❌ **NEVER use `fullPage: true`** parameter - it creates multi-MB images
+- ❌ **NEVER try to capture entire page** in one shot
+
+**Why**: Full-page screenshots of SPAs can be 5000+ pixels tall, creating files that exceed API limits. Viewport screenshots (~800px tall) are much smaller and always work.
+
 #### Component Library Hierarchy
 
 I've organized components into three tiers for maximum reusability and consistency:
@@ -183,7 +196,8 @@ The BentoGrid system I've refined for flexible card layouts:
 - Don't override grid-cols in the instantiation - let BentoGrid handle it
 - Use simple col-span-1 for cards, avoid col-span-2 on mobile
 - Remove fixed heights (min-h) for better content adaptation
-- Grid should be: 1 column mobile → 2 columns tablet → flexible desktop
+- Grid should be: **2 columns mobile (375px+) → 4 columns desktop (1024px+)** for optimal mobile density
+- Pattern: `grid-cols-2 lg:grid-cols-4` maximizes content visibility on phones
 
 #### Animation & Motion Standards
 
@@ -240,9 +254,17 @@ const breakpoints = {
 ```
 
 **Layout Patterns:**
-1. **Mobile (< 640px)**: Single column, stacked elements
-2. **Tablet (640-1024px)**: 2-column grids, side-by-side where appropriate
-3. **Desktop (1024px+)**: Multi-column, complex grids, side navigation
+1. **Mobile (375-639px)**: 2-column grids for cards, tighter spacing, reduced padding
+2. **Tablet (640-1023px)**: 2-column grids maintained, increased spacing
+3. **Desktop (1024px+)**: 4-column grids, full spacing, side navigation
+
+**Mobile Optimization Strategy (2024 Update):**
+- **Always 2 columns minimum on mobile** for service/feature cards - maximizes content density
+- **Reduce hero title size**: Start at `text-[1.25rem]` (20px) on smallest screens
+- **Compact button padding**: `py-2 px-4` on mobile vs `py-3.5 px-9` on desktop
+- **Tighter vertical spacing**: Use `space-y-2` on mobile, scale up to `space-y-6+` on desktop
+- **Stats in 3 columns on all sizes**: Hide detail text on mobile, show on sm+
+- **Use fluid typography variables** from globals.css instead of hardcoded responsive classes
 
 #### Common Issues & Solutions
 
@@ -367,6 +389,7 @@ pnpm lint                        # Check code quality
 4. **Container Nesting**: Avoid Container > Container nesting, causes spacing issues
 5. **Grid Spans**: Test col-span values across all breakpoints
 6. **Overflow Hidden**: Be cautious - can clip content unexpectedly (learned from Bento grid issue)
+7. **Container Horizontal Overflow (CRITICAL)**: Container must use `maxWidth: min(${size}, 100vw)` not just `maxWidth: ${size}` - otherwise content extends beyond viewport on mobile causing black screens and horizontal scroll. Fixed in Container.tsx by clamping to viewport width.
 
 #### 🚨 CRITICAL: Tailwind CSS Centering Not Working Fix
 
@@ -477,6 +500,24 @@ Remember: I'm building this to be premium, fluid, and delightful. If something i
    - `pnpm build` or `npm run build`
    - Any test runners or file watchers
    - Playwright browser automation sessions
+   - Chrome DevTools MCP instances
+
+6. **Detecting orphaned dev servers**:
+   ```bash
+   # Check for running Next.js/Node processes
+   ps aux | grep -E "(pnpm|npm|node)" | grep -v grep
+
+   # Check what's using specific ports
+   lsof -ti:3000,3001,4000,4001,4100,4102 2>/dev/null
+
+   # Kill processes on specific ports
+   lsof -ti:4000 | xargs kill -9 2>/dev/null || true
+   ```
+
+7. **Chrome DevTools MCP Usage**:
+   - Use `--isolated` flag when multiple agents need Chrome simultaneously
+   - Example: `chrome-devtools-mcp --isolated`
+   - Always close browser tabs after testing: `mcp__chrome-devtools__close_page`
 
 ### Development Server Ports
 
@@ -490,6 +531,3 @@ Remember: I'm building this to be premium, fluid, and delightful. If something i
 - Document any long-running processes that need to persist
 - Use background execution (`run_in_background: true`) for long tasks
 - Monitor output with `BashOutput` tool when needed
-
-Add project-specific configuration here when working on individual projects.
-Use `/init` command in Claude Code to generate project-specific CLAUDE.md files.

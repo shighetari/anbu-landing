@@ -1,29 +1,16 @@
 {
   "mcpServers": {
-    "playwright": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
-      "env": {}
-    },
-
     "context7": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp", "--api-key", "${CONTEXT7_API_KEY}"],
-      "env": {}
-    },
-
-    "tavily": {
       "type": "http",
-      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}"
+      "url": "https://mcp.context7.com/mcp"
     },
-    
-    "@magicuidesign/mcp": {
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com/"
+    },
+    "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "@magicuidesign/mcp@latest"]
+      "args": ["chrome-devtools-mcp@latest"]
     }
-  
-
   }
 }

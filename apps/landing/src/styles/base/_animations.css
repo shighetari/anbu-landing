@@ -433,3 +433,37 @@
 .transition-opacity {
   transition: opacity var(--transition-normal) var(--ease-in-out);
 }
+
+/* =================================
+   REDUCED MOTION SUPPORT
+   ================================= */
+/* I'm respecting user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep opacity transitions but remove transforms */
+  .transition-opacity {
+    transition: opacity var(--transition-fast) var(--ease-in-out);
+  }
+
+  /* Disable complex animations */
+  .animate-float,
+  .animate-pulse,
+  .animate-heartbeat,
+  .animate-glow,
+  .animate-text-glow,
+  .animate-gradient,
+  .animate-wobble,
+  .animate-shake,
+  .animate-swing,
+  .animate-bounce {
+    animation: none !important;
+  }
+}

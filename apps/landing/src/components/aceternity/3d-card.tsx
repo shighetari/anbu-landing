@@ -1,8 +1,9 @@
 "use client"
 
 import { cn } from "@/lib/cn"
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useCallback, useEffect } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { useScrolling } from "@/hooks/useScrolling"
 
 export const CardContainer = ({
   children,
@@ -15,19 +16,40 @@ export const CardContainer = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
+  const isScrolling = useScrolling()
+  const rafRef = useRef<number | undefined>(undefined)
 
   const x = useMotionValue(0)
   const y = useMotionValue(0)
 
-  const mouseXSpring = useSpring(x, { stiffness: 500, damping: 30 })
-  const mouseYSpring = useSpring(y, { stiffness: 500, damping: 30 })
+  // Reduced stiffness for smoother interaction
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 35 })
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 35 })
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"])
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"])
+  // Reset card position when scrolling
+  useEffect(() => {
+    if (isScrolling) {
+      setIsHovered(false)
+      x.set(0)
+      y.set(0)
+    }
+  }, [isScrolling, x, y])
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Reduced rotation range for less aggressive movement
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"])
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"])
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    // Don't track mouse during scroll - completely disable
+    if (isScrolling) {
+      x.set(0)
+      y.set(0)
+      return
+    }
+
     if (!ref.current) return
 
+    // Direct update without RAF
     const rect = ref.current.getBoundingClientRect()
     const width = rect.width
     const height = rect.height
@@ -38,7 +60,7 @@ export const CardContainer = ({
 
     x.set(xPct)
     y.set(yPct)
-  }
+  }, [isScrolling, x, y])
 
   const handleMouseLeave = () => {
     setIsHovered(false)
@@ -66,6 +88,8 @@ export const CardContainer = ({
           rotateY,
           rotateX,
           transformStyle: "preserve-3d",
+          willChange: "transform",
+          contain: "layout style paint"
         }}
         className={cn(
           "relative",
@@ -74,7 +98,7 @@ export const CardContainer = ({
       >
         <div
           style={{
-            transform: "translateZ(75px)",
+            transform: "translateZ(50px)", // Reduced from 75px for better performance
             transformStyle: "preserve-3d",
           }}
         >

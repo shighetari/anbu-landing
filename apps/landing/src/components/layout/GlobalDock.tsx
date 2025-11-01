@@ -27,7 +27,7 @@ export function GlobalDock({
 }: GlobalDockProps) {
   const pathname = usePathname()
 
-  if (pathname?.startsWith('/social-hub')) {
+  if (pathname?.startsWith('/social-hub') || pathname?.startsWith('/solutions/marketing-studio')) {
     return null
   }
 

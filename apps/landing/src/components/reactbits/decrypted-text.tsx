@@ -9,6 +9,7 @@ interface DecryptedTextProps {
   className?: string
   duration?: number
   revealDirection?: "start" | "end" | "center"
+  mono?: boolean
 }
 
 const CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>!@#$%^&*()".split("")
@@ -21,6 +22,7 @@ export function DecryptedText({
   className,
   duration = 1600,
   revealDirection = "start",
+  mono = true,
 }: DecryptedTextProps) {
   const [display, setDisplay] = useState(text)
 
@@ -67,9 +69,9 @@ export function DecryptedText({
     return () => window.cancelAnimationFrame(raf)
   }, [text, duration, order])
 
-  return (
-    <span className={cn("font-mono text-sm tracking-[0.35em] uppercase", className)}>
-      {display}
-    </span>
-  )
+  const baseClasses = mono
+    ? "font-mono text-sm tracking-[0.35em] uppercase"
+    : "tracking-[0.25em] uppercase"
+
+  return <span className={cn(baseClasses, className)}>{display}</span>
 }

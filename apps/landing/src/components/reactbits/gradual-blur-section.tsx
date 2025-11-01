@@ -16,7 +16,7 @@ interface GradualBlurSectionProps extends PropsWithChildren<{}> {
  */
 export function GradualBlurSection({ children, className, id }: GradualBlurSectionProps) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.3 })
+  const isInView = useInView(ref, { once: true, amount: 0.1 })
 
   return (
     <motion.section

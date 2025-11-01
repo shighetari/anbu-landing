@@ -14,10 +14,10 @@ export default function Container({
   size = 'lg'
 }: ContainerProps) {
   const sizeValues = {
-    sm: '768px',
-    md: '1024px',
-    lg: '1280px',
-    xl: '1440px',
+    sm: '48rem',   // 768px
+    md: '64rem',   // 1024px
+    lg: '80rem',   // 1280px
+    xl: '90rem',   // 1440px
     full: '100%'
   }
 
@@ -25,11 +25,11 @@ export default function Container({
     <div
       className={cn('w-full', className)}
       style={{
-        maxWidth: sizeValues[size],
+        maxWidth: `min(${sizeValues[size]}, 100vw)`,
         marginLeft: 'auto',
         marginRight: 'auto',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
+        paddingLeft: 'clamp(1rem, 2vw, 2rem)',
+        paddingRight: 'clamp(1rem, 2vw, 2rem)',
       }}
     >
       {children}

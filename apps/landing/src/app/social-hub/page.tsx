@@ -1,13 +1,13 @@
 'use client'
 
+import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { motion } from 'framer-motion'
-import { Youtube, Instagram, Video, TrendingUp, BarChart3, Users, Play, Eye } from 'lucide-react'
+import { Youtube, Instagram, Video, TrendingUp, BarChart3, Users, Play, Eye, ArrowUpRight } from 'lucide-react'
 
 import Container from '@/components/ui/Container'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
 import { HeroVideoDialog } from '@/components/ui/hero-video-dialog'
-import { WobbleCard } from '@/components/aceternity/wobble-card'
 import { CardContainer, CardBody, CardItem } from '@/components/aceternity/3d-card'
 import { FloatingDock } from '@/components/aceternity/floating-dock'
 import { InfiniteMovingCards } from '@/components/aceternity/infinite-moving-cards'
@@ -24,6 +24,7 @@ import { Meteors } from '@/components/aceternity/meteors'
 import SocialPricingCards from '@/components/features/social/SocialPricingCards'
 import AdditionalServices from '@/components/features/social/AdditionalServices'
 import { cn } from '@/lib/utils'
+import { brandButton } from '@/lib/brand'
 
 const socialPlatforms = [
   {
@@ -110,19 +111,78 @@ const stats = [
   { value: 15, suffix: '%', label: 'Avg. Engagement' },
 ]
 
+const heroHighlights = [
+  {
+    title: 'Conversion sprints',
+    description: 'Script-to-launch in 21 days with pre-built nurture flows',
+    icon: <TrendingUp className="h-4 w-4" />,
+    accentFrom: '#FFD16A',
+    accentTo: '#FF8C37',
+  },
+  {
+    title: 'Multi-platform ops',
+    description: 'YouTube, LinkedIn, paid social, and partner enablement cuts',
+    icon: <BarChart3 className="h-4 w-4" />,
+    accentFrom: '#38bdf8',
+    accentTo: '#22d3ee',
+  },
+  {
+    title: 'Insight loop',
+    description: 'Performance diagnostics after every drop with next-step prompts',
+    icon: <Eye className="h-4 w-4" />,
+    accentFrom: '#a855f7',
+    accentTo: '#fb7185',
+  },
+]
+
+const workflowHighlights = [
+  {
+    title: 'Campaign blueprints',
+    description: 'Figma storyboards, narrative prompts, and edit templates keep every launch aligned with product and revenue goals.',
+    icon: BarChart3,
+    accentFrom: '#FFD16A',
+    accentTo: '#FF8C37',
+    tags: ['Strategic', 'Ready-to-run'],
+    href: '/docs-hub?focus=campaign-blueprints',
+    cta: 'Explore playbooks',
+  },
+  {
+    title: 'Content production pods',
+    description: 'Hybrid producers and editors capture footage, cut hero films, and deliver platform-specific variations in a single sprint.',
+    icon: Video,
+    accentFrom: '#C084FC',
+    accentTo: '#FB7185',
+    tags: ['Cinematic', 'On-brand'],
+    href: '/contact?topic=marketing-studio',
+    cta: 'Book production slot',
+  },
+  {
+    title: 'Insights console',
+    description: 'Live dashboards connect platform analytics, CRM data, and MQL triggers so every drop feeds the next optimization cycle.',
+    icon: TrendingUp,
+    accentFrom: '#38BDF8',
+    accentTo: '#14B8A6',
+    tags: ['Live metrics', 'Ops ready'],
+    href: '/solutions/command-console',
+    cta: 'See command console',
+  },
+]
+
 const sectionBase = 'relative py-16 sm:py-24 lg:py-32 w-full flex justify-center'
 
 function SectionWrapper({
   children,
   className,
-  containerClassName = 'space-y-16 sm:space-y-20 lg:space-y-24',
+  containerClassName = 'space-y-12 sm:space-y-16 lg:space-y-20',
+  id,
 }: {
   children: ReactNode
   className?: string
   containerClassName?: string
+  id?: string
 }) {
   return (
-    <GradualBlurSection className={cn(sectionBase, className)}>
+    <GradualBlurSection id={id} className={cn(sectionBase, className)}>
       <Container size="lg" className={cn('flex flex-col items-center justify-center text-center', containerClassName)}>
         {children}
       </Container>
@@ -149,7 +209,7 @@ function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay }}
       viewport={{ once: true, amount: 0.4 }}
-      className={cn('mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center mb-12 sm:mb-16 lg:mb-20', className)}
+      className={cn('mx-auto w-full max-w-3xl space-y-6 sm:space-y-8 text-center mb-10 sm:mb-12 lg:mb-16', className)}
     >
       {eyebrow ? <div className="flex justify-center">{eyebrow}</div> : null}
       {typeof title === 'string' ? (
@@ -178,7 +238,14 @@ function SectionHeading({
 export default function SocialHubPage() {
   return (
     <div className="min-h-screen bg-black">
-      <main className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble">
+      <main
+        id="main-content"
+        className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
+        style={{
+          overscrollBehaviorY: 'contain',
+          touchAction: 'pan-y',
+        }}
+      >
         {/* Background Effects */}
         <div className="absolute inset-0">
           <BackgroundBeams className="opacity-20" />
@@ -186,14 +253,14 @@ export default function SocialHubPage() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-32 pb-28">
+        <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-20 sm:pt-24 lg:pt-32 pb-16 sm:pb-20 lg:pb-28">
           <div className="pointer-events-none absolute inset-0">
-            <Meteors number={20} className="opacity-45" />
+            <Meteors number={15} className="opacity-45" />
           </div>
           <Container size="lg" className="relative flex flex-col items-center text-center">
             <Sparkles
               particleColor="#FFD16A"
-              particleDensity={90}
+              particleDensity={60}
               minSize={0.6}
               maxSize={1.4}
               className="mx-auto flex w-full max-w-4xl flex-col items-center gap-10"
@@ -202,37 +269,37 @@ export default function SocialHubPage() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="mx-auto flex w-full max-w-3xl flex-col items-center space-y-12 sm:space-y-16 text-center"
+                className="mx-auto flex w-full max-w-3xl flex-col items-center space-y-8 sm:space-y-12 lg:space-y-14 text-center"
               >
-                <div className="flex flex-col items-center space-y-10 sm:space-y-14">
+                <div className="flex flex-col items-center space-y-6 sm:space-y-8 lg:space-y-10">
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
                     <AnimatedGradientText
-                      className="mx-auto inline-flex items-center justify-center text-xs sm:text-sm uppercase tracking-[0.32em] text-anbu-gold"
+                      className="mx-auto inline-flex items-center justify-center text-xs sm:text-sm uppercase tracking-[0.24em] sm:tracking-[0.32em] text-anbu-gold"
                       colorFrom="#FFED4E"
                       colorTo="#FF9D2E"
                     >
-                      Social Showcase
+                      Marketing Studio
                     </AnimatedGradientText>
                   </motion.div>
 
                   <div className="relative inline-flex flex-col items-center gap-2">
                     <TextCascade
                       as="span"
-                      text="Broadcast-ready"
-                      className="text-balance text-4xl sm:text-6xl lg:text-[4rem] font-semibold"
-                      gradientClassName="text-white"
+                      text="Turn scrolls into"
+                      className="text-balance text-[2rem] font-semibold sm:text-5xl lg:text-[4rem]"
+                      gradientClassName="bg-gradient-to-r from-[#FFE5A0] via-[#FFD16A] to-[#FF8C37] text-transparent bg-clip-text"
                       delay={0.2}
                       stagger={0.06}
                     />
                     <TextCascade
                       as="span"
-                      text="storytelling"
-                      className="text-balance text-3xl sm:text-5xl lg:text-[3.4rem] font-semibold text-white/95"
-                      gradientClassName="text-white/95"
+                      text="sales-ready demand"
+                      className="text-balance text-[1.75rem] font-semibold sm:text-4xl lg:text-[3.4rem]"
+                      gradientClassName="bg-gradient-to-r from-[#9AE6FF] via-[#7BDFF2] to-[#C084FC] text-transparent bg-clip-text"
                       delay={0.28}
                       stagger={0.05}
                     />
@@ -242,28 +309,95 @@ export default function SocialHubPage() {
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="mx-auto max-w-2xl text-center text-base sm:text-lg lg:text-xl text-white/90 leading-[1.75] sm:leading-[1.85] px-4 sm:px-6"
+                    className="mx-auto max-w-2xl px-4 text-center text-sm leading-[1.75] text-white/90 sm:px-6 sm:text-base sm:leading-[1.85] lg:text-lg"
                   >
-                    <span className="font-semibold text-anbu-gold">Tech-credible.</span>{' '}
-                    <span className="font-semibold text-white">Cinema-grade.</span>{' '}
-                    From explainers to reels—every edit upholds ANBU's premium standard.
+                    Cinematic edits engineered with conversion psychology, automation, and analytics—so every drop opens
+                    pipeline, not just eyes.
                   </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.75, duration: 0.5, type: 'spring', stiffness: 110 }}
+                    className="flex w-full flex-col items-center gap-4 sm:flex-row sm:justify-center sm:gap-5"
+                  >
+                    <a
+                      href="/contact"
+                      className={brandButton({
+                        variant: 'primary',
+                        size: 'lg',
+                        className: 'w-full sm:w-auto shadow-[0_18px_45px_rgba(255,173,51,0.35)] min-h-[44px]',
+                      })}
+                      style={{ touchAction: 'manipulation' }}
+                    >
+                      Book a Call
+                    </a>
+                    <a
+                      href="#showreel"
+                      className={brandButton({
+                        variant: 'secondary',
+                        size: 'lg',
+                        className: 'w-full sm:w-auto text-white/85 hover:text-anbu-gold min-h-[44px]',
+                      })}
+                      style={{ touchAction: 'manipulation' }}
+                    >
+                      Watch Reel
+                    </a>
+                  </motion.div>
+
+                  <motion.ul
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.85, duration: 0.6 }}
+                    className="grid w-full max-w-3xl gap-3 sm:gap-4 sm:grid-cols-3"
+                  >
+                    {heroHighlights.map((highlight, index) => (
+                      <motion.li
+                        key={highlight.title}
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ delay: index * 0.12, duration: 0.6 }}
+                        className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-5 sm:px-5 sm:py-6 text-left shadow-[0_18px_45px_rgba(0,0,0,0.45)] backdrop-blur"
+                      >
+                        <span
+                          className="pointer-events-none absolute inset-0 opacity-70"
+                          style={{
+                            background: `linear-gradient(135deg, ${highlight.accentFrom}1a, ${highlight.accentTo}24)`,
+                          }}
+                        />
+                        <div className="relative flex flex-col gap-2">
+                          <span className="flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-white/70">
+                            {highlight.icon}
+                            {highlight.title}
+                          </span>
+                          <AnimatedGradientText
+                            colorFrom={highlight.accentFrom}
+                            colorTo={highlight.accentTo}
+                            className="text-sm font-semibold leading-relaxed text-white"
+                          >
+                            {highlight.description}
+                          </AnimatedGradientText>
+                        </div>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
                 </div>
 
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.85, duration: 0.6, type: 'spring', stiffness: 120, damping: 20 }}
-                  className="flex flex-wrap justify-center gap-4 sm:gap-5 text-[0.65rem] uppercase tracking-[0.28em] text-white/70"
+                  transition={{ delay: 0.95, duration: 0.6, type: 'spring', stiffness: 120, damping: 20 }}
+                  className="flex flex-wrap justify-center gap-3 text-[0.65rem] uppercase tracking-[0.28em] text-white/75 sm:gap-4"
                 >
-                  <span className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3 backdrop-blur-sm">
-                    Premium Production
+                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
+                    Launch Blueprints
                   </span>
-                  <span className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3 backdrop-blur-sm">
-                    Lifecycle Campaigns
+                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
+                    Sales Enablement Cuts
                   </span>
-                  <span className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3 backdrop-blur-sm">
-                    Intelligent Automation
+                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
+                    Performance Dashboards
                   </span>
                 </motion.div>
               </motion.div>
@@ -272,7 +406,11 @@ export default function SocialHubPage() {
         </section>
 
         {/* Video Showcase */}
-        <SectionWrapper className="mt-12 sm:mt-16 lg:mt-20" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
+        <SectionWrapper
+          id="showreel"
+          className="mt-12 sm:mt-16 lg:mt-20"
+          containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20"
+        >
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -289,7 +427,7 @@ export default function SocialHubPage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mx-auto w-full max-w-4xl"
+            className="mx-auto w-full max-w-7xl"
           >
             <ShineBorder
               className="relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.65)]"
@@ -320,11 +458,11 @@ export default function SocialHubPage() {
           />
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="mx-auto grid w-full max-w-5xl grid-cols-2 gap-10 md:grid-cols-4 md:gap-12 lg:gap-16"
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true, amount: 0.3 }}
+            className="mx-auto grid w-full max-w-5xl grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4 md:gap-10 lg:gap-12"
           >
             {stats.map((stat, index) => (
               <motion.div
@@ -355,7 +493,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* NEW: Service Offerings Section */}
-        <SectionWrapper className="mt-32 sm:mt-40 lg:mt-48">
+        <SectionWrapper id="pricing" className="mt-12 sm:mt-16 lg:mt-20">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -370,7 +508,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Additional Services */}
-        <SectionWrapper className="relative mt-16 sm:mt-20 lg:mt-24 py-16 sm:py-24 lg:py-32 overflow-visible">
+        <SectionWrapper className="relative mt-16 sm:mt-20 lg:mt-24 overflow-visible">
           <SectionHeading
             eyebrow={
               <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
@@ -381,7 +519,7 @@ export default function SocialHubPage() {
             description="Live production. Commerce support. On-brand analytics. Mix and match."
             className=""
           />
-          <div className="pt-12 sm:pt-16 lg:pt-20 pb-16 sm:pb-20 lg:pb-24">
+          <div className="pt-8 sm:pt-10 lg:pt-12 pb-8 sm:pb-10 lg:pb-12">
             <AdditionalServices />
           </div>
         </SectionWrapper>
@@ -399,7 +537,7 @@ export default function SocialHubPage() {
             className="mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center"
           />
 
-          <div className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          <div className="mx-auto grid w-full max-w-6xl gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
             {videoShowcase.map((video, index) => (
               <motion.div
                 key={video.title}
@@ -409,7 +547,7 @@ export default function SocialHubPage() {
                 viewport={{ once: true }}
               >
                 <CardContainer className="inter-var max-w-sm mx-auto h-full">
-                  <CardBody className="relative flex h-full min-h-[520px] flex-col justify-between gap-5 rounded-[26px] border border-white/12 bg-black/60 p-8 sm:p-10 shadow-[0_16px_60px_rgba(0,0,0,0.55)] backdrop-blur">
+                  <CardBody className="relative flex h-full min-h-[460px] sm:min-h-[500px] flex-col justify-between gap-5 rounded-[26px] border border-white/12 bg-black/60 p-6 sm:p-8 lg:p-9 shadow-[0_16px_60px_rgba(0,0,0,0.55)] backdrop-blur">
                     <div className="flex flex-col gap-4">
                       <CardItem
                         translateZ="50"
@@ -425,7 +563,7 @@ export default function SocialHubPage() {
                         {video.description}
                       </CardItem>
                     </div>
-                    <CardItem translateZ="100" className="w-full overflow-hidden rounded-2xl">
+                    <CardItem translateZ="50" className="w-full overflow-hidden rounded-2xl">
                       <img
                         src={video.thumbnail}
                         height="1000"
@@ -472,44 +610,74 @@ export default function SocialHubPage() {
             className=""
           />
 
-          <div className="mx-auto grid w-full max-w-5xl gap-8 sm:gap-12 lg:grid-cols-2 lg:gap-16">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <WobbleCard containerClassName="col-span-1 min-h-[320px] max-w-xl mx-auto">
-                <div className="mx-auto flex max-w-prose flex-col items-center space-y-4 text-center">
-                  <h2 className="text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-                    Campaign Blueprints
-                  </h2>
-                  <p className="text-base leading-relaxed text-neutral-200">
-                    Scripts. Storyboards. Edit templates. Stay on-message through every launch.
-                  </p>
-                </div>
-                <BarChart3 className="absolute -right-4 lg:-right-[40%] -bottom-10 h-32 w-32 rounded-2xl object-contain text-anbu-gold/30" />
-              </WobbleCard>
-            </motion.div>
+          <div className="mx-auto grid w-full max-w-6xl gap-6 sm:gap-7 lg:grid-cols-3 lg:gap-8">
+            {workflowHighlights.map((workflow, index) => {
+              const Icon = workflow.icon
+              return (
+                <motion.article
+                  key={workflow.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  whileHover={{ y: -6 }}
+                  className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-left shadow-[0_18px_45px_rgba(0,0,0,0.45)] backdrop-blur sm:p-7 lg:p-8"
+                >
+                  <span
+                    className="pointer-events-none absolute inset-0 opacity-80"
+                    style={{
+                      background: `linear-gradient(145deg, ${workflow.accentFrom}18, ${workflow.accentTo}0a)`,
+                    }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 rounded-3xl border border-white/5" />
 
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <WobbleCard containerClassName="col-span-1 min-h-[320px] max-w-xl mx-auto">
-                <div className="mx-auto flex max-w-prose flex-col items-center space-y-4 text-center">
-                  <h2 className="text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-                    Performance Analytics
-                  </h2>
-                  <p className="text-base leading-relaxed text-neutral-200">
-                    Dashboards. Reports. Creative tuned to audience signals.
-                  </p>
-                </div>
-                <TrendingUp className="absolute -right-4 lg:-right-[40%] -bottom-10 h-32 w-32 rounded-2xl object-contain text-anbu-gold/30" />
-              </WobbleCard>
-            </motion.div>
+                  <div className="relative flex min-h-[220px] flex-col gap-5">
+                    <div className="flex items-start gap-4">
+                      <span
+                        className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-black/40 text-white shadow-[0_12px_32px_rgba(0,0,0,0.35)]"
+                        style={{
+                          backgroundImage: `linear-gradient(135deg, ${workflow.accentFrom}33, ${workflow.accentTo}26)`,
+                        }}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div className="flex-1 space-y-3">
+                        <span className="block text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-white/60 sm:text-[0.75rem]">
+                          {workflow.title}
+                        </span>
+                        <p className="text-[0.8rem] leading-relaxed text-white/75 sm:text-[0.9rem]">
+                          {workflow.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      {workflow.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center justify-center rounded-full border border-white/18 bg-black/45 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-white/65 sm:text-[0.7rem]"
+                          style={{
+                            backgroundImage: `linear-gradient(135deg, ${workflow.accentFrom}16, ${workflow.accentTo}0d)`,
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {workflow.href ? (
+                      <Link
+                        href={workflow.href}
+                        className="group inline-flex w-fit items-center gap-2 text-[0.8rem] font-semibold text-anbu-gold transition-colors duration-300 hover:text-[#FFE27A]"
+                      >
+                        {workflow.cta}
+                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                      </Link>
+                    ) : null}
+                  </div>
+                </motion.article>
+              )
+            })}
           </div>
         </SectionWrapper>
 
@@ -579,7 +747,8 @@ export default function SocialHubPage() {
                   >
                     <a
                       href="mailto:contact@anbu.ai?subject=Marketing Studio Production Inquiry"
-                      className="block px-12 py-5 text-lg font-bold uppercase tracking-[0.18em] text-anbu-gold transition-colors hover:text-white"
+                      className="block px-12 py-5 text-lg font-bold uppercase tracking-[0.18em] text-anbu-gold transition-colors hover:text-white min-h-[44px]"
+                      style={{ touchAction: 'manipulation' }}
                     >
                       Start Your Project
                     </a>
@@ -591,11 +760,11 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Social Media Dock */}
-        <div className="pointer-events-none fixed bottom-20 left-1/2 z-50 -translate-x-1/2">
+        <div className="pointer-events-none fixed bottom-16 sm:bottom-20 left-1/2 z-50 -translate-x-1/2">
           <div className="pointer-events-auto">
             <FloatingDock
-              desktopClassName="border border-anbu-gold/40 bg-black/70 backdrop-blur-3xl shadow-[0_16px_60px_rgba(0,0,0,0.65)]"
-              mobileClassName="translate-y-28"
+              desktopClassName="border border-anbu-gold/50 bg-black/70 backdrop-blur-3xl shadow-[0_16px_60px_rgba(0,0,0,0.65)]"
+              mobileClassName="translate-y-20"
               items={socialPlatforms}
             />
           </div>

@@ -236,7 +236,7 @@ export const Terminal = ({
     <motion.div
       ref={containerRef}
       className={cn(
-        'relative z-0 w-full max-w-xl text-left text-white group',
+        'relative z-0 w-full text-left text-white group',
         className,
       )}
       initial={{ opacity: 0, y: 20 }}
@@ -272,10 +272,10 @@ export const Terminal = ({
       </div>
 
       {/* Terminal window */}
-      <div className="relative rounded-2xl border border-white/10 bg-gradient-to-b from-neutral-950/95 to-black/95 p-6 shadow-[0_22px_65px_rgba(0,0,0,0.55)] backdrop-blur-xl">
+      <div className="relative rounded-2xl border border-white/12 bg-gradient-to-b from-neutral-950/95 to-black/95 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.45)] backdrop-blur-xl">
         {/* Terminal header with glowing border */}
         <motion.div
-          className="relative flex flex-col gap-3 rounded-xl border border-white/5 bg-gradient-to-r from-black/60 via-black/40 to-black/60 px-5 py-4 overflow-hidden"
+          className="relative flex flex-col gap-3 rounded-xl border border-white/8 bg-gradient-to-r from-black/60 via-black/45 to-black/60 px-4 py-3.5 overflow-hidden"
         >
           {/* Animated border beam */}
           <motion.div
@@ -333,7 +333,7 @@ export const Terminal = ({
         </motion.div>
 
         {/* Terminal content with enhanced styling */}
-        <pre className="relative mt-4 max-h-[300px] overflow-auto rounded-xl bg-gradient-to-b from-black/50 to-black/30 px-5 py-6 text-[13px] font-mono scrollbar-thin scrollbar-track-transparent scrollbar-thumb-anbu-gold/20 hover:scrollbar-thumb-anbu-gold/30">
+        <pre className="relative mt-3 min-h-[180px] max-h-[260px] overflow-auto rounded-xl bg-gradient-to-b from-black/50 to-black/30 px-4 py-5 text-[13px] font-mono scrollbar-thin scrollbar-track-transparent scrollbar-thumb-anbu-gold/20 hover:scrollbar-thumb-anbu-gold/30">
           {/* Scanline effect */}
           <motion.div
             className="pointer-events-none absolute inset-0 opacity-[0.03]"

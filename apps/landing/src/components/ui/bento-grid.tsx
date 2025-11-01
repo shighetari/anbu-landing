@@ -5,9 +5,7 @@ import { motion } from "framer-motion";
 
 import { AnimatedTooltip } from "@/components/reactbits/animated-tooltip";
 import { ShinyText } from "@/components/magicui/shiny-text";
-import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { cn } from "@/lib/utils";
-import { buttonVariants, animationVariants } from "@/lib/button-variants";
 
 interface BentoGridProps extends ComponentPropsWithoutRef<"div"> {
   children: ReactNode;
@@ -20,20 +18,21 @@ interface BentoCardProps extends ComponentPropsWithoutRef<"div"> {
   background: ReactNode;
   Icon: React.ElementType;
   description: string;
-  href: string;
+  href?: string;
   cta: string;
   tooltip?: string;
   gradientClass?: string;
   accentColor?: string;
+  onClick?: () => void;
+  ctaOnClick?: () => void;
 }
 
 const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
   return (
     <div
       className={cn(
-        "grid w-full auto-rows-auto sm:auto-rows-[12rem] md:auto-rows-[13rem] lg:auto-rows-[14rem] xl:auto-rows-[15rem]",
-        "grid-cols-1 sm:grid-cols-2",
-        "gap-3 sm:gap-4 md:gap-5 lg:gap-6",
+        "grid w-full",
+        "auto-rows-[11rem] sm:auto-rows-[12rem] md:auto-rows-[13rem] lg:auto-rows-[14rem] xl:auto-rows-[16rem]",
         className,
       )}
       {...props}
@@ -54,8 +53,21 @@ const BentoCard = ({
   tooltip,
   gradientClass,
   accentColor = "#FFD700",
+  onClick,
+  ctaOnClick,
   ...props
 }: BentoCardProps) => {
+  const hasHref = typeof href === "string" && href.length > 0;
+
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    if (ctaOnClick) {
+      ctaOnClick();
+      return;
+    }
+    onClick?.();
+  };
+
   return (
   <div
     key={name}
@@ -67,13 +79,15 @@ const BentoCard = ({
       "transition-all duration-500 ease-out",
       "hover:scale-[1.02] hover:shadow-[0_18px_40px_rgba(255,215,0,0.18)] motion-safe:hover:-translate-y-2",
       "hover:border-anbu-gold/40",
-      "min-h-[200px] sm:min-h-[210px] md:min-h-[200px] lg:min-h-0",
+      "min-h-[11rem] sm:min-h-[12rem] md:min-h-[13rem] lg:min-h-[14rem] xl:min-h-[16rem]",
       "backdrop-blur-sm",
+      onClick && "cursor-pointer",
       className,
     )}
     style={{
       "--accent-color": accentColor,
     } as React.CSSProperties}
+    onClick={onClick}
     {...props}
   >
     <div className="absolute inset-0 opacity-80">
@@ -102,8 +116,8 @@ const BentoCard = ({
     </div>
 
     <div className="relative z-10 flex flex-col h-full">
-      <div className="p-4 sm:p-5 md:p-4 lg:p-5 xl:p-6 flex flex-col items-center text-center flex-1">
-        <div className="flex transform-gpu flex-col items-center gap-3 sm:gap-4 lg:gap-4 transition-all duration-700">
+      <div className="p-2.5 sm:p-3 md:p-4 lg:p-5 xl:p-5 flex flex-col items-center text-center flex-1">
+        <div className="flex transform-gpu flex-col items-center gap-1.5 sm:gap-2 md:gap-3 lg:gap-3 transition-all duration-700">
           <motion.div
             className="relative"
             whileHover={{ rotate: 360, scale: 1.1 }}
@@ -126,20 +140,20 @@ const BentoCard = ({
               <div className="relative inline-flex">
                 <AnimatedTooltip label={tooltip}>
                   <Icon
-                    className="h-8 w-8 sm:h-9 sm:w-9 lg:h-8 lg:w-8 xl:h-9 xl:w-9 transform-gpu transition-all duration-700 ease-out"
+                    className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-8 lg:w-8 transform-gpu transition-all duration-700 ease-out"
                     style={{ color: accentColor }}
                   />
                 </AnimatedTooltip>
               </div>
             ) : (
               <Icon
-                className="relative h-8 w-8 sm:h-9 sm:w-9 lg:h-8 lg:w-8 xl:h-9 xl:w-9 transform-gpu transition-all duration-700 ease-out"
+                className="relative h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 lg:h-8 lg:w-8 transform-gpu transition-all duration-700 ease-out"
                 style={{ color: accentColor }}
               />
             )}
           </motion.div>
 
-          <ShinyText className="text-sm sm:text-base md:text-sm lg:text-base xl:text-lg font-bold" speed={3}>
+          <ShinyText className="text-xs sm:text-sm md:text-base lg:text-base font-bold" speed={3}>
             <motion.span
               className="bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent"
               whileHover={{
@@ -154,41 +168,114 @@ const BentoCard = ({
           <motion.p
             initial={{ opacity: 0.7 }}
             whileHover={{ opacity: 1 }}
-            className="max-w-lg text-xs sm:text-sm md:text-xs lg:text-sm leading-relaxed text-white/80 group-hover:text-white/95 transition-all duration-500 px-2"
+            className="max-w-lg text-[10px] sm:text-xs md:text-sm lg:text-sm leading-relaxed text-white/80 group-hover:text-white/95 transition-all duration-500 px-1 sm:px-2"
           >
             {description}
           </motion.p>
         </div>
       </div>
 
-      <div className="relative z-20 p-4 sm:p-5 md:p-4 lg:p-5 mt-auto">
-        <motion.div
-          className="flex w-full justify-center items-center"
-          initial={{ opacity: 0.9, y: 0 }}
-          whileHover={{ opacity: 1, y: -2 }}
-          transition={{ duration: 0.3 }}
-        >
-          <Link href={href} className="block w-full max-w-[200px]">
-            <ShimmerButton
-              {...buttonVariants.ghost}
+      <div className="relative z-20 p-3 sm:p-4 md:p-5 lg:p-5 mt-auto">
+        <div className="block w-full">
+          {hasHref ? (
+            <Link href={href as string} className="block w-full" onClick={(e) => onClick && e.stopPropagation()}>
+              <motion.button
+                className={cn(
+                  "relative w-full overflow-hidden",
+                  "text-[10px] xs:text-[11px] sm:text-xs md:text-sm lg:text-sm",
+                  "px-3 xs:px-4 sm:px-6 md:px-7 py-2 xs:py-2.5 sm:py-3 lg:py-3.5",
+                  "font-semibold rounded-full",
+                  "border border-white/20",
+                  "bg-black/60 backdrop-blur-sm",
+                  "shadow-lg",
+                  "transition-all duration-300",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-anbu-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                )}
+                initial={{ opacity: 0.9, y: 0 }}
+                whileHover={{
+                  opacity: 1,
+                  y: -2,
+                  borderColor: "rgba(255, 215, 0, 0.6)",
+                  boxShadow: "0 0 30px rgba(255, 215, 0, 0.3), 0 10px 40px rgba(0, 0, 0, 0.4)"
+                }}
+                transition={{ duration: 0.3 }}
+                type="button"
+              >
+                <motion.div
+                  className="absolute inset-0 opacity-0"
+                  style={{
+                    background: `linear-gradient(135deg, ${accentColor}15, transparent, ${accentColor}10)`
+                  }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <motion.div
+                  className="absolute inset-0 opacity-0"
+                  style={{
+                    background: `radial-gradient(circle at center, ${accentColor}20, transparent 70%)`
+                  }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.4 }}
+                />
+                <motion.span
+                  className="relative z-10 flex items-center justify-center gap-2 text-white/90"
+                  whileHover={{ color: "#FFD700" }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {cta}
+                  <motion.span
+                    animate={{ x: [0, 3, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 rtl:rotate-180" />
+                  </motion.span>
+                </motion.span>
+              </motion.button>
+            </Link>
+          ) : (
+            <motion.button
               className={cn(
-                buttonVariants.ghost.className,
-                "w-full",
-                "text-xs sm:text-sm lg:text-sm px-4 py-2 lg:px-5 lg:py-2.5",
-                "font-semibold",
-                "border border-white/20 hover:border-white/40",
-                "bg-black/60 hover:bg-black/80 backdrop-blur-sm",
-                "shadow-lg hover:shadow-2xl",
+                "relative w-full overflow-hidden",
+                "text-[10px] xs:text-[11px] sm:text-xs md:text-sm lg:text-sm",
+                "px-3 xs:px-4 sm:px-6 md:px-7 py-2 xs:py-2.5 sm:py-3 lg:py-3.5",
+                "font-semibold rounded-full",
+                "border border-white/20",
+                "bg-black/60 backdrop-blur-sm",
+                "shadow-lg",
                 "transition-all duration-300",
-                "group-hover:border-anbu-gold/60 group-hover:shadow-[0_0_30px_rgba(255,215,0,0.3)]"
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-anbu-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               )}
-              shimmerSize="0.08em"
-              style={{
-                "--shimmer-color": accentColor,
-              } as React.CSSProperties}
+              initial={{ opacity: 0.9, y: 0 }}
+              whileHover={{
+                opacity: 1,
+                y: -2,
+                borderColor: "rgba(255, 215, 0, 0.6)",
+                boxShadow: "0 0 30px rgba(255, 215, 0, 0.3), 0 10px 40px rgba(0, 0, 0, 0.4)"
+              }}
+              transition={{ duration: 0.3 }}
+              type="button"
+              onClick={handleButtonClick}
             >
-              <span
-                className="flex items-center justify-center gap-2 text-white/90 group-hover:text-anbu-gold transition-colors duration-300"
+              <motion.div
+                className="absolute inset-0 opacity-0"
+                style={{
+                  background: `linear-gradient(135deg, ${accentColor}15, transparent, ${accentColor}10)`
+                }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.div
+                className="absolute inset-0 opacity-0"
+                style={{
+                  background: `radial-gradient(circle at center, ${accentColor}20, transparent 70%)`
+                }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              />
+              <motion.span
+                className="relative z-10 flex items-center justify-center gap-2 text-white/90"
+                whileHover={{ color: "#FFD700" }}
+                transition={{ duration: 0.3 }}
               >
                 {cta}
                 <motion.span
@@ -197,10 +284,10 @@ const BentoCard = ({
                 >
                   <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 rtl:rotate-180" />
                 </motion.span>
-              </span>
-            </ShimmerButton>
-          </Link>
-        </motion.div>
+              </motion.span>
+            </motion.button>
+          )}
+        </div>
       </div>
     </div>
 

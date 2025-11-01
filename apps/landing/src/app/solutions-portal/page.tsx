@@ -16,6 +16,7 @@ import AnimatedGradientText from '@/components/magicui/animated-gradient-text'
 import SparklesText from '@/components/magicui/sparkles-text'
 import TypingAnimation from '@/components/magicui/typing-animation'
 import { cn } from '@/lib/utils'
+import { brandButton } from '@/lib/brand'
 
 const VIDEO_STOP_TIME = 7.2
 
@@ -52,7 +53,7 @@ const portalDestinations: PortalDestination[] = [
     subtitle: 'Campaign Systems & Brand Motion',
     description:
       'Premium campaigns. Cinematic storytelling. Full service stack.',
-    href: '/social-hub',
+    href: '/solutions/marketing-studio',
     status: 'Client ready',
     statusTone: 'amber',
     accent: '#f59e0b',
@@ -65,7 +66,7 @@ const portalDestinations: PortalDestination[] = [
     subtitle: 'Automation & Delivery Ops',
     description:
       'Unified console. Orchestrating pods. Full observability.',
-    href: '/docs-hub',
+    href: '/solutions/command-console',
     status: 'In build',
     statusTone: 'violet',
     accent: '#a855f7',
@@ -242,10 +243,10 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
 
             {/* CTA */}
             <motion.div
-              className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-anbu-gold"
+              className={brandButton({ variant: 'ghost', size: 'sm', className: 'mt-6 border-white/20 bg-black/40 px-4 py-1.5 tracking-[0.18em] text-anbu-gold/85' })}
               animate={{
                 x: isHovered ? 8 : 0,
-                letterSpacing: isHovered ? '0.15em' : '0.1em'
+                letterSpacing: isHovered ? '0.2em' : '0.16em'
               }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
@@ -349,8 +350,8 @@ export default function SolutionsPortalLanding() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-anbu-marble">
-      <section className="relative flex min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh] lg:min-h-[55vh] items-center justify-center overflow-hidden">
+    <main id="main-content" className="min-h-screen bg-black text-anbu-marble">
+      <section className="relative flex min-h-[70vh] sm:min-h-[75vh] lg:min-h-[80vh] items-center justify-center overflow-hidden">
         {mounted && !videoFinished ? (
           <video
             ref={videoRef}
@@ -373,7 +374,7 @@ export default function SolutionsPortalLanding() {
           />
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/65 to-black" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/45 to-black/75" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.18)_0%,_transparent_55%)]" />
 
         <motion.div

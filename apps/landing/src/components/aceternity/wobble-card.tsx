@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import React, { useState } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { cn } from '@/lib/cn'
+import { useScrolling } from '@/hooks/useScrolling'
 
 export const WobbleCard = ({
   children,
@@ -15,14 +16,33 @@ export const WobbleCard = ({
 }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
+  const isScrolling = useScrolling()
+  const rafRef = useRef<number | undefined>(undefined)
+  const lastMoveTime = useRef(0)
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = event
-    const rect = event.currentTarget.getBoundingClientRect()
-    const x = (clientX - rect.left) / rect.width
-    const y = (clientY - rect.top) / rect.height
+  // Reset position when scrolling starts
+  useEffect(() => {
+    if (isScrolling) {
+      setMousePosition({ x: 0, y: 0 })
+      setIsHovered(false)
+    }
+  }, [isScrolling])
+
+  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    // Don't track mouse during scroll - return immediately
+    if (isScrolling) {
+      setMousePosition({ x: 0, y: 0 })
+      return
+    }
+
+    // Simple direct update without RAF for now
+    const rect = event.currentTarget?.getBoundingClientRect()
+    if (!rect) return
+
+    const x = (event.clientX - rect.left) / rect.width
+    const y = (event.clientY - rect.top) / rect.height
     setMousePosition({ x, y })
-  }
+  }, [isScrolling])
 
   return (
     <motion.div
@@ -33,12 +53,13 @@ export const WobbleCard = ({
         setMousePosition({ x: 0, y: 0 })
       }}
       style={{
-        transform: isHovered
+        transform: isHovered && !isScrolling
           ? `translate3d(${(mousePosition.x - 0.5) * 10}px, ${
               (mousePosition.y - 0.5) * 10
             }px, 0) scale3d(1, 1, 1)`
           : "translate3d(0px, 0px, 0) scale3d(1, 1, 1)",
         transition: "transform 0.1s ease-out",
+        willChange: isHovered && !isScrolling ? 'transform' : 'auto',
       }}
       className={cn(
         "relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.02] to-transparent backdrop-blur-sm",

@@ -110,3 +110,6 @@ scratch/
 docs/CONTEXT_SUMMARY.md
 docs/*-context.md
 docs/*.context.md
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md

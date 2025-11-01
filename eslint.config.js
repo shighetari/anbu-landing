@@ -13,6 +13,7 @@ export default [
       'build/**',
       '.next/**',
       'coverage/**',
+      'packages/utils/**',
     ],
   },
   js.configs.recommended,
