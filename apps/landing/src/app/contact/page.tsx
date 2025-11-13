@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "Connect with ANBU Solutions",
     description:
       "Get in touch with the ANBU Solutions team to accelerate product, design, and platform initiatives.",
-    url: "https://anbu.ai/contact",
+    url: `${siteConfig.website}/contact`,
   },
 }
 

@@ -16,6 +16,7 @@ import {
   BookMarked,
   Sparkles,
 } from "@/components/ui/lucide-safe"
+import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
   title: "Resource Library — ANBU Solutions",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     title: "ANBU Resource Library",
     description:
       "Discover curated documentation, launch playbooks, and partner enablement material from ANBU Solutions.",
-    url: "https://anbu.ai/resources",
+    url: `${siteConfig.website}/resources`,
   },
 }
 

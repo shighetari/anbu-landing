@@ -8,6 +8,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["*.ts", "*.tsx", "*.js"],
   "exclude": ["node_modules", "dist"]
 }

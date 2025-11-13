@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import { siteConfig } from '@/lib/site-config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://anbu.ai'
+  const baseUrl = siteConfig.website
   const currentDate = new Date()
 
   // I'm defining all the main routes for my site
