@@ -23,6 +23,7 @@ const config: Config = {
         'anbu-black': '#000000',
         'anbu-gold': '#FFD700',
         'anbu-gold-accent': '#FFA500',
+        'anbu-ink': '#0B0500',
         'anbu-marble': '#F8F8F8',
         'anbu-gray': '#2C2C2C',
       },
@@ -39,8 +40,13 @@ const config: Config = {
         'spin-slow': 'spin 8s linear infinite',
         'meteor-effect': 'meteor 5s linear infinite',
         'shiny-text': 'shiny-text 8s infinite',
+        'gradient': 'gradient 8s linear infinite',
       },
       keyframes: {
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
         marbleFlow: {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },

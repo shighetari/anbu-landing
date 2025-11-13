@@ -6,6 +6,59 @@
 @tailwind utilities;
 @import "tw-animate-css";
 
+/* Accessibility: Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fix for framer-motion transforms causing layout shifts */
+[style*="transform"] {
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Hardware acceleration for smooth animations */
+.will-change-transform-gpu {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Smooth meteors animation to prevent jarring effects */
+.animate-meteor-effect {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Reduce motion for performance */
+@media (prefers-reduced-motion: reduce) {
+  .animate-meteor-effect {
+    animation: none !important;
+  }
+}
+
+/* Fix for motion animations causing layout shifts */
+.motion-reduce\:y-0 {
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-reduce\:y-0 {
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
@@ -13,22 +66,23 @@
     --anbu-black: #000000;
     --anbu-gold: #FFD700;
     --anbu-gold-accent: #FFA500;
+    --anbu-ink: #0B0500;
     --anbu-marble: #F8F8F8;
     --anbu-gray: #2C2C2C;
     --background: #000000;
     --foreground: #F8F8F8;
 
-    /* Compact fluid spacing system - I'm implementing tighter, professional scaling */
-    --space-xs: clamp(0.25rem, 0.5vw, 0.375rem);
-    --space-sm: clamp(0.5rem, 0.75vw, 0.625rem);
-    --space-md: clamp(0.75rem, 1vw, 1rem);
-    --space-lg: clamp(1rem, 1.5vw, 1.5rem);
-    --space-xl: clamp(1.5rem, 2vw, 2rem);
-    --space-2xl: clamp(2rem, 2.5vw, 3rem);
-    --space-3xl: clamp(2.5rem, 3vw, 3.5rem);
-    --space-4xl: clamp(3rem, 4vw, 4rem);
-    --space-5xl: clamp(3.5rem, 5vw, 5rem);
-    --space-6xl: clamp(4rem, 6vw, 6rem);
+    /* Mobile-first fluid spacing system - I'm implementing responsive, professional scaling */
+    --space-xs: clamp(0.25rem, calc(0.25rem + 0.25vw), 0.5rem);
+    --space-sm: clamp(0.375rem, calc(0.375rem + 0.5vw), 0.75rem);
+    --space-md: clamp(0.5rem, calc(0.5rem + 1vw), 1rem);
+    --space-lg: clamp(0.75rem, calc(0.75rem + 1.5vw), 1.5rem);
+    --space-xl: clamp(1rem, calc(1rem + 2vw), 2rem);
+    --space-2xl: clamp(1.5rem, calc(1.5rem + 2.5vw), 3rem);
+    --space-3xl: clamp(2rem, calc(2rem + 3vw), 4rem);
+    --space-4xl: clamp(2.5rem, calc(2.5rem + 3.5vw), 5rem);
+    --space-5xl: clamp(3rem, calc(3rem + 4vw), 6rem);
+    --space-6xl: clamp(3.5rem, calc(3.5rem + 4.5vw), 7rem);
 
     /* Compact hero spacing for better viewport utilization */
     --hero-top-spacing: clamp(2rem, 4vh + 1rem, 4rem);
@@ -38,17 +92,30 @@
     --navbar-top: clamp(0.25rem, 0.5vh, 1rem);
     --navbar-height: clamp(3rem, 6vh, 4rem);
 
-    /* Refined compact typography scale - I'm making this tighter and more professional */
-    --text-xs: clamp(0.625rem, 0.7vw + 0.4rem, 0.75rem);
-    --text-sm: clamp(0.75rem, 0.85vw + 0.5rem, 0.875rem);
-    --text-base: clamp(0.875rem, 1vw + 0.6rem, 1rem);
-    --text-lg: clamp(1rem, 1.2vw + 0.7rem, 1.125rem);
-    --text-xl: clamp(1.125rem, 1.5vw + 0.75rem, 1.375rem);
-    --text-2xl: clamp(1.375rem, 2vw + 0.875rem, 1.75rem);
-    --text-3xl: clamp(1.625rem, 2.5vw + 1rem, 2.25rem);
-    --text-4xl: clamp(2rem, 3vw + 1.25rem, 3rem);
-    --text-5xl: clamp(2.5rem, 4vw + 1.5rem, 3.75rem);
-    --text-hero: clamp(2rem, 5vw + 0.75rem, 4.5rem);
+    /* Mobile-first responsive typography scale - I'm making this fluid and professional */
+    --text-xs: clamp(0.625rem, calc(0.625rem + 0.125vw), 0.75rem);
+    --text-sm: clamp(0.75rem, calc(0.75rem + 0.125vw), 0.875rem);
+    --text-base: clamp(0.875rem, calc(0.875rem + 0.25vw), 1rem);
+    --text-lg: clamp(1rem, calc(1rem + 0.25vw), 1.125rem);
+    --text-xl: clamp(1.125rem, calc(1.125rem + 0.5vw), 1.375rem);
+    --text-2xl: clamp(1.375rem, calc(1.375rem + 0.75vw), 1.75rem);
+    --text-3xl: clamp(1.625rem, calc(1.625rem + 1vw), 2.25rem);
+    --text-4xl: clamp(2rem, calc(2rem + 1.5vw), 3rem);
+    --text-5xl: clamp(2.5rem, calc(2.5rem + 2vw), 3.75rem);
+    --text-hero: clamp(2rem, calc(2rem + 3vw), 4.5rem);
+
+    /* Mobile-optimized hero text - more aggressive scaling for phones */
+    --text-hero-mobile: clamp(1.25rem, 5vw + 0.5rem, 2.5rem);
+
+    /* Mobile-optimized button sizing */
+    --button-padding-x-mobile: clamp(0.875rem, 2vw, 1.5rem);
+    --button-padding-y-mobile: clamp(0.5rem, 1vh, 0.75rem);
+
+    /* Tighter mobile spacing for better content density */
+    --space-mobile-xs: clamp(0.25rem, 0.5vw, 0.375rem);
+    --space-mobile-sm: clamp(0.375rem, 1vw, 0.625rem);
+    --space-mobile-md: clamp(0.5rem, 1.5vw, 0.875rem);
+    --space-mobile-lg: clamp(0.75rem, 2vw, 1.25rem);
 
     /* Line height adjustments for better readability */
     --leading-tight: 1.25;
@@ -68,7 +135,10 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Only use smooth scrolling for users who haven't requested reduced motion */
+    @media (prefers-reduced-motion: no-preference) {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
@@ -79,6 +149,8 @@
     line-height: var(--leading-normal);
     overflow-x: hidden;
     min-height: 100vh;
+    /* Ensure body can always scroll vertically */
+    overflow-y: auto;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -93,6 +165,14 @@
 }
 
 @layer components {
+  .hero-gradient-layer {
+    background-image:
+      radial-gradient(circle at 20% 15%, rgba(255, 215, 0, 0.14), transparent 55%),
+      radial-gradient(circle at 80% 45%, rgba(255, 168, 0, 0.1), transparent 60%),
+      radial-gradient(circle at center, rgba(255, 255, 255, 0.04), transparent 68%);
+    background-size: cover;
+  }
+
   /* Marble texture gradient - I love this effect */
   .marble-bg {
     background: linear-gradient(135deg, #000000 0%, #2C2C2C 50%, #000000 100%);
@@ -132,15 +212,65 @@
     background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
   }
 
+  .shine-border {
+    --shine-border-width: 1px;
+    --shine-border-duration: 14s;
+    --shine-border-gradient: radial-gradient(transparent, transparent, rgba(255, 215, 0, 0.85), transparent, transparent);
+  }
+
+  .shine-border__padding {
+    padding: var(--shine-border-width);
+  }
+
+  .shine-border__glow {
+    will-change: background-position;
+    background-image: var(--shine-border-gradient);
+    background-size: 300% 300%;
+    animation: shine var(--shine-border-duration) linear infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shine-border__glow {
+      animation: none;
+    }
+  }
+
   /* Container with responsive padding */
   .container-custom {
     @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
 
-  /* Compact section spacing - I'm making this tighter for better content density */
+  /* Mobile-first section spacing - I'm optimizing for all viewports */
   .section-padding {
-    @apply py-12 sm:py-16 md:py-20 lg:py-24;
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-3xl);
   }
+
+  .section-padding-sm {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .section-padding-lg {
+    padding-top: var(--space-4xl);
+    padding-bottom: var(--space-4xl);
+  }
+
+  /* Responsive gap utilities using fluid spacing */
+  .gap-fluid-sm { gap: var(--space-sm); }
+  .gap-fluid-md { gap: var(--space-md); }
+  .gap-fluid-lg { gap: var(--space-lg); }
+  .gap-fluid-xl { gap: var(--space-xl); }
+
+  /* Responsive padding utilities */
+  .p-fluid-sm { padding: var(--space-sm); }
+  .p-fluid-md { padding: var(--space-md); }
+  .p-fluid-lg { padding: var(--space-lg); }
+  .p-fluid-xl { padding: var(--space-xl); }
 
   /* Luxury navbar glass morphism - I'm making this look premium */
   .navbar-luxury-glass {
@@ -245,6 +375,38 @@
     font-size: var(--text-hero);
   }
 
+  .fluid-text-hero-mobile {
+    font-size: var(--text-hero-mobile);
+  }
+
+  /* Mobile button sizing utilities */
+  .button-px-mobile {
+    padding-left: var(--button-padding-x-mobile);
+    padding-right: var(--button-padding-x-mobile);
+  }
+
+  .button-py-mobile {
+    padding-top: var(--button-padding-y-mobile);
+    padding-bottom: var(--button-padding-y-mobile);
+  }
+
+  /* Mobile spacing utilities */
+  .space-mobile-y-xs > * + * {
+    margin-top: var(--space-mobile-xs);
+  }
+
+  .space-mobile-y-sm > * + * {
+    margin-top: var(--space-mobile-sm);
+  }
+
+  .space-mobile-y-md > * + * {
+    margin-top: var(--space-mobile-md);
+  }
+
+  .space-mobile-y-lg > * + * {
+    margin-top: var(--space-mobile-lg);
+  }
+
   .fluid-space-y-md > * + * {
     margin-top: var(--space-md);
   }
@@ -284,6 +446,12 @@
     100% {
       background-position: 0% 50%;
     }
+  }
+
+  @keyframes animate-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   @keyframes gradientRotate {

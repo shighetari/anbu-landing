@@ -1,19 +1,25 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type React from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowUpRight, BookOpen, Bot, Sparkles } from 'lucide-react'
+import Image from 'next/image'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { ArrowUpRight, BookOpen, Bot, Sparkles } from '@/components/ui/lucide-safe'
 
 import { SparklesCore } from '@/components/aceternity/sparkles'
+import { HeroVideoDialog } from '@/components/ui/hero-video-dialog'
+import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect'
 import Container from '@/components/ui/Container'
 import { BlurFadeText } from '@/components/magicui/blur-fade-text'
 import { ShinyText } from '@/components/magicui/shiny-text'
+import WordRotate from '@/components/magicui/word-rotate'
+import AnimatedGradientText from '@/components/magicui/animated-gradient-text'
+import SparklesText from '@/components/magicui/sparkles-text'
+import TypingAnimation from '@/components/magicui/typing-animation'
 import { cn } from '@/lib/utils'
-
-const VIDEO_STOP_TIME = 7.2
+import { brandButton } from '@/lib/brand'
 
 type PortalDestination = {
   id: string
@@ -48,7 +54,7 @@ const portalDestinations: PortalDestination[] = [
     subtitle: 'Campaign Systems & Brand Motion',
     description:
       'Premium campaigns. Cinematic storytelling. Full service stack.',
-    href: '/social-hub',
+    href: '/solutions/marketing-studio',
     status: 'Client ready',
     statusTone: 'amber',
     accent: '#f59e0b',
@@ -61,7 +67,7 @@ const portalDestinations: PortalDestination[] = [
     subtitle: 'Automation & Delivery Ops',
     description:
       'Unified console. Orchestrating pods. Full observability.',
-    href: '/docs-hub',
+    href: '/solutions/command-console',
     status: 'In build',
     statusTone: 'violet',
     accent: '#a855f7',
@@ -119,7 +125,7 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
         />
 
         {/* Main card container */}
-        <div className="relative flex h-full min-h-[320px] sm:min-h-[340px] lg:min-h-[360px] w-full max-w-full sm:max-w-[340px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[380px] flex-col overflow-hidden rounded-[20px] sm:rounded-[24px] border border-white/10 bg-gradient-to-br from-black/95 via-black/90 to-black/85 p-5 sm:p-6 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
+        <div className="relative flex h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[320px] w-full max-w-full sm:max-w-[340px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[380px] flex-col overflow-hidden rounded-[20px] sm:rounded-[24px] border border-white/10 bg-gradient-to-br from-black/95 via-black/90 to-black/85 p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
 
           {/* Background effects layer */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[24px]">
@@ -238,10 +244,10 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
 
             {/* CTA */}
             <motion.div
-              className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-anbu-gold"
+              className={brandButton({ variant: 'ghost', size: 'sm', className: 'mt-6 border-white/20 bg-black/40 px-4 py-1.5 tracking-[0.18em] text-anbu-gold/85' })}
               animate={{
                 x: isHovered ? 8 : 0,
-                letterSpacing: isHovered ? '0.15em' : '0.1em'
+                letterSpacing: isHovered ? '0.2em' : '0.16em'
               }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
@@ -264,9 +270,6 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
 }
 
 export default function SolutionsPortalLanding() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [mounted, setMounted] = useState(false)
-  const [videoFinished, setVideoFinished] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -277,128 +280,69 @@ export default function SolutionsPortalLanding() {
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -50])
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3])
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!mounted) return
-    const video = videoRef.current
-    if (!video) return
-
-    setVideoFinished(false)
-
-    let removeUserInteractionListeners: (() => void) | null = null
-
-    const attemptPlay = () => {
-      const promise = video.play()
-      if (!promise || typeof promise.then !== 'function') {
-        return
-      }
-      promise.catch(() => {
-        const retry = () => {
-          video.play().catch(() => null)
-          removeUserInteractionListeners?.()
-        }
-        const handlePointer = () => retry()
-        const handleKey = () => retry()
-        removeUserInteractionListeners = () => {
-          window.removeEventListener('pointerdown', handlePointer)
-          window.removeEventListener('keydown', handleKey)
-          removeUserInteractionListeners = null
-        }
-        window.addEventListener('pointerdown', handlePointer, { once: true })
-        window.addEventListener('keydown', handleKey, { once: true })
-      })
-    }
-
-    const primePlayback = () => {
-      setVideoFinished(false)
-      video.currentTime = 0
-      attemptPlay()
-    }
-
-    if (video.readyState >= 2) {
-      primePlayback()
-    } else {
-      const onLoaded = () => {
-        primePlayback()
-      }
-      video.addEventListener('loadeddata', onLoaded, { once: true })
-      removeUserInteractionListeners = () => {
-        video.removeEventListener('loadeddata', onLoaded)
-      }
-    }
-
-    return () => {
-      removeUserInteractionListeners?.()
-    }
-  }, [mounted])
-
-  const handleTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
-    const video = event.currentTarget
-    if (video.currentTime >= VIDEO_STOP_TIME) {
-      video.pause()
-      video.currentTime = VIDEO_STOP_TIME
-      setVideoFinished(true)
-    }
-  }
-
   return (
-    <main className="min-h-screen bg-black text-anbu-marble">
-      <section className="relative flex min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh] lg:min-h-[65vh] items-center justify-center overflow-hidden">
-        {mounted && !videoFinished ? (
-          <video
-            ref={videoRef}
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            onTimeUpdate={handleTimeUpdate}
-            poster="/anbu_hero.png"
-          >
-            <source src="/Create_a_marketing_202509100024_evwzi.mp4" type="video/mp4" />
-          </video>
-        ) : (
-          <img
+    <main id="main-content" className="min-h-screen bg-black text-anbu-marble">
+      <section className="relative flex min-h-[70vh] sm:min-h-[75vh] lg:min-h-[80vh] items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
             src="/anbu_hero.png"
             alt="ANBU Solutions Portal"
-            className="absolute inset-0 h-full w-full object-cover"
-            loading="lazy"
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
           />
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/65 to-black" />
+        </div>
+        <SparklesCore
+          id="solutions-portal-hero"
+          className="absolute inset-0"
+          particleDensity={10}
+          minSize={0.2}
+          maxSize={0.6}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/65 to-black/80" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.18)_0%,_transparent_55%)]" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
-          className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center"
-        >
-          <span
-            className="inline-flex items-center justify-center gap-3 rounded-full border border-white/20 bg-black/70 px-6 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.45em] text-white/80 text-center backdrop-blur"
-          >
-            <motion.span
-              aria-hidden
-              animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.08, 1] }}
-              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="h-1 w-8 rounded-full bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/60 to-anbu-gold/20"
+        <Container className="relative z-10 flex flex-col items-center gap-6 text-center py-16">
+          <AnimatedGradientText className="text-xs uppercase tracking-[0.35em] text-white/60">
+            Solutions Portal
+          </AnimatedGradientText>
+          <div className="space-y-4 max-w-3xl">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+              Three enterprise workspaces. One command surface.
+            </h1>
+            <p className="text-base sm:text-lg text-white/70">
+              Switch between Docs Intelligence, Marketing Studio, and Command Console without losing momentum. Each
+              workspace is tuned for premium delivery and storytelling.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <ShimmerButton
+              shimmerColor="#FFD700"
+              shimmerDuration="2s"
+              background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+              borderRadius="0.75rem"
+              textColor="var(--anbu-ink, #0B0500)"
+              className="px-7 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-anbu-ink"
+              asChild
+            >
+              <Link href="/contact?topic=solutions-portal">
+                <span className="flex items-center gap-2">
+                  Schedule walkthrough
+                </span>
+              </Link>
+            </ShimmerButton>
+            <HeroVideoDialog
+              videoSrc="/Create_a_marketing_202509100024_evwzi.mp4"
+              thumbnailSrc="/anbu_hero.png"
+              thumbnailAlt="Watch the ANBU Solutions reel"
+              className="w-full max-w-md"
             />
-            ANBU SOLUTIONS PORTAL
-            <motion.span
-              aria-hidden
-              animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.08, 1] }}
-              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="h-1 w-8 rounded-full bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/60 to-anbu-gold/20"
-            />
-          </span>
-        </motion.div>
+          </div>
+        </Container>
       </section>
 
-      <section ref={sectionRef} id="portals" className="relative overflow-hidden py-8 sm:py-10 md:py-12 lg:py-16">
+      <section ref={sectionRef} id="portals" className="relative overflow-hidden py-6 sm:py-8 md:py-10 lg:py-12">
         <motion.div
           className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#0c0c0c] to-black"
           style={{ opacity }}
@@ -428,33 +372,66 @@ export default function SolutionsPortalLanding() {
         </motion.div>
 
         <Container size="lg">
-          <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12">
-            <div className="mx-auto max-w-3xl text-center space-y-3 sm:space-y-4">
+          <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
+            <div className="mx-auto max-w-2xl text-center space-y-2 sm:space-y-3">
               <BlurFadeText delay={0} duration={0.6}>
-                <motion.p
-                  animate={{
-                    letterSpacing: ['0.35em', '0.4em', '0.35em'],
-                  }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="text-xs uppercase text-anbu-gold/70"
-                >
-                  Portal directory
-                </motion.p>
+                <AnimatedGradientText className="inline-flex">
+                  <SparklesText
+                    text="✨ ENTERPRISE PORTALS"
+                    className="text-[10px] font-bold uppercase tracking-[0.35em]"
+                    sparkleColor="#FFD700"
+                    sparklesCount={3}
+                  />
+                </AnimatedGradientText>
               </BlurFadeText>
 
               <BlurFadeText delay={0.1} duration={0.7}>
-                <h2 className="text-balance text-3xl font-display font-semibold text-white sm:text-4xl">
-                  Choose the workspace that aligns with your next move
+                <h2 className="text-balance text-xl font-display font-semibold sm:text-2xl lg:text-3xl">
+                  <span className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    Your next
+                  </span>
+                  {' '}
+                  <WordRotate
+                    words={[
+                      'breakthrough',
+                      'transformation',
+                      'evolution',
+                      'advantage',
+                      'innovation',
+                      'success story',
+                      'market edge',
+                      'growth phase',
+                      'expansion',
+                      'disruption'
+                    ]}
+                    className="bg-gradient-to-r from-anbu-gold via-amber-400 to-anbu-gold bg-clip-text text-transparent inline-block font-bold animate-gradient bg-[length:200%_auto]"
+                    duration={2500}
+                  />
+                  {' '}
+                  <span className="bg-gradient-to-r from-white/70 via-white/90 to-white bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                    starts here
+                  </span>
                 </h2>
               </BlurFadeText>
 
               <BlurFadeText delay={0.2} duration={0.7}>
-                <p className="text-balance text-sm leading-relaxed text-white/70 sm:text-base">
-                  <ShinyText className="inline text-white/90" speed={7}>
-                    MagicUI. React Bits. Custom motion.
-                  </ShinyText>
-                  {' '}Guiding partners to success.
-                </p>
+                <div className="flex flex-col items-center gap-1">
+                  <TypingAnimation
+                    text="Three paths. Unlimited potential."
+                    className="text-xs sm:text-sm text-transparent bg-clip-text bg-gradient-to-r from-white/50 via-white/70 to-white/50 font-medium"
+                    duration={0.04}
+                    delay={0.5}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.8, duration: 0.5 }}
+                  >
+                    <ShinyText className="text-[10px] uppercase tracking-widest text-anbu-gold/60" speed={3}>
+                      Select your workspace below
+                    </ShinyText>
+                  </motion.div>
+                </div>
               </BlurFadeText>
             </div>
 
@@ -471,7 +448,7 @@ export default function SolutionsPortalLanding() {
                   }
                 }
               }}
-              className="grid w-full max-w-7xl mx-auto gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 justify-items-center px-4 sm:px-6 lg:px-8"
+              className="grid w-full max-w-7xl mx-auto gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 justify-items-center px-4 sm:px-6 lg:px-8"
             >
               {portalDestinations.map((portal) => (
                 <PortalCard key={portal.id} portal={portal} />

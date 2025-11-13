@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Search, Bot, Zap, Database, Code, BookOpen } from 'lucide-react'
+import { Search, Bot, Zap, Database, Code, BookOpen } from '@/components/ui/lucide-safe'
+import { siteConfig } from '@/lib/site-config'
 
 import Container from '@/components/ui/Container'
 import { TypewriterEffectSmooth } from '@/components/aceternity/typewriter-effect'
@@ -82,7 +83,10 @@ const typewriterWords = [
 export default function DocsHubLanding() {
   return (
     <div className="min-h-screen bg-black">
-      <main className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble">
+      <main
+        id="main-content"
+        className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
+      >
         {/* Background Effects */}
         <div className="absolute inset-0">
           <BackgroundBeams className="opacity-40" />
@@ -96,20 +100,20 @@ export default function DocsHubLanding() {
             background="transparent"
             minSize={0.6}
             maxSize={1.4}
-            particleDensity={100}
+            particleDensity={35}
             className="w-full h-full"
             particleColor="#FFD700"
           />
         </div>
 
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center px-4">
+        <section className="relative min-h-[90vh] flex items-center justify-center px-4 py-16 sm:py-20">
           <div className="w-full max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="space-y-8 text-center"
+              className="space-y-6 sm:space-y-8 text-center"
             >
               <div className="space-y-6">
                 <motion.div
@@ -118,7 +122,7 @@ export default function DocsHubLanding() {
                   transition={{ delay: 0.2 }}
                   className="flex justify-center"
                 >
-                  <ShinyText className="text-xs sm:text-sm uppercase tracking-[0.3em] sm:tracking-[0.4em] text-anbu-gold/80 font-medium">
+                  <ShinyText className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-anbu-gold/80 font-medium">
                     Coming Soon
                   </ShinyText>
                 </motion.div>
@@ -137,10 +141,11 @@ export default function DocsHubLanding() {
                   className="flex justify-center"
                 >
                   <BlurFadeText
-                    text="Experience intelligent documentation with vector search, RAG chatbots, and instant code examples. The future of developer documentation is here."
                     className="max-w-3xl text-base sm:text-lg lg:text-xl text-white/70 leading-relaxed px-4"
-                    animationDelay={0.8}
-                  />
+                    delay={0.8}
+                  >
+                    Experience intelligent documentation with vector search, RAG chatbots, and instant code examples. The future of developer documentation is here.
+                  </BlurFadeText>
                 </motion.div>
               </div>
 
@@ -151,11 +156,17 @@ export default function DocsHubLanding() {
                 className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6 sm:pt-8"
               >
                 <ShimmerButton
-                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em]"
+                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-ink"
                   background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
                   borderRadius="0.75rem"
+                  textColor="var(--anbu-ink, #0B0500)"
+                  asChild
                 >
-                  <span className="text-black font-bold">Get Early Access</span>
+                  <Link href="/contact?topic=docs-hub">
+                    <span className="flex items-center gap-2 text-anbu-ink">
+                      Get Early Access
+                    </span>
+                  </Link>
                 </ShimmerButton>
 
                 <ShimmerButton
@@ -163,9 +174,12 @@ export default function DocsHubLanding() {
                   background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
                   borderRadius="0.75rem"
                   shimmerColor="#FFD700"
+                  asChild
                 >
-                  <Link href="/" className="text-anbu-gold">
-                    Return to Main Site
+                  <Link href="/">
+                    <span className="flex items-center gap-2">
+                      Return to Main Site
+                    </span>
                   </Link>
                 </ShimmerButton>
               </motion.div>
@@ -286,26 +300,36 @@ export default function DocsHubLanding() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="text-center mb-8 sm:mb-10 lg:mb-12"
+              className="flex flex-col items-center text-center mb-8 sm:mb-10 lg:mb-12"
             >
               <ShinyText className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold mb-4 sm:mb-6 inline-block">
                 See It In Action
               </ShinyText>
               <BlurFadeText
-                text="Experience how our AI assistant will help you find answers instantly"
                 className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-white/70 px-4"
-                animationDelay={0.2}
-              />
+                delay={0.2}
+              >
+                Experience how our AI assistant will help you find answers instantly
+              </BlurFadeText>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.2,
+                ease: [0.25, 0.1, 0.25, 1] // Custom easing for smoother animation
+              }}
               viewport={{ once: true }}
-              className="max-w-4xl mx-auto px-4"
+              className="w-full max-w-[95vw] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-2 sm:px-4 flex justify-center motion-reduce:y-0"
+              style={{
+                willChange: 'transform, opacity',
+                contain: 'layout style paint', // Prevent layout shifts from propagating
+                contentVisibility: 'auto'
+              }}
             >
-              <Terminal className="border border-white/10 bg-black/90 shadow-2xl mx-auto max-w-full overflow-x-auto">
+              <Terminal className="border border-white/10 bg-black/90 shadow-2xl w-full max-w-full">
                 <TypingAnimation className="font-mono text-xs sm:text-sm text-anbu-gold/80" startOnView>
                   $ ask-anbu "How do I implement authentication with Next.js?"
                 </TypingAnimation>
@@ -347,21 +371,27 @@ export default function DocsHubLanding() {
               >
                 Be Among the First to Experience the Future
               </AnimatedGradientText>
-              <TextGenerateEffect
-                words="Join our early access program and help shape the next generation of developer documentation."
-                className="max-w-2xl mx-auto text-sm sm:text-base lg:text-lg text-white/70 mb-6 sm:mb-8"
-              />
+              <div className="flex justify-center w-full">
+                <TextGenerateEffect
+                  words="Join our early access program and help shape the next generation of developer documentation."
+                  className="max-w-2xl text-center mx-auto text-sm sm:text-base lg:text-lg text-white/70 mb-6 sm:mb-8 block"
+                />
+              </div>
 
               <div className="flex justify-center">
-                <Link href="mailto:contact@anbu.ai?subject=Docs Hub Early Access Request">
-                  <ShimmerButton
-                    className="px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em]"
-                    background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
-                    borderRadius="0.75rem"
-                  >
-                    <span className="text-black font-bold">Request Early Access</span>
-                  </ShimmerButton>
-                </Link>
+                <ShimmerButton
+                  className="px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-ink"
+                  background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+                  borderRadius="0.75rem"
+                  textColor="var(--anbu-ink, #0B0500)"
+                  asChild
+                >
+                  <Link href={`mailto:${siteConfig.contactEmail}?subject=Docs Hub Early Access Request`}>
+                    <span className="flex items-center gap-2 text-anbu-ink">
+                      Request Early Access
+                    </span>
+                  </Link>
+                </ShimmerButton>
               </div>
             </motion.div>
           </Container>

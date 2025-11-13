@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useId, useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/cn"
+import React, { useId, useMemo } from "react"
+import { motion, useInView, useReducedMotion } from "framer-motion"
+import { cn } from "@/lib/utils"
+import { deterministicRandom, hashStringToNumber } from "@/lib/random"
 
 interface SparklesProps {
   id?: string
@@ -26,66 +27,80 @@ export const SparklesCore = (props: SparklesProps) => {
   } = props
   const generatedId = useId()
   const internalId = id || generatedId
+  const prefersReducedMotion = useReducedMotion()
+  const containerRef = React.useRef<HTMLDivElement | null>(null)
+  const isInView = useInView(containerRef, { margin: '-10% 0px' })
+  const baseSeed = useMemo(() => hashStringToNumber(internalId), [internalId])
 
-  const [particles, setParticles] = useState<Array<{
-    id: number
-    x: number
-    y: number
-    size: number
-    delay: number
-    duration: number
-  }>>([])
-
-  useEffect(() => {
-    const generateParticles = () => {
-      const newParticles = []
-      for (let i = 0; i < particleDensity; i++) {
-        newParticles.push({
-          id: i,
-          x: Math.random() * 100,
-          y: Math.random() * 100,
-          size: Math.random() * (maxSize - minSize) + minSize,
-          delay: Math.random() * 5,
-          duration: Math.random() * 20 + 10,
-        })
-      }
-      setParticles(newParticles)
+  const effectiveDensity = useMemo(() => {
+    if (prefersReducedMotion) {
+      return 0
     }
-    generateParticles()
-  }, [particleDensity, minSize, maxSize])
+    return Math.min(particleDensity, 18)
+  }, [particleDensity, prefersReducedMotion])
+
+  const particles = useMemo(() => {
+    if (!effectiveDensity) {
+      return []
+    }
+
+    const valueForIndex = (index: number, offset: number) =>
+      deterministicRandom(baseSeed + index * 131 + offset)
+
+    return Array.from({ length: effectiveDensity }, (_, index) => ({
+      id: index,
+      x: valueForIndex(index, 1) * 100,
+      y: valueForIndex(index, 2) * 100,
+      size: valueForIndex(index, 3) * (maxSize - minSize) + minSize,
+      delay: valueForIndex(index, 4) * 5,
+      duration: valueForIndex(index, 5) * 6 + 8,
+    }))
+  }, [effectiveDensity, maxSize, minSize, baseSeed])
+
+  if (!particles.length) {
+    return null
+  }
 
   return (
-    <div className={cn("absolute inset-0", className)}>
-      <svg
-        className="absolute inset-0 h-full w-full"
-        style={{ background }}
-      >
-        <defs>
-          <filter id={`sparkle-${internalId}`}>
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
-          </filter>
-        </defs>
-        {particles.map((particle) => (
-          <motion.circle
-            key={particle.id}
-            cx={`${particle.x}%`}
-            cy={`${particle.y}%`}
-            r={particle.size}
-            fill={particleColor}
-            filter={`url(#sparkle-${internalId})`}
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: particle.duration,
-              repeat: Infinity,
-              delay: particle.delay,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
-      </svg>
+    <div
+      ref={containerRef}
+      className={cn("absolute inset-0 pointer-events-none", className)}
+      style={{
+        contain: 'layout style paint',
+        willChange: 'transform'
+      }}
+      aria-hidden
+    >
+      {isInView && (
+        <svg
+          className="absolute inset-0 h-full w-full"
+          style={{ background }}
+        >
+          <defs>
+            <filter id={`sparkle-${internalId}`}>
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+            </filter>
+          </defs>
+          {particles.map((particle) => (
+            <motion.circle
+              key={particle.id}
+              cx={`${particle.x}%`}
+              cy={`${particle.y}%`}
+              r={particle.size}
+              fill={particleColor}
+              filter={`url(#sparkle-${internalId})`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{
+                duration: particle.duration,
+                repeat: Infinity,
+                delay: particle.delay,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </svg>
+      )}
     </div>
   )
 }

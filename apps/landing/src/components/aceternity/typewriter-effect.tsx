@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/lib/cn"
+import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import React from "react"
 
@@ -78,14 +78,14 @@ export const TypewriterEffectSmooth = ({
   }))
 
   return (
-    <div className={cn("flex space-x-1 my-6", className)}>
+    <div className={cn("flex w-full items-center justify-center gap-2 my-6", className)}>
       <motion.div
         className="overflow-hidden"
-        initial={{ width: "0%" }}
-        animate={{ width: "100%" }}
-        transition={{ duration: 2, ease: "linear", delay: 0.5 }}
+        initial={{ clipPath: "inset(0 100% 0 0)" }}
+        animate={{ clipPath: "inset(0 0% 0 0)" }}
+        transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
       >
-        <div className="text-xs sm:text-base md:text-xl lg:text-3xl xl:text-5xl font-bold whitespace-nowrap">
+        <div className="text-center text-xs sm:text-base md:text-xl lg:text-3xl xl:text-5xl font-bold whitespace-nowrap">
           {wordsArray.map((word, idx) => (
             <span key={`word-${idx}`} className="inline-block">
               {word.text.map((char, index) => (

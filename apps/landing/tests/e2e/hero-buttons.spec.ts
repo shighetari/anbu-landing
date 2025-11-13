@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Hero Section Button Improvements', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:3003');
+    await page.goto('/');
     await page.waitForSelector('#home', { state: 'visible' });
   });
 

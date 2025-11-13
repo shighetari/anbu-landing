@@ -1,10 +1,16 @@
 // I'm creating a Playwright test to verify the hero button changes
 import { test, expect } from '@playwright/test';
 
+const baseURL =
+  process.env.PLAYWRIGHT_BASE_URL ||
+  process.env.APP_BASE_URL ||
+  process.env.NEXT_PUBLIC_APP_URL ||
+  `http://127.0.0.1:${process.env.PORT || '3000'}`;
+
 test.describe('Hero Section Buttons', () => {
   test('should display improved buttons with proper spacing and visibility', async ({ page }) => {
     // Navigate to the landing page
-    await page.goto('http://localhost:3003');
+    await page.goto(baseURL);
 
     // Wait for hero section to be visible
     await expect(page.locator('#home')).toBeVisible();

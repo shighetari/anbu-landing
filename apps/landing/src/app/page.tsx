@@ -6,22 +6,22 @@ import { SectionDivider } from '@/components/ui/section-divider'
 
 export default function Home() {
   return (
-    <main className="relative flex flex-col items-center min-h-screen">
+    <main id="main-content" className="relative flex flex-col items-center min-h-screen">
       <HeroSection />
 
-      <div className="w-full py-12 sm:py-16 lg:py-20">
+      <div className="w-full py-4 sm:py-6 lg:py-8">
         <SectionDivider variant="gradient" />
       </div>
 
       <ServicesSection />
 
-      <div className="w-full py-12 sm:py-16 lg:py-20">
+      <div className="w-full py-4 sm:py-6 lg:py-8">
         <SectionDivider variant="dots" />
       </div>
 
       <AboutSection />
 
-      <div className="w-full py-12 sm:py-16 lg:py-20">
+      <div className="w-full py-4 sm:py-6 lg:py-8">
         <SectionDivider variant="gradient" />
       </div>
 
@@ -29,7 +29,7 @@ export default function Home() {
 
       {/* Clear separator before footer */}
       <div className="w-full h-1 bg-gradient-to-r from-transparent via-anbu-gold/20 to-transparent" />
-      <div className="w-full py-16 sm:py-20 lg:py-24 bg-black" />
+      <div className="w-full py-8 sm:py-12 lg:py-16 bg-black" />
     </main>
   )
 }

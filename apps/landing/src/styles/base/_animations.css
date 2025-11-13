@@ -285,6 +285,21 @@
   50%, 100% { opacity: 0; }
 }
 
+/* Meteor animation - Optimized from Aceternity UI docs */
+@keyframes meteor {
+  0% { 
+    transform: rotate(215deg) translateX(0); 
+    opacity: 1; 
+  }
+  70% { 
+    opacity: 1; 
+  }
+  100% { 
+    transform: rotate(215deg) translateX(1200px); 
+    opacity: 0; 
+  }
+}
+
 /* =================================
    ANIMATION CLASSES
    ================================= */
@@ -354,6 +369,17 @@
 
 /* Terminal */
 .animate-blink { animation: blink 1s infinite; }
+
+/* Meteor effect - Optimized per Aceternity UI docs */
+.animate-meteor-effect {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  animation: meteor 5s linear infinite;
+  /* Performance optimizations from official docs */
+  pointer-events: none;
+  contain: layout style paint;
+}
 
 /* =================================
    ANIMATION DELAYS
@@ -432,4 +458,38 @@
 
 .transition-opacity {
   transition: opacity var(--transition-normal) var(--ease-in-out);
+}
+
+/* =================================
+   REDUCED MOTION SUPPORT
+   ================================= */
+/* I'm respecting user preferences for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Keep opacity transitions but remove transforms */
+  .transition-opacity {
+    transition: opacity var(--transition-fast) var(--ease-in-out);
+  }
+
+  /* Disable complex animations */
+  .animate-float,
+  .animate-pulse,
+  .animate-heartbeat,
+  .animate-glow,
+  .animate-text-glow,
+  .animate-gradient,
+  .animate-wobble,
+  .animate-shake,
+  .animate-swing,
+  .animate-bounce {
+    animation: none !important;
+  }
 }

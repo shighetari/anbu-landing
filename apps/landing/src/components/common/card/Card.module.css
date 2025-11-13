@@ -101,6 +101,9 @@
 
 .header {
   padding: var(--space-md);
+  /* Add a touch more horizontal breathing room to avoid edge clipping */
+  padding-left: calc(var(--space-md) + var(--space-xs));
+  padding-right: calc(var(--space-md) + var(--space-xs));
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   font-weight: var(--font-semibold);
   font-size: var(--text-lg);

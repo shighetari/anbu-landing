@@ -1,6 +1,9 @@
 // I'm creating a simple script to capture screenshots of the button improvements
 const { chromium } = require('@playwright/test');
 
+const DEFAULT_PORT = process.env.APP_PORT || process.env.PORT || 3000;
+const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
+
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage({
@@ -8,8 +11,8 @@ const { chromium } = require('@playwright/test');
   });
 
   try {
-    console.log('Navigating to localhost:3003...');
-    await page.goto('http://localhost:3003', { waitUntil: 'networkidle' });
+    console.log(`Navigating to ${BASE_URL}...`);
+    await page.goto(BASE_URL, { waitUntil: 'networkidle' });
 
     // Wait for hero section
     await page.waitForSelector('#home', { state: 'visible' });

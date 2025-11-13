@@ -73,6 +73,7 @@ export const BorderBeam = ({
       }
     >
       <motion.div
+        suppressHydrationWarning
         className={cn(
           "absolute aspect-square",
           "bg-gradient-to-l from-[var(--color-from)] via-[var(--color-to)] to-transparent",
@@ -80,7 +81,7 @@ export const BorderBeam = ({
         )}
         style={
           {
-            width: size,
+            width: `${size}px`,
             offsetPath: `rect(0 auto auto 0 round ${size}px)`,
             "--color-from": colorFrom,
             "--color-to": colorTo,

@@ -1,6 +1,9 @@
 // I'm testing the final responsive improvements
 const { chromium } = require('@playwright/test');
 
+const DEFAULT_PORT = process.env.APP_PORT || process.env.PORT || 3000;
+const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
+
 (async () => {
   const browser = await chromium.launch({ headless: false });
 
@@ -16,7 +19,7 @@ const { chromium } = require('@playwright/test');
 
     for (const viewport of viewports) {
       const page = await browser.newPage({ viewport });
-      await page.goto('http://localhost:3001', { waitUntil: 'networkidle' });
+      await page.goto(BASE_URL, { waitUntil: 'networkidle' });
       await page.waitForTimeout(2000);
 
       // Capture full page

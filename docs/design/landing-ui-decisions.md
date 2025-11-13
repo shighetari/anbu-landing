@@ -1,5 +1,7 @@
 # ANBU Landing UI Decisions
 
+> _Note: This document previously lived under `apps/agents.md`. It now resides in `docs/design` so the `apps/` tree only contains runnable code._
+
 _Last updated: 2025-09-17_
 
 ## Design Principles

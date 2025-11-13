@@ -18,15 +18,28 @@ This is a monorepo containing the ANBU Solutions landing page and related applic
 
 ### 📦 Applications
 
-- **`apps/landing`** - Main ANBU.ai landing page with Letter Glitch background
-- **`apps/docs-hub`** - ANBU Solutions Documentation Hub
-- **`apps/solutions-portal`** - Official ANBU Solutions Portal
+- **`apps/landing`** – Main ANBU.ai landing page with Letter Glitch background and premium motion system
+
+> ℹ️ `docs-hub` and `solutions-portal` remain roadmap items; they stay documented but are not yet present in the workspace so new contributors can focus on the landing experience.
 
 ### 📚 Shared Packages
 
 - **`packages/ui`** - Shared UI components library
 - **`packages/config`** - Shared configuration files
 - **`packages/utils`** - Shared utility functions
+
+### 🗂️ Knowledge Docs
+
+- **`docs/design/landing-ui-decisions.md`** – Detailed component rationale, motion guidelines, and integration tips.
+- **`docs/changelog/landing.md`** – Running log of landing redesign milestones and component installs.
+
+## ✅ UX Navigation To-Do
+
+- [ ] Validate new journey routes (`/solutions`, `/resources`, `/contact`) in browser and capture polish issues.
+- [ ] Confirm mega menu + mobile nav microinteractions meet performance and accessibility targets.
+- [ ] Align CTA copy and section headings across new pages with brand voice.
+- [ ] Add analytics/events for journey CTAs before launch.
+- [ ] Update Playwright coverage for journey navigation paths once UI stabilizes.
 
 ## 🎨 Design System
 
@@ -235,22 +248,21 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
 
 ```
 anbu-landing/
-├── apps/                    # Application packages
-│   ├── landing/            # Main landing page
-│   ├── docs-hub/          # Documentation hub
-│   └── solutions-portal/   # Solutions portal
-├── packages/               # Shared packages
-│   ├── ui/                # UI components
-│   ├── config/            # Configurations
-│   └── utils/             # Utilities
-├── docker/                 # Docker configurations
-│   ├── development/       # Dev Dockerfiles
-│   └── production/        # Prod Dockerfiles
-├── .github/               # GitHub configurations
-│   └── workflows/         # CI/CD workflows
-├── scripts/               # Build scripts
-├── docs/                  # Documentation
-└── [config files]         # Root configuration
+├── apps/
+│   └── landing/               # Next.js app currently in production
+├── packages/
+│   ├── ui/                    # Shared UI kit
+│   ├── config/                # ESLint/Tailwind/TS presets
+│   └── utils/                 # Cross-cutting helpers
+├── docs/
+│   ├── design/landing-ui-decisions.md
+│   ├── changelog/landing.md
+│   └── *.md                   # Additional runbooks & guides
+├── docker/
+│   └── development|production # Container images
+├── scripts/                   # Automation + platform helpers
+├── .github/workflows/         # CI/CD configuration
+└── [config files]             # Root configs (.env.example, eslint, turbo, etc.)
 ```
 
 ## 🔒 Security

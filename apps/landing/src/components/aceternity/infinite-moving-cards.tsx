@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/lib/cn"
+import { cn } from "@/lib/utils"
 import React, { useEffect, useState } from "react"
 
 export const InfiniteMovingCards = ({
@@ -25,9 +25,30 @@ export const InfiniteMovingCards = ({
   const scrollerRef = React.useRef<HTMLUListElement>(null)
 
   const [start, setStart] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
     addAnimation()
+  }, [])
+
+  // Pause animation during page scroll for better performance
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout
+
+    const handleScroll = () => {
+      setIsPaused(true)
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(() => {
+        setIsPaused(false)
+      }, 150)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      clearTimeout(scrollTimeout)
+    }
   }, [])
 
   function addAnimation() {
@@ -76,14 +97,21 @@ export const InfiniteMovingCards = ({
         "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
         className
       )}
+      style={{
+        contain: 'layout style paint'
+      }}
     >
       <ul
         ref={scrollerRef}
         className={cn(
           "flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
           start && "animate-scroll",
-          pauseOnHover && "hover:[animation-play-state:paused]"
+          pauseOnHover && "hover:[animation-play-state:paused]",
+          isPaused && "[animation-play-state:paused]"
         )}
+        style={{
+          willChange: 'transform'
+        }}
       >
         {items.map((item, idx) => (
           <li

@@ -10,14 +10,6 @@
 }
 
 /* =================================
-   MARGIN & PADDING RESET
-   ================================= */
-* {
-  margin: 0;
-  padding: 0;
-}
-
-/* =================================
    DOCUMENT SETUP
    ================================= */
 html {
@@ -26,8 +18,8 @@ html {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   
-  /* Smooth scrolling */
-  scroll-behavior: smooth;
+  /* Smooth scrolling removed - handled in globals.css */
+  /* scroll-behavior: smooth; */
   
   /* Better font rendering */
   -webkit-font-smoothing: antialiased;
@@ -118,7 +110,6 @@ button {
   cursor: pointer;
   background: none;
   border: none;
-  padding: 0;
 }
 
 /* Remove spinner from number inputs */

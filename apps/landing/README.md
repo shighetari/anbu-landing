@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Landing App
 
-## Getting Started
+This workspace hosts the production ANBU landing experience. It consumes shared UI/config/util packages from the monorepo and runs on a dedicated dev port so it never collides with other future apps.
 
-First, run the development server:
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install                  # from repo root
+cp apps/landing/.env.example apps/landing/.env.local
+pnpm --filter landing dev     # boots Next.js on http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The root `pnpm dev` command still works (Turbo will only start `landing` for now), but using the filter keeps logs scoped to this app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Description |
+| --- | --- |
+| `pnpm --filter landing dev` | Next.js dev server on port 3000 with hot reload |
+| `pnpm --filter landing build` | Production build (`.next/`) |
+| `pnpm --filter landing start` | Serve the production build (also on port 3000) |
+| `pnpm lint` | Turbo-powered ESLint across the repo (landing is included) |
+| `pnpm test:e2e` | Playwright suite under `apps/landing/tests/e2e` |
 
-## Learn More
+> Tip: The suite reads `PLAYWRIGHT_BASE_URL`, so if you temporarily run on another port set `PLAYWRIGHT_BASE_URL=http://127.0.0.1:<port> pnpm test:e2e`.
 
-To learn more about Next.js, take a look at the following resources:
+## File Map
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app` – App Router entry points
+- `src/components/ui|reactbits|aceternity` – Local component libraries referenced in `docs/design/landing-ui-decisions.md`
+- `tests/e2e` – Canonical Playwright specs (+ screenshots in `__screenshots__`)
+- `public/` – OG assets, icons, and marketing imagery
+- `tailwind.config.ts` – App-specific theme extensions layered on top of shared tokens
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Reference Material
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Design rationale: `../../docs/design/landing-ui-decisions.md`
+- Recent tweaks: `../../docs/changelog/landing.md`
+- Repo-wide workflows: see `../../README.md` and `../../AGENTS.md`

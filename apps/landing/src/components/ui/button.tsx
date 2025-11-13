@@ -25,7 +25,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     // Variant styles - keeping it clean and maintainable
     const variants = {
-      primary: 'bg-anbu-gold text-anbu-black hover:bg-anbu-gold-accent shadow-lg hover:shadow-anbu-gold/50',
+      primary: 'bg-anbu-gold text-anbu-ink hover:bg-anbu-gold-accent shadow-lg hover:shadow-anbu-gold/50',
       secondary: 'bg-anbu-gray text-white hover:bg-anbu-gray/80',
       outline: 'border-2 border-anbu-gold/50 text-anbu-gold hover:bg-anbu-gold/10 hover:border-anbu-gold',
       ghost: 'text-anbu-gold hover:bg-anbu-gold/10'

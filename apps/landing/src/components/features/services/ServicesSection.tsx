@@ -5,7 +5,7 @@ import {
   Globe2,
   Layers3,
   Sparkles,
-} from 'lucide-react'
+} from '@/components/ui/lucide-safe'
 import { motion } from 'framer-motion'
 
 import Container from '@/components/ui/Container'
@@ -20,43 +20,43 @@ import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect
 
 const services = [
   {
-    id: 'portal',
-    name: 'Solutions Portal',
-    description: 'Unified ops & monitoring',
-    href: '/solutions-portal',
-    cta: 'Enter portal',
+    id: 'saas-build',
+    name: 'Build Your App',
+    description: 'Custom web apps ready in 8-12 weeks',
+    href: '/solutions/command-console',
+    cta: 'See examples',
     icon: Globe2,
-    tooltip: 'Portal',
+    tooltip: 'Web Apps',
     accentColor: '#FFB700',
   },
   {
-    id: 'experience',
-    name: 'Experience Design',
-    description: 'Motion-first interfaces',
-    href: '/#contact',
-    cta: 'Book session',
+    id: 'integration',
+    name: 'Connect Your Tools',
+    description: 'Link your software and automate tasks',
+    href: '/contact',
+    cta: 'Get started',
     icon: Sparkles,
-    tooltip: 'Experience',
+    tooltip: 'Integrations',
     accentColor: '#C084FC',
   },
   {
-    id: 'data',
-    name: 'Data Intelligence',
-    description: 'Real-time analytics',
+    id: 'intelligence',
+    name: 'Analytics & Insights',
+    description: 'Dashboards that make your data useful',
     href: '/docs-hub',
-    cta: 'View insights',
+    cta: 'Learn more',
     icon: Layers3,
-    tooltip: 'Intelligence',
+    tooltip: 'Analytics',
     accentColor: '#0EA5E9',
   },
   {
-    id: 'automation',
-    name: 'Automation',
-    description: 'Self-running workflows',
-    href: '/#contact',
-    cta: 'Start automating',
+    id: 'pods',
+    name: 'Dedicated Team',
+    description: 'Part-time developers when you need them',
+    href: '/contact',
+    cta: 'Talk to us',
     icon: CircuitBoard,
-    tooltip: 'Automation',
+    tooltip: 'Team',
     accentColor: '#EA580C',
   },
 ]
@@ -181,7 +181,7 @@ export default function ServicesSection() {
   return (
     <GradualBlurSection
       id="services"
-      className="relative overflow-hidden py-20 sm:py-24 md:py-28 lg:py-36 w-full flex justify-center"
+      className="relative overflow-hidden py-6 sm:py-10 md:py-14 lg:py-18 xl:py-20 w-full flex justify-center"
     >
       {/* Enhanced background gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505] to-black" />
@@ -203,9 +203,9 @@ export default function ServicesSection() {
         />
       </div>
 
-      <Container size="lg" className="relative flex flex-col items-center gap-12 md:gap-14 lg:gap-20">
+      <Container size="lg" className="relative flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
         {/* Enhanced header section */}
-        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-5 md:space-y-6">
+        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-2 sm:space-y-3 md:space-y-4">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -213,24 +213,24 @@ export default function ServicesSection() {
             transition={{ duration: 0.6 }}
           >
             <ShinyText
-              className="text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-anbu-gold font-medium"
+              className="text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-[0.2em] text-anbu-gold font-medium"
               speed={6}
             >
-              What I Build
+              Our Services
             </ShinyText>
           </motion.div>
 
-          <h2 className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white">
+          <h2 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
             <TextGenerateEffect
-              words="Premium Digital Solutions"
+              words="What We Build"
               className=""
               duration={0.8}
             />
           </h2>
 
           <BlurFadeText delay={0.3} duration={0.7}>
-            <p className="text-sm md:text-base lg:text-lg text-white/70 max-w-xl mx-auto leading-relaxed">
-              We build scalable products that perform.
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/70 max-w-xl mx-auto leading-relaxed px-4 sm:px-0">
+              Fast, reliable software for growing businesses.
             </p>
           </BlurFadeText>
         </div>
@@ -243,7 +243,7 @@ export default function ServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
           className="w-full"
         >
-          <BentoGrid className="mt-8 md:mt-10 lg:mt-12 sm:auto-rows-[13rem] md:auto-rows-[14rem] lg:auto-rows-[15rem] lg:grid-cols-4">
+          <BentoGrid className="mt-3 sm:mt-4 md:mt-6 grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
             {/* Portal Card */}
             <motion.div
               key={services[0].id}
@@ -258,7 +258,7 @@ export default function ServicesSection() {
             >
               <BentoCard
                 name={services[0].name}
-                className="col-span-1"
+                className="col-span-1 h-full"
                 background={
                   <div className="absolute inset-0 overflow-hidden">
                     <AnimatedGradientBackground color={services[0].accentColor} variant="portal" />
@@ -296,7 +296,7 @@ export default function ServicesSection() {
             >
               <BentoCard
                 name={services[1].name}
-                className="col-span-1"
+                className="col-span-1 h-full"
                 background={
                   <div className="absolute inset-0 overflow-hidden">
                     <AnimatedGradientBackground color={services[1].accentColor} variant="experience" />
@@ -326,7 +326,7 @@ export default function ServicesSection() {
             >
               <BentoCard
                 name={services[2].name}
-                className="col-span-1"
+                className="col-span-1 h-full"
                 background={
                   <div className="absolute inset-0 overflow-hidden">
                     <AnimatedGradientBackground color={services[2].accentColor} variant="data" />
@@ -365,7 +365,7 @@ export default function ServicesSection() {
             >
               <BentoCard
                 name={services[3].name}
-                className="col-span-1"
+                className="col-span-1 h-full"
                 background={
                   <div className="absolute inset-0 overflow-hidden">
                     <AnimatedGradientBackground color={services[3].accentColor} variant="automation" />
