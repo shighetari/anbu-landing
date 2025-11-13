@@ -10,8 +10,22 @@ import { WobbleCard } from '@/components/aceternity/wobble-card';
 import { SparklesCore } from '@/components/aceternity/sparkles';
 import { Meteors } from '@/components/aceternity/meteors';
 import { NumberTicker } from '@/components/ui/number-ticker';
+import { NeonGradientCard } from '@/components/ui/neon-gradient-card';
+import { CardSpotlight } from '@/components/aceternity/card-spotlight';
+import { BorderBeam } from '@/components/ui/border-beam';
 import { siteConfig } from '@/lib/site-config';
-import { ArrowUpRight, Gauge, ShieldCheck, Workflow } from '@/components/ui/lucide-safe';
+import {
+  ArrowUpRight,
+  Gauge,
+  ShieldCheck,
+  Workflow,
+  Rocket,
+  Video,
+  BookOpen,
+  Cpu,
+  Users,
+  Sparkles,
+} from '@/components/ui/lucide-safe';
 
 export const metadata: Metadata = {
   title: 'Command Console — Executive Delivery Control',
@@ -157,73 +171,106 @@ export default function CommandConsolePage() {
                 Navigate our solutions
               </h2>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                {
-                  id: 'apps',
-                  title: 'Build Custom Apps',
-                  href: '/solutions',
-                  icon: '🚀',
-                  description: 'Web & mobile applications',
-                },
-                {
-                  id: 'studio',
-                  title: 'Marketing Studio',
-                  href: '/solutions/marketing-studio',
-                  icon: '🎬',
-                  description: 'Cinematic content & campaigns',
-                },
-                {
-                  id: 'docs',
-                  title: 'Documentation Hub',
-                  href: '/docs-hub',
-                  icon: '📚',
-                  description: 'Knowledge & playbooks',
-                },
-                {
-                  id: 'integrations',
-                  title: 'Integrations',
-                  href: '/solutions#integrations',
-                  icon: '⚙️',
-                  description: 'Connect your tools',
-                },
-                {
-                  id: 'teams',
-                  title: 'Dedicated Teams',
-                  href: '/solutions#pods',
-                  icon: '👥',
-                  description: 'On-demand developers',
-                },
-                {
-                  id: 'contact',
-                  title: 'Get Started',
-                  href: '/contact',
-                  icon: '✨',
-                  description: 'Begin your project',
-                },
-              ].map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.href}
-                  className="group relative block overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.02] p-6 transition-all duration-300 hover:border-anbu-gold/40 hover:bg-white/[0.08]"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-anbu-gold/0 via-anbu-gold/0 to-anbu-gold/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  <div className="relative space-y-3">
-                    <div className="text-4xl">{item.icon}</div>
-                    <div>
-                      <h3 className="text-sm font-semibold text-white transition-colors duration-300 group-hover:text-anbu-gold">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-xs text-white/50">{item.description}</p>
-                    </div>
-                    <div className="flex items-center gap-2 pt-2 text-xs text-anbu-gold/60 transition-colors duration-300 group-hover:text-anbu-gold">
-                      <span>Explore</span>
-                      <ArrowUpRight className="h-3 w-3" />
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <NeonGradientCard
+              neonColors={{ firstColor: '#FFD700', secondColor: '#FFA500' }}
+              borderSize={2}
+              borderRadius={16}
+              contentClassName="p-6 sm:p-8"
+            >
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {[
+                  {
+                    id: 'apps',
+                    title: 'Build Custom Apps',
+                    href: '/solutions',
+                    icon: Rocket,
+                    description: 'Web & mobile applications',
+                    gradient: 'from-pink-500/20 to-pink-600/20',
+                    iconBg: 'bg-gradient-to-br from-pink-500 to-pink-600',
+                  },
+                  {
+                    id: 'studio',
+                    title: 'Marketing Studio',
+                    href: '/solutions/marketing-studio',
+                    icon: Video,
+                    description: 'Cinematic content & campaigns',
+                    gradient: 'from-cyan-500/20 to-blue-500/20',
+                    iconBg: 'bg-gradient-to-br from-cyan-400 to-blue-500',
+                  },
+                  {
+                    id: 'docs',
+                    title: 'Documentation Hub',
+                    href: '/docs-hub',
+                    icon: BookOpen,
+                    description: 'Knowledge & playbooks',
+                    gradient: 'from-orange-500/20 to-amber-500/20',
+                    iconBg: 'bg-gradient-to-br from-orange-400 to-amber-500',
+                  },
+                  {
+                    id: 'integrations',
+                    title: 'Integrations',
+                    href: '/solutions#integrations',
+                    icon: Cpu,
+                    description: 'Connect your tools',
+                    gradient: 'from-emerald-500/20 to-green-600/20',
+                    iconBg: 'bg-gradient-to-br from-emerald-400 to-green-500',
+                  },
+                  {
+                    id: 'teams',
+                    title: 'Dedicated Teams',
+                    href: '/solutions#pods',
+                    icon: Users,
+                    description: 'On-demand developers',
+                    gradient: 'from-red-500/20 to-pink-600/20',
+                    iconBg: 'bg-gradient-to-br from-red-400 to-pink-600',
+                  },
+                  {
+                    id: 'contact',
+                    title: 'Get Started',
+                    href: '/contact',
+                    icon: Sparkles,
+                    description: 'Begin your project',
+                    gradient: 'from-purple-500/20 to-indigo-600/20',
+                    iconBg: 'bg-gradient-to-br from-purple-500 to-indigo-600',
+                  },
+                ].map((item, index) => (
+                  <Link
+                    key={item.id}
+                    href={item.href}
+                    className={`group relative block transition-all duration-300 hover:scale-[1.02]`}
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                    }}
+                  >
+                    <CardSpotlight
+                      className="h-full"
+                      color="#FFD700"
+                      radius={350}
+                    >
+                      <div className={`absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br ${item.gradient}`} />
+                      <div className="relative z-10 flex flex-col gap-3 h-full">
+                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center ${item.iconBg} text-white flex-shrink-0 transition-transform duration-300 group-hover:scale-110`}>
+                          <item.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                        </div>
+                        <div className="flex-grow space-y-1.5">
+                          <h3 style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)' }} className="font-semibold leading-snug text-white/95 transition-colors duration-300 group-hover:text-anbu-gold line-clamp-2 tracking-wide">
+                            {item.title}
+                          </h3>
+                          <p style={{ fontSize: 'clamp(0.65rem, 2vw, 0.75rem)' }} className="leading-tight text-white/55 transition-colors duration-300 group-hover:text-white/70 line-clamp-2">
+                            {item.description}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1.5 pt-1 text-[0.6rem] sm:text-[0.65rem] lg:text-xs font-semibold text-anbu-gold/70 transition-colors duration-300 group-hover:text-anbu-gold mt-auto">
+                          <span>Explore</span>
+                          <ArrowUpRight className="h-2.5 w-2.5 sm:h-3 sm:w-3 lg:h-3.5 lg:w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </div>
+                      </div>
+                      <BorderBeam size={200} duration={12} delay={index * 1} />
+                    </CardSpotlight>
+                  </Link>
+                ))}
+              </div>
+            </NeonGradientCard>
           </div>
         </Container>
       </section>
