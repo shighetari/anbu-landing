@@ -2,7 +2,8 @@
 const { chromium } = require('@playwright/test');
 
 const DEFAULT_PORT = process.env.APP_PORT || process.env.PORT || 3000;
-const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
+const BASE_URL =
+  process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
 
 (async () => {
   const browser = await chromium.launch({ headless: false });
@@ -16,7 +17,7 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     // Capture improved navbar
     await page.screenshot({
       path: 'navbar-improved.png',
-      clip: { x: 0, y: 0, width: 1440, height: 150 }
+      clip: { x: 0, y: 0, width: 1440, height: 150 },
     });
     console.log('✅ Captured: navbar-improved.png');
 
@@ -27,7 +28,7 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
 
     await page.screenshot({
       path: 'navbar-hover-state.png',
-      clip: { x: 0, y: 0, width: 1440, height: 400 }
+      clip: { x: 0, y: 0, width: 1440, height: 400 },
     });
     console.log('✅ Captured: navbar-hover-state.png');
 
@@ -37,7 +38,7 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
 
     await page.screenshot({
       path: 'navbar-mobile.png',
-      clip: { x: 0, y: 0, width: 390, height: 150 }
+      clip: { x: 0, y: 0, width: 390, height: 150 },
     });
     console.log('✅ Captured: navbar-mobile.png');
 
@@ -48,7 +49,7 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
 
     await page.screenshot({
       path: 'navbar-mobile-menu.png',
-      fullPage: true
+      fullPage: true,
     });
     console.log('✅ Captured: navbar-mobile-menu.png');
 
@@ -60,7 +61,6 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     console.log('  ✓ Better letter spacing (0.2em/0.25em)');
     console.log('  ✓ Enhanced hover effects with subtle glow');
     console.log('  ✓ Wider navbar container (max-w-6xl)');
-
   } catch (error) {
     console.error('Error:', error);
   } finally {

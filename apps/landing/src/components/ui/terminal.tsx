@@ -1,16 +1,8 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { motion, MotionProps, useInView } from "motion/react";
-import {
-  Children,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { cn } from '@/lib/utils';
+import { motion, MotionProps, useInView } from 'motion/react';
+import { Children, createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 interface SequenceContextValue {
   completeItem: (index: number) => void;
@@ -65,13 +57,10 @@ export const AnimatedSpan = ({
       initial={{ opacity: 0 }}
       animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
       transition={{ duration: 0.3, delay: sequence ? 0 : delay / 1000 }}
-      className={cn(
-        "grid min-h-[1.4em] text-sm font-normal tracking-tight",
-        className,
-      )}
+      className={cn('grid min-h-[1.4em] text-sm font-normal tracking-tight', className)}
       style={{
         contentVisibility: 'auto',
-        containIntrinsicSize: '1px 1.4em'
+        containIntrinsicSize: '1px 1.4em',
       }}
       onAnimationComplete={() => {
         if (!sequence) return;
@@ -99,12 +88,12 @@ export const TypingAnimation = ({
   className,
   duration = 50,
   delay = 0,
-  as: Component = "span",
+  as: Component = 'span',
   startOnView = true,
   ...props
 }: TypingAnimationProps) => {
-  if (typeof children !== "string") {
-    throw new Error("TypingAnimation: children must be a string. Received:");
+  if (typeof children !== 'string') {
+    throw new Error('TypingAnimation: children must be a string. Received:');
   }
 
   const MotionComponent = useMemo(
@@ -112,10 +101,10 @@ export const TypingAnimation = ({
       motion.create(Component, {
         forwardMotionProps: true,
       }),
-    [Component],
+    [Component]
   );
 
-  const [displayedText, setDisplayedText] = useState<string>("");
+  const [displayedText, setDisplayedText] = useState<string>('');
   const [started, setStarted] = useState(false);
   const elementRef = useRef<HTMLElement | null>(null);
   const isInView = useInView(elementRef as React.RefObject<Element>, {
@@ -179,23 +168,20 @@ export const TypingAnimation = ({
   return (
     <MotionComponent
       ref={elementRef}
-      className={cn(
-        "relative block min-h-[1.4em] text-sm font-normal tracking-tight",
-        className,
-      )}
+      className={cn('relative block min-h-[1.4em] text-sm font-normal tracking-tight', className)}
       style={{
         contentVisibility: 'auto',
         containIntrinsicSize: '1px 1.4em',
-        willChange: 'contents'
+        willChange: 'contents',
       }}
       {...props}
     >
       {displayedText}
       {started && displayedText.length < children.length && (
         <motion.span
-          className="inline-block w-[2px] h-4 bg-anbu-gold ml-[1px] align-middle"
+          className="ml-[1px] inline-block h-4 w-[2px] bg-anbu-gold align-middle"
           animate={{ opacity: [1, 0] }}
-          transition={{ duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
+          transition={{ duration: 0.8, repeat: Infinity, repeatType: 'reverse' }}
         />
       )}
     </MotionComponent>
@@ -228,9 +214,7 @@ export const Terminal = ({
     if (!sequence) return null;
     return {
       completeItem: (index: number) => {
-        setActiveIndex((current) =>
-          index === current ? current + 1 : current,
-        );
+        setActiveIndex((current) => (index === current ? current + 1 : current));
       },
       activeIndex,
       sequenceStarted: sequenceHasStarted,
@@ -250,20 +234,17 @@ export const Terminal = ({
   const content = (
     <div
       ref={containerRef}
-      className={cn(
-        'relative z-0 w-full text-left text-white group',
-        className,
-      )}
+      className={cn('group relative z-0 w-full text-left text-white', className)}
       style={{
         contain: 'layout style paint', // Isolate terminal from external layout
-        contentVisibility: 'auto'
+        contentVisibility: 'auto',
       }}
     >
       {/* Glow effect */}
       <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/10 to-anbu-gold/20 opacity-0 blur-md transition-all duration-500 group-hover:opacity-100" />
 
       {/* Matrix rain effect background - optimized for performance */}
-      <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-10">
+      <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-10">
         <motion.div
           className="absolute inset-0"
           style={{
@@ -276,43 +257,43 @@ export const Terminal = ({
             )`,
             backgroundSize: '100% 100%',
             willChange: 'background-position',
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: 'hidden',
           }}
           animate={{
             backgroundPosition: ['0% 0%', '0% 100%'],
           }}
           transition={{
-            duration: 20,  // Slower, more subtle effect
-            ease: "linear",
+            duration: 20, // Slower, more subtle effect
+            ease: 'linear',
             repeat: Infinity,
           }}
         />
       </div>
 
       {/* Terminal window */}
-      <div className="relative rounded-2xl border border-white/12 bg-gradient-to-b from-neutral-950/95 to-black/95 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+      <div className="border-white/12 relative rounded-2xl border bg-gradient-to-b from-neutral-950/95 to-black/95 p-5 shadow-[0_18px_55px_rgba(0,0,0,0.45)] backdrop-blur-xl">
         {/* Terminal header with glowing border */}
         <motion.div
-          className="relative flex flex-col gap-3 rounded-xl border border-white/8 bg-gradient-to-r from-black/60 via-black/45 to-black/60 px-4 py-3.5 overflow-hidden"
+          className="border-white/8 relative flex flex-col gap-3 overflow-hidden rounded-xl border bg-gradient-to-r from-black/60 via-black/45 to-black/60 px-4 py-3.5"
           style={{
             willChange: 'transform',
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: 'hidden',
           }}
         >
           {/* Animated border beam - optimized for smooth motion */}
           <motion.div
-            className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-anbu-gold/50 to-transparent"
+            className="absolute left-0 right-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-anbu-gold/50 to-transparent"
             style={{
               willChange: 'transform',
-              backfaceVisibility: 'hidden'
+              backfaceVisibility: 'hidden',
             }}
             animate={{
-              x: ["-100%", "100%"],
+              x: ['-100%', '100%'],
             }}
             transition={{
-              duration: 4,  // Smoother, less jarring
+              duration: 4, // Smoother, less jarring
               repeat: Infinity,
-              ease: "linear",
+              ease: 'linear',
             }}
           />
           <div className="flex items-center gap-2">
@@ -321,47 +302,49 @@ export const Terminal = ({
               whileHover={{ scale: 1.2 }}
               animate={{
                 boxShadow: [
-                  "0 0 8px rgba(239,68,68,0.5)",
-                  "0 0 10px rgba(239,68,68,0.6)",
-                  "0 0 8px rgba(239,68,68,0.5)"
-                ]
+                  '0 0 8px rgba(239,68,68,0.5)',
+                  '0 0 10px rgba(239,68,68,0.6)',
+                  '0 0 8px rgba(239,68,68,0.5)',
+                ],
               }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             />
             <motion.span
               className="h-3 w-3 rounded-full bg-yellow-400/80 shadow-[0_0_8px_rgba(251,191,36,0.5)]"
               whileHover={{ scale: 1.2 }}
               animate={{
                 boxShadow: [
-                  "0 0 8px rgba(251,191,36,0.5)",
-                  "0 0 10px rgba(251,191,36,0.6)",
-                  "0 0 8px rgba(251,191,36,0.5)"
-                ]
+                  '0 0 8px rgba(251,191,36,0.5)',
+                  '0 0 10px rgba(251,191,36,0.6)',
+                  '0 0 8px rgba(251,191,36,0.5)',
+                ],
               }}
-              transition={{ duration: 3, repeat: Infinity, delay: 1, ease: "easeInOut" }}
+              transition={{ duration: 3, repeat: Infinity, delay: 1, ease: 'easeInOut' }}
             />
             <motion.span
               className="h-3 w-3 rounded-full bg-green-500/75 shadow-[0_0_8px_rgba(34,197,94,0.5)]"
               whileHover={{ scale: 1.2 }}
               animate={{
                 boxShadow: [
-                  "0 0 8px rgba(34,197,94,0.5)",
-                  "0 0 10px rgba(34,197,94,0.6)",
-                  "0 0 8px rgba(34,197,94,0.5)"
-                ]
+                  '0 0 8px rgba(34,197,94,0.5)',
+                  '0 0 10px rgba(34,197,94,0.6)',
+                  '0 0 8px rgba(34,197,94,0.5)',
+                ],
               }}
-              transition={{ duration: 3, repeat: Infinity, delay: 2, ease: "easeInOut" }}
+              transition={{ duration: 3, repeat: Infinity, delay: 2, ease: 'easeInOut' }}
             />
           </div>
-          <div className="absolute top-2 left-1/2 -translate-x-1/2">
-            <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.3em]">anbu@terminal</span>
+          <div className="absolute left-1/2 top-2 -translate-x-1/2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">
+              anbu@terminal
+            </span>
           </div>
         </motion.div>
 
         {/* Terminal content with enhanced styling and layout containment */}
         <pre
-          className="relative mt-3 overflow-y-scroll overflow-x-hidden rounded-xl bg-gradient-to-b from-black/50 to-black/30 px-4 py-5 pr-6 text-[13px] font-mono scrollbar-thin scrollbar-track-transparent scrollbar-thumb-anbu-gold/20 hover:scrollbar-thumb-anbu-gold/30"
-          style={{ 
+          className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-anbu-gold/20 hover:scrollbar-thumb-anbu-gold/30 relative mt-3 overflow-x-hidden overflow-y-scroll rounded-xl bg-gradient-to-b from-black/50 to-black/30 px-4 py-5 pr-6 font-mono text-[13px]"
+          style={{
             height: '260px', // Fixed height - critical for preventing layout shifts
             minHeight: '260px',
             maxHeight: '260px',
@@ -369,7 +352,7 @@ export const Terminal = ({
             contain: 'strict', // Strictest containment to completely isolate layout
             contentVisibility: 'auto',
             willChange: 'scroll-position',
-            overflow: 'scroll' // Force scrollbars to always be visible
+            overflow: 'scroll', // Force scrollbars to always be visible
           }}
         >
           {/* Scanline effect - optimized for smooth performance */}
@@ -382,23 +365,23 @@ export const Terminal = ({
               )`,
               backgroundSize: '100% 4px',
               willChange: 'background-position',
-              backfaceVisibility: 'hidden'
+              backfaceVisibility: 'hidden',
             }}
             animate={{
               backgroundPosition: ['0px 0px', '0px 4px'],
             }}
             transition={{
-              duration: 2,  // Slower for smoother effect
+              duration: 2, // Slower for smoother effect
               repeat: Infinity,
-              ease: "linear",
+              ease: 'linear',
             }}
           />
-          <code 
-            className="relative grid gap-y-2 whitespace-pre-wrap break-words" 
-            style={{ 
+          <code
+            className="relative grid gap-y-2 whitespace-pre-wrap break-words"
+            style={{
               contain: 'layout style',
               minHeight: '100%',
-              display: 'grid'
+              display: 'grid',
             }}
           >
             {wrappedChildren}
@@ -410,9 +393,5 @@ export const Terminal = ({
 
   if (!sequence) return content;
 
-  return (
-    <SequenceContext.Provider value={contextValue}>
-      {content}
-    </SequenceContext.Provider>
-  );
+  return <SequenceContext.Provider value={contextValue}>{content}</SequenceContext.Provider>;
 };

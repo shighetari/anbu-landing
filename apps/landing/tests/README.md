@@ -18,11 +18,13 @@ src/
 ## Test Types
 
 ### Unit Tests (`*.spec.ts`)
+
 - Located alongside source files in `__tests__` directories
 - Run with Vitest: `pnpm test`
 - Test individual functions, utilities, and components in isolation
 
 ### E2E Tests (`tests/e2e/*.spec.ts`)
+
 - Located in `tests/e2e/`
 - Run with Playwright: `pnpm test:e2e`
 - Test full user flows and interactions
@@ -51,14 +53,14 @@ pnpm lint && pnpm typecheck && pnpm test
 ### Unit Test Example
 
 ```typescript
-import { describe, it, expect } from 'vitest'
-import { myFunction } from '../my-module'
+import { describe, it, expect } from 'vitest';
+import { myFunction } from '../my-module';
 
 describe('myFunction', () => {
   it('should return expected value', () => {
-    expect(myFunction('input')).toBe('output')
-  })
-})
+    expect(myFunction('input')).toBe('output');
+  });
+});
 ```
 
 ### Component Test Example
@@ -79,6 +81,7 @@ describe('MyComponent', () => {
 ## Mocks and Setup
 
 Global mocks and setup are configured in `tests/setup.ts`:
+
 - Next.js router mocks
 - Testing library cleanup
 - Global test utilities

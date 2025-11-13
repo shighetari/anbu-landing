@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react';
 
 /**
  * Hook that detects clicks outside of the passed ref
@@ -7,27 +7,27 @@ export function useClickOutside<T extends HTMLElement = HTMLElement>(
   handler: () => void,
   enabled: boolean = true
 ) {
-  const ref = useRef<T>(null)
+  const ref = useRef<T>(null);
 
   useEffect(() => {
-    if (!enabled) return
+    if (!enabled) return;
 
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        handler()
+        handler();
       }
-    }
+    };
 
     // Add event listeners
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
 
     // Cleanup
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('touchstart', handleClickOutside)
-    }
-  }, [handler, enabled])
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [handler, enabled]);
 
-  return ref
+  return ref;
 }

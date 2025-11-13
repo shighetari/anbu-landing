@@ -30,10 +30,12 @@ I work across three different machines, so I've tested this setup extensively on
 I primarily develop on Windows 11, and getting Docker to play nice with Windows took some figuring out. Here's what works:
 
 **What You Need:**
+
 1. Docker Desktop with WSL 2 enabled - this is crucial for performance
 2. Windows Terminal (the default terminal is painful for development)
 
 **Getting Started:**
+
 ```bash
 # I created a setup script that detects your platform
 pnpm docker:setup
@@ -43,6 +45,7 @@ pnpm docker:landing
 ```
 
 **Windows Quirks I've Found:**
+
 - File watching requires polling because of how Windows handles file systems. I've already configured this in the Docker setup, so hot reload will work, but it's slightly slower (1-2 seconds) than on Mac/Linux.
 - If you're getting permission errors, make sure Docker Desktop is running as administrator.
 - For best performance, clone the repo inside WSL 2 rather than on your Windows filesystem. Trust me on this one - the speed difference is night and day.
@@ -52,6 +55,7 @@ pnpm docker:landing
 My MacBook M4 Pro is where I do most of my creative work, and Docker runs beautifully on Apple Silicon once you know the tricks.
 
 **Initial Setup:**
+
 ```bash
 # Install Docker Desktop for Mac first
 # Then run our setup
@@ -60,6 +64,7 @@ pnpm docker:landing
 ```
 
 **Mac-Specific Tips:**
+
 - I've configured the volumes to use cached mounts, which significantly improves performance on macOS
 - File watching works natively without polling - you'll see changes instantly
 - If you're on an M-series chip like me, Docker Desktop handles the architecture translation automatically
@@ -70,6 +75,7 @@ pnpm docker:landing
 I also test on Arch Linux (because I like to live dangerously). Linux gives you the best Docker performance since there's no VM layer.
 
 **Installation on Arch:**
+
 ```bash
 # Install Docker
 sudo pacman -S docker docker-compose
@@ -94,6 +100,7 @@ Let me explain what I've built here and why I made certain choices.
 ### The Architecture
 
 I've set up a multi-stage Dockerfile that:
+
 1. Caches dependencies separately from code (rebuilds are faster)
 2. Uses Alpine Linux for smaller images
 3. Includes health checks so we know when the container is ready
@@ -138,7 +145,7 @@ This happens to me constantly. Something else is running on port 3000.
 netstat -ano | findstr :3000
 taskkill /PID [THE_PID] /F
 
-# Find what's using the port (Mac/Linux)  
+# Find what's using the port (Mac/Linux)
 lsof -i :3000
 kill -9 [THE_PID]
 
@@ -151,12 +158,14 @@ kill -9 [THE_PID]
 This drove me crazy until I figured out the platform differences.
 
 **On Windows:** Make sure these environment variables are set (I've added them to .env.windows):
+
 ```
 WATCHPACK_POLLING=true
 CHOKIDAR_USEPOLLING=true
 ```
 
 **On Mac/Linux:** Polling should be OFF:
+
 ```
 WATCHPACK_POLLING=false
 CHOKIDAR_USEPOLLING=false
@@ -209,18 +218,21 @@ If you're new to Docker, don't worry. Here's all you really need to know:
 Think of it as a lightweight virtual machine that packages our app and all its dependencies. Everyone gets the exact same environment, regardless of their operating system.
 
 **Why use it?**
+
 - No more "install Node version X, then install package Y"
 - No more "it works on my machine" debugging sessions
 - Onboarding takes minutes, not hours
 - Switch between projects without dependency conflicts
 
 **Daily Workflow:**
+
 1. Pull the latest code: `git pull`
 2. Start Docker: `pnpm docker:landing`
 3. Code as normal - changes auto-reload
 4. Stop when done: `pnpm docker:stop`
 
 **When to Rebuild:**
+
 - After pulling changes that modify package.json
 - When switching branches with different dependencies
 - If something seems broken: `pnpm docker:landing:rebuild`
@@ -230,14 +242,17 @@ Think of it as a lightweight virtual machine that packages our app and all its d
 I've set up environment templates for each platform. The setup script copies the right one automatically, but here's what's different:
 
 **Windows (.env.windows):**
+
 - Polling enabled for file watching
 - Longer intervals to reduce CPU usage
 
 **macOS (.env.macos):**
+
 - Native file watching (no polling)
 - Optimizations for Darwin kernel
 
 **Linux (.env.linux):**
+
 - Native file watching
 - Minimal overhead configuration
 
@@ -246,11 +261,11 @@ I've set up environment templates for each platform. The setup script copies the
 Here's what I'm seeing on my machines:
 
 | What I'm Measuring | Windows 11 | MacBook M4 | Arch Linux |
-|-------------------|------------|------------|------------|
-| Initial build | 2-3 min | 1-2 min | 1 min |
-| Hot reload | 2-3 sec | < 1 sec | < 1 sec |
-| Container start | 10 sec | 5 sec | 3 sec |
-| Memory usage | 500MB | 400MB | 350MB |
+| ------------------ | ---------- | ---------- | ---------- |
+| Initial build      | 2-3 min    | 1-2 min    | 1 min      |
+| Hot reload         | 2-3 sec    | < 1 sec    | < 1 sec    |
+| Container start    | 10 sec     | 5 sec      | 3 sec      |
+| Memory usage       | 500MB      | 400MB      | 350MB      |
 
 ## Advanced Stuff
 
@@ -258,17 +273,19 @@ Once you're comfortable with the basics, here are some power-user features:
 
 **Custom Overrides:**
 Create a `docker-compose.override.yml` (gitignored) for personal settings:
+
 ```yaml
 services:
   landing:
     environment:
       - MY_CUSTOM_ENV=value
     ports:
-      - "3001:3000"  # Use a different port
+      - '3001:3000' # Use a different port
 ```
 
 **Multiple Apps:**
 When we add more apps to the monorepo, they'll each get their own container:
+
 ```bash
 docker-compose up          # Start everything
 docker-compose up landing   # Just the landing page
@@ -277,6 +294,7 @@ docker-compose up docs-hub  # Just the docs (future)
 
 **Production Builds:**
 I've also created a production Dockerfile that creates optimized builds:
+
 ```bash
 docker build -f docker/production/Dockerfile -t anbu-landing:prod .
 ```

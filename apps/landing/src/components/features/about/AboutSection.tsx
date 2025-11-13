@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import { ShieldCheck, Sparkles, Trophy, Zap } from '@/components/ui/lucide-safe'
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { ShieldCheck, Sparkles, Trophy, Zap } from '@/components/ui/lucide-safe';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
-import Container from '@/components/ui/Container'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { BentoGrid, BentoCard } from '@/components/ui/bento-grid'
-import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section'
-import { LogoLoop } from '@/components/reactbits/logo-loop'
-import { PixelImage } from '@/components/ui/pixel-image'
-import { Magnet } from '@/components/reactbits/magnet'
-import { SparklesCore } from '@/components/aceternity/sparkles'
-import { Meteors } from '@/components/aceternity/meteors'
-import { BlurFadeText } from '@/components/magicui/blur-fade-text'
-import { ShinyText } from '@/components/magicui/shiny-text'
-import { DecryptedText } from '@/components/reactbits/decrypted-text'
-import { TextHoverEffect } from '@/components/aceternity/text-hover-effect'
-import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
-import { FeatureModal } from '@/components/ui/feature-modal'
+import Container from '@/components/ui/Container';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { BentoGrid, BentoCard } from '@/components/ui/bento-grid';
+import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section';
+import { LogoLoop } from '@/components/reactbits/logo-loop';
+import { PixelImage } from '@/components/ui/pixel-image';
+import { Magnet } from '@/components/reactbits/magnet';
+import { SparklesCore } from '@/components/aceternity/sparkles';
+import { Meteors } from '@/components/aceternity/meteors';
+import { BlurFadeText } from '@/components/magicui/blur-fade-text';
+import { ShinyText } from '@/components/magicui/shiny-text';
+import { DecryptedText } from '@/components/reactbits/decrypted-text';
+import { TextHoverEffect } from '@/components/aceternity/text-hover-effect';
+import { TypewriterEffect } from '@/components/aceternity/typewriter-effect';
+import { FeatureModal } from '@/components/ui/feature-modal';
 
 // ============================================
 // IMAGE CONFIGURATION - Easy Image Swapping
@@ -31,11 +31,11 @@ import { FeatureModal } from '@/components/ui/feature-modal'
 // - Tip: Keep multiple options commented below for easy A/B testing
 
 const ABOUT_IMAGE = {
-  src: "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=80",
-  alt: "About ANBU - Built with precision and care",
-  caption: "Built with care and attention to detail.",
-  pixelGrid: "6x4" as const, // Options: "6x4", "8x8", "4x6" - affects animation style
-}
+  src: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=80',
+  alt: 'About ANBU - Built with precision and care',
+  caption: 'Built with care and attention to detail.',
+  pixelGrid: '6x4' as const, // Options: "6x4", "8x8", "4x6" - affects animation style
+};
 
 // Uncomment these to quickly test other images:
 // const ABOUT_IMAGE = {
@@ -82,7 +82,7 @@ const differentiators = [
     gradient: 'from-green-500/20 via-emerald-500/20 to-teal-500/20',
     accentColor: '#10b981', // green
   },
-]
+];
 
 // Detailed modal content for each feature
 const featureDetails = [
@@ -90,7 +90,8 @@ const featureDetails = [
     title: 'Fast Delivery',
     icon: Trophy,
     tagline: 'Launch in weeks, not months',
-    description: "I've built my development process around speed without sacrificing quality. Using agile methodologies and rapid prototyping, I help you get to market fast—perfect for startups needing quick validation or businesses racing against tight deadlines.",
+    description:
+      "I've built my development process around speed without sacrificing quality. Using agile methodologies and rapid prototyping, I help you get to market fast—perfect for startups needing quick validation or businesses racing against tight deadlines.",
     benefits: [
       '2-4 week sprint cycles get you from concept to launch lightning-fast',
       'Rapid prototyping validates your ideas before full-scale development',
@@ -116,7 +117,8 @@ const featureDetails = [
     title: 'Fixed Pricing',
     icon: Sparkles,
     tagline: 'Know your costs upfront, no surprises',
-    description: "I believe in transparent pricing. You'll get a detailed project-based quote upfront—no hidden fees, no scope creep charges, no surprises. Budget confidently knowing exactly what you're investing in.",
+    description:
+      "I believe in transparent pricing. You'll get a detailed project-based quote upfront—no hidden fees, no scope creep charges, no surprises. Budget confidently knowing exactly what you're investing in.",
     benefits: [
       'Detailed project quotes provided before any work begins',
       'Fixed-price packages eliminate budget uncertainty',
@@ -143,7 +145,8 @@ const featureDetails = [
     title: 'Grows With You',
     icon: Zap,
     tagline: 'Scales as you grow, built to last',
-    description: "I architect solutions with growth in mind. Your app won't just work today—it'll scale effortlessly as your user base explodes, your features multiply, and your business expands globally. Built with modern, maintainable tech that evolves with you.",
+    description:
+      "I architect solutions with growth in mind. Your app won't just work today—it'll scale effortlessly as your user base explodes, your features multiply, and your business expands globally. Built with modern, maintainable tech that evolves with you.",
     benefits: [
       'Cloud-native architecture auto-scales with traffic spikes',
       'Microservices design adds features without touching existing code',
@@ -170,7 +173,8 @@ const featureDetails = [
     title: 'Quick Support',
     icon: ShieldCheck,
     tagline: 'Fast help when you need it most',
-    description: "I'm here for you even after launch. With dedicated support channels, same-day response times, and proactive monitoring, you're never left hanging. Bugs get prioritized, questions get answered, and your app stays running smoothly.",
+    description:
+      "I'm here for you even after launch. With dedicated support channels, same-day response times, and proactive monitoring, you're never left hanging. Bugs get prioritized, questions get answered, and your app stays running smoothly.",
     benefits: [
       'Same-day response to critical issues, usually within hours',
       'Dedicated Slack/Discord channel for instant communication',
@@ -193,20 +197,34 @@ const featureDetails = [
     ],
     accentColor: '#10b981',
   },
-]
+];
 
 const techStack = [
   { render: <span className="text-sm font-semibold text-white/80">Next.js</span>, alt: 'Next.js' },
   { render: <span className="text-sm font-semibold text-white/80">React</span>, alt: 'React' },
-  { render: <span className="text-sm font-semibold text-white/80">Tailwind</span>, alt: 'Tailwind' },
+  {
+    render: <span className="text-sm font-semibold text-white/80">Tailwind</span>,
+    alt: 'Tailwind',
+  },
   { render: <span className="text-sm font-semibold text-white/80">AWS</span>, alt: 'AWS' },
   { render: <span className="text-sm font-semibold text-white/80">Edge AI</span>, alt: 'Edge AI' },
-  { render: <span className="text-sm font-semibold text-white/80">Supabase</span>, alt: 'Supabase' },
-]
+  {
+    render: <span className="text-sm font-semibold text-white/80">Supabase</span>,
+    alt: 'Supabase',
+  },
+];
 
 // Enhanced BentoCard with hover effects
-function EnhancedBentoCard({ item, index, onClick }: { item: typeof differentiators[0], index: number, onClick: () => void }) {
-  const [isHovered, setIsHovered] = useState(false)
+function EnhancedBentoCard({
+  item,
+  index,
+  onClick,
+}: {
+  item: (typeof differentiators)[0];
+  index: number;
+  onClick: () => void;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
@@ -235,26 +253,32 @@ function EnhancedBentoCard({ item, index, onClick }: { item: typeof differentiat
                   minSize={0.4}
                   maxSize={1.0}
                 />
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-50'}`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${item.gradient} transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-50'}`}
+                />
               </>
             )}
             {index === 1 && (
               <>
                 <Meteors number={isHovered ? 10 : 5} />
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-50'}`} />
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${item.gradient} transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-50'}`}
+                />
               </>
             )}
             {index === 2 && (
               <motion.div
                 className="absolute inset-0"
                 animate={{
-                  background: isHovered ? [
-                    'radial-gradient(circle at 20% 20%, rgba(255,215,0,0.15), transparent 50%)',
-                    'radial-gradient(circle at 80% 80%, rgba(255,215,0,0.15), transparent 50%)',
-                  ] : [
-                    'radial-gradient(circle at 20% 20%, rgba(255,215,0,0.08), transparent 50%)',
-                    'radial-gradient(circle at 80% 80%, rgba(255,215,0,0.08), transparent 50%)',
-                  ],
+                  background: isHovered
+                    ? [
+                        'radial-gradient(circle at 20% 20%, rgba(255,215,0,0.15), transparent 50%)',
+                        'radial-gradient(circle at 80% 80%, rgba(255,215,0,0.15), transparent 50%)',
+                      ]
+                    : [
+                        'radial-gradient(circle at 20% 20%, rgba(255,215,0,0.08), transparent 50%)',
+                        'radial-gradient(circle at 80% 80%, rgba(255,215,0,0.08), transparent 50%)',
+                      ],
                 }}
                 transition={{ duration: 5, repeat: Infinity, repeatType: 'reverse' }}
               />
@@ -269,7 +293,8 @@ function EnhancedBentoCard({ item, index, onClick }: { item: typeof differentiat
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                   style={{
-                    background: 'linear-gradient(45deg, transparent, rgba(255,215,0,0.05), transparent)',
+                    background:
+                      'linear-gradient(45deg, transparent, rgba(255,215,0,0.05), transparent)',
                   }}
                 />
               </div>
@@ -283,110 +308,110 @@ function EnhancedBentoCard({ item, index, onClick }: { item: typeof differentiat
         ctaOnClick={onClick}
       />
     </motion.div>
-  )
+  );
 }
 
 export default function AboutSection() {
-  const [selectedFeature, setSelectedFeature] = useState<number | null>(null)
+  const [selectedFeature, setSelectedFeature] = useState<number | null>(null);
 
   return (
     <div>
-      <GradualBlurSection className="relative py-6 sm:py-10 md:py-14 lg:py-18 xl:py-20 w-full" id="about">
+      <GradualBlurSection
+        className="relative w-full py-6 sm:py-10 md:py-14 lg:py-18 xl:py-20"
+        id="about"
+      >
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80" />
         <div className="absolute inset-0 opacity-30 mix-blend-screen" aria-hidden>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_70%,rgba(255,215,0,0.08),transparent_55%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(255,165,0,0.12),transparent_60%)]" />
         </div>
 
-      <Container size="lg" className="relative">
-        <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 lg:gap-8">
-          {/* Header section with text and image side by side */}
-          <div className="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 lg:grid-cols-[1.2fr_1fr] items-center">
-            <div className="space-y-1.5 sm:space-y-2 md:space-y-3 lg:space-y-4 text-center">
+        <Container size="lg" className="relative">
+          <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+            {/* Header section with text and image side by side */}
+            <div className="grid items-center gap-3 sm:gap-4 md:gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-8">
+              <div className="space-y-1.5 text-center sm:space-y-2 md:space-y-3 lg:space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="flex justify-center"
+                >
+                  <ShinyText
+                    className="inline-block text-[0.5rem] uppercase tracking-[0.15em] text-anbu-gold sm:text-[0.625rem] sm:tracking-[0.2em] md:text-[0.7rem] md:tracking-[0.3em] lg:text-xs lg:tracking-[0.35em]"
+                    speed={7}
+                  >
+                    Why Choose Us
+                  </ShinyText>
+                </motion.div>
+                <BlurFadeText delay={0.1} duration={0.6}>
+                  <h2 className="px-2 font-display text-lg font-bold leading-[1.2] text-white sm:px-0 sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+                    Built to Help You Succeed
+                  </h2>
+                </BlurFadeText>
+                <BlurFadeText delay={0.2} duration={0.6}>
+                  <p className="mx-auto max-w-2xl px-4 text-[0.8125rem] leading-relaxed text-white/70 sm:px-0 sm:text-[0.875rem] md:text-[0.9375rem] lg:text-[1rem] xl:text-[1.0625rem]">
+                    We make software development simple and affordable for growing businesses.
+                  </p>
+                </BlurFadeText>
+              </div>
+
+              {/* Image and caption - properly centered at all breakpoints */}
               <motion.div
+                className="relative order-first flex w-full flex-col items-center justify-center gap-2 sm:gap-3 lg:order-last"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="flex justify-center"
+                transition={{ duration: 0.8 }}
               >
-                <ShinyText
-                  className="inline-block text-[0.5rem] sm:text-[0.625rem] md:text-[0.7rem] lg:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.3em] lg:tracking-[0.35em] text-anbu-gold"
-                  speed={7}
-                >
-                  Why Choose Us
-                </ShinyText>
-              </motion.div>
-              <BlurFadeText delay={0.1} duration={0.6}>
-                <h2 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white leading-[1.2] px-2 sm:px-0">
-                  Built to Help You Succeed
-                </h2>
-              </BlurFadeText>
-              <BlurFadeText delay={0.2} duration={0.6}>
-                <p className="text-[0.8125rem] sm:text-[0.875rem] md:text-[0.9375rem] lg:text-[1rem] xl:text-[1.0625rem] text-white/70 leading-relaxed max-w-2xl mx-auto px-4 sm:px-0">
-                  We make software development simple and affordable for growing businesses.
-                </p>
-              </BlurFadeText>
-            </div>
+                {/* Container sized to match PixelImage dimensions for proper centering */}
+                <div className="relative mx-auto max-w-[140px] overflow-hidden rounded-lg xs:max-w-[160px] sm:max-w-[200px] sm:rounded-xl md:max-w-[280px] lg:max-w-[384px]">
+                  <div className="group relative">
+                    {/* Subtle glow effect on hover */}
+                    <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-anbu-gold/20 to-anbu-gold-accent/20 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-75" />
 
-            {/* Image and caption - properly centered at all breakpoints */}
-            <motion.div
-              className="relative flex flex-col items-center justify-center gap-2 sm:gap-3 order-first lg:order-last w-full"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Container sized to match PixelImage dimensions for proper centering */}
-              <div className="relative max-w-[140px] xs:max-w-[160px] sm:max-w-[200px] md:max-w-[280px] lg:max-w-[384px] mx-auto overflow-hidden rounded-lg sm:rounded-xl">
-                <div className="relative group">
-                  {/* Subtle glow effect on hover */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-anbu-gold/20 to-anbu-gold-accent/20 rounded-xl blur-md opacity-0 group-hover:opacity-75 transition-opacity duration-500" />
+                    {/* Image with border */}
+                    <div className="relative overflow-hidden rounded-xl border border-white/10">
+                      <PixelImage src={ABOUT_IMAGE.src} grid={ABOUT_IMAGE.pixelGrid} />
 
-                  {/* Image with border */}
-                  <div className="relative rounded-xl overflow-hidden border border-white/10">
-                    <PixelImage
-                      src={ABOUT_IMAGE.src}
-                      grid={ABOUT_IMAGE.pixelGrid}
-                    />
-
-                    {/* Subtle overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      {/* Subtle overlay gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <motion.p
-                className="text-center text-[0.625rem] sm:text-[0.75rem] md:text-[0.8125rem] lg:text-[0.875rem] text-white/60 max-w-sm"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                {ABOUT_IMAGE.caption}
-              </motion.p>
-            </motion.div>
+                <motion.p
+                  className="max-w-sm text-center text-[0.625rem] text-white/60 sm:text-[0.75rem] md:text-[0.8125rem] lg:text-[0.875rem]"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                  {ABOUT_IMAGE.caption}
+                </motion.p>
+              </motion.div>
+            </div>
+
+            <LogoLoop
+              logos={techStack}
+              speed={28}
+              className="mt-2 sm:mt-3 md:mt-4 lg:mt-6"
+              fadeEdges
+            />
+
+            <BentoGrid className="mt-3 grid-cols-2 gap-3 sm:mt-4 sm:gap-4 md:mt-6 md:gap-5 lg:mt-8 lg:grid-cols-4">
+              {differentiators.map((item, index) => (
+                <EnhancedBentoCard
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  onClick={() => setSelectedFeature(index)}
+                />
+              ))}
+            </BentoGrid>
           </div>
-
-          <LogoLoop
-            logos={techStack}
-            speed={28}
-            className="mt-2 sm:mt-3 md:mt-4 lg:mt-6"
-            fadeEdges
-          />
-
-          <BentoGrid className="mt-3 sm:mt-4 md:mt-6 lg:mt-8 grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
-            {differentiators.map((item, index) => (
-              <EnhancedBentoCard
-                key={item.title}
-                item={item}
-                index={index}
-                onClick={() => setSelectedFeature(index)}
-              />
-            ))}
-          </BentoGrid>
-        </div>
-      </Container>
+        </Container>
       </GradualBlurSection>
 
       {/* Feature Modal */}
@@ -398,5 +423,5 @@ export default function AboutSection() {
         />
       )}
     </div>
-  )
+  );
 }

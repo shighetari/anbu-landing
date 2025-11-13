@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import { motion, useInView } from "framer-motion"
-import { PropsWithChildren, useRef } from "react"
+import { motion, useInView } from 'framer-motion';
+import { PropsWithChildren, useRef } from 'react';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
 interface GradualBlurSectionProps extends PropsWithChildren<{}> {
-  className?: string
-  id?: string
+  className?: string;
+  id?: string;
 }
 
 /**
@@ -15,17 +15,17 @@ interface GradualBlurSectionProps extends PropsWithChildren<{}> {
  * Inspired by React Bits "gradual-blur" animation.
  */
 export function GradualBlurSection({ children, className, id }: GradualBlurSectionProps) {
-  const ref = useRef<HTMLDivElement | null>(null)
-  const isInView = useInView(ref, { once: true, amount: 0.1 })
+  const ref = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
 
   return (
     <motion.section
       ref={ref}
       id={id}
-      initial={{ opacity: 0, filter: "blur(18px)" }}
-      animate={isInView ? { opacity: 1, filter: "blur(0px)" } : undefined}
-      transition={{ duration: 0.9, ease: "easeOut" }}
-      className={cn("relative", className)}
+      initial={{ opacity: 0, filter: 'blur(18px)' }}
+      animate={isInView ? { opacity: 1, filter: 'blur(0px)' } : undefined}
+      transition={{ duration: 0.9, ease: 'easeOut' }}
+      className={cn('relative', className)}
     >
       {children}
       <span
@@ -33,5 +33,5 @@ export function GradualBlurSection({ children, className, id }: GradualBlurSecti
         aria-hidden="true"
       />
     </motion.section>
-  )
+  );
 }

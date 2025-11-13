@@ -1,25 +1,21 @@
-import React from 'react'
-import { cn } from '@/lib/utils'
+import React from 'react';
+import { cn } from '@/lib/utils';
 
 // I'm creating a responsive container for consistent spacing
 interface ContainerProps {
-  children: React.ReactNode
-  className?: string
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  children: React.ReactNode;
+  className?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
 }
 
-export default function Container({
-  children,
-  className,
-  size = 'lg'
-}: ContainerProps) {
+export default function Container({ children, className, size = 'lg' }: ContainerProps) {
   const sizeValues = {
-    sm: '48rem',   // 768px
-    md: '64rem',   // 1024px
-    lg: '80rem',   // 1280px
-    xl: '90rem',   // 1440px
-    full: '100%'
-  }
+    sm: '48rem', // 768px
+    md: '64rem', // 1024px
+    lg: '80rem', // 1280px
+    xl: '90rem', // 1440px
+    full: '100%',
+  };
 
   return (
     <div
@@ -34,5 +30,5 @@ export default function Container({
     >
       {children}
     </div>
-  )
+  );
 }

@@ -3,9 +3,9 @@ export function formatCurrency(value: number, currency: string = 'USD', locale: 
     style: 'currency',
     currency,
     maximumFractionDigits: 0,
-  }).format(value)
+  }).format(value);
 }
 
 export function formatPercentage(value: number, fractionDigits: number = 0) {
-  return `${value.toFixed(fractionDigits)}%`
+  return `${value.toFixed(fractionDigits)}%`;
 }

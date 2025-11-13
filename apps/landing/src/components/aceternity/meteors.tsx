@@ -1,24 +1,18 @@
-'use client'
+'use client';
 
-import { cn } from '@/lib/utils'
-import { deterministicRandom } from '@/lib/random'
-import React, { useMemo } from 'react'
+import { cn } from '@/lib/utils';
+import { deterministicRandom } from '@/lib/random';
+import React, { useMemo } from 'react';
 
-export const Meteors = ({
-  number = 20,
-  className,
-}: {
-  number?: number
-  className?: string
-}) => {
+export const Meteors = ({ number = 20, className }: { number?: number; className?: string }) => {
   // Generate deterministic values based on index to avoid hydration mismatch
   const randomForIndex = (index: number, offset: number) =>
-    deterministicRandom(index * 97 + offset)
+    deterministicRandom(index * 97 + offset);
 
   const meteors = useMemo(() => {
     return new Array(number).fill(true).map((_, idx) => {
-      const sizeValue = randomForIndex(idx, 1)
-      const trailValue = randomForIndex(idx, 2)
+      const sizeValue = randomForIndex(idx, 1);
+      const trailValue = randomForIndex(idx, 2);
 
       return {
         key: idx,
@@ -30,9 +24,9 @@ export const Meteors = ({
         size: sizeValue > 0.7 ? 'w-1 h-1' : 'w-0.5 h-0.5',
         // Some meteors get brighter trails
         trailOpacity: trailValue > 0.6 ? '#FFD700cc' : '#FFD70064',
-      }
-    })
-  }, [number])
+      };
+    });
+  }, [number]);
 
   return (
     <>
@@ -40,9 +34,9 @@ export const Meteors = ({
         <span
           key={'meteor' + meteor.key}
           className={cn(
-            'animate-meteor-effect absolute top-1/2 left-1/2 rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10] rotate-[215deg]',
+            'absolute left-1/2 top-1/2 rotate-[215deg] animate-meteor-effect rounded-[9999px] bg-slate-500 shadow-[0_0_0_1px_#ffffff10]',
             meteor.size, // Apply variable size
-            "before:content-[''] before:absolute before:top-1/2 before:transform before:-translate-y-[50%] before:w-[150px] before:h-[1px] before:bg-gradient-to-r before:from-[#FFD700cc] before:via-[#FFD70099] before:to-transparent",
+            "before:absolute before:top-1/2 before:h-[1px] before:w-[150px] before:-translate-y-[50%] before:transform before:bg-gradient-to-r before:from-[#FFD700cc] before:via-[#FFD70099] before:to-transparent before:content-['']",
             className
           )}
           style={{
@@ -54,5 +48,5 @@ export const Meteors = ({
         ></span>
       ))}
     </>
-  )
-}
+  );
+};

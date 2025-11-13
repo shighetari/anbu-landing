@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Menu, X, ArrowUpRight, ChevronDown } from '@/components/ui/lucide-safe'
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X, ArrowUpRight, ChevronDown } from '@/components/ui/lucide-safe';
 import {
   IconBrandCodesandbox,
   IconBook,
@@ -15,51 +15,55 @@ import {
   IconRoute,
   IconSparkles,
   IconUsersGroup,
-  IconChecklist
-} from '@tabler/icons-react'
-import { useEffect, useState, useRef, useCallback } from 'react'
-import type { FocusEvent as ReactFocusEvent, PointerEvent as ReactPointerEvent, KeyboardEvent as ReactKeyboardEvent } from 'react'
-import type { ComponentType } from 'react'
+  IconChecklist,
+} from '@tabler/icons-react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import type {
+  FocusEvent as ReactFocusEvent,
+  PointerEvent as ReactPointerEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+} from 'react';
+import type { ComponentType } from 'react';
 
-import { cn } from '@/lib/utils'
-import { siteConfig } from '@/lib/site-config'
-import { useClickOutside } from '@/hooks/useClickOutside'
-import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
-import { useFocusTrap } from '@/hooks/useFocusTrap'
+import { cn } from '@/lib/utils';
+import { siteConfig } from '@/lib/site-config';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 type JourneyItem = {
-  stage: string
-  title: string
-  description: string
-  href: string
-}
+  stage: string;
+  title: string;
+  description: string;
+  href: string;
+};
 
 type MegaItem = {
-  title: string
-  description: string
-  href: string
-  icon?: ComponentType<{ className?: string }>
-  gradient: string
-  bgGradient?: string
-  badge?: string
-  status?: string
-}
+  title: string;
+  description: string;
+  href: string;
+  icon?: ComponentType<{ className?: string }>;
+  gradient: string;
+  bgGradient?: string;
+  badge?: string;
+  status?: string;
+};
 
 type AuxiliaryLink = {
-  label: string
-  href: string
-  icon?: ComponentType<{ className?: string }>
-  gradient?: string
-}
+  label: string;
+  href: string;
+  icon?: ComponentType<{ className?: string }>;
+  gradient?: string;
+};
 
 type NavItem = {
-  label: string
-  href: string
-  description?: string
-  journey?: JourneyItem[]
-  mega?: MegaItem[]
-  auxLinks?: AuxiliaryLink[]
-}
+  label: string;
+  href: string;
+  description?: string;
+  journey?: JourneyItem[];
+  mega?: MegaItem[];
+  auxLinks?: AuxiliaryLink[];
+};
 
 const NAV_ITEMS: NavItem[] = [
   {
@@ -134,83 +138,83 @@ const NAV_ITEMS: NavItem[] = [
     href: '/contact',
     description: 'Start a project in under a minute.',
   },
-]
+];
 
 const TRANSITION = {
   type: 'spring',
   mass: 0.8,
   damping: 30,
   stiffness: 300,
-}
+};
 
-const STAGGER_DELAY = 0.05
+const STAGGER_DELAY = 0.05;
 
 export default function Navigation() {
-  const pathname = usePathname()
-  const [active, setActive] = useState<string | null>(null)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null)
-  const [scrollVelocity, setScrollVelocity] = useState(0)
-  const prevY = useRef(0)
+  const pathname = usePathname();
+  const [active, setActive] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [scrollVelocity, setScrollVelocity] = useState(0);
+  const prevY = useRef(0);
 
-  const mobileMenuRef = useClickOutside<HTMLDivElement>(() => setMobileOpen(false), mobileOpen)
-  const focusTrapRef = useFocusTrap<HTMLDivElement>(mobileOpen)
-  useLockBodyScroll(mobileOpen)
+  const mobileMenuRef = useClickOutside<HTMLDivElement>(() => setMobileOpen(false), mobileOpen);
+  const focusTrapRef = useFocusTrap<HTMLDivElement>(mobileOpen);
+  useLockBodyScroll(mobileOpen);
 
   useEffect(() => {
     const handler = () => {
-      const scrollY = window.scrollY
-      setIsScrolled(scrollY > 24)
-      const velocity = scrollY - prevY.current
-      setScrollVelocity(velocity)
-      prevY.current = scrollY
-    }
-    handler()
-    window.addEventListener('scroll', handler, { passive: true })
-    return () => window.removeEventListener('scroll', handler)
-  }, [])
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 24);
+      const velocity = scrollY - prevY.current;
+      setScrollVelocity(velocity);
+      prevY.current = scrollY;
+    };
+    handler();
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
 
   useEffect(() => {
-    setMobileOpen(false)
-    setMobileExpanded(null)
-    setActive(null)
-    document.body.style.overflow = ''
-    document.body.style.paddingRight = ''
-  }, [pathname])
+    setMobileOpen(false);
+    setMobileExpanded(null);
+    setActive(null);
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  }, [pathname]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (mobileExpanded) {
-          setMobileExpanded(null)
+          setMobileExpanded(null);
         } else {
-          setMobileOpen(false)
-          setActive(null)
+          setMobileOpen(false);
+          setActive(null);
         }
       }
-    }
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [mobileOpen, mobileExpanded])
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [mobileOpen, mobileExpanded]);
 
   useEffect(() => {
     return () => {
-      document.body.style.overflow = ''
-      document.body.style.paddingRight = ''
-    }
-  }, [])
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, []);
 
   const handleNavigate = () => {
-    setMobileOpen(false)
-    setActive(null)
-  }
+    setMobileOpen(false);
+    setActive(null);
+  };
 
   return (
     <motion.header
       className={cn(
-        'fixed inset-x-0 z-[55] flex justify-center px-4 transition-all duration-500 fluid-top-nav',
-        isScrolled && 'translate-y-[-0.25rem]',
+        'fluid-top-nav fixed inset-x-0 z-[55] flex justify-center px-4 transition-all duration-500',
+        isScrolled && 'translate-y-[-0.25rem]'
       )}
       style={{
         backdropFilter: `blur(${isScrolled ? 20 : 16}px)`,
@@ -224,8 +228,8 @@ export default function Navigation() {
         onMouseLeave={() => setActive(null)}
         className={cn(
           'will-change-transform',
-          'relative flex w-full max-w-6xl items-center justify-between gap-3 rounded-full border border-white/15 bg-black/65 px-4 lg:px-6 py-2 lg:py-3 shadow-[0_16px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500',
-          isScrolled && 'border-white/15 bg-black/70 shadow-[0_16px_80px_rgba(0,0,0,0.55)]',
+          'relative flex w-full max-w-6xl items-center justify-between gap-3 rounded-full border border-white/15 bg-black/65 px-4 py-2 shadow-[0_16px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 lg:px-6 lg:py-3',
+          isScrolled && 'border-white/15 bg-black/70 shadow-[0_16px_80px_rgba(0,0,0,0.55)]'
         )}
         animate={{
           scale: isScrolled ? 0.98 : 1,
@@ -234,21 +238,16 @@ export default function Navigation() {
       >
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold uppercase tracking-[0.2em] text-anbu-gold transition-all duration-300 hover:text-anbu-gold/90 hover:scale-105"
+          className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold uppercase tracking-[0.2em] text-anbu-gold transition-all duration-300 hover:scale-105 hover:text-anbu-gold/90"
         >
           <span className="h-2.5 w-2.5 rounded-full bg-anbu-gold shadow-[0_0_15px_rgba(255,215,0,0.8)]" />
           ANBU
         </Link>
 
-        <div className="hidden md:flex items-center gap-4 lg:gap-6">
+        <div className="hidden items-center gap-4 md:flex lg:gap-6">
           <div className="flex items-center gap-2 lg:gap-3">
             {NAV_ITEMS.map((item) => (
-              <DesktopMenuItem
-                key={item.label}
-                item={item}
-                active={active}
-                setActive={setActive}
-              />
+              <DesktopMenuItem key={item.label} item={item} active={active} setActive={setActive} />
             ))}
           </div>
           <motion.div
@@ -263,7 +262,7 @@ export default function Navigation() {
               href={siteConfig.calLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative inline-flex items-center gap-1.5 rounded-full border border-transparent bg-gradient-to-r from-[#FFD700] via-[#FFC347] to-[#FF9C2E] px-4 sm:px-5 lg:px-6 py-1.5 lg:py-2 text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-anbu-ink shadow-[0_10px_26px_rgba(255,181,71,0.35)] min-h-[40px] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#FFD700] focus-visible:ring-offset-black touch-manipulation"
+              className="relative inline-flex min-h-[40px] touch-manipulation items-center gap-1.5 rounded-full border border-transparent bg-gradient-to-r from-[#FFD700] via-[#FFC347] to-[#FF9C2E] px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-anbu-ink shadow-[0_10px_26px_rgba(255,181,71,0.35)] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD700] focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-5 sm:text-[0.7rem] lg:px-6 lg:py-2"
             >
               <span className="flex items-center gap-2">
                 Book a Call
@@ -274,7 +273,7 @@ export default function Navigation() {
         </div>
 
         <button
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-anbu-gold/10 md:hidden touch-manipulation"
+          className="flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-white/10 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-anbu-gold/10 md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle navigation"
           aria-expanded={mobileOpen}
@@ -319,8 +318,8 @@ export default function Navigation() {
               <motion.div
                 ref={(node) => {
                   // I'm properly setting both refs to the same element
-                  mobileMenuRef.current = node
-                  focusTrapRef(node)
+                  mobileMenuRef.current = node;
+                  focusTrapRef(node);
                 }}
                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -336,10 +335,10 @@ export default function Navigation() {
                 aria-modal="true"
                 aria-label="Mobile navigation menu"
               >
-                <div className="max-h-[calc(100vh-7rem)] overflow-y-auto space-y-3 rounded-3xl border border-white/12 bg-black/95 p-4 shadow-[0_32px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl scrollbar-thin scrollbar-track-white/5 scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30">
+                <div className="border-white/12 scrollbar-thin scrollbar-track-white/5 scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30 max-h-[calc(100vh-7rem)] space-y-3 overflow-y-auto rounded-3xl border bg-black/95 p-4 shadow-[0_32px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
                   {NAV_ITEMS.map((item, index) => {
-                    const hasNested = Boolean(item.journey || item.mega)
-                    const isExpanded = mobileExpanded === item.label
+                    const hasNested = Boolean(item.journey || item.mega);
+                    const isExpanded = mobileExpanded === item.label;
 
                     return (
                       <motion.div
@@ -357,10 +356,12 @@ export default function Navigation() {
                           >
                             <span className="flex items-center justify-between text-sm font-semibold text-anbu-marble">
                               {item.label}
-                              <span className="text-[10px] uppercase tracking-[0.2em] text-anbu-gold/70">Go</span>
+                              <span className="text-[10px] uppercase tracking-[0.2em] text-anbu-gold/70">
+                                Go
+                              </span>
                             </span>
                             {item.description ? (
-                              <span className="text-xs text-white/55 leading-relaxed">
+                              <span className="text-xs leading-relaxed text-white/55">
                                 {item.description}
                               </span>
                             ) : null}
@@ -369,8 +370,10 @@ export default function Navigation() {
                           {hasNested && (
                             <button
                               onClick={() => setMobileExpanded(isExpanded ? null : item.label)}
-                              className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 text-anbu-gold transition-all duration-300 hover:bg-white/10 hover:border-anbu-gold/40"
-                              aria-label={isExpanded ? `Collapse ${item.label}` : `Expand ${item.label}`}
+                              className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-white/10"
+                              aria-label={
+                                isExpanded ? `Collapse ${item.label}` : `Expand ${item.label}`
+                              }
                               aria-expanded={isExpanded}
                             >
                               <motion.div
@@ -403,11 +406,11 @@ export default function Navigation() {
                                     <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-anbu-gold/80">
                                       {step.stage}
                                     </span>
-                                    <div className="flex-1 min-w-0">
+                                    <div className="min-w-0 flex-1">
                                       <span className="block text-xs font-medium text-white">
                                         {step.title}
                                       </span>
-                                      <span className="text-[11px] text-white/55 leading-relaxed">
+                                      <span className="text-[11px] leading-relaxed text-white/55">
                                         {step.description}
                                       </span>
                                     </div>
@@ -427,7 +430,7 @@ export default function Navigation() {
                             >
                               <div className="space-y-2 border-l border-white/10 pl-3 pt-2">
                                 {item.mega.map((mega) => {
-                                  const IconComponent = mega.icon
+                                  const IconComponent = mega.icon;
                                   return (
                                     <Link
                                       key={mega.title}
@@ -436,30 +439,34 @@ export default function Navigation() {
                                       className="group relative block rounded-xl px-3 py-2 transition-all duration-300 hover:bg-white/5"
                                     >
                                       <div className="flex items-start gap-2">
-                                        <div className="flex flex-col items-center gap-1 mt-1">
+                                        <div className="mt-1 flex flex-col items-center gap-1">
                                           {mega.badge && (
-                                            <span className={cn(
-                                              'rounded-full px-2 py-0.5 text-[9px] uppercase tracking-[0.2em] text-white/80',
-                                              'bg-gradient-to-r',
-                                              mega.gradient
-                                            )}>
+                                            <span
+                                              className={cn(
+                                                'rounded-full px-2 py-0.5 text-[9px] uppercase tracking-[0.2em] text-white/80',
+                                                'bg-gradient-to-r',
+                                                mega.gradient
+                                              )}
+                                            >
                                               {mega.badge}
                                             </span>
                                           )}
                                           {IconComponent && (
-                                            <div className={cn(
-                                              'rounded-md p-1 bg-gradient-to-br text-white',
-                                              mega.gradient
-                                            )}>
+                                            <div
+                                              className={cn(
+                                                'rounded-md bg-gradient-to-br p-1 text-white',
+                                                mega.gradient
+                                              )}
+                                            >
                                               <IconComponent className="h-3.5 w-3.5" />
                                             </div>
                                           )}
                                         </div>
-                                        <div className="flex-1 min-w-0">
+                                        <div className="min-w-0 flex-1">
                                           <span className="block text-xs font-medium text-white">
                                             {mega.title}
                                           </span>
-                                          <span className="text-[11px] text-white/55 leading-relaxed">
+                                          <span className="text-[11px] leading-relaxed text-white/55">
                                             {mega.description}
                                           </span>
                                           {mega.status && (
@@ -470,14 +477,14 @@ export default function Navigation() {
                                         </div>
                                       </div>
                                     </Link>
-                                  )
+                                  );
                                 })}
                               </div>
                             </motion.div>
                           )}
                         </AnimatePresence>
                       </motion.div>
-                    )
+                    );
                   })}
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -487,7 +494,7 @@ export default function Navigation() {
                     <Link
                       href="/contact"
                       onClick={handleNavigate}
-                      className="flex items-center justify-center gap-2 rounded-full bg-anbu-gold px-6 py-3 text-sm font-semibold text-anbu-ink shadow-[0_12px_30px_rgba(255,215,0,0.35)] transition-all duration-300 hover:bg-anbu-gold-accent hover:scale-[1.05] active:scale-[0.95]"
+                      className="flex items-center justify-center gap-2 rounded-full bg-anbu-gold px-6 py-3 text-sm font-semibold text-anbu-ink shadow-[0_12px_30px_rgba(255,215,0,0.35)] transition-all duration-300 hover:scale-[1.05] hover:bg-anbu-gold-accent active:scale-[0.95]"
                     >
                       Get Started
                       <ArrowUpRight className="h-4 w-4" />
@@ -500,7 +507,7 @@ export default function Navigation() {
         </AnimatePresence>
       </motion.nav>
     </motion.header>
-  )
+  );
 }
 
 function DesktopMenuItem({
@@ -508,121 +515,121 @@ function DesktopMenuItem({
   active,
   setActive,
 }: {
-  item: NavItem
-  active: string | null
-  setActive: (value: string | null) => void
+  item: NavItem;
+  active: string | null;
+  setActive: (value: string | null) => void;
 }) {
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const menuRef = useRef<HTMLDivElement | null>(null)
-  const [menuOffset, setMenuOffset] = useState(0)
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const [menuOffset, setMenuOffset] = useState(0);
 
-  const isActive = active === item.label
-  const hasMega = Boolean(item.mega && item.mega.length > 0)
-  const hasJourney = Boolean(item.journey && item.journey.length > 0)
-  const hasMenu = hasMega || hasJourney
+  const isActive = active === item.label;
+  const hasMega = Boolean(item.mega && item.mega.length > 0);
+  const hasJourney = Boolean(item.journey && item.journey.length > 0);
+  const hasMenu = hasMega || hasJourney;
 
   const pointerTargetsContain = useCallback((target: EventTarget | null) => {
     if (!target) {
-      return false
+      return false;
     }
     if (typeof window === 'undefined' || typeof Node === 'undefined') {
-      return false
+      return false;
     }
     if (!(target instanceof Node)) {
-      return false
+      return false;
     }
     if (containerRef.current?.contains(target)) {
-      return true
+      return true;
     }
     if (menuRef.current?.contains(target)) {
-      return true
+      return true;
     }
-    return false
-  }, [])
+    return false;
+  }, []);
 
   const openMenu = useCallback(() => {
     if (hasMenu) {
-      setActive(item.label)
+      setActive(item.label);
     }
-  }, [hasMenu, item.label, setActive])
+  }, [hasMenu, item.label, setActive]);
 
   const closeMenu = useCallback(() => {
     if (hasMenu) {
-      setActive(null)
+      setActive(null);
     }
-  }, [hasMenu, setActive])
+  }, [hasMenu, setActive]);
 
   const handlePointerLeave = useCallback(
     (event: ReactPointerEvent<HTMLDivElement>) => {
       if (!hasMenu) {
-        return
+        return;
       }
       if (pointerTargetsContain(event.relatedTarget)) {
-        return
+        return;
       }
-      setActive(null)
+      setActive(null);
     },
-    [hasMenu, pointerTargetsContain, setActive],
-  )
+    [hasMenu, pointerTargetsContain, setActive]
+  );
 
   const handleBlur = useCallback(
     (event: ReactFocusEvent<HTMLDivElement>) => {
       if (!hasMenu) {
-        return
+        return;
       }
       if (pointerTargetsContain(event.relatedTarget)) {
-        return
+        return;
       }
-      setActive(null)
+      setActive(null);
     },
-    [hasMenu, pointerTargetsContain, setActive],
-  )
+    [hasMenu, pointerTargetsContain, setActive]
+  );
 
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLAnchorElement>) => {
     if (!hasMenu) {
-      return
+      return;
     }
 
     if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
-      event.preventDefault()
-      openMenu()
+      event.preventDefault();
+      openMenu();
     }
 
     if (event.key === 'Escape') {
-      event.preventDefault()
-      closeMenu()
+      event.preventDefault();
+      closeMenu();
     }
-  }
+  };
 
   useEffect(() => {
     if (!isActive) {
-      setMenuOffset(0)
-      return
+      setMenuOffset(0);
+      return;
     }
 
     const updatePosition = () => {
       if (typeof window === 'undefined' || !menuRef.current) {
-        return
+        return;
       }
 
-      const rect = menuRef.current.getBoundingClientRect()
-      const viewportWidth = window.innerWidth
-      const safePadding = 16
-      let nextOffset = 0
+      const rect = menuRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const safePadding = 16;
+      let nextOffset = 0;
 
       if (rect.left < safePadding) {
-        nextOffset = safePadding - rect.left
+        nextOffset = safePadding - rect.left;
       } else if (rect.right > viewportWidth - safePadding) {
-        nextOffset = (viewportWidth - safePadding) - rect.right
+        nextOffset = viewportWidth - safePadding - rect.right;
       }
 
-      setMenuOffset(nextOffset)
-    }
+      setMenuOffset(nextOffset);
+    };
 
-    updatePosition()
-    window.addEventListener('resize', updatePosition)
-    return () => window.removeEventListener('resize', updatePosition)
-  }, [isActive])
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, [isActive]);
 
   return (
     <div
@@ -639,8 +646,8 @@ function DesktopMenuItem({
         aria-haspopup={hasMenu ? 'true' : undefined}
         aria-expanded={hasMenu ? isActive : undefined}
         className={cn(
-          'group relative inline-flex items-center rounded-full px-4 lg:px-6 py-2 lg:py-2.5 text-xs font-semibold uppercase tracking-[0.12em] lg:tracking-[0.15em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] min-h-[44px] touch-manipulation',
-          isActive && 'bg-white/5 text-anbu-gold',
+          'group relative inline-flex min-h-[44px] touch-manipulation items-center rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] lg:px-6 lg:py-2.5 lg:tracking-[0.15em]',
+          isActive && 'bg-white/5 text-anbu-gold'
         )}
         onKeyDown={handleKeyDown}
       >
@@ -655,7 +662,7 @@ function DesktopMenuItem({
       </Link>
 
       {hasMenu && isActive ? (
-        <div className="pointer-events-none absolute top-full left-0 right-0 h-6 z-30" />
+        <div className="pointer-events-none absolute left-0 right-0 top-full z-30 h-6" />
       ) : null}
 
       <AnimatePresence>
@@ -673,7 +680,7 @@ function DesktopMenuItem({
             role="menu"
             aria-label={`${item.label} submenu`}
           >
-            <div className="overflow-hidden rounded-2xl border border-white/12 bg-black/92 shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
+            <div className="border-white/12 bg-black/92 overflow-hidden rounded-2xl border shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
               {hasJourney ? (
                 <motion.div
                   className="flex flex-col gap-3 p-6"
@@ -714,11 +721,11 @@ function DesktopMenuItem({
                           <p className="text-sm font-semibold text-white group-hover:text-anbu-gold">
                             {step.title}
                           </p>
-                          <p className="text-xs text-white/60 leading-relaxed">
+                          <p className="text-xs leading-relaxed text-white/60">
                             {step.description}
                           </p>
                         </div>
-                        <ArrowUpRight className="h-4 w-4 text-white/50 transition-all duration-300 group-hover:text-anbu-gold group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        <ArrowUpRight className="h-4 w-4 text-white/50 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-anbu-gold" />
                       </Link>
                     </motion.div>
                   ))}
@@ -739,7 +746,7 @@ function DesktopMenuItem({
                   }}
                 >
                   {item.mega?.map((mega) => {
-                    const IconComponent = mega.icon
+                    const IconComponent = mega.icon;
                     return (
                       <motion.div
                         key={mega.title}
@@ -761,23 +768,27 @@ function DesktopMenuItem({
                         <Link
                           href={mega.href}
                           className={cn(
-                            'group relative flex h-full flex-col gap-4 rounded-xl border border-white/[0.08] bg-white/[0.05] p-5 lg:p-6 transition-all duration-300',
-                            'hover:border-white/20 hover:bg-white/[0.08] hover:shadow-lg backdrop-blur-sm',
+                            'group relative flex h-full flex-col gap-4 rounded-xl border border-white/[0.08] bg-white/[0.05] p-5 transition-all duration-300 lg:p-6',
+                            'backdrop-blur-sm hover:border-white/20 hover:bg-white/[0.08] hover:shadow-lg',
                             'focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black'
                           )}
                         >
-                          <div className={cn(
-                            'absolute inset-0 rounded-xl bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-100',
-                            mega.bgGradient || mega.gradient
-                          )} />
+                          <div
+                            className={cn(
+                              'absolute inset-0 rounded-xl bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-100',
+                              mega.bgGradient || mega.gradient
+                            )}
+                          />
 
                           <div className="relative flex items-start justify-between gap-2">
                             {mega.badge ? (
-                              <span className={cn(
-                                'inline-flex items-center justify-center rounded-full px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/90',
-                                'bg-gradient-to-r',
-                                mega.gradient
-                              )}>
+                              <span
+                                className={cn(
+                                  'inline-flex items-center justify-center rounded-full px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/90',
+                                  'bg-gradient-to-r',
+                                  mega.gradient
+                                )}
+                              >
                                 {mega.badge}
                               </span>
                             ) : null}
@@ -787,36 +798,38 @@ function DesktopMenuItem({
                               </span>
                             ) : null}
                             {IconComponent ? (
-                              <div className={cn(
-                                'absolute -top-2 -right-2 rounded-xl p-2 bg-gradient-to-br text-white shadow-lg transition-transform duration-300',
-                                mega.gradient
-                              )}>
+                              <div
+                                className={cn(
+                                  'absolute -right-2 -top-2 rounded-xl bg-gradient-to-br p-2 text-white shadow-lg transition-transform duration-300',
+                                  mega.gradient
+                                )}
+                              >
                                 <IconComponent className="h-4 w-4" />
                               </div>
                             ) : null}
                           </div>
 
                           <div className="relative space-y-2 pt-2">
-                            <p className="text-base font-semibold text-white">
-                              {mega.title}
-                            </p>
-                            <p className="text-sm text-white/70 leading-relaxed">
+                            <p className="text-base font-semibold text-white">{mega.title}</p>
+                            <p className="text-sm leading-relaxed text-white/70">
                               {mega.description}
                             </p>
                           </div>
 
                           <div className="relative mt-auto flex items-center gap-2">
-                            <span className={cn(
-                              'text-xs uppercase tracking-[0.2em] font-medium text-white/70 transition-colors duration-300',
-                              'group-hover:text-anbu-gold'
-                            )}>
+                            <span
+                              className={cn(
+                                'text-xs font-medium uppercase tracking-[0.2em] text-white/70 transition-colors duration-300',
+                                'group-hover:text-anbu-gold'
+                              )}
+                            >
                               Explore
                             </span>
-                            <ArrowUpRight className="h-4 w-4 text-white/60 transition-all duration-300 group-hover:text-anbu-gold group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            <ArrowUpRight className="h-4 w-4 text-white/60 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-anbu-gold" />
                           </div>
                         </Link>
                       </motion.div>
-                    )
+                    );
                   })}
                 </motion.div>
               ) : null}
@@ -830,7 +843,7 @@ function DesktopMenuItem({
                 >
                   <div className="flex items-center justify-center gap-4 px-6 py-4">
                     {item.auxLinks.map((aux, index) => {
-                      const IconComponent = aux.icon
+                      const IconComponent = aux.icon;
                       return (
                         <motion.div
                           key={aux.label}
@@ -846,26 +859,28 @@ function DesktopMenuItem({
                           <Link
                             href={aux.href}
                             className={cn(
-                              'group relative inline-flex items-center gap-2.5 rounded-full overflow-hidden',
+                              'group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full',
                               'border border-white/10 px-5 py-2.5 text-[11px]',
-                              'uppercase tracking-[0.15em] font-semibold',
+                              'font-semibold uppercase tracking-[0.15em]',
                               'text-white/80 transition-all duration-300',
-                              'hover:scale-105 hover:border-anbu-gold/40 hover:text-anbu-gold hover:bg-anbu-gold/5',
+                              'hover:scale-105 hover:border-anbu-gold/40 hover:bg-anbu-gold/5 hover:text-anbu-gold',
                               'hover:shadow-[0_0_20px_rgba(255,215,0,0.15)]',
-                              'backdrop-blur-sm min-w-[160px] justify-center',
+                              'min-w-[160px] justify-center backdrop-blur-sm',
                               'focus:outline-none focus:ring-2 focus:ring-anbu-gold/50 focus:ring-offset-1 focus:ring-offset-black'
                             )}
                           >
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 -skew-x-12" />
-                            <div className={cn(
-                              'absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300',
-                              aux.gradient || 'from-anbu-gold/20 to-anbu-gold/10'
-                            )} />
+                            <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                            <div
+                              className={cn(
+                                'absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300',
+                                aux.gradient || 'from-anbu-gold/20 to-anbu-gold/10'
+                              )}
+                            />
                             <div className="relative z-10 flex items-center gap-2.5">
                               {IconComponent && (
                                 <motion.div
                                   className={cn(
-                                    'rounded-full p-1.5 bg-gradient-to-br',
+                                    'rounded-full bg-gradient-to-br p-1.5',
                                     aux.gradient || 'from-anbu-gold/20 to-anbu-gold/10'
                                   )}
                                   whileHover={{ rotate: 180 }}
@@ -878,7 +893,7 @@ function DesktopMenuItem({
                             </div>
                           </Link>
                         </motion.div>
-                      )
+                      );
                     })}
                   </div>
                 </motion.div>
@@ -888,5 +903,5 @@ function DesktopMenuItem({
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }

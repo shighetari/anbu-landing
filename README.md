@@ -87,15 +87,15 @@ pnpm dev
 
 ### Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start all apps in development mode |
-| `pnpm build` | Build all apps for production |
-| `pnpm test` | Run tests across all apps |
-| `pnpm lint` | Lint all apps and packages |
-| `pnpm typecheck` | Type check all TypeScript files |
-| `pnpm format` | Format code with Prettier |
-| `pnpm clean` | Clean all build artifacts and node_modules |
+| Script           | Description                                |
+| ---------------- | ------------------------------------------ |
+| `pnpm dev`       | Start all apps in development mode         |
+| `pnpm build`     | Build all apps for production              |
+| `pnpm test`      | Run tests across all apps                  |
+| `pnpm lint`      | Lint all apps and packages                 |
+| `pnpm typecheck` | Type check all TypeScript files            |
+| `pnpm format`    | Format code with Prettier                  |
+| `pnpm clean`     | Clean all build artifacts and node_modules |
 
 ## 🐳 Docker Support
 
@@ -121,18 +121,18 @@ pnpm docker:landing:shell
 
 ### Docker Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm docker:landing` | Start landing app with hot reload |
-| `pnpm docker:landing:build` | Rebuild landing container (no cache) |
-| `pnpm docker:landing:rebuild` | Rebuild and start landing app |
-| `pnpm docker:landing:logs` | View landing app logs |
-| `pnpm docker:landing:shell` | Access landing container shell |
-| `pnpm docker:dev` | Start all services in detached mode |
-| `pnpm docker:stop` | Stop all containers |
-| `pnpm docker:down` | Stop and remove containers |
-| `pnpm docker:clean` | Remove everything (containers, volumes, images) |
-| `pnpm docker:prune` | Clean up all unused Docker resources |
+| Command                       | Description                                     |
+| ----------------------------- | ----------------------------------------------- |
+| `pnpm docker:landing`         | Start landing app with hot reload               |
+| `pnpm docker:landing:build`   | Rebuild landing container (no cache)            |
+| `pnpm docker:landing:rebuild` | Rebuild and start landing app                   |
+| `pnpm docker:landing:logs`    | View landing app logs                           |
+| `pnpm docker:landing:shell`   | Access landing container shell                  |
+| `pnpm docker:dev`             | Start all services in detached mode             |
+| `pnpm docker:stop`            | Stop all containers                             |
+| `pnpm docker:down`            | Stop and remove containers                      |
+| `pnpm docker:clean`           | Remove everything (containers, volumes, images) |
+| `pnpm docker:prune`           | Clean up all unused Docker resources            |
 
 ### Windows Hot Reload Setup
 

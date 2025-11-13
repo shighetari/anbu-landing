@@ -1,31 +1,31 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '@/lib/utils'
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface SparklesTextProps {
-  text: string
-  className?: string
-  sparkleColor?: string
-  sparklesCount?: number
+  text: string;
+  className?: string;
+  sparkleColor?: string;
+  sparklesCount?: number;
 }
 
 interface Sparkle {
-  id: string
-  x: string
-  y: string
-  color: string
-  delay: number
-  scale: number
-  lifespan: number
+  id: string;
+  x: string;
+  y: string;
+  color: string;
+  delay: number;
+  scale: number;
+  lifespan: number;
 }
 
 const random = (min: number, max: number) => {
-  return Math.random() * (max - min) + min
-}
+  return Math.random() * (max - min) + min;
+};
 
-const DEFAULT_COLOR = '#FFD700'
+const DEFAULT_COLOR = '#FFD700';
 
 function SparklesText({
   text,
@@ -33,7 +33,7 @@ function SparklesText({
   sparkleColor = DEFAULT_COLOR,
   sparklesCount = 10,
 }: SparklesTextProps) {
-  const [sparkles, setSparkles] = useState<Sparkle[]>([])
+  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
 
   useEffect(() => {
     const generateSparkle = (): Sparkle => ({
@@ -44,34 +44,31 @@ function SparklesText({
       delay: random(0, 1),
       scale: random(0.2, 1),
       lifespan: random(0.5, 1.5),
-    })
+    });
 
     const interval = setInterval(() => {
       setSparkles((currentSparkles) => {
-        const now = Date.now()
+        const now = Date.now();
         const newSparkles = currentSparkles.filter(
           (sparkle) => parseFloat(sparkle.id) > now - sparkle.lifespan * 2000
-        )
+        );
 
         if (newSparkles.length < sparklesCount) {
-          newSparkles.push(generateSparkle())
+          newSparkles.push(generateSparkle());
         }
 
-        return newSparkles
-      })
-    }, 200)
+        return newSparkles;
+      });
+    }, 200);
 
-    return () => clearInterval(interval)
-  }, [sparklesCount, sparkleColor])
+    return () => clearInterval(interval);
+  }, [sparklesCount, sparkleColor]);
 
   return (
     <span className={cn('relative inline-block', className)}>
       <span className="relative">
         {text}
-        <span
-          className="pointer-events-none absolute inset-0 -z-10"
-          aria-hidden="true"
-        >
+        <span className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
           <AnimatePresence>
             {sparkles.map((sparkle) => (
               <motion.svg
@@ -103,7 +100,7 @@ function SparklesText({
         </span>
       </span>
     </span>
-  )
+  );
 }
 
-export default SparklesText
+export default SparklesText;

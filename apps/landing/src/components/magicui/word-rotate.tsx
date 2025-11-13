@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import { cn } from '@/lib/utils'
-import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { cn } from '@/lib/utils';
+import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 interface WordRotateProps {
-  words: string[]
-  duration?: number
-  framerProps?: HTMLMotionProps<'span'>
-  className?: string
+  words: string[];
+  duration?: number;
+  framerProps?: HTMLMotionProps<'span'>;
+  className?: string;
 }
 
 export default function WordRotate({
@@ -22,27 +22,23 @@ export default function WordRotate({
   },
   className,
 }: WordRotateProps) {
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % words.length)
-    }, duration)
+      setIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, duration);
 
-    return () => clearInterval(interval)
-  }, [words.length, duration])
+    return () => clearInterval(interval);
+  }, [words.length, duration]);
 
   return (
     <div className="overflow-hidden py-2">
       <AnimatePresence mode="wait">
-        <motion.span
-          key={words[index]}
-          className={cn(className)}
-          {...framerProps}
-        >
+        <motion.span key={words[index]} className={cn(className)} {...framerProps}>
           {words[index]}
         </motion.span>
       </AnimatePresence>
     </div>
-  )
+  );
 }

@@ -1,59 +1,54 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import { ResourceShowcase } from "@/components/features/resources/ResourceShowcase"
-import { SparklesCore } from "@/components/aceternity/sparkles"
-import { WobbleCard } from "@/components/aceternity/wobble-card"
-import Container from "@/components/ui/Container"
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
-import { ShineBorder } from "@/components/ui/shine-border"
-import { ShimmerButton } from "@/components/ui/shimmer-button"
-import { buttonVariants } from "@/lib/button-variants"
-import { cn } from "@/lib/utils"
-import {
-  ArrowUpRight,
-  BarChart2,
-  BookMarked,
-  Sparkles,
-} from "@/components/ui/lucide-safe"
-import { siteConfig } from "@/lib/site-config"
+import { ResourceShowcase } from '@/components/features/resources/ResourceShowcase';
+import { SparklesCore } from '@/components/aceternity/sparkles';
+import { WobbleCard } from '@/components/aceternity/wobble-card';
+import Container from '@/components/ui/Container';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { ShineBorder } from '@/components/ui/shine-border';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
+import { buttonVariants } from '@/lib/button-variants';
+import { cn } from '@/lib/utils';
+import { ArrowUpRight, BarChart2, BookMarked, Sparkles } from '@/components/ui/lucide-safe';
+import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: "Resource Library — ANBU Solutions",
+  title: 'Resource Library — ANBU Solutions',
   description:
-    "Explore ANBU Solutions resources: documentation, playbooks, community moments, and strategic guides that help teams ship faster.",
+    'Explore ANBU Solutions resources: documentation, playbooks, community moments, and strategic guides that help teams ship faster.',
   openGraph: {
-    title: "ANBU Resource Library",
+    title: 'ANBU Resource Library',
     description:
-      "Discover curated documentation, launch playbooks, and partner enablement material from ANBU Solutions.",
+      'Discover curated documentation, launch playbooks, and partner enablement material from ANBU Solutions.',
     url: `${siteConfig.website}/resources`,
   },
-}
+};
 
 const snapshotCards = [
   {
     icon: BookMarked,
-    title: "Live documentation",
-    caption: "Versioned, searchable, and updated alongside every release.",
-    metric: "47 collections",
+    title: 'Live documentation',
+    caption: 'Versioned, searchable, and updated alongside every release.',
+    metric: '47 collections',
   },
   {
     icon: BarChart2,
-    title: "Playbooks in motion",
-    caption: "Battle-tested templates for shipping with clarity and control.",
-    metric: "13 frameworks",
+    title: 'Playbooks in motion',
+    caption: 'Battle-tested templates for shipping with clarity and control.',
+    metric: '13 frameworks',
   },
   {
     icon: Sparkles,
-    title: "Co-build sessions",
-    caption: "Monthly touchpoints with our hybrid squads and partner teams.",
-    metric: "Monthly cadence",
+    title: 'Co-build sessions',
+    caption: 'Monthly touchpoints with our hybrid squads and partner teams.',
+    metric: 'Monthly cadence',
   },
-]
+];
 
 export default function ResourcesPage() {
-  const primaryButton = buttonVariants.primary
-  const secondaryButton = buttonVariants.secondary
+  const primaryButton = buttonVariants.primary;
+  const secondaryButton = buttonVariants.secondary;
 
   return (
     <main className="relative min-h-screen bg-black text-anbu-marble">
@@ -75,8 +70,9 @@ export default function ResourcesPage() {
               Everything we use to ship premium product experiences
             </h1>
             <p className="max-w-2xl text-base text-white/60 md:text-lg">
-              Dive into the same documentation, playbooks, and strategic tooling we rely on with partners. Updated in
-              lockstep with production, crafted for clarity, and ready to bookmark.
+              Dive into the same documentation, playbooks, and strategic tooling we rely on with
+              partners. Updated in lockstep with production, crafted for clarity, and ready to
+              bookmark.
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <ShimmerButton
@@ -87,7 +83,7 @@ export default function ResourcesPage() {
                 textColor={primaryButton.textColor}
                 className={cn(
                   primaryButton.className,
-                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                  'px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm'
                 )}
                 asChild
               >
@@ -105,7 +101,7 @@ export default function ResourcesPage() {
                 borderRadius={secondaryButton.borderRadius}
                 className={cn(
                   secondaryButton.className,
-                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                  'px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm'
                 )}
                 asChild
               >
@@ -121,7 +117,7 @@ export default function ResourcesPage() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {snapshotCards.map((card) => {
-              const Icon = card.icon
+              const Icon = card.icon;
               return (
                 <WobbleCard
                   key={card.title}
@@ -130,20 +126,25 @@ export default function ResourcesPage() {
                 >
                   <div className="flex items-center justify-between">
                     <Icon className="h-5 w-5 text-anbu-gold" />
-                    <span className="text-xs uppercase tracking-[0.3em] text-white/35">{card.metric}</span>
+                    <span className="text-xs uppercase tracking-[0.3em] text-white/35">
+                      {card.metric}
+                    </span>
                   </div>
                   <div className="space-y-2 text-white/90">
                     <h3 className="text-lg font-semibold">{card.title}</h3>
                     <p className="text-sm text-white/60">{card.caption}</p>
                   </div>
                 </WobbleCard>
-              )
+              );
             })}
           </div>
         </Container>
       </section>
 
-      <section id="resource-atlas" className="border-b border-white/10 bg-[#070707]/95 py-16 md:py-20">
+      <section
+        id="resource-atlas"
+        className="border-b border-white/10 bg-[#070707]/95 py-16 md:py-20"
+      >
         <Container className="space-y-10">
           <div className="max-w-xl space-y-3">
             <AnimatedGradientText className="text-xs uppercase tracking-[0.35em] text-white/60">
@@ -153,8 +154,8 @@ export default function ResourcesPage() {
               Filter by the outcome you&apos;re targeting
             </h2>
             <p className="text-sm text-white/60 md:text-base">
-              Toggle through documentation, playbooks, community access, and strategic guides. Each card links directly
-              into Docs Hub so you can jump straight to the answers.
+              Toggle through documentation, playbooks, community access, and strategic guides. Each
+              card links directly into Docs Hub so you can jump straight to the answers.
             </p>
           </div>
           <ResourceShowcase />
@@ -163,7 +164,11 @@ export default function ResourcesPage() {
 
       <section className="relative py-16 md:py-20">
         <Container>
-          <ShineBorder borderWidth={1.5} shineColor={["#FFD700", "#FF8A3C"]} className="rounded-[2rem] border-white/5">
+          <ShineBorder
+            borderWidth={1.5}
+            shineColor={['#FFD700', '#FF8A3C']}
+            className="rounded-[2rem] border-white/5"
+          >
             <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-black/75 via-black/60 to-black/75 px-6 py-10 backdrop-blur-xl md:px-12 md:py-14">
               <SparklesCore
                 id="resources-dive-deeper"
@@ -181,8 +186,9 @@ export default function ResourcesPage() {
                     Subscribe to change logs and early release notes
                   </h2>
                   <p className="text-sm text-white/60 md:text-base">
-                    We publish a fresh changelog every sprint with highlights, upcoming experiments, and long-term bets.
-                    You can self-serve or have updates dropped into your preferred channel.
+                    We publish a fresh changelog every sprint with highlights, upcoming experiments,
+                    and long-term bets. You can self-serve or have updates dropped into your
+                    preferred channel.
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
                     <ShimmerButton
@@ -192,7 +198,7 @@ export default function ResourcesPage() {
                       borderRadius={primaryButton.borderRadius}
                       className={cn(
                         primaryButton.className,
-                        "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-9 md:py-4 md:text-sm",
+                        'px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-9 md:py-4 md:text-sm'
                       )}
                       asChild
                     >
@@ -213,13 +219,16 @@ export default function ResourcesPage() {
                 </div>
                 <div className="space-y-4 rounded-3xl border border-white/10 bg-white/[0.015] p-6 text-sm text-white/60">
                   <p className="text-sm text-white/55">
-                    <span className="text-anbu-gold">What you get:</span> curated doc bundles, live office hours,
-                    async video recaps, and early prototypes you can test-drive with your team.
+                    <span className="text-anbu-gold">What you get:</span> curated doc bundles, live
+                    office hours, async video recaps, and early prototypes you can test-drive with
+                    your team.
                   </p>
                   <ul className="space-y-2 text-sm text-white/50">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-2 w-2 rounded-full bg-anbu-gold" />
-                      <span>Opt-in by topic — design systems, platform, growth, or partner tooling.</span>
+                      <span>
+                        Opt-in by topic — design systems, platform, growth, or partner tooling.
+                      </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-2 w-2 rounded-full bg-anbu-gold" />
@@ -227,7 +236,9 @@ export default function ResourcesPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1 h-2 w-2 rounded-full bg-anbu-gold" />
-                      <span>Redlines on your roadmap with implementation notes from our leads.</span>
+                      <span>
+                        Redlines on your roadmap with implementation notes from our leads.
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -237,5 +248,5 @@ export default function ResourcesPage() {
         </Container>
       </section>
     </main>
-  )
+  );
 }

@@ -18,7 +18,7 @@ const colors = {
   green: '\x1b[32m',
   yellow: '\x1b[33m',
   blue: '\x1b[34m',
-  cyan: '\x1b[36m'
+  cyan: '\x1b[36m',
 };
 
 // Detect current platform
@@ -27,10 +27,10 @@ const arch = os.arch();
 const isWindows = platform === 'win32';
 const isMac = platform === 'darwin';
 const isLinux = platform === 'linux';
-const isM1Mac = isMac && (arch === 'arm64');
+const isM1Mac = isMac && arch === 'arm64';
 
 console.log(`${colors.cyan}${colors.bright}🔄 ANBU Platform Switch Helper${colors.reset}`);
-console.log('=' .repeat(50));
+console.log('='.repeat(50));
 console.log(`${colors.blue}Platform:${colors.reset} ${platform}`);
 console.log(`${colors.blue}Architecture:${colors.reset} ${arch}`);
 if (isM1Mac) {
@@ -41,17 +41,23 @@ console.log('');
 // Check for Dropbox sync status
 function checkDropboxStatus() {
   console.log(`${colors.yellow}📂 Checking Dropbox sync status...${colors.reset}`);
-  
+
   const nodeModulesPath = path.join(process.cwd(), 'node_modules');
   if (fs.existsSync(nodeModulesPath)) {
     const stats = fs.statSync(nodeModulesPath);
     const files = fs.readdirSync(nodeModulesPath);
     console.log(`  ⚠️  node_modules exists with ${files.length} packages`);
     console.log(`  📅 Last modified: ${stats.mtime}`);
-    console.log(`${colors.red}  ⚠️  WARNING: node_modules should be excluded from Dropbox sync!${colors.reset}`);
-    console.log(`${colors.yellow}  💡 See .dropboxignore for instructions on excluding folders${colors.reset}`);
+    console.log(
+      `${colors.red}  ⚠️  WARNING: node_modules should be excluded from Dropbox sync!${colors.reset}`
+    );
+    console.log(
+      `${colors.yellow}  💡 See .dropboxignore for instructions on excluding folders${colors.reset}`
+    );
   } else {
-    console.log(`${colors.green}  ✅ node_modules not found (good - it shouldn't sync)${colors.reset}`);
+    console.log(
+      `${colors.green}  ✅ node_modules not found (good - it shouldn't sync)${colors.reset}`
+    );
   }
   console.log('');
 }
@@ -59,7 +65,7 @@ function checkDropboxStatus() {
 // Check for platform-specific issues
 function checkPlatformIssues() {
   console.log(`${colors.yellow}🔍 Checking for platform-specific issues...${colors.reset}`);
-  
+
   // Check if lockfile exists
   const lockfilePath = path.join(process.cwd(), 'pnpm-lock.yaml');
   if (!fs.existsSync(lockfilePath)) {
@@ -69,13 +75,13 @@ function checkPlatformIssues() {
   } else {
     console.log(`${colors.green}  ✅ pnpm-lock.yaml found${colors.reset}`);
   }
-  
+
   // Check for platform-specific packages in lockfile
   try {
     const lockfileContent = fs.readFileSync(lockfilePath, 'utf8');
     const hasSharp = lockfileContent.includes('sharp');
     const hasFsevents = lockfileContent.includes('fsevents');
-    
+
     if (hasSharp) {
       console.log(`  ⚠️  Found 'sharp' - platform-specific image processing library`);
     }
@@ -85,7 +91,7 @@ function checkPlatformIssues() {
   } catch (error) {
     console.log(`${colors.red}  ❌ Error reading lockfile: ${error.message}${colors.reset}`);
   }
-  
+
   console.log('');
   return true;
 }
@@ -93,7 +99,7 @@ function checkPlatformIssues() {
 // Clean platform-specific files
 function cleanPlatformFiles() {
   console.log(`${colors.yellow}🧹 Cleaning platform-specific files...${colors.reset}`);
-  
+
   const dirsToClean = [
     'node_modules',
     '.next',
@@ -101,10 +107,10 @@ function cleanPlatformFiles() {
     'apps/landing/node_modules',
     'apps/landing/.next',
     'apps/docs-hub/node_modules',
-    'apps/solutions-portal/node_modules'
+    'apps/solutions-portal/node_modules',
   ];
-  
-  dirsToClean.forEach(dir => {
+
+  dirsToClean.forEach((dir) => {
     const fullPath = path.join(process.cwd(), dir);
     if (fs.existsSync(fullPath)) {
       console.log(`  🗑️  Removing ${dir}...`);
@@ -120,25 +126,25 @@ function cleanPlatformFiles() {
       }
     }
   });
-  
+
   console.log('');
 }
 
 // Setup for current platform
 function setupPlatform() {
   console.log(`${colors.yellow}🚀 Setting up for ${platform}...${colors.reset}`);
-  
+
   // Create platform-specific .env if it doesn't exist
   const envFile = '.env';
   const envTemplateName = isWindows ? '.env.windows' : isMac ? '.env.macos' : '.env.linux';
   const envTemplate = path.join(process.cwd(), envTemplateName);
-  
+
   if (fs.existsSync(envTemplate) && !fs.existsSync(envFile)) {
     console.log(`  📝 Creating .env from ${envTemplateName}...`);
     fs.copyFileSync(envTemplate, envFile);
     console.log(`${colors.green}  ✅ Created .env file${colors.reset}`);
   }
-  
+
   // Install dependencies
   console.log(`  📦 Installing dependencies with pnpm...`);
   try {
@@ -148,7 +154,7 @@ function setupPlatform() {
     console.log(`${colors.red}  ❌ Failed to install dependencies${colors.reset}`);
     return false;
   }
-  
+
   console.log('');
   return true;
 }
@@ -157,22 +163,22 @@ function setupPlatform() {
 function recoverFromLockfileConflict() {
   console.log(`${colors.yellow}🔧 Recovering from lockfile conflict...${colors.reset}`);
   console.log(`  1. Backing up current lockfile...`);
-  
+
   const lockfilePath = path.join(process.cwd(), 'pnpm-lock.yaml');
   const backupPath = path.join(process.cwd(), `pnpm-lock.yaml.backup.${Date.now()}`);
-  
+
   if (fs.existsSync(lockfilePath)) {
     fs.copyFileSync(lockfilePath, backupPath);
     console.log(`${colors.green}  ✅ Backup created: ${backupPath}${colors.reset}`);
   }
-  
+
   console.log(`  2. Removing lockfile and node_modules...`);
   cleanPlatformFiles();
-  
+
   if (fs.existsSync(lockfilePath)) {
     fs.unlinkSync(lockfilePath);
   }
-  
+
   console.log(`  3. Regenerating lockfile...`);
   try {
     execSync('pnpm install', { stdio: 'inherit' });
@@ -199,30 +205,32 @@ function showMenu() {
 
 // Process user choice
 function processChoice(choice) {
-  switch(choice.trim()) {
+  switch (choice.trim()) {
     case '1':
       checkDropboxStatus();
       checkPlatformIssues();
       cleanPlatformFiles();
       setupPlatform();
       console.log(`${colors.green}${colors.bright}✅ Platform setup complete!${colors.reset}`);
-      console.log(`Run: ${colors.cyan}pnpm dev${colors.reset} or ${colors.cyan}pnpm docker:landing${colors.reset}`);
+      console.log(
+        `Run: ${colors.cyan}pnpm dev${colors.reset} or ${colors.cyan}pnpm docker:landing${colors.reset}`
+      );
       break;
-      
+
     case '2':
       cleanPlatformFiles();
       console.log(`${colors.green}✅ Cleanup complete!${colors.reset}`);
       break;
-      
+
     case '3':
       recoverFromLockfileConflict();
       break;
-      
+
     case '4':
       checkDropboxStatus();
       checkPlatformIssues();
       break;
-      
+
     case '5':
       console.log(`${colors.cyan}${colors.bright}🐳 Docker Setup${colors.reset}`);
       console.log('Run these commands:');
@@ -231,12 +239,12 @@ function processChoice(choice) {
       console.log('');
       console.log('Docker handles all platform differences automatically!');
       break;
-      
+
     case '6':
       console.log(`${colors.cyan}Goodbye! 👋${colors.reset}`);
       process.exit(0);
       break;
-      
+
     default:
       console.log(`${colors.red}Invalid choice. Please try again.${colors.reset}`);
   }
@@ -245,13 +253,13 @@ function processChoice(choice) {
 // Interactive mode
 if (process.argv.length === 2) {
   showMenu();
-  
+
   import readline from 'readline';
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
   });
-  
+
   rl.question('Enter your choice (1-6): ', (answer) => {
     processChoice(answer);
     rl.close();
@@ -259,7 +267,7 @@ if (process.argv.length === 2) {
 } else {
   // Command line arguments
   const command = process.argv[2];
-  switch(command) {
+  switch (command) {
     case 'clean':
       cleanPlatformFiles();
       break;

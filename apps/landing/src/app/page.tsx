@@ -1,12 +1,12 @@
-import HeroSection from '@/components/features/hero/HeroSection'
-import ServicesSection from '@/components/features/services/ServicesSection'
-import AboutSection from '@/components/features/about/AboutSection'
-import ContactSection from '@/components/features/contact/ContactSection'
-import { SectionDivider } from '@/components/ui/section-divider'
+import HeroSection from '@/components/features/hero/HeroSection';
+import ServicesSection from '@/components/features/services/ServicesSection';
+import AboutSection from '@/components/features/about/AboutSection';
+import ContactSection from '@/components/features/contact/ContactSection';
+import { SectionDivider } from '@/components/ui/section-divider';
 
 export default function Home() {
   return (
-    <main id="main-content" className="relative flex flex-col items-center min-h-screen">
+    <main id="main-content" className="relative flex min-h-screen flex-col items-center">
       <HeroSection />
 
       <div className="w-full py-4 sm:py-6 lg:py-8">
@@ -28,8 +28,8 @@ export default function Home() {
       <ContactSection />
 
       {/* Clear separator before footer */}
-      <div className="w-full h-1 bg-gradient-to-r from-transparent via-anbu-gold/20 to-transparent" />
-      <div className="w-full py-8 sm:py-12 lg:py-16 bg-black" />
+      <div className="h-1 w-full bg-gradient-to-r from-transparent via-anbu-gold/20 to-transparent" />
+      <div className="w-full bg-black py-8 sm:py-12 lg:py-16" />
     </main>
-  )
+  );
 }

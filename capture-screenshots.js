@@ -2,12 +2,13 @@
 const { chromium } = require('@playwright/test');
 
 const DEFAULT_PORT = process.env.APP_PORT || process.env.PORT || 3000;
-const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
+const BASE_URL =
+  process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
 
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage({
-    viewport: { width: 1440, height: 900 }
+    viewport: { width: 1440, height: 900 },
   });
 
   try {
@@ -26,8 +27,8 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
         x: 0,
         y: 0,
         width: 1440,
-        height: 900
-      }
+        height: 900,
+      },
     });
     console.log('✅ Captured: hero-full-page.png');
 
@@ -47,8 +48,8 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
           x: Math.max(0, box.x - 50),
           y: Math.max(0, box.y - 30),
           width: Math.min(1440 - box.x + 50, box.width + 100),
-          height: box.height + 60
-        }
+          height: box.height + 60,
+        },
       });
       console.log('✅ Captured: hero-buttons-desktop.png');
     }
@@ -64,8 +65,8 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
           x: Math.max(0, box.x - 50),
           y: Math.max(0, box.y - 30),
           width: Math.min(1440 - box.x + 50, box.width + 100),
-          height: box.height + 60
-        }
+          height: box.height + 60,
+        },
       });
       console.log('✅ Captured: hero-buttons-hover.png');
     }
@@ -84,8 +85,8 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
           x: 0,
           y: Math.max(0, mobileBox.y - 30),
           width: 390,
-          height: mobileBox.height + 60
-        }
+          height: mobileBox.height + 60,
+        },
       });
       console.log('✅ Captured: hero-buttons-mobile.png');
     }
@@ -97,7 +98,6 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     console.log('  ✓ Better padding (fluid-py-lg for more height)');
     console.log('  ✓ Fixed text contrast (black text on gold button)');
     console.log('  ✓ Maintained responsive behavior on mobile');
-
   } catch (error) {
     console.error('Error:', error);
   } finally {

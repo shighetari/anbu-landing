@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { cn } from '@/lib/utils'
-import { motion, Variants } from 'framer-motion'
+import { cn } from '@/lib/utils';
+import { motion, Variants } from 'framer-motion';
 
 interface TypingAnimationProps {
-  text: string
-  duration?: number
-  className?: string
-  delay?: number
+  text: string;
+  duration?: number;
+  className?: string;
+  delay?: number;
 }
 
 export default function TypingAnimation({
@@ -19,7 +19,7 @@ export default function TypingAnimation({
   const textVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1 },
-  }
+  };
 
   const containerVariants: Variants = {
     hidden: { opacity: 1 },
@@ -30,9 +30,9 @@ export default function TypingAnimation({
         delayChildren: delay,
       },
     },
-  }
+  };
 
-  const characters = text.split('')
+  const characters = text.split('');
 
   return (
     <motion.span
@@ -42,14 +42,10 @@ export default function TypingAnimation({
       animate="visible"
     >
       {characters.map((char, index) => (
-        <motion.span
-          key={`${char}-${index}`}
-          variants={textVariants}
-          className="inline-block"
-        >
+        <motion.span key={`${char}-${index}`} variants={textVariants} className="inline-block">
           {char === ' ' ? '\u00A0' : char}
         </motion.span>
       ))}
     </motion.span>
-  )
+  );
 }

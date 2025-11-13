@@ -14,13 +14,13 @@ The root `pnpm dev` command still works (Turbo will only start `landing` for now
 
 ## Available Scripts
 
-| Command | Description |
-| --- | --- |
-| `pnpm --filter landing dev` | Next.js dev server on port 3000 with hot reload |
-| `pnpm --filter landing build` | Production build (`.next/`) |
-| `pnpm --filter landing start` | Serve the production build (also on port 3000) |
-| `pnpm lint` | Turbo-powered ESLint across the repo (landing is included) |
-| `pnpm test:e2e` | Playwright suite under `apps/landing/tests/e2e` |
+| Command                       | Description                                                |
+| ----------------------------- | ---------------------------------------------------------- |
+| `pnpm --filter landing dev`   | Next.js dev server on port 3000 with hot reload            |
+| `pnpm --filter landing build` | Production build (`.next/`)                                |
+| `pnpm --filter landing start` | Serve the production build (also on port 3000)             |
+| `pnpm lint`                   | Turbo-powered ESLint across the repo (landing is included) |
+| `pnpm test:e2e`               | Playwright suite under `apps/landing/tests/e2e`            |
 
 > Tip: The suite reads `PLAYWRIGHT_BASE_URL`, so if you temporarily run on another port set `PLAYWRIGHT_BASE_URL=http://127.0.0.1:<port> pnpm test:e2e`.
 

@@ -1,121 +1,121 @@
-"use client"
+'use client';
 
-import { cn } from "@/lib/utils"
-import React, { useEffect, useState } from "react"
+import { cn } from '@/lib/utils';
+import React, { useEffect, useState } from 'react';
 
 export const InfiniteMovingCards = ({
   items,
-  direction = "left",
-  speed = "fast",
+  direction = 'left',
+  speed = 'fast',
   pauseOnHover = true,
   className,
 }: {
   items: {
-    quote?: string
-    name?: string
-    title?: string
-    content?: React.ReactNode
-  }[]
-  direction?: "left" | "right"
-  speed?: "fast" | "normal" | "slow"
-  pauseOnHover?: boolean
-  className?: string
+    quote?: string;
+    name?: string;
+    title?: string;
+    content?: React.ReactNode;
+  }[];
+  direction?: 'left' | 'right';
+  speed?: 'fast' | 'normal' | 'slow';
+  pauseOnHover?: boolean;
+  className?: string;
 }) => {
-  const containerRef = React.useRef<HTMLDivElement>(null)
-  const scrollerRef = React.useRef<HTMLUListElement>(null)
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const scrollerRef = React.useRef<HTMLUListElement>(null);
 
-  const [start, setStart] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
+  const [start, setStart] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
-    addAnimation()
-  }, [])
+    addAnimation();
+  }, []);
 
   // Pause animation during page scroll for better performance
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout
+    let scrollTimeout: NodeJS.Timeout;
 
     const handleScroll = () => {
-      setIsPaused(true)
-      clearTimeout(scrollTimeout)
+      setIsPaused(true);
+      clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
-        setIsPaused(false)
-      }, 150)
-    }
+        setIsPaused(false);
+      }, 150);
+    };
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      clearTimeout(scrollTimeout)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
   function addAnimation() {
     if (containerRef.current && scrollerRef.current) {
-      const scrollerContent = Array.from(scrollerRef.current.children)
+      const scrollerContent = Array.from(scrollerRef.current.children);
 
       scrollerContent.forEach((item) => {
-        const duplicatedItem = item.cloneNode(true)
+        const duplicatedItem = item.cloneNode(true);
         if (scrollerRef.current) {
-          scrollerRef.current.appendChild(duplicatedItem)
+          scrollerRef.current.appendChild(duplicatedItem);
         }
-      })
+      });
 
-      getDirection()
-      getSpeed()
-      setStart(true)
+      getDirection();
+      getSpeed();
+      setStart(true);
     }
   }
 
   const getDirection = () => {
     if (containerRef.current) {
-      if (direction === "left") {
-        containerRef.current.style.setProperty("--animation-direction", "forwards")
+      if (direction === 'left') {
+        containerRef.current.style.setProperty('--animation-direction', 'forwards');
       } else {
-        containerRef.current.style.setProperty("--animation-direction", "reverse")
+        containerRef.current.style.setProperty('--animation-direction', 'reverse');
       }
     }
-  }
+  };
 
   const getSpeed = () => {
     if (containerRef.current) {
-      if (speed === "fast") {
-        containerRef.current.style.setProperty("--animation-duration", "20s")
-      } else if (speed === "normal") {
-        containerRef.current.style.setProperty("--animation-duration", "40s")
+      if (speed === 'fast') {
+        containerRef.current.style.setProperty('--animation-duration', '20s');
+      } else if (speed === 'normal') {
+        containerRef.current.style.setProperty('--animation-duration', '40s');
       } else {
-        containerRef.current.style.setProperty("--animation-duration", "80s")
+        containerRef.current.style.setProperty('--animation-duration', '80s');
       }
     }
-  }
+  };
 
   return (
     <div
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        'scroller relative z-20 max-w-7xl overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]',
         className
       )}
       style={{
-        contain: 'layout style paint'
+        contain: 'layout style paint',
       }}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
-          start && "animate-scroll",
-          pauseOnHover && "hover:[animation-play-state:paused]",
-          isPaused && "[animation-play-state:paused]"
+          'flex w-max min-w-full shrink-0 flex-nowrap gap-4 py-4',
+          start && 'animate-scroll',
+          pauseOnHover && 'hover:[animation-play-state:paused]',
+          isPaused && '[animation-play-state:paused]'
         )}
         style={{
-          willChange: 'transform'
+          willChange: 'transform',
         }}
       >
         {items.map((item, idx) => (
           <li
-            className="relative max-w-full md:max-w-[450px] w-[350px] flex-shrink-0 rounded-2xl border border-anbu-gold/20 bg-black/70 px-8 py-6"
+            className="relative w-[350px] max-w-full flex-shrink-0 rounded-2xl border border-anbu-gold/20 bg-black/70 px-8 py-6 md:max-w-[450px]"
             key={idx}
           >
             <blockquote>
@@ -127,15 +127,15 @@ export const InfiniteMovingCards = ({
                 <div className="relative z-20">{item.content}</div>
               ) : (
                 <>
-                  <span className="relative z-20 text-sm text-white/80 font-normal leading-[1.6]">
+                  <span className="relative z-20 text-sm font-normal leading-[1.6] text-white/80">
                     {item.quote}
                   </span>
                   <div className="relative z-20 mt-6 flex flex-row items-center">
                     <span className="flex flex-col gap-1">
-                      <span className="text-sm text-white font-medium leading-[1.6]">
+                      <span className="text-sm font-medium leading-[1.6] text-white">
                         {item.name}
                       </span>
-                      <span className="text-sm text-white/60 font-normal leading-[1.6]">
+                      <span className="text-sm font-normal leading-[1.6] text-white/60">
                         {item.title}
                       </span>
                     </span>
@@ -157,9 +157,10 @@ export const InfiniteMovingCards = ({
           }
         }
         .animate-scroll {
-          animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+          animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards)
+            linear infinite;
         }
       `}</style>
     </div>
-  )
-}
+  );
+};

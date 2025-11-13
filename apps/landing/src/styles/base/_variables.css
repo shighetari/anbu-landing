@@ -57,7 +57,7 @@
   /* =================================
      COLOR SYSTEM - HSL for flexibility
      ================================= */
-  
+
   /* Primary - Gold */
   --color-primary-h: 51;
   --color-primary-s: 100%;
@@ -72,13 +72,17 @@
   --color-secondary-h: 39;
   --color-secondary-s: 100%;
   --color-secondary-l: 50%;
-  --color-secondary: hsl(var(--color-secondary-h), var(--color-secondary-s), var(--color-secondary-l));
+  --color-secondary: hsl(
+    var(--color-secondary-h),
+    var(--color-secondary-s),
+    var(--color-secondary-l)
+  );
   --color-secondary-light: hsl(var(--color-secondary-h), var(--color-secondary-s), 60%);
   --color-secondary-dark: hsl(var(--color-secondary-h), var(--color-secondary-s), 40%);
 
   /* Neutral - Grays & Blacks */
   --color-black: hsl(0, 0%, 0%);
-  --color-ink: #0B0500;
+  --color-ink: #0b0500;
   --color-gray-950: hsl(0, 0%, 5%);
   --color-gray-900: hsl(0, 0%, 10%);
   --color-gray-800: hsl(0, 0%, 17%);
@@ -107,7 +111,7 @@
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
   --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
-  
+
   /* Gold glow shadows */
   --shadow-glow-sm: 0 0 20px rgba(255, 215, 0, 0.3);
   --shadow-glow-md: 0 0 40px rgba(255, 215, 0, 0.4);
@@ -198,7 +202,7 @@
 /* =================================
    DARK MODE SUPPORT
    ================================= */
-[data-theme="dark"] {
+[data-theme='dark'] {
   --color-bg: var(--color-black);
   --color-bg-secondary: var(--color-gray-950);
   --color-bg-tertiary: var(--color-gray-900);
@@ -210,7 +214,7 @@
 /* =================================
    LIGHT MODE SUPPORT (future)
    ================================= */
-[data-theme="light"] {
+[data-theme='light'] {
   --color-bg: var(--color-white);
   --color-bg-secondary: var(--color-gray-50);
   --color-bg-tertiary: var(--color-gray-100);

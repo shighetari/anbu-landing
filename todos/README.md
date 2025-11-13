@@ -21,7 +21,7 @@ This folder keeps lightweight kanban-style TODO entries as Markdown files so eve
 
 - Keep one task per file so we can link to it from commits/PRs.
 - Use checklists for concrete acceptance criteria; they double as status documentation.
-- Reference file paths or commands (e.g. ``packages/config/tsconfig.json``) so implementers know exactly where to work.
+- Reference file paths or commands (e.g. `packages/config/tsconfig.json`) so implementers know exactly where to work.
 - Prefer descriptive titles like `2025-01-09-hardening-typecheck.md` to make searching easier.
 
 ## Auditing

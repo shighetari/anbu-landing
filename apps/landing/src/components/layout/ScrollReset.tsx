@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 /**
  * Component that ensures clean scroll behavior across page navigation
@@ -10,19 +10,19 @@ export function ScrollReset() {
   useEffect(() => {
     // Clear any stuck scroll styles on mount
     const clearScrollStyles = () => {
-      document.body.style.overflow = ''
-      document.body.style.overscrollBehaviorY = ''
-      document.body.style.touchAction = ''
-      document.body.style.paddingRight = ''
-    }
+      document.body.style.overflow = '';
+      document.body.style.overscrollBehaviorY = '';
+      document.body.style.touchAction = '';
+      document.body.style.paddingRight = '';
+    };
 
-    clearScrollStyles()
+    clearScrollStyles();
 
     // Ensure cleanup on unmount
     return () => {
-      clearScrollStyles()
-    }
-  }, [])
+      clearScrollStyles();
+    };
+  }, []);
 
-  return null
+  return null;
 }

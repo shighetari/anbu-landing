@@ -1,6 +1,6 @@
-import { beforeAll, afterEach, afterAll, vi } from 'vitest'
-import { cleanup } from '@testing-library/react'
-import '@testing-library/jest-dom/vitest'
+import { beforeAll, afterEach, afterAll, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom/vitest';
 
 // Mock Next.js router
 vi.mock('next/navigation', () => ({
@@ -15,18 +15,18 @@ vi.mock('next/navigation', () => ({
   }),
   usePathname: () => '/',
   useSearchParams: () => new URLSearchParams(),
-}))
+}));
 
 // Cleanup after each test
 afterEach(() => {
-  cleanup()
-})
+  cleanup();
+});
 
 // Global test setup
 beforeAll(() => {
   // Setup any global test configuration
-})
+});
 
 afterAll(() => {
   // Cleanup after all tests
-})
+});

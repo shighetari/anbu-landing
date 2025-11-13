@@ -1,6 +1,6 @@
-import { defineConfig, devices } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:3000'
+const baseURL = process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:3000';
 
 export default defineConfig({
   testDir: './apps/landing/tests/e2e',
@@ -32,4 +32,4 @@ export default defineConfig({
     stdout: 'ignore',
     stderr: 'pipe',
   },
-})
+});

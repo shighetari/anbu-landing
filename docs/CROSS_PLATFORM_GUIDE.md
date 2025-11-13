@@ -21,7 +21,7 @@ This guide helps you work seamlessly across Windows, macOS (including M4 Pro), a
 
 3. **Uncheck These Folders** within `ANBU_Landing_Page`:
    - `node_modules` (CRITICAL)
-   - `.next` 
+   - `.next`
    - `.turbo`
    - `dist`
    - `build`
@@ -57,7 +57,7 @@ pnpm dev
 pnpm docker:setup
 pnpm docker:landing
 
-# 2. Option B: Local Development  
+# 2. Option B: Local Development
 pnpm platform:setup  # Automatically detects Windows
 # OR manually:
 rmdir /s /q node_modules .next .turbo
@@ -86,14 +86,14 @@ pnpm dev
 
 ## 🛠️ Available Platform Commands
 
-| Command | Description | When to Use |
-|---------|-------------|-------------|
-| `pnpm platform:switch` | Interactive platform switcher | First time on a new machine |
-| `pnpm platform:setup` | Auto-setup for current platform | Switching machines |
-| `pnpm platform:clean` | Remove all platform-specific files | Before switching platforms |
-| `pnpm platform:check` | Check for platform issues | Debugging sync problems |
-| `pnpm platform:recover` | Recover from lockfile conflicts | When you get lockfile errors |
-| `pnpm safe:install` | Clean install for current platform | When dependencies are corrupted |
+| Command                 | Description                        | When to Use                     |
+| ----------------------- | ---------------------------------- | ------------------------------- |
+| `pnpm platform:switch`  | Interactive platform switcher      | First time on a new machine     |
+| `pnpm platform:setup`   | Auto-setup for current platform    | Switching machines              |
+| `pnpm platform:clean`   | Remove all platform-specific files | Before switching platforms      |
+| `pnpm platform:check`   | Check for platform issues          | Debugging sync problems         |
+| `pnpm platform:recover` | Recover from lockfile conflicts    | When you get lockfile errors    |
+| `pnpm safe:install`     | Clean install for current platform | When dependencies are corrupted |
 
 ## 🐳 Docker: The Ultimate Solution
 
@@ -107,8 +107,9 @@ pnpm docker:landing
 ```
 
 ### Docker Benefits:
+
 - ✅ No node_modules conflicts
-- ✅ No lockfile issues  
+- ✅ No lockfile issues
 - ✅ Identical environment on all machines
 - ✅ Hot reload works everywhere
 - ✅ No platform-specific dependency problems
@@ -120,6 +121,7 @@ pnpm docker:landing
 **Cause**: Lockfile was created on a different platform
 
 **Solution**:
+
 ```bash
 # Quick fix:
 pnpm platform:recover
@@ -136,6 +138,7 @@ git commit -m "fix: Updated lockfile for [platform]"
 **Cause**: Windows-specific binaries in node_modules
 
 **Solution**:
+
 ```bash
 pnpm platform:clean
 pnpm install
@@ -143,12 +146,14 @@ pnpm install
 
 ### Issue 3: Dropbox Sync Conflicts
 
-**Symptoms**: 
+**Symptoms**:
+
 - Files like `package (Rosa's conflicted copy).json`
 - Duplicate node_modules folders
 - Sync never completes
 
 **Solution**:
+
 1. Ensure node_modules is excluded from Dropbox (see setup above)
 2. Delete all conflicted copies
 3. Run `pnpm platform:setup`
@@ -158,6 +163,7 @@ pnpm install
 **Platform-Specific Solutions**:
 
 Windows:
+
 ```bash
 # Ensure polling is enabled
 echo "WATCHPACK_POLLING=true" >> .env
@@ -165,6 +171,7 @@ pnpm dev
 ```
 
 macOS/Linux:
+
 ```bash
 # Ensure polling is disabled
 echo "WATCHPACK_POLLING=false" >> .env
@@ -174,12 +181,14 @@ pnpm dev
 ## 📋 Platform Switching Checklist
 
 Before leaving a machine:
+
 - [ ] Commit any code changes
 - [ ] Push to git if needed
 - [ ] Wait for Dropbox sync to complete
 - [ ] Note: node_modules should NOT sync
 
 When arriving at a new machine:
+
 - [ ] Pull latest git changes (if using git)
 - [ ] Wait for Dropbox sync to complete
 - [ ] Run `pnpm platform:setup` or use Docker
@@ -188,18 +197,22 @@ When arriving at a new machine:
 ## 🎯 Best Practices
 
 ### 1. **Always Use Docker When Possible**
+
 ```bash
 pnpm docker:landing  # Works identically everywhere
 ```
 
 ### 2. **Exclude node_modules from Dropbox**
+
 This prevents 90% of cross-platform issues
 
 ### 3. **Commit Lockfiles Carefully**
+
 - Only commit pnpm-lock.yaml after testing
 - Use `pnpm platform:recover` if conflicts occur
 
 ### 4. **Use Platform Scripts**
+
 ```bash
 # Instead of: pnpm install
 # Use: pnpm platform:setup
@@ -209,6 +222,7 @@ This prevents 90% of cross-platform issues
 ```
 
 ### 5. **Keep .env Files Platform-Specific**
+
 - Don't sync .env through Dropbox
 - Use .env.windows, .env.macos, .env.linux templates
 
@@ -232,12 +246,14 @@ pnpm docker:landing
 ## 📱 Platform Detection
 
 The setup scripts automatically detect:
+
 - Windows (x64, ARM)
 - macOS Intel (x64)
 - macOS Apple Silicon (M1/M2/M3/M4)
 - Linux (x64, ARM)
 
 You can check your platform:
+
 ```bash
 node -e "console.log(process.platform, process.arch)"
 ```
@@ -256,6 +272,7 @@ node -e "console.log(process.platform, process.arch)"
 3. Interactive help: `pnpm platform:switch`
 
 Remember: **Docker solves 99% of cross-platform issues!** When in doubt, use:
+
 ```bash
 pnpm docker:landing
 ```

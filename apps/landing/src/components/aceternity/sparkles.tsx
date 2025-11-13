@@ -1,51 +1,51 @@
-"use client"
+'use client';
 
-import React, { useId, useMemo } from "react"
-import { motion, useInView, useReducedMotion } from "framer-motion"
-import { cn } from "@/lib/utils"
-import { deterministicRandom, hashStringToNumber } from "@/lib/random"
+import React, { useId, useMemo } from 'react';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { deterministicRandom, hashStringToNumber } from '@/lib/random';
 
 interface SparklesProps {
-  id?: string
-  background?: string
-  minSize?: number
-  maxSize?: number
-  particleDensity?: number
-  className?: string
-  particleColor?: string
+  id?: string;
+  background?: string;
+  minSize?: number;
+  maxSize?: number;
+  particleDensity?: number;
+  className?: string;
+  particleColor?: string;
 }
 
 export const SparklesCore = (props: SparklesProps) => {
   const {
     id,
-    background = "transparent",
+    background = 'transparent',
     minSize = 0.4,
     maxSize = 1,
     particleDensity = 100,
     className,
-    particleColor = "#FFD700",
-  } = props
-  const generatedId = useId()
-  const internalId = id || generatedId
-  const prefersReducedMotion = useReducedMotion()
-  const containerRef = React.useRef<HTMLDivElement | null>(null)
-  const isInView = useInView(containerRef, { margin: '-10% 0px' })
-  const baseSeed = useMemo(() => hashStringToNumber(internalId), [internalId])
+    particleColor = '#FFD700',
+  } = props;
+  const generatedId = useId();
+  const internalId = id || generatedId;
+  const prefersReducedMotion = useReducedMotion();
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(containerRef, { margin: '-10% 0px' });
+  const baseSeed = useMemo(() => hashStringToNumber(internalId), [internalId]);
 
   const effectiveDensity = useMemo(() => {
     if (prefersReducedMotion) {
-      return 0
+      return 0;
     }
-    return Math.min(particleDensity, 18)
-  }, [particleDensity, prefersReducedMotion])
+    return Math.min(particleDensity, 18);
+  }, [particleDensity, prefersReducedMotion]);
 
   const particles = useMemo(() => {
     if (!effectiveDensity) {
-      return []
+      return [];
     }
 
     const valueForIndex = (index: number, offset: number) =>
-      deterministicRandom(baseSeed + index * 131 + offset)
+      deterministicRandom(baseSeed + index * 131 + offset);
 
     return Array.from({ length: effectiveDensity }, (_, index) => ({
       id: index,
@@ -54,28 +54,25 @@ export const SparklesCore = (props: SparklesProps) => {
       size: valueForIndex(index, 3) * (maxSize - minSize) + minSize,
       delay: valueForIndex(index, 4) * 5,
       duration: valueForIndex(index, 5) * 6 + 8,
-    }))
-  }, [effectiveDensity, maxSize, minSize, baseSeed])
+    }));
+  }, [effectiveDensity, maxSize, minSize, baseSeed]);
 
   if (!particles.length) {
-    return null
+    return null;
   }
 
   return (
     <div
       ref={containerRef}
-      className={cn("absolute inset-0 pointer-events-none", className)}
+      className={cn('pointer-events-none absolute inset-0', className)}
       style={{
         contain: 'layout style paint',
-        willChange: 'transform'
+        willChange: 'transform',
       }}
       aria-hidden
     >
       {isInView && (
-        <svg
-          className="absolute inset-0 h-full w-full"
-          style={{ background }}
-        >
+        <svg className="absolute inset-0 h-full w-full" style={{ background }}>
           <defs>
             <filter id={`sparkle-${internalId}`}>
               <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
@@ -102,8 +99,8 @@ export const SparklesCore = (props: SparklesProps) => {
         </svg>
       )}
     </div>
-  )
-}
+  );
+};
 
 export const Sparkles = ({
   children,
@@ -111,9 +108,9 @@ export const Sparkles = ({
   ...props
 }: React.PropsWithChildren<SparklesProps & { className?: string }>) => {
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn('relative', className)}>
       <SparklesCore {...props} />
       <div className="relative z-10">{children}</div>
     </div>
-  )
-}
+  );
+};

@@ -1,4 +1,4 @@
-import js from '@eslint/js'
+import js from '@eslint/js';
 
 export default [
   {
@@ -13,4 +13,4 @@ export default [
       },
     },
   },
-]
+];

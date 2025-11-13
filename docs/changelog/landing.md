@@ -10,16 +10,16 @@
 
 **What Was Updated**
 
-1. **ShimmerButton Core (`apps/landing/src/components/ui/shimmer-button.tsx`)**  
-   - Added a `textColor` prop that injects directly into the computed style object (works even when `asChild` wraps external elements).  
+1. **ShimmerButton Core (`apps/landing/src/components/ui/shimmer-button.tsx`)**
+   - Added a `textColor` prop that injects directly into the computed style object (works even when `asChild` wraps external elements).
    - Guarantees text color survives Tailwind v4 pruning when custom utility classes are absent.
 
-2. **Button Variants (`apps/landing/src/lib/button-variants.ts`)**  
-   - `primary` and `cta` presets now emit `textColor: var(--anbu-ink, #0B0500)` instead of relying on `text-anbu-ink`.  
+2. **Button Variants (`apps/landing/src/lib/button-variants.ts`)**
+   - `primary` and `cta` presets now emit `textColor: var(--anbu-ink, #0B0500)` instead of relying on `text-anbu-ink`.
    - Keeps design tokens centralized while letting callers stay declarative.
 
-3. **CTA Callers**  
-   - `/solutions/command-console`, `/docs-hub`, `/contact`, `/resources`, `/solutions-portal`, `/error`, `/not-found`, and any section spreading the variants now pass (or inherit) `textColor`.  
+3. **CTA Callers**
+   - `/solutions/command-console`, `/docs-hub`, `/contact`, `/resources`, `/solutions-portal`, `/error`, `/not-found`, and any section spreading the variants now pass (or inherit) `textColor`.
    - Gold gradients (Book a Tour, Get Early Access, Email the Team, Request Access, etc.) render with AAA-compliant ink text regardless of wrapper overrides.
 
 ### 🎯 How to Validate
@@ -29,8 +29,8 @@ pnpm --filter landing dev
 open http://localhost:3000/solutions/command-console
 ```
 
-- Inspect CTAs on `/solutions/command-console`, `/docs-hub`, and `/contact`.  
-- DevTools → Elements → Computed style on the inner `<span>` shows `color: #0b0500`.  
+- Inspect CTAs on `/solutions/command-console`, `/docs-hub`, and `/contact`.
+- DevTools → Elements → Computed style on the inner `<span>` shows `color: #0b0500`.
 - Optional: run `pnpm --filter landing build` to ensure Next.js static CSS captures the inline tokens (already verified once in this session).
 
 ### ★ Insight
@@ -40,21 +40,21 @@ open http://localhost:3000/solutions/command-console
 
 ### 🔒 Quality Status
 
-| Check            | Status | Details                                                |
-|------------------|--------|--------------------------------------------------------|
-| Build            | ✅      | `pnpm -s build` for `apps/landing`                     |
-| Visual           | ✅      | Manual inspection across `/contact`, `/docs-hub`, `/solutions/command-console` |
-| Accessibility    | ✅      | Contrast ratio ≈14:1 vs. gold gradient (`#FFD700`)     |
-| Regression Risk  | ⚠️      | Any new ShimmerButton must use `textColor` or variants |
+| Check           | Status | Details                                                                        |
+| --------------- | ------ | ------------------------------------------------------------------------------ |
+| Build           | ✅     | `pnpm -s build` for `apps/landing`                                             |
+| Visual          | ✅     | Manual inspection across `/contact`, `/docs-hub`, `/solutions/command-console` |
+| Accessibility   | ✅     | Contrast ratio ≈14:1 vs. gold gradient (`#FFD700`)                             |
+| Regression Risk | ⚠️     | Any new ShimmerButton must use `textColor` or variants                         |
 
 ### 🚀 Next Steps
 
-1. Audit remaining ShimmerButton usages (marketing studio, social hub) and apply variants for consistency.  
+1. Audit remaining ShimmerButton usages (marketing studio, social hub) and apply variants for consistency.
 2. Consider defining `text-ink` inside `@theme` if we want Tailwind utilities back for general typography.
 
 ### 📝 References
 
-- Commit: _pending local changes (contrast hotfix)_  
+- Commit: _pending local changes (contrast hotfix)_
 - Files touched: `shimmer-button.tsx`, `button-variants.ts`, `solutions/command-console`, `docs-hub`, `contact`, `resources`, `solutions-portal`, `error`, `not-found`.
 
 ---
@@ -73,7 +73,7 @@ open http://localhost:3000/solutions/command-console
 
 ### 🎯 How to Validate
 
-- `pnpm --filter landing dev`, hit `/solutions/command-console` and `/solutions-portal`.  
+- `pnpm --filter landing dev`, hit `/solutions/command-console` and `/solutions-portal`.
 - Confirm there are no hydration warnings, focus trap recovers after toggling menu 5×, and network panel shows the MP4 only after opening the dialog.
 
 ### ★ Insight
@@ -82,21 +82,21 @@ Hydration mismatches mostly stemmed from randomized visual effects. By moving ra
 
 ### 🔒 Quality Status
 
-| Check            | Status | Details                                           |
-|------------------|--------|---------------------------------------------------|
-| Hydration        | ✅      | No warnings across hero + portal routes          |
-| Accessibility    | ✅      | Focus trap passes keyboard testing               |
-| Performance      | ✅      | Hero video lazy-load verified in DevTools        |
-| Regression Risk  | ⚠️      | New sparkle instances must seed randomness       |
+| Check           | Status | Details                                    |
+| --------------- | ------ | ------------------------------------------ |
+| Hydration       | ✅     | No warnings across hero + portal routes    |
+| Accessibility   | ✅     | Focus trap passes keyboard testing         |
+| Performance     | ✅     | Hero video lazy-load verified in DevTools  |
+| Regression Risk | ⚠️     | New sparkle instances must seed randomness |
 
 ### 🚀 Next Steps
 
-- Apply seeded randomness pattern to any future particle components.  
+- Apply seeded randomness pattern to any future particle components.
 - Expand dialog-trigger pattern to other heavy media sections (marketing studio reel).
 
 ### 📝 References
 
-- Commit: _see git history around 2025-11-11 14:20 UTC_.  
+- Commit: _see git history around 2025-11-11 14:20 UTC_.
 - Files: sparkles/meteors hooks, navigation layout, `app/sitemap.ts`, solutions portal hero.
 
 ---
@@ -112,8 +112,8 @@ Hydration mismatches mostly stemmed from randomized visual effects. By moving ra
 
 ### 🎯 How to Validate
 
-- `pnpm --filter landing dev`, navigate to `/docs-hub`, focus the terminal, and let the typing animation run 30 s.  
-- Lighthouse / Performance tab should report CLS = 0.000000 (previously 0.072).  
+- `pnpm --filter landing dev`, navigate to `/docs-hub`, focus the terminal, and let the typing animation run 30 s.
+- Lighthouse / Performance tab should report CLS = 0.000000 (previously 0.072).
 - Optional: `pnpm --filter landing test:e2e` (if terminal spec enabled) to ensure no regression.
 
 ### ★ Insight
@@ -122,20 +122,20 @@ The terminal component combined `overflow`, dynamic height, and positioned spark
 
 ### 🔒 Quality Status
 
-| Check            | Status | Details                         |
-|------------------|--------|---------------------------------|
-| CLS              | ✅      | 0.000000 measured in Lighthouse |
-| Visual Diff      | ✅      | Manual QA on docs hero          |
-| Regression Risk  | ⚠️      | Future height changes must keep containment |
+| Check           | Status | Details                                     |
+| --------------- | ------ | ------------------------------------------- |
+| CLS             | ✅     | 0.000000 measured in Lighthouse             |
+| Visual Diff     | ✅     | Manual QA on docs hero                      |
+| Regression Risk | ⚠️     | Future height changes must keep containment |
 
 ### 🚀 Next Steps
 
-- Apply the same containment recipe to other animated modules (e.g., marketing terminal).  
+- Apply the same containment recipe to other animated modules (e.g., marketing terminal).
 - Monitor real-user metrics once deployed.
 
 ### 📝 References
 
-- Deep dive: `docs/BUGS_AND_FIXES.md` (Terminal Component Jittering Issue).  
+- Deep dive: `docs/BUGS_AND_FIXES.md` (Terminal Component Jittering Issue).
 - Files: `components/ui/terminal.tsx`, `app/docs-hub/page.tsx`.
 
 ---
@@ -146,25 +146,25 @@ The terminal component combined `overflow`, dynamic height, and positioned spark
 
 **What Was Created**
 
-1. **Design System Installation (05:15)**  
+1. **Design System Installation (05:15)**
    - Pulled in Magic UI + React Bits components (Bento Grid, Neon Gradient Card, Dock, Terminal, Scroll Progress, Hero Video Dialog, Animated Gradient Text, Pixel Image) via shadcn installer.
 
-2. **Hero Rebuild (05:45)**  
+2. **Hero Rebuild (05:45)**
    - Introduced star-border CTAs, Arch-style terminal, neon metrics card, and click-spark overlay for premium motion language.
 
-3. **Core Sections Refresh (06:05)**  
+3. **Core Sections Refresh (06:05)**
    - Services/About/Contact now use GradualBlur wrappers, ShineBorder cards, LogoLoop carousel, and revised storytelling copy.
 
-4. **Social Hub Launch (06:20)**  
+4. **Social Hub Launch (06:20)**
    - New `/social-hub` route highlights the marketing reel with HeroVideoDialog and campaign feature blocks.
 
-5. **Docs & Ops (06:25)**  
+5. **Docs & Ops (06:25)**
    - Added `docs/agents.md` (rationale + integration guidelines) to keep architectural context close to the code.
 
 ### 🎯 How to Validate
 
-- Run `pnpm --filter landing dev`, smoke-test `/`, `/social-hub`, `/contact`.  
-- Confirm HeroVideoDialog lazy-loads media and the new components hydrate without warnings.  
+- Run `pnpm --filter landing dev`, smoke-test `/`, `/social-hub`, `/contact`.
+- Confirm HeroVideoDialog lazy-loads media and the new components hydrate without warnings.
 - Lighthouse: target >= 90 performance / 100 accessibility after animations stabilize.
 
 ### ★ Insight
@@ -173,15 +173,15 @@ Batching the UI overhaul into themed passes (design system → hero → sections
 
 ### 🔒 Quality Status
 
-| Check            | Status | Details                                   |
-|------------------|--------|-------------------------------------------|
-| Component Audit  | ✅      | All new Magic UI assets documented        |
-| Accessibility    | ⚠️      | Follow-up contrast pass scheduled (see 2025-01-14 entry) |
-| Performance      | ⚠️      | Monitor animation cost on lower-end GPUs |
+| Check           | Status | Details                                                  |
+| --------------- | ------ | -------------------------------------------------------- |
+| Component Audit | ✅     | All new Magic UI assets documented                       |
+| Accessibility   | ⚠️     | Follow-up contrast pass scheduled (see 2025-01-14 entry) |
+| Performance     | ⚠️     | Monitor animation cost on lower-end GPUs                 |
 
 ### 🚀 Next Steps
 
-- Continue polishing typography scale and animation timings (see `docs/design/landing-ui-decisions.md`).  
+- Continue polishing typography scale and animation timings (see `docs/design/landing-ui-decisions.md`).
 - Add automated visual tests for hero + marketing hub once assets stabilize.
 
 ### 📝 References

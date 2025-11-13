@@ -1,24 +1,17 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import {
-  Bot,
-  Sparkles,
-  Globe2,
-  BookOpen,
-  Cpu,
-  ArrowUpRight
-} from '@/components/ui/lucide-safe'
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { Bot, Sparkles, Globe2, BookOpen, Cpu, ArrowUpRight } from '@/components/ui/lucide-safe';
 
-import Container from '@/components/ui/Container'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { ShinyText } from '@/components/magicui/shiny-text'
-import { BlurFadeText } from '@/components/magicui/blur-fade-text'
-import { SparklesCore } from '@/components/aceternity/sparkles'
-import ProcessTimeline from '@/components/features/solutions/ProcessTimeline'
-import { cn } from '@/lib/utils'
-import { brandButton } from '@/lib/brand'
+import Container from '@/components/ui/Container';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { ShinyText } from '@/components/magicui/shiny-text';
+import { BlurFadeText } from '@/components/magicui/blur-fade-text';
+import { SparklesCore } from '@/components/aceternity/sparkles';
+import ProcessTimeline from '@/components/features/solutions/ProcessTimeline';
+import { cn } from '@/lib/utils';
+import { brandButton } from '@/lib/brand';
 
 const headerVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -27,7 +20,7 @@ const headerVariants = {
     y: 0,
     transition: { duration: 0.6, ease: 'easeOut' },
   },
-}
+};
 
 const suiteCardVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.98 },
@@ -37,7 +30,7 @@ const suiteCardVariants = {
     scale: 1,
     transition: { type: 'spring', stiffness: 120, damping: 20 },
   },
-}
+};
 
 const suites = [
   {
@@ -100,11 +93,11 @@ const suites = [
       'Simple content management',
     ],
   },
-]
+];
 
 export default function SolutionsPage() {
   return (
-    <div className="relative min-h-screen bg-black pt-24 pb-32">
+    <div className="relative min-h-screen bg-black pb-32 pt-24">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black" />
         <SparklesCore
@@ -124,36 +117,34 @@ export default function SolutionsPage() {
       <main className="relative">
         <Container size="lg" className="px-4 sm:px-6 lg:px-8">
           <motion.header
-            className="flex flex-col items-center text-center gap-6 sm:gap-8"
+            className="flex flex-col items-center gap-6 text-center sm:gap-8"
             initial="hidden"
             animate="visible"
             variants={headerVariants}
           >
-            <ShinyText className="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-anbu-gold" speed={5}>
+            <ShinyText
+              className="text-[10px] uppercase tracking-[0.3em] text-anbu-gold sm:text-xs"
+              speed={5}
+            >
               Our Solutions
             </ShinyText>
             <AnimatedGradientText
               colorFrom="#FFE680"
               colorTo="#FF9A3C"
               speed={1.2}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold font-display"
+              className="font-display text-2xl font-semibold sm:text-3xl md:text-4xl lg:text-5xl"
             >
               Everything you need to build and grow your product
             </AnimatedGradientText>
-            <BlurFadeText className="max-w-2xl text-sm sm:text-base md:text-lg text-white/70">
-              From web apps to marketing sites, we help you build the software your business needs to succeed.
+            <BlurFadeText className="max-w-2xl text-sm text-white/70 sm:text-base md:text-lg">
+              From web apps to marketing sites, we help you build the software your business needs
+              to succeed.
             </BlurFadeText>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/#services"
-                className={brandButton({ variant: 'primary', size: 'lg' })}
-              >
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link href="/#services" className={brandButton({ variant: 'primary', size: 'lg' })}>
                 View All Services
               </Link>
-              <Link
-                href="/contact"
-                className={brandButton({ variant: 'secondary', size: 'lg' })}
-              >
+              <Link href="/contact" className={brandButton({ variant: 'secondary', size: 'lg' })}>
                 Start a project
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -174,7 +165,7 @@ export default function SolutionsPage() {
               }}
             >
               {suites.map((suite) => {
-                const Icon = suite.icon
+                const Icon = suite.icon;
                 return (
                   <motion.article
                     key={suite.label}
@@ -183,33 +174,49 @@ export default function SolutionsPage() {
                     whileInView="visible"
                     viewport={{ once: true, margin: '0px 0px -80px 0px' }}
                     whileHover={{ y: -6 }}
-                    className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/8 bg-gradient-to-b from-white/[0.04] via-black/[0.35] to-black/80 p-8 sm:p-10 pt-14 sm:pt-16 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] transition-all duration-300 hover:border-anbu-gold/25 hover:shadow-[0_0_0_1px_rgba(255,215,0,0.25)]"
+                    className="border-white/8 group relative flex h-full flex-col overflow-hidden rounded-3xl border bg-gradient-to-b from-white/[0.04] via-black/[0.35] to-black/80 p-8 pt-14 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] transition-all duration-300 hover:border-anbu-gold/25 hover:shadow-[0_0_0_1px_rgba(255,215,0,0.25)] sm:p-10 sm:pt-16"
                   >
-                    <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden>
-                      <div className={cn('absolute inset-0 blur-3xl', `bg-gradient-to-br ${suite.gradient}`)} />
+                    <div
+                      className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      aria-hidden
+                    >
+                      <div
+                        className={cn(
+                          'absolute inset-0 blur-3xl',
+                          `bg-gradient-to-br ${suite.gradient}`
+                        )}
+                      />
                     </div>
                     {/* subtle top highlight for polish */}
                     <div className="pointer-events-none absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-                    <div className="relative mt-4 sm:mt-6 flex items-center justify-between px-1">
-                      <div className={cn('inline-block mt-0 rounded-full px-3 py-1 text-[10px] leading-none uppercase tracking-[0.3em] text-white/85 backdrop-blur-[2px] border border-white/15 shadow-[0_0_20px_rgba(0,0,0,0.15)]', `bg-gradient-to-r ${suite.gradient}`)}>
+                    <div className="relative mt-4 flex items-center justify-between px-1 sm:mt-6">
+                      <div
+                        className={cn(
+                          'mt-0 inline-block rounded-full border border-white/15 px-3 py-1 text-[10px] uppercase leading-none tracking-[0.3em] text-white/85 shadow-[0_0_20px_rgba(0,0,0,0.15)] backdrop-blur-[2px]',
+                          `bg-gradient-to-r ${suite.gradient}`
+                        )}
+                      >
                         {suite.eyebrow}
                       </div>
-                      <span className="mt-0 rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 whitespace-nowrap backdrop-blur-[2px]">
+                      <span className="mt-0 whitespace-nowrap rounded-full border border-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 backdrop-blur-[2px]">
                         {suite.status}
                       </span>
                     </div>
 
                     <div className="relative mt-6 flex items-center gap-3">
-                      <span className={cn('flex h-12 w-12 items-center justify-center rounded-2xl text-anbu-ink shadow-lg', `bg-gradient-to-br ${suite.gradient}`)}>
+                      <span
+                        className={cn(
+                          'flex h-12 w-12 items-center justify-center rounded-2xl text-anbu-ink shadow-lg',
+                          `bg-gradient-to-br ${suite.gradient}`
+                        )}
+                      >
                         <Icon className="h-6 w-6" />
                       </span>
-                      <h3 className="text-xl font-semibold text-white">
-                        {suite.label}
-                      </h3>
+                      <h3 className="text-xl font-semibold text-white">{suite.label}</h3>
                     </div>
 
-                    <p className="relative mt-4 text-sm text-white/70 leading-relaxed">
+                    <p className="relative mt-4 text-sm leading-relaxed text-white/70">
                       {suite.description}
                     </p>
 
@@ -225,13 +232,20 @@ export default function SolutionsPage() {
                     <Link
                       href={suite.href}
                       aria-label={`Get started with ${suite.label}`}
-                      className={cn('relative mt-8 self-start', brandButton({ variant: 'ghost', size: 'sm', className: 'group-hover:border-anbu-gold/60 group-hover:text-anbu-gold' }))}
+                      className={cn(
+                        'relative mt-8 self-start',
+                        brandButton({
+                          variant: 'ghost',
+                          size: 'sm',
+                          className: 'group-hover:border-anbu-gold/60 group-hover:text-anbu-gold',
+                        })
+                      )}
                     >
                       Get started
                       <ArrowUpRight className="h-4 w-4" />
                     </Link>
                   </motion.article>
-                )
+                );
               })}
             </motion.div>
           </section>
@@ -240,5 +254,5 @@ export default function SolutionsPage() {
         </Container>
       </main>
     </div>
-  )
+  );
 }

@@ -17,17 +17,17 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-  
+
   /* Smooth scrolling removed - handled in globals.css */
   /* scroll-behavior: smooth; */
-  
+
   /* Better font rendering */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   /* Improve text rendering */
   text-rendering: optimizeLegibility;
-  
+
   /* Prevent overflow on x-axis */
   overflow-x: hidden;
 }
@@ -45,13 +45,24 @@ body {
 /* =================================
    TYPOGRAPHY RESET
    ================================= */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: inherit;
   font-weight: inherit;
 }
 
 /* Balance text wrapping */
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   text-wrap: balance;
   overflow-wrap: break-word;
 }
@@ -113,13 +124,13 @@ button {
 }
 
 /* Remove spinner from number inputs */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -176,7 +187,7 @@ details > summary::-webkit-details-marker {
   html {
     scroll-behavior: auto;
   }
-  
+
   *,
   *::before,
   *::after {

@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
-import React, { forwardRef } from 'react'
-import { motion, HTMLMotionProps } from 'framer-motion'
-import Image from 'next/image'
-import styles from './Card.module.css'
+import React, { forwardRef } from 'react';
+import { motion, HTMLMotionProps } from 'framer-motion';
+import Image from 'next/image';
+import styles from './Card.module.css';
 
 export interface CardProps {
-  variant?: 'default' | 'glass' | 'gradient' | 'outlined' | 'elevated'
-  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl'
-  hover?: boolean
-  glow?: boolean
-  interactive?: boolean
-  neon?: boolean
-  children: React.ReactNode
-  className?: string
-  header?: React.ReactNode
-  footer?: React.ReactNode
+  variant?: 'default' | 'glass' | 'gradient' | 'outlined' | 'elevated';
+  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  hover?: boolean;
+  glow?: boolean;
+  interactive?: boolean;
+  neon?: boolean;
+  children: React.ReactNode;
+  className?: string;
+  header?: React.ReactNode;
+  footer?: React.ReactNode;
   image?: {
-    src: string
-    alt: string
-    position?: 'top' | 'bottom' | 'background'
-    width?: number
-    height?: number
-    sizes?: string
-  }
+    src: string;
+    alt: string;
+    position?: 'top' | 'bottom' | 'background';
+    width?: number;
+    height?: number;
+    sizes?: string;
+  };
 }
 
-type CombinedProps = CardProps & Omit<HTMLMotionProps<"div">, keyof CardProps>
+type CombinedProps = CardProps & Omit<HTMLMotionProps<'div'>, keyof CardProps>;
 
 const Card = forwardRef<HTMLDivElement, CombinedProps>(
   (
@@ -55,13 +55,15 @@ const Card = forwardRef<HTMLDivElement, CombinedProps>(
       interactive && styles.interactive,
       neon && styles.neon,
       image?.position === 'background' && styles.hasBackgroundImage,
-      className
-    ].filter(Boolean).join(' ')
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     const cardContent = (
       <>
         {image?.position === 'background' && (
-          <div 
+          <div
             className={styles.backgroundImage}
             style={{ backgroundImage: `url(${image.src})` }}
             role="img"
@@ -82,21 +84,11 @@ const Card = forwardRef<HTMLDivElement, CombinedProps>(
           </div>
         )}
 
-        {header && (
-          <div className={styles.header}>
-            {header}
-          </div>
-        )}
+        {header && <div className={styles.header}>{header}</div>}
 
-        <div className={styles.content}>
-          {children}
-        </div>
+        <div className={styles.content}>{children}</div>
 
-        {footer && (
-          <div className={styles.footer}>
-            {footer}
-          </div>
-        )}
+        {footer && <div className={styles.footer}>{footer}</div>}
 
         {image?.position === 'bottom' && (
           <div className={styles.imageBottom}>
@@ -111,11 +103,9 @@ const Card = forwardRef<HTMLDivElement, CombinedProps>(
           </div>
         )}
 
-        {neon && (
-          <div className={styles.neonBorder} />
-        )}
+        {neon && <div className={styles.neonBorder} />}
       </>
-    )
+    );
 
     if (interactive) {
       return (
@@ -124,16 +114,16 @@ const Card = forwardRef<HTMLDivElement, CombinedProps>(
           className={cardClasses}
           whileHover={{ y: -8, scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          transition={{ 
-            type: "spring",
+          transition={{
+            type: 'spring',
             stiffness: 400,
-            damping: 17
+            damping: 17,
           }}
           {...props}
         >
           {cardContent}
         </motion.div>
-      )
+      );
     }
 
     return (
@@ -148,10 +138,10 @@ const Card = forwardRef<HTMLDivElement, CombinedProps>(
       >
         {cardContent}
       </motion.div>
-    )
+    );
   }
-)
+);
 
-Card.displayName = 'Card'
+Card.displayName = 'Card';
 
-export default Card
+export default Card;

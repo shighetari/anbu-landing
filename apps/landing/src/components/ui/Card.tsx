@@ -1,32 +1,32 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 // I'm creating a flexible card component with hover effects
 interface CardProps {
-  children: React.ReactNode
-  className?: string
-  hover?: boolean
-  glow?: boolean
-  glass?: boolean
-  padding?: 'sm' | 'md' | 'lg'
+  children: React.ReactNode;
+  className?: string;
+  hover?: boolean;
+  glow?: boolean;
+  glass?: boolean;
+  padding?: 'sm' | 'md' | 'lg';
 }
 
-export default function Card({ 
-  children, 
-  className, 
+export default function Card({
+  children,
+  className,
   hover = true,
   glow = false,
   glass = true,
-  padding = 'md'
+  padding = 'md',
 }: CardProps) {
   const paddings = {
     sm: 'p-4 sm:p-6',
     md: 'p-6 sm:p-8',
-    lg: 'p-8 sm:p-10'
-  }
+    lg: 'p-8 sm:p-10',
+  };
 
   return (
     <motion.div
@@ -47,5 +47,5 @@ export default function Card({
     >
       {children}
     </motion.div>
-  )
+  );
 }
