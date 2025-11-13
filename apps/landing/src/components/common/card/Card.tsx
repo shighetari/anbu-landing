@@ -2,6 +2,7 @@
 
 import React, { forwardRef } from 'react'
 import { motion, HTMLMotionProps } from 'framer-motion'
+import Image from 'next/image'
 import styles from './Card.module.css'
 
 export interface CardProps {
@@ -19,6 +20,9 @@ export interface CardProps {
     src: string
     alt: string
     position?: 'top' | 'bottom' | 'background'
+    width?: number
+    height?: number
+    sizes?: string
   }
 }
 
@@ -67,7 +71,14 @@ const Card = forwardRef<HTMLDivElement, CombinedProps>(
 
         {image?.position === 'top' && (
           <div className={styles.imageTop}>
-            <img src={image.src} alt={image.alt} loading="lazy" />
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width ?? 640}
+              height={image.height ?? 360}
+              sizes={image.sizes ?? '(max-width: 768px) 90vw, (max-width: 1200px) 420px, 520px'}
+              className="h-auto w-full object-cover"
+            />
           </div>
         )}
 
@@ -89,7 +100,14 @@ const Card = forwardRef<HTMLDivElement, CombinedProps>(
 
         {image?.position === 'bottom' && (
           <div className={styles.imageBottom}>
-            <img src={image.src} alt={image.alt} loading="lazy" />
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width ?? 640}
+              height={image.height ?? 360}
+              sizes={image.sizes ?? '(max-width: 768px) 90vw, (max-width: 1200px) 420px, 520px'}
+              className="h-auto w-full object-cover"
+            />
           </div>
         )}
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { ChevronDown, ArrowRight, Briefcase, Rocket, Clock, Shield, TrendingUp } from 'lucide-react'
+import { ChevronDown, ArrowRight, Briefcase, Rocket, Clock, Shield, TrendingUp } from '@/components/ui/lucide-safe'
 import dynamic from 'next/dynamic'
 
 import Container from '@/components/ui/Container'

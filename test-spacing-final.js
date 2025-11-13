@@ -1,13 +1,16 @@
 // I'm testing the final spacing improvements
 const { chromium } = require('@playwright/test');
 
+const DEFAULT_PORT = process.env.APP_PORT || process.env.PORT || 3000;
+const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
+
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
 
   try {
     console.log('Testing final spacing improvements...');
-    await page.goto('http://localhost:3003', { waitUntil: 'networkidle' });
+    await page.goto(BASE_URL, { waitUntil: 'networkidle' });
     await page.waitForTimeout(2000);
 
     // Capture navbar with doubled spacing

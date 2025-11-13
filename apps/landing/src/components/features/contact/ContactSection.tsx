@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowUpRight, Mail, MessageSquare, Sparkles, ChevronDown } from 'lucide-react'
+import { ArrowUpRight, Mail, MessageSquare, Sparkles, ChevronDown } from '@/components/ui/lucide-safe'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
@@ -19,6 +19,7 @@ import { TypewriterEffect } from '@/components/aceternity/typewriter-effect'
 import { TextHoverEffect } from '@/components/aceternity/text-hover-effect'
 import { cn } from '@/lib/utils'
 import { buttonVariants, animationVariants, buttonSizes } from '@/lib/button-variants'
+import { siteConfig } from '@/lib/site-config'
 
 const contactOptions = [
   {
@@ -27,8 +28,8 @@ const contactOptions = [
     description: 'Quick replies',
     shortDesc: '<24hrs',
     icon: Mail,
-    href: 'mailto:contact@anbu.ai',
-    label: 'contact@anbu.ai',
+    href: `mailto:${siteConfig.contactEmail}`,
+    label: siteConfig.contactEmail,
     gradient: 'from-blue-500/20 via-cyan-500/20 to-teal-500/20',
     iconGradient: 'from-blue-500 to-cyan-500',
     hoverGlow: 'hover:shadow-[0_0_40px_rgba(6,182,212,0.3)]',
@@ -39,7 +40,7 @@ const contactOptions = [
     description: 'Talk on a call',
     shortDesc: '30 min',
     icon: MessageSquare,
-    href: 'https://cal.com/',
+    href: siteConfig.calLink,
     label: 'Book a call',
     gradient: 'from-purple-500/20 via-pink-500/20 to-rose-500/20',
     iconGradient: 'from-purple-500 to-pink-500',
@@ -64,20 +65,48 @@ export default function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
   const [isClientReady, setIsClientReady] = useState(false)
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   useEffect(() => {
     setIsClientReady(true)
   }, [])
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {}
+
+    // Email validation
+    if (!formState.email.trim()) {
+      newErrors.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) {
+      newErrors.email = 'Please enter a valid email address'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleInputChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = event.target
     setFormState((prev) => ({ ...prev, [name]: value }))
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+
+    if (!validateForm()) {
+      return
+    }
+
     if (isSubmitting) {
       return
     }
@@ -104,7 +133,7 @@ export default function ContactSection() {
     )
     params.set('body', lines)
 
-    const mailtoUrl = `mailto:contact@anbu.ai?${params.toString()}`
+    const mailtoUrl = `mailto:${siteConfig.contactEmail}?${params.toString()}`
 
     if (typeof window !== 'undefined') {
       window.location.href = mailtoUrl
@@ -280,10 +309,23 @@ export default function ContactSection() {
                     value={formState.email}
                     onChange={handleInputChange}
                     placeholder="you@company.com"
-                    className="rounded-lg border border-white/15 bg-white/8 px-3 py-2.5 text-sm text-white/95 placeholder:text-white/40 transition-all duration-200 hover:border-white/25 focus:border-anbu-gold focus:outline-none focus:ring-2 focus:ring-anbu-gold/40 focus:shadow-[0_0_15px_rgba(255,215,0,0.2)]"
+                    className={`rounded-lg border bg-white/8 px-3 py-2.5 text-sm text-white/95 placeholder:text-white/40 transition-all duration-200 hover:border-white/25 focus:outline-none focus:ring-2 focus:shadow-[0_0_15px_rgba(255,215,0,0.2)] ${
+                      errors.email
+                        ? 'border-red-500/60 focus:border-red-500 focus:ring-red-500/40 focus:shadow-[0_0_15px_rgba(239,68,68,0.2)]'
+                        : 'border-white/15 focus:border-anbu-gold focus:ring-anbu-gold/40'
+                    }`}
                     autoComplete="email"
                     required
                   />
+                  {errors.email && (
+                    <motion.span
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs text-red-400/80"
+                    >
+                      {errors.email}
+                    </motion.span>
+                  )}
                 </label>
                 <label className="flex flex-col gap-1">
                   <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Team Size</span>
@@ -456,7 +498,7 @@ export default function ContactSection() {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex w-full sm:w-auto items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#FFD700] via-[#FFC347] to-[#FFAF45] px-4 py-2 text-xs sm:text-sm font-bold uppercase tracking-[0.16em] text-black transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_18px_rgba(255,215,0,0.35)] disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex w-full sm:w-auto items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#FFD700] via-[#FFC347] to-[#FFAF45] px-4 py-2 text-xs sm:text-sm font-bold uppercase tracking-[0.16em] text-anbu-ink transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_18px_rgba(255,215,0,0.35)] disabled:cursor-not-allowed disabled:opacity-70"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -541,12 +583,12 @@ export default function ContactSection() {
                 onClick={() => {
                   handleContactClick()
                   if (typeof window !== 'undefined') {
-                    window.open('mailto:contact@anbu.ai', '_blank')
+                    window.open(`mailto:${siteConfig.contactEmail}`, '_blank')
                   }
                 }}
               >
                 <motion.span
-                  className="flex items-center gap-1.5 text-black font-medium"
+                  className="flex items-center gap-1.5 text-anbu-ink font-medium"
                   whileHover={{ gap: '8px' }}
                   transition={{ duration: 0.2 }}
                 >
@@ -556,7 +598,7 @@ export default function ContactSection() {
                 </motion.span>
               </ShimmerButton>
               <p className="mt-1.5 text-xs text-white/30 text-center leading-relaxed">
-                Prefer email? <span className="text-anbu-gold/60">contact@anbu.ai</span>
+                Prefer email? <span className="text-anbu-gold/60">{siteConfig.contactEmail}</span>
               </p>
             </motion.div>
           </div>

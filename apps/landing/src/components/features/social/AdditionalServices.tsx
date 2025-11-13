@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Video, Users, ShoppingBag, Shield, Mic, BarChart3 } from 'lucide-react'
+import { Video, Users, ShoppingBag, Shield, Mic, BarChart3 } from '@/components/ui/lucide-safe'
 
 import { CardContainer, CardBody, CardItem } from '@/components/aceternity/3d-card'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
@@ -167,7 +167,7 @@ export default function AdditionalServices() {
                     >
                       <span
                         className={cn(
-                          'flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br text-[0.65rem] font-semibold text-black/85 shadow-[0_10px_24px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover:scale-110',
+                          'flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br text-[0.65rem] font-semibold text-anbu-ink/90 shadow-[0_10px_24px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover:scale-110',
                           service.accent.bullet
                         )}
                       >

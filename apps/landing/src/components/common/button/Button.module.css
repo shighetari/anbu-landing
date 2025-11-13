@@ -61,7 +61,7 @@
 /* Primary variant */
 .primary {
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  color: var(--color-black);
+  color: var(--color-ink, #0B0500);
   font-weight: var(--font-bold);
   box-shadow: var(--shadow-md), var(--shadow-glow-sm);
 }

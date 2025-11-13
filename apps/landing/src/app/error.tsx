@@ -34,23 +34,25 @@ export default function Error({
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <ShimmerButton
             onClick={() => reset()}
-            className="px-8 py-4 text-base font-bold uppercase tracking-wide text-black"
+            className="px-8 py-4 text-base font-bold uppercase tracking-wide text-anbu-ink"
             background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
             borderRadius="0.75rem"
+            textColor="var(--anbu-ink, #0B0500)"
           >
             Try Again
           </ShimmerButton>
 
-          <Link href="/">
-            <ShimmerButton
-              className="px-8 py-4 text-base font-bold uppercase tracking-wide text-anbu-gold"
-              background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
-              borderRadius="0.75rem"
-              shimmerColor="#FFD700"
-            >
-              Return Home
-            </ShimmerButton>
-          </Link>
+          <ShimmerButton
+            className="px-8 py-4 text-base font-bold uppercase tracking-wide text-anbu-gold"
+            background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
+            borderRadius="0.75rem"
+            shimmerColor="#FFD700"
+            asChild
+          >
+            <Link href="/">
+              <span>Return Home</span>
+            </Link>
+          </ShimmerButton>
         </div>
 
         {process.env.NODE_ENV === 'development' && error.digest && (

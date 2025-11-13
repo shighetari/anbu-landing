@@ -23,6 +23,7 @@ const config: Config = {
         'anbu-black': '#000000',
         'anbu-gold': '#FFD700',
         'anbu-gold-accent': '#FFA500',
+        'anbu-ink': '#0B0500',
         'anbu-marble': '#F8F8F8',
         'anbu-gray': '#2C2C2C',
       },

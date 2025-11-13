@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-The monorepo relies on pnpm workspaces plus Turbo for orchestration. Feature apps live under `apps/` (`landing`, `docs-hub`, `solutions-portal`), each following the Next.js App Router layout with colocated feature modules. Shared building blocks sit in `packages/`: `ui` for reusable React components, `config` for environment-aware settings, and `utils` for cross-cutting helpers. Refer to `docs/` for platform playbooks, `docker/` for container recipes, and `scripts/` for automation utilities.
+The monorepo relies on pnpm workspaces plus Turbo for orchestration. Feature apps live under `apps/`—today that’s just `landing`, with `docs-hub` and `solutions-portal` reserved for future expansions so newcomers only wrangle the shipping experience. Shared building blocks sit in `packages/`: `ui` for reusable React components, `config` for environment-aware settings, and `utils` for cross-cutting helpers. Refer to `docs/` (notably `docs/design/landing-ui-decisions.md` and `docs/changelog/landing.md`) for product notes, `docker/` for container recipes, and `scripts/` for automation utilities.
 
 ## Build, Test, and Development Commands
 
@@ -10,7 +10,7 @@ The monorepo relies on pnpm workspaces plus Turbo for orchestration. Feature app
 - `pnpm build` – Produces optimized production builds across apps and packages.
 - `pnpm lint` / `pnpm typecheck` – Runs ESLint and TypeScript checks; required before opening a PR.
 - `pnpm test` – Executes Vitest suites via Turbo; filter with `pnpm --filter apps/landing test` when needed.
-- `pnpm test:e2e` – Runs Playwright scenarios defined in `tests/` and root `test-*.js` helpers.
+- `pnpm test:e2e` – Runs the canonical Playwright suite under `apps/landing/tests/e2e` (legacy helper scripts still live at repo root).
 - `pnpm format` / `pnpm format:check` – Applies or verifies Prettier formatting for supported file types.
 - `pnpm clean` – Removes build artifacts; use `pnpm clean:all` if node_modules reset is required.
 
@@ -20,7 +20,7 @@ TypeScript is mandatory for application and shared code. Prettier enforces two-s
 
 ## Testing Guidelines
 
-Vitest specs belong next to the feature or under `tests/` when shared; name files `*.spec.ts`. Integration and visual regressions live in Playwright scripts (`test-*.js`); add screenshots to `test-results/` when debugging. Maintain parity between component updates and test coverage—new UI states require matching assertions. Run `pnpm test` and, for UI shifts, `pnpm test:e2e --debug` before requesting review. Broken snapshots or flaky cases must be resolved or quarantined with clear justification.
+Vitest specs belong next to the feature or under `tests/` when shared; name files `*.spec.ts`. Playwright is the source of truth for integration/E2E and lives under `apps/landing/tests/e2e`; legacy helper scripts in the repo root can be used ad hoc but should eventually migrate into that suite. Maintain parity between component updates and coverage—new UI states require matching assertions. Run `pnpm test` (unit) and `pnpm test:e2e` (Playwright) before requesting review, adding `--debug` when chasing flaky UI states. Broken snapshots or flaky cases must be resolved or quarantined with clear justification.
 
 ## Commit & Pull Request Guidelines
 

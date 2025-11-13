@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import React, { useState, useRef, useCallback, useEffect } from 'react'
-import { cn } from '@/lib/cn'
+import { cn } from '@/lib/utils'
 import { useScrolling } from '@/hooks/useScrolling'
 
 export const WobbleCard = ({
@@ -79,6 +79,7 @@ export const WobbleCard = ({
               )`
             : "transparent",
         }}
+        suppressHydrationWarning
       >
         <motion.div
           animate={{

@@ -289,7 +289,7 @@ cd C:\Users\Rosa\Documents\Dropbox\Projects\ANBU_Landing_Page
 pnpm dev
 
 # View at
-http://localhost:3003
+http://localhost:3000
 ```
 
 ### Component States to Test

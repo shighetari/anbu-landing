@@ -1,7 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 import {
   AnimatePresence,
   MotionValue,
@@ -37,6 +38,8 @@ const FloatingDockMobile = ({
   className?: string;
 }) => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const menuId = "floating-dock-mobile-menu";
   return (
     <div className={cn("relative block md:hidden", className)}>
       <AnimatePresence>
@@ -59,47 +62,69 @@ const FloatingDockMobile = ({
               exit={{ opacity: 0, y: 10, scale: 0.9 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
-              <div className="flex items-center gap-2 rounded-full bg-black/80 backdrop-blur-2xl border border-anbu-gold/30 px-3 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.7)]">
-                {items.map((item, idx) => (
-                  <motion.a
-                    key={item.title}
-                    href={item.href}
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      transition: {
-                        delay: idx * 0.05,
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 25
-                      }
-                    }}
-                    exit={{
-                      opacity: 0,
-                      scale: 0,
-                      transition: {
-                        delay: (items.length - 1 - idx) * 0.03
-                      }
-                    }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="relative group flex h-10 w-10 items-center justify-center rounded-full bg-white/5 hover:bg-anbu-gold/20 border border-white/10 hover:border-anbu-gold/50 transition-all duration-300"
-                    onClick={() => setOpen(false)}
-                  >
-                    <div className="h-5 w-5 text-anbu-gold group-hover:text-white transition-colors duration-300">
-                      {item.icon}
-                    </div>
-                    {/* Tooltip */}
-                    <motion.span
-                      initial={{ opacity: 0, y: 5, scale: 0.8 }}
-                      whileHover={{ opacity: 1, y: -8, scale: 1 }}
-                      className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none whitespace-nowrap rounded-md bg-black/90 border border-anbu-gold/30 px-2 py-1 text-xs text-white"
+              <div
+                id={menuId}
+                role="menu"
+                aria-label="Quick navigation"
+                className="flex items-center gap-2 rounded-full bg-black/80 backdrop-blur-2xl border border-anbu-gold/30 px-3 py-2 shadow-[0_20px_50px_rgba(0,0,0,0.7)]"
+              >
+                {items.map((item, idx) => {
+                  const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
+                  return (
+                    <motion.a
+                      key={item.title}
+                      href={item.href}
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{
+                        opacity: 1,
+                        scale: 1,
+                        transition: {
+                          delay: idx * 0.05,
+                          type: "spring",
+                          stiffness: 400,
+                          damping: 25
+                        }
+                      }}
+                      exit={{
+                        opacity: 0,
+                        scale: 0,
+                        transition: {
+                          delay: (items.length - 1 - idx) * 0.03
+                        }
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={cn(
+                        "relative group flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300",
+                        isActive
+                          ? "bg-anbu-gold/30 border-anbu-gold/60"
+                          : "bg-white/5 hover:bg-anbu-gold/20 border-white/10 hover:border-anbu-gold/50"
+                      )}
+                      onClick={() => setOpen(false)}
+                      aria-label={item.title}
+                      aria-current={isActive ? "page" : undefined}
+                      role="menuitem"
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noreferrer noopener' : undefined}
                     >
-                      {item.title}
-                    </motion.span>
-                  </motion.a>
-                ))}
+                      <div className={cn(
+                        "h-5 w-5 transition-colors duration-300",
+                        isActive ? "text-white" : "text-anbu-gold group-hover:text-white"
+                      )}>
+                        {item.icon}
+                      </div>
+                      {/* Tooltip */}
+                      <motion.span
+                        aria-hidden="true"
+                        initial={{ opacity: 0, y: 5, scale: 0.8 }}
+                        whileHover={{ opacity: 1, y: -8, scale: 1 }}
+                        className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 pointer-events-none whitespace-nowrap rounded-md bg-black/90 border border-anbu-gold/30 px-2 py-1 text-xs text-white"
+                      >
+                        {item.title}
+                      </motion.span>
+                    </motion.a>
+                  )
+                })}
               </div>
             </motion.div>
           </>
@@ -112,6 +137,9 @@ const FloatingDockMobile = ({
         whileTap={{ scale: 0.95 }}
         animate={{ rotate: open ? 180 : 0 }}
         transition={{ duration: 0.3 }}
+        aria-label="Toggle quick navigation dock"
+        aria-controls={menuId}
+        aria-expanded={open}
       >
         <IconLayoutNavbarCollapse className="h-5 w-5 text-anbu-gold" />
       </motion.button>
@@ -135,6 +163,8 @@ const FloatingDockDesktop = ({
         "mx-auto hidden h-16 items-center gap-2 rounded-2xl bg-gradient-to-b from-black/40 to-black/60 backdrop-blur-2xl px-4 py-2 md:flex border border-anbu-gold/30 shadow-[0_8px_32px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_40px_rgba(255,215,0,0.15)] transition-all duration-500",
         className
       )}
+      role="navigation"
+      aria-label="Quick navigation dock"
     >
       {items.map((item) => (
         <IconContainer mouseX={mouseX} key={item.title} {...item} />
@@ -154,6 +184,8 @@ function IconContainer({
   icon: React.ReactNode;
   href: string;
 }) {
+  const pathname = usePathname();
+  const isActive = pathname === href || pathname.startsWith(href + '/');
   let ref = useRef<HTMLDivElement>(null);
 
   let distance = useTransform(mouseX, (val) => {
@@ -195,15 +227,27 @@ function IconContainer({
   });
 
   const [hovered, setHovered] = useState(false);
+  const isExternal = href.startsWith("http");
 
   return (
-    <a href={href}>
+    <a
+      href={href}
+      aria-label={title}
+      aria-current={isActive ? "page" : undefined}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noreferrer noopener" : undefined}
+    >
       <motion.div
         ref={ref}
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="relative flex aspect-square items-center justify-center rounded-full bg-gradient-to-b from-white/10 to-white/5 hover:from-anbu-gold/20 hover:to-anbu-gold/10 border border-anbu-gold/20 hover:border-anbu-gold/50 shadow-lg hover:shadow-[0_0_25px_rgba(255,215,0,0.3)] backdrop-blur-xl transition-colors duration-300 cursor-pointer"
+        className={cn(
+          "relative flex aspect-square items-center justify-center rounded-full shadow-lg backdrop-blur-xl transition-colors duration-300 cursor-pointer border",
+          isActive
+            ? "bg-anbu-gold/25 border-anbu-gold/60 shadow-[0_0_25px_rgba(255,215,0,0.4)]"
+            : "bg-gradient-to-b from-white/10 to-white/5 hover:from-anbu-gold/20 hover:to-anbu-gold/10 border-anbu-gold/20 hover:border-anbu-gold/50 hover:shadow-[0_0_25px_rgba(255,215,0,0.3)]"
+        )}
       >
         <AnimatePresence>
           {hovered && (
@@ -213,6 +257,7 @@ function IconContainer({
               exit={{ opacity: 0, y: 2, x: "-50%" }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className="absolute -top-10 left-1/2 w-fit rounded-lg border border-anbu-gold/30 bg-black/90 backdrop-blur-xl px-3 py-1.5 text-xs font-medium whitespace-pre text-white shadow-[0_4px_20px_rgba(255,215,0,0.3)]"
+              aria-hidden="true"
             >
               {title}
             </motion.div>
@@ -220,7 +265,10 @@ function IconContainer({
         </AnimatePresence>
         <motion.div
           style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center text-anbu-gold hover:text-white transition-colors duration-300"
+          className={cn(
+            "flex items-center justify-center transition-colors duration-300",
+            isActive ? "text-white" : "text-anbu-gold hover:text-white"
+          )}
         >
           {icon}
         </motion.div>

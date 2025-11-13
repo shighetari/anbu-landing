@@ -5,7 +5,7 @@ import {
   Globe2,
   Layers3,
   Sparkles,
-} from 'lucide-react'
+} from '@/components/ui/lucide-safe'
 import { motion } from 'framer-motion'
 
 import Container from '@/components/ui/Container'

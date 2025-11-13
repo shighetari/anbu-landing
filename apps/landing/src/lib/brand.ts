@@ -20,7 +20,7 @@ const buttonSizes: Record<BrandButtonSize, string> = {
 
 const buttonVariants: Record<BrandButtonVariant, string> = {
   primary:
-    'border-anbu-gold/60 bg-gradient-to-br from-[#FFD700] via-[#FFC94A] to-[#FFB347] text-black shadow-[0_12px_30px_rgba(255,215,0,0.25)] hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(255,215,0,0.35)] active:translate-y-0',
+    'border-anbu-gold/60 bg-gradient-to-br from-[#FFD700] via-[#FFC94A] to-[#FFB347] text-anbu-ink shadow-[0_12px_30px_rgba(255,215,0,0.25)] hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(255,215,0,0.35)] active:translate-y-0',
   secondary:
     'border-white/15 bg-white/[0.08] text-white/85 hover:border-anbu-gold/45 hover:bg-white/[0.12] hover:text-anbu-gold',
   ghost:

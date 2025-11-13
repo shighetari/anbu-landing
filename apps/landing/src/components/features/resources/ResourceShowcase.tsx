@@ -10,7 +10,7 @@ import {
   LifeBuoy,
   Lightbulb,
   Users,
-} from "lucide-react"
+} from "@/components/ui/lucide-safe"
 
 import { WobbleCard } from "@/components/aceternity/wobble-card"
 import { cn } from "@/lib/utils"

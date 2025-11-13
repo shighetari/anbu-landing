@@ -28,7 +28,10 @@ export function GradualBlurSection({ children, className, id }: GradualBlurSecti
       className={cn("relative", className)}
     >
       {children}
-      <span className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black via-transparent to-transparent opacity-50" />
+      <span
+        className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black via-transparent to-transparent opacity-50"
+        aria-hidden="true"
+      />
     </motion.section>
   )
 }

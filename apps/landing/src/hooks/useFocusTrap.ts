@@ -1,49 +1,55 @@
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 /**
  * Hook that traps focus within a container
  */
 export function useFocusTrap<T extends HTMLElement = HTMLElement>(enabled: boolean = true) {
-  const ref = useRef<T>(null)
+  const [container, setContainer] = useState<T | null>(null)
 
   useEffect(() => {
-    if (!enabled || !ref.current) return
+    if (!enabled || !container) {
+      return
+    }
 
-    const container = ref.current
-    const focusableElements = container.querySelectorAll(
-      'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    const focusableElements = container.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]):not([tabindex="-1"]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
     )
 
-    const firstFocusable = focusableElements[0] as HTMLElement
-    const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement
+    if (focusableElements.length === 0) {
+      return
+    }
 
-    const handleTabKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return
+    const firstFocusable = focusableElements[0]
+    const lastFocusable = focusableElements[focusableElements.length - 1]
 
-      if (e.shiftKey) {
-        // Shift + Tab
+    const handleTabKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') {
+        return
+      }
+
+      if (event.shiftKey) {
         if (document.activeElement === firstFocusable) {
-          e.preventDefault()
+          event.preventDefault()
           lastFocusable?.focus()
         }
-      } else {
-        // Tab
-        if (document.activeElement === lastFocusable) {
-          e.preventDefault()
-          firstFocusable?.focus()
-        }
+        return
+      }
+
+      if (document.activeElement === lastFocusable) {
+        event.preventDefault()
+        firstFocusable?.focus()
       }
     }
 
-    // Focus first element on mount
     firstFocusable?.focus()
-
     container.addEventListener('keydown', handleTabKey)
 
     return () => {
       container.removeEventListener('keydown', handleTabKey)
     }
-  }, [enabled])
+  }, [container, enabled])
 
-  return ref
+  return useCallback((node: T | null) => {
+    setContainer(node ?? null)
+  }, [])
 }

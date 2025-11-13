@@ -17,7 +17,8 @@ import {
   ShieldCheck,
   Sparkles,
   Users,
-} from "lucide-react"
+} from "@/components/ui/lucide-safe"
+import { siteConfig } from "@/lib/site-config"
 
 export const metadata: Metadata = {
   title: "Connect with ANBU Solutions",
@@ -56,6 +57,8 @@ const heroHighlights = [
 ]
 
 export default function ContactPage() {
+  const contactEmail = siteConfig.contactEmail
+  const callLink = siteConfig.calLink
   const primaryButton = buttonVariants.primary
   const secondaryButton = buttonVariants.secondary
 
@@ -84,40 +87,43 @@ export default function ContactPage() {
               value hits production.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link href="mailto:contact@anbu.ai">
-                <ShimmerButton
-                  shimmerColor={primaryButton.shimmerColor}
-                  shimmerDuration={primaryButton.shimmerDuration}
-                  background={primaryButton.background}
-                  borderRadius={primaryButton.borderRadius}
-                  className={cn(
-                    primaryButton.className,
-                    "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
-                  )}
-                >
-                  <span className="flex items-center gap-2">
+              <ShimmerButton
+                shimmerColor={primaryButton.shimmerColor}
+                shimmerDuration={primaryButton.shimmerDuration}
+                background={primaryButton.background}
+                borderRadius={primaryButton.borderRadius}
+                textColor={primaryButton.textColor}
+                className={cn(
+                  primaryButton.className,
+                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                )}
+                asChild
+              >
+                <Link href={`mailto:${contactEmail}`}>
+                  <span className="flex items-center gap-2 text-anbu-ink">
                     <Sparkles className="h-4 w-4" />
                     Email the team
                   </span>
-                </ShimmerButton>
-              </Link>
-              <Link href="https://cal.com/anbu" target="_blank" rel="noopener noreferrer">
-                <ShimmerButton
-                  shimmerColor={secondaryButton.shimmerColor}
-                  shimmerDuration={secondaryButton.shimmerDuration}
-                  background={secondaryButton.background}
-                  borderRadius={secondaryButton.borderRadius}
-                  className={cn(
-                    secondaryButton.className,
-                    "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
-                  )}
-                >
-                  <span className="flex items-center gap-2">
+                </Link>
+              </ShimmerButton>
+              <ShimmerButton
+                shimmerColor={secondaryButton.shimmerColor}
+                shimmerDuration={secondaryButton.shimmerDuration}
+                background={secondaryButton.background}
+                borderRadius={secondaryButton.borderRadius}
+                className={cn(
+                  secondaryButton.className,
+                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                )}
+                asChild
+              >
+                <Link href={callLink} target="_blank" rel="noopener noreferrer">
+                  <span className="flex items-center gap-2 text-anbu-ink">
                     <ArrowUpRight className="h-4 w-4" />
                     Book a call
                   </span>
-                </ShimmerButton>
-              </Link>
+                </Link>
+              </ShimmerButton>
             </div>
           </div>
 
@@ -225,23 +231,25 @@ export default function ContactPage() {
               response.
             </p>
           </div>
-          <Link href="/docs-hub">
-            <ShimmerButton
-              shimmerColor={primaryButton.shimmerColor}
-              shimmerDuration={primaryButton.shimmerDuration}
-              background={primaryButton.background}
-              borderRadius={primaryButton.borderRadius}
-              className={cn(
-                primaryButton.className,
-                "px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
-              )}
-            >
-              <span className="flex items-center gap-2">
+          <ShimmerButton
+            shimmerColor={primaryButton.shimmerColor}
+            shimmerDuration={primaryButton.shimmerDuration}
+            background={primaryButton.background}
+            borderRadius={primaryButton.borderRadius}
+            textColor={primaryButton.textColor}
+            className={cn(
+              primaryButton.className,
+              "px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+            )}
+            asChild
+          >
+            <Link href="/docs-hub">
+              <span className="flex items-center gap-2 text-anbu-ink">
                 <ArrowUpRight className="h-4 w-4" />
                 Open Docs Hub
               </span>
-            </ShimmerButton>
-          </Link>
+            </Link>
+          </ShimmerButton>
         </Container>
       </section>
     </main>

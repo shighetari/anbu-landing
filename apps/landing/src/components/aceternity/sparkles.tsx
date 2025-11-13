@@ -2,7 +2,8 @@
 
 import React, { useId, useMemo } from "react"
 import { motion, useInView, useReducedMotion } from "framer-motion"
-import { cn } from "@/lib/cn"
+import { cn } from "@/lib/utils"
+import { deterministicRandom, hashStringToNumber } from "@/lib/random"
 
 interface SparklesProps {
   id?: string
@@ -29,6 +30,7 @@ export const SparklesCore = (props: SparklesProps) => {
   const prefersReducedMotion = useReducedMotion()
   const containerRef = React.useRef<HTMLDivElement | null>(null)
   const isInView = useInView(containerRef, { margin: '-10% 0px' })
+  const baseSeed = useMemo(() => hashStringToNumber(internalId), [internalId])
 
   const effectiveDensity = useMemo(() => {
     if (prefersReducedMotion) {
@@ -41,19 +43,19 @@ export const SparklesCore = (props: SparklesProps) => {
     if (!effectiveDensity) {
       return []
     }
-    const generated = []
-    for (let i = 0; i < effectiveDensity; i++) {
-      generated.push({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * (maxSize - minSize) + minSize,
-        delay: Math.random() * 5,
-        duration: Math.random() * 14 + 8,
-      })
-    }
-    return generated
-  }, [effectiveDensity, minSize, maxSize])
+
+    const valueForIndex = (index: number, offset: number) =>
+      deterministicRandom(baseSeed + index * 131 + offset)
+
+    return Array.from({ length: effectiveDensity }, (_, index) => ({
+      id: index,
+      x: valueForIndex(index, 1) * 100,
+      y: valueForIndex(index, 2) * 100,
+      size: valueForIndex(index, 3) * (maxSize - minSize) + minSize,
+      delay: valueForIndex(index, 4) * 5,
+      duration: valueForIndex(index, 5) * 6 + 8,
+    }))
+  }, [effectiveDensity, maxSize, minSize, baseSeed])
 
   if (!particles.length) {
     return null

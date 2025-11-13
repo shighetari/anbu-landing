@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Check, Sparkles, Zap, Crown } from 'lucide-react'
+import { Check, Sparkles, Zap, Crown } from '@/components/ui/lucide-safe'
 
 import { WobbleCard } from '@/components/aceternity/wobble-card'
 import { ShinyText } from '@/components/magicui/shiny-text'
@@ -142,7 +142,7 @@ export default function SocialPricingCards() {
               <>
                 <BorderBeam size={250} duration={12} delay={9} />
                 <div className="absolute -top-6 left-1/2 z-10 -translate-x-1/2">
-                  <ShinyText className="rounded-full bg-gradient-to-r from-[#FFD700] via-[#FFC94A] to-[#FFB347] px-4 py-1.5 text-xs font-semibold text-black shadow-[0_8px_24px_rgba(255,215,0,0.35)]">
+                  <ShinyText className="rounded-full bg-gradient-to-r from-[#FFD700] via-[#FFC94A] to-[#FFB347] px-4 py-1.5 text-xs font-semibold text-anbu-ink shadow-[0_8px_24px_rgba(255,215,0,0.35)]">
                     MOST POPULAR
                   </ShinyText>
                 </div>
@@ -171,7 +171,7 @@ export default function SocialPricingCards() {
 
                   <span
                     className={cn(
-                      'flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-black/85 shadow-[0_18px_55px_rgba(0,0,0,0.35)] ring-1 ring-white/15',
+                      'flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br text-anbu-ink/90 shadow-[0_18px_55px_rgba(0,0,0,0.35)] ring-1 ring-white/15',
                       tier.accent.text
                     )}
                   >
@@ -229,7 +229,7 @@ export default function SocialPricingCards() {
                   >
                     <span
                       className={cn(
-                        'flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br text-black/85 shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition-transform duration-300 group-hover:scale-110',
+                        'flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br text-anbu-ink/90 shadow-[0_12px_30px_rgba(0,0,0,0.35)] transition-transform duration-300 group-hover:scale-110',
                         tier.accent.bullet
                       )}
                     >
@@ -248,7 +248,7 @@ export default function SocialPricingCards() {
                 className={cn(
                   'w-full rounded-full px-6 py-3.5 min-h-[44px] text-sm font-semibold uppercase tracking-[0.24em] text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black shadow-[0_12px_35px_rgba(0,0,0,0.45)]',
                   tier.highlighted
-                    ? 'bg-gradient-to-r from-[#FFD16A] via-[#FFB347] to-[#FF8C37] text-black shadow-[0_18px_60px_rgba(255,173,51,0.45)] hover:shadow-[0_20px_65px_rgba(255,173,51,0.6)]'
+                    ? 'bg-gradient-to-r from-[#FFD16A] via-[#FFB347] to-[#FF8C37] text-anbu-ink shadow-[0_18px_60px_rgba(255,173,51,0.45)] hover:shadow-[0_20px_65px_rgba(255,173,51,0.6)]'
                     : 'bg-gradient-to-r from-white/15 via-white/10 to-white/5 hover:from-white/20 hover:via-white/14 hover:to-white/8'
                 )}
                 style={{ touchAction: 'manipulation' }}

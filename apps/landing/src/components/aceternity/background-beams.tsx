@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react"
 import { motion } from "framer-motion"
-import { cn } from "@/lib/cn"
+import { cn } from "@/lib/utils"
 
 export const BackgroundBeams = React.memo(({ className }: { className?: string }) => {
   // Reduced number of beams for better performance

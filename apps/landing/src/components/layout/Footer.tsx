@@ -2,16 +2,17 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Twitter, Linkedin, Mail, Heart, ArrowUpRight, Zap } from 'lucide-react'
+import { Github, Twitter, Linkedin, Mail, Heart, ArrowUpRight, Zap } from '@/components/ui/lucide-safe'
 import Container from '@/components/ui/Container'
 import { Magnet } from '@/components/reactbits/magnet'
 import { SparklesCore } from '@/components/aceternity/sparkles'
+import { siteConfig } from '@/lib/site-config'
 
 const socialLinks = [
-  { name: 'GitHub', icon: Github, href: 'https://github.com/shighetari' },
-  { name: 'Twitter', icon: Twitter, href: '#' },
-  { name: 'LinkedIn', icon: Linkedin, href: '#' },
-  { name: 'Email', icon: Mail, href: 'mailto:contact@anbu.ai' },
+  { name: 'GitHub', icon: Github, href: siteConfig.github },
+  { name: 'Twitter', icon: Twitter, href: siteConfig.twitter },
+  { name: 'LinkedIn', icon: Linkedin, href: siteConfig.linkedin },
+  { name: 'Email', icon: Mail, href: `mailto:${siteConfig.contactEmail}` },
 ]
 
 const quickLinks = [
@@ -76,6 +77,7 @@ function SocialIcon({ social }: { social: typeof socialLinks[0] }) {
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   const [emailHovered, setEmailHovered] = useState(false)
+  const [showLegalModal, setShowLegalModal] = useState(false)
 
   return (
     <footer className="relative border-t border-anbu-gold/10 bg-black">
@@ -168,7 +170,7 @@ export default function Footer() {
                 </p>
 
                 <motion.a
-                  href="mailto:contact@anbu.ai"
+                  href={`mailto:${siteConfig.contactEmail}`}
                   className="group inline-flex items-center gap-2 rounded-full border border-anbu-gold/40 bg-black/60 px-6 py-3 text-sm font-medium text-white/85 backdrop-blur transition-all duration-300 hover:border-anbu-gold/70 hover:text-anbu-gold"
                   onMouseEnter={() => setEmailHovered(true)}
                   onMouseLeave={() => setEmailHovered(false)}
@@ -231,13 +233,13 @@ export default function Footer() {
 
             <div className="flex items-center gap-5">
               {['Privacy', 'Terms', 'Cookies'].map((link) => (
-                <a
+                <button
                   key={link}
-                  href="#"
-                  className="transition-colors duration-300 hover:text-anbu-gold"
+                  onClick={() => setShowLegalModal(true)}
+                  className="cursor-pointer transition-colors duration-300 hover:text-anbu-gold"
                 >
                   {link}
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -250,6 +252,50 @@ export default function Footer() {
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         />
       </Container>
+
+      {/* Coming Soon Modal */}
+      <AnimatePresence>
+        {showLegalModal && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowLegalModal(false)}
+            />
+            <motion.div
+              className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-anbu-gold/30 bg-black/95 px-6 py-8 backdrop-blur-xl"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="space-y-4 text-center">
+                <h3 className="font-display text-xl font-semibold text-white">Coming Soon</h3>
+                <p className="text-sm text-white/70">
+                  Our legal documentation is being finalized. We'll have these available shortly.
+                </p>
+                <p className="text-xs text-white/50">
+                  Questions? Reach out to{' '}
+                  <a href={`mailto:${siteConfig.contactEmail}`} className="text-anbu-gold hover:text-anbu-gold-accent transition-colors">
+                    the team
+                  </a>
+                </p>
+              </div>
+
+              <motion.button
+                onClick={() => setShowLegalModal(false)}
+                className="mt-6 w-full rounded-lg border border-anbu-gold/40 bg-black/40 py-2 text-sm font-medium text-white/80 transition-colors duration-300 hover:border-anbu-gold/70 hover:text-anbu-gold"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Understood
+              </motion.button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </footer>
   )
 }

@@ -22,6 +22,7 @@ export const buttonVariants = {
     shimmerDuration: '2s',
     background: 'linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)',
     borderRadius: '0.75rem',
+    textColor: 'var(--anbu-ink, #0B0500)',
     className: 'shadow-2xl hover:scale-105 transition-transform font-bold uppercase tracking-[0.15em]',
   } as Partial<ShimmerButtonProps>,
 
@@ -46,6 +47,7 @@ export const buttonVariants = {
     shimmerDuration: '1.5s',
     background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
     borderRadius: '1rem',
+    textColor: 'var(--anbu-ink, #0B0500)',
     className: 'shadow-[0_20px_50px_rgba(255,215,0,0.3)] hover:shadow-[0_30px_60px_rgba(255,215,0,0.5)] hover:scale-105 transition-all font-bold',
   } as Partial<ShimmerButtonProps>,
 }

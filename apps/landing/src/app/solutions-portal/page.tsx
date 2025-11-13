@@ -1,12 +1,15 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import type React from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowUpRight, BookOpen, Bot, Sparkles } from 'lucide-react'
+import Image from 'next/image'
+import { motion, useInView, useScroll, useTransform } from 'framer-motion'
+import { ArrowUpRight, BookOpen, Bot, Sparkles } from '@/components/ui/lucide-safe'
 
 import { SparklesCore } from '@/components/aceternity/sparkles'
+import { HeroVideoDialog } from '@/components/ui/hero-video-dialog'
+import { ShimmerButton } from '@/components/ui/shimmer-button'
 import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect'
 import Container from '@/components/ui/Container'
 import { BlurFadeText } from '@/components/magicui/blur-fade-text'
@@ -17,8 +20,6 @@ import SparklesText from '@/components/magicui/sparkles-text'
 import TypingAnimation from '@/components/magicui/typing-animation'
 import { cn } from '@/lib/utils'
 import { brandButton } from '@/lib/brand'
-
-const VIDEO_STOP_TIME = 7.2
 
 type PortalDestination = {
   id: string
@@ -269,9 +270,6 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
 }
 
 export default function SolutionsPortalLanding() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [mounted, setMounted] = useState(false)
-  const [videoFinished, setVideoFinished] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -282,125 +280,66 @@ export default function SolutionsPortalLanding() {
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -50])
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3])
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  useEffect(() => {
-    if (!mounted) return
-    const video = videoRef.current
-    if (!video) return
-
-    setVideoFinished(false)
-
-    let removeUserInteractionListeners: (() => void) | null = null
-
-    const attemptPlay = () => {
-      const promise = video.play()
-      if (!promise || typeof promise.then !== 'function') {
-        return
-      }
-      promise.catch(() => {
-        const retry = () => {
-          video.play().catch(() => null)
-          removeUserInteractionListeners?.()
-        }
-        const handlePointer = () => retry()
-        const handleKey = () => retry()
-        removeUserInteractionListeners = () => {
-          window.removeEventListener('pointerdown', handlePointer)
-          window.removeEventListener('keydown', handleKey)
-          removeUserInteractionListeners = null
-        }
-        window.addEventListener('pointerdown', handlePointer, { once: true })
-        window.addEventListener('keydown', handleKey, { once: true })
-      })
-    }
-
-    const primePlayback = () => {
-      setVideoFinished(false)
-      video.currentTime = 0
-      attemptPlay()
-    }
-
-    if (video.readyState >= 2) {
-      primePlayback()
-    } else {
-      const onLoaded = () => {
-        primePlayback()
-      }
-      video.addEventListener('loadeddata', onLoaded, { once: true })
-      removeUserInteractionListeners = () => {
-        video.removeEventListener('loadeddata', onLoaded)
-      }
-    }
-
-    return () => {
-      removeUserInteractionListeners?.()
-    }
-  }, [mounted])
-
-  const handleTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
-    const video = event.currentTarget
-    if (video.currentTime >= VIDEO_STOP_TIME) {
-      video.pause()
-      video.currentTime = VIDEO_STOP_TIME
-      setVideoFinished(true)
-    }
-  }
-
   return (
     <main id="main-content" className="min-h-screen bg-black text-anbu-marble">
       <section className="relative flex min-h-[70vh] sm:min-h-[75vh] lg:min-h-[80vh] items-center justify-center overflow-hidden">
-        {mounted && !videoFinished ? (
-          <video
-            ref={videoRef}
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
-            onTimeUpdate={handleTimeUpdate}
-            poster="/anbu_hero.png"
-          >
-            <source src="/Create_a_marketing_202509100024_evwzi.mp4" type="video/mp4" />
-          </video>
-        ) : (
-          <img
+        <div className="absolute inset-0">
+          <Image
             src="/anbu_hero.png"
             alt="ANBU Solutions Portal"
-            className="absolute inset-0 h-full w-full object-cover"
-            loading="lazy"
+            fill
+            sizes="100vw"
+            className="object-cover"
+            priority
           />
-        )}
-
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/45 to-black/75" />
+        </div>
+        <SparklesCore
+          id="solutions-portal-hero"
+          className="absolute inset-0"
+          particleDensity={10}
+          minSize={0.2}
+          maxSize={0.6}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/65 to-black/80" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.18)_0%,_transparent_55%)]" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
-          className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center"
-        >
-          <span
-            className="inline-flex items-center justify-center gap-3 rounded-full border border-white/20 bg-black/70 px-6 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.45em] text-white/80 text-center backdrop-blur"
-          >
-            <motion.span
-              aria-hidden
-              animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.08, 1] }}
-              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="h-1 w-8 rounded-full bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/60 to-anbu-gold/20"
+        <Container className="relative z-10 flex flex-col items-center gap-6 text-center py-16">
+          <AnimatedGradientText className="text-xs uppercase tracking-[0.35em] text-white/60">
+            Solutions Portal
+          </AnimatedGradientText>
+          <div className="space-y-4 max-w-3xl">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+              Three enterprise workspaces. One command surface.
+            </h1>
+            <p className="text-base sm:text-lg text-white/70">
+              Switch between Docs Intelligence, Marketing Studio, and Command Console without losing momentum. Each
+              workspace is tuned for premium delivery and storytelling.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <ShimmerButton
+              shimmerColor="#FFD700"
+              shimmerDuration="2s"
+              background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+              borderRadius="0.75rem"
+              textColor="var(--anbu-ink, #0B0500)"
+              className="px-7 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-anbu-ink"
+              asChild
+            >
+              <Link href="/contact?topic=solutions-portal">
+                <span className="flex items-center gap-2">
+                  Schedule walkthrough
+                </span>
+              </Link>
+            </ShimmerButton>
+            <HeroVideoDialog
+              videoSrc="/Create_a_marketing_202509100024_evwzi.mp4"
+              thumbnailSrc="/anbu_hero.png"
+              thumbnailAlt="Watch the ANBU Solutions reel"
+              className="w-full max-w-md"
             />
-            ANBU SOLUTIONS PORTAL
-            <motion.span
-              aria-hidden
-              animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.08, 1] }}
-              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-              className="h-1 w-8 rounded-full bg-gradient-to-r from-anbu-gold/20 via-anbu-gold/60 to-anbu-gold/20"
-            />
-          </span>
-        </motion.div>
+          </div>
+        </Container>
       </section>
 
       <section ref={sectionRef} id="portals" className="relative overflow-hidden py-6 sm:py-8 md:py-10 lg:py-12">

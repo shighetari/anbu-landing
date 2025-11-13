@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   Clock,
   ArrowRight
-} from 'lucide-react'
+} from '@/components/ui/lucide-safe'
 import Link from 'next/link'
 
 import { CardSpotlight } from '@/components/aceternity/card-spotlight'
@@ -282,7 +282,7 @@ function ProcessCard({ stage, index }: { stage: ProcessStage; index: number }) {
           `bg-gradient-to-br ${stage.gradient}`
         )}
       >
-        <Icon className="h-4 w-4 text-black" />
+        <Icon className="h-4 w-4 text-anbu-ink" />
       </motion.div>
 
       {/* Card */}
@@ -315,7 +315,7 @@ function ProcessCard({ stage, index }: { stage: ProcessStage; index: number }) {
             <motion.div
               whileHover={{ scale: 1.05 }}
               className={cn(
-                'sm:hidden flex items-center justify-center w-14 h-14 rounded-xl text-black font-bold shadow-lg relative overflow-hidden',
+                'sm:hidden flex items-center justify-center w-14 h-14 rounded-xl text-anbu-ink font-bold shadow-lg relative overflow-hidden',
                 `bg-gradient-to-br ${stage.gradient}`
               )}
             >

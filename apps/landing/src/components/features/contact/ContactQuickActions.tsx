@@ -11,13 +11,14 @@ import {
   Mail,
   MapPin,
   Sparkles,
-} from "lucide-react"
+} from "@/components/ui/lucide-safe"
 
 import { WobbleCard } from "@/components/aceternity/wobble-card"
 import { ShimmerButton } from "@/components/ui/shimmer-button"
 import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
 import { buttonSizes } from "@/lib/button-variants"
 import { cn } from "@/lib/utils"
+import { siteConfig } from "@/lib/site-config"
 
 type ActionCard = {
   id: string
@@ -40,8 +41,8 @@ type ActionCard = {
   body?: React.ReactNode
 }
 
-const defaultEmail = "contact@anbu.ai"
-const calendlyUrl = "https://cal.com/anbu"
+const defaultEmail = siteConfig.contactEmail
+const calendlyUrl = siteConfig.calLink
 const hqLocation = "Englewood Cliffs, NJ"
 const responsiveSm = buttonSizes.responsive.sm
 const baseButtonClass = "text-xs font-semibold uppercase tracking-[0.24em] sm:text-[0.72rem]"
@@ -112,7 +113,7 @@ export function ContactQuickActions() {
       badgeGradient: { from: "#34F5C5", to: "#7DFFB1" },
       buttonBackground: "linear-gradient(135deg, #34F5C5 0%, #7DFFB1 100%)",
       buttonShimmer: "#E8FFF6",
-      buttonTextClass: "text-black",
+      buttonTextClass: "text-anbu-ink",
       body: (
         <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80">
           <Mail className="h-4 w-4 text-anbu-gold" />
@@ -129,7 +130,7 @@ export function ContactQuickActions() {
             className={cn(
               baseButtonClass,
               responsiveSm,
-              "text-black shadow-[0_18px_45px_rgba(52,245,197,0.28)] hover:shadow-[0_24px_60px_rgba(52,245,197,0.35)] transition-shadow duration-300",
+            "text-anbu-ink shadow-[0_18px_45px_rgba(52,245,197,0.28)] hover:shadow-[0_24px_60px_rgba(52,245,197,0.35)] transition-shadow duration-300",
             )}
             onClick={handleCopy}
           >
@@ -175,26 +176,27 @@ export function ContactQuickActions() {
       badgeGradient: { from: "#60A5FF", to: "#38D9FF" },
       buttonBackground: "linear-gradient(135deg, #60A5FF 0%, #38D9FF 100%)",
       buttonShimmer: "#E4F2FF",
-      buttonTextClass: "text-black",
+      buttonTextClass: "text-anbu-ink",
       footer: (
-        <Link href={calendlyUrl} target="_blank" rel="noopener noreferrer">
-          <ShimmerButton
-            shimmerColor="#E4F2FF"
-            shimmerDuration="2.2s"
-            background="linear-gradient(135deg, #60A5FF 0%, #38D9FF 100%)"
-            borderRadius="999px"
-            className={cn(
-              baseButtonClass,
-              responsiveSm,
-              "text-black shadow-[0_18px_45px_rgba(96,165,255,0.28)] hover:shadow-[0_24px_60px_rgba(96,165,255,0.35)] transition-shadow duration-300",
-            )}
-          >
+        <ShimmerButton
+          shimmerColor="#E4F2FF"
+          shimmerDuration="2.2s"
+          background="linear-gradient(135deg, #60A5FF 0%, #38D9FF 100%)"
+          borderRadius="999px"
+          className={cn(
+            baseButtonClass,
+            responsiveSm,
+            "text-anbu-ink shadow-[0_18px_45px_rgba(96,165,255,0.28)] hover:shadow-[0_24px_60px_rgba(96,165,255,0.35)] transition-shadow duration-300",
+          )}
+          asChild
+        >
+          <Link href={calendlyUrl} target="_blank" rel="noopener noreferrer">
             <span className="flex items-center gap-2">
               <CalendarDays className="h-3.5 w-3.5" />
               Book Discovery
             </span>
-          </ShimmerButton>
-        </Link>
+          </Link>
+        </ShimmerButton>
       ),
       body: (
         <div className="flex flex-col gap-2 text-xs text-white/60">
@@ -237,11 +239,13 @@ export function ContactQuickActions() {
       ),
       footer: (
         <Link
-          href="/docs-hub?focus=partner-workshops"
+          href="https://maps.google.com/?q=Englewood+Cliffs+NJ"
+          target="_blank"
+          rel="noopener noreferrer"
           className="group inline-flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-anbu-gold transition-colors duration-300 hover:text-[#FFE4FA]"
         >
           <AnimatedGradientText colorFrom="#C084FC" colorTo="#FB7185" className="text-[0.72rem] uppercase tracking-[0.24em]">
-            Review workshop logistics
+            View on Maps
           </AnimatedGradientText>
           <Sparkles className="h-3 w-3 text-anbu-gold transition-transform duration-300 group-hover:translate-x-0.5" />
         </Link>

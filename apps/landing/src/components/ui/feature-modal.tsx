@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { X, Check } from "lucide-react"
+import { X, Check } from "@/components/ui/lucide-safe"
 import { useEffect, useId, useRef } from "react"
 
 import { ShinyText } from "@/components/magicui/shiny-text"
@@ -197,13 +197,14 @@ export function FeatureModal({ isOpen, onClose, feature }: FeatureModalProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <ShinyText
-                  className="text-base sm:text-lg md:text-xl font-semibold"
-                  style={{ color: feature.accentColor }}
-                  speed={5}
-                >
-                  {feature.tagline}
-                </ShinyText>
+                <span style={{ color: feature.accentColor }}>
+                  <ShinyText
+                    className="text-base sm:text-lg md:text-xl font-semibold"
+                    speed={5}
+                  >
+                    {feature.tagline}
+                  </ShinyText>
+                </span>
               </motion.div>
 
               {/* Description */}
@@ -309,7 +310,7 @@ export function FeatureModal({ isOpen, onClose, feature }: FeatureModalProps) {
                   className={cn(
                     "w-full py-4 rounded-full font-semibold",
                     "bg-gradient-to-r from-anbu-gold via-anbu-gold-accent to-anbu-gold",
-                    "text-black text-sm sm:text-base",
+                    "text-anbu-ink text-sm sm:text-base",
                     "shadow-lg hover:shadow-2xl",
                     "transition-all duration-300",
                     "hover:scale-[1.02]"

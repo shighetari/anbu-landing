@@ -7,9 +7,10 @@ import SkipNav from '@/components/layout/SkipNav'
 import { ScrollProgress } from '@/components/ui/scroll-progress'
 import { GlobalDock } from '@/components/layout/GlobalDock'
 import { ClickSparkOverlay } from '@/components/reactbits/click-spark-overlay'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { ArrowRight, BookOpen, Compass, Home, MessagesSquare } from 'lucide-react'
+import { ArrowRight, BookOpen, Compass, Home, MessagesSquare, Sparkles } from '@/components/ui/lucide-safe'
 import { ScrollReset } from '@/components/layout/ScrollReset'
+import { HashScrollManager } from '@/components/layout/HashScrollManager'
+import { siteConfig } from '@/lib/site-config'
 
 // I'm loading the Nerd Font locally for optimal performance
 const jetbrainsMono = localFont({
@@ -29,6 +30,8 @@ const jetbrainsMono = localFont({
   display: 'swap',
 })
 
+const ogImageUrl = `${siteConfig.website}/og-image.png`
+
 export const metadata: Metadata = {
   title: "ANBU Solutions - Innovative Digital Solutions",
   description: "ANBU Solutions delivers cutting-edge digital transformation, custom software development, and enterprise solutions for the modern era.",
@@ -37,12 +40,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ANBU Solutions - Innovative Digital Solutions",
     description: "Elevating businesses through cutting-edge technology",
-    url: "https://anbu.ai",
+    url: siteConfig.website,
     siteName: "ANBU Solutions",
     type: "website",
     images: [
       {
-        url: "https://anbu.ai/og-image.png",
+        url: ogImageUrl,
         width: 1200,
         height: 630,
         alt: "ANBU Solutions - Innovative Digital Solutions",
@@ -53,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ANBU Solutions - Innovative Digital Solutions",
     description: "Elevating businesses through cutting-edge technology",
-    images: ["https://anbu.ai/og-image.png"],
+    images: [ogImageUrl],
   },
   robots: {
     index: true,
@@ -86,6 +89,7 @@ export default function RootLayout({
         className={`${jetbrainsMono.variable} font-sans antialiased bg-black text-anbu-marble`}
       >
         <ScrollReset />
+        <HashScrollManager />
         <SkipNav />
         <ScrollProgress />
         <ClickSparkOverlay />
@@ -110,11 +114,7 @@ export default function RootLayout({
             },
             {
               title: "Marketing",
-              icon: (
-                <AnimatedGradientText className="text-xs uppercase" colorFrom="#FFD700" colorTo="#FF8A3C">
-                  Studio
-                </AnimatedGradientText>
-              ),
+              icon: <Sparkles className="h-full w-full" />,
               href: "/solutions/marketing-studio",
             },
             {

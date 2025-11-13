@@ -15,7 +15,7 @@ import {
   BarChart2,
   BookMarked,
   Sparkles,
-} from "lucide-react"
+} from "@/components/ui/lucide-safe"
 
 export const metadata: Metadata = {
   title: "Resource Library — ANBU Solutions",
@@ -78,40 +78,43 @@ export default function ResourcesPage() {
               lockstep with production, crafted for clarity, and ready to bookmark.
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <Link href="/docs-hub">
-                <ShimmerButton
-                  shimmerColor={primaryButton.shimmerColor}
-                  shimmerDuration={primaryButton.shimmerDuration}
-                  background={primaryButton.background}
-                  borderRadius={primaryButton.borderRadius}
-                  className={cn(
-                    primaryButton.className,
-                    "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
-                  )}
-                >
+              <ShimmerButton
+                shimmerColor={primaryButton.shimmerColor}
+                shimmerDuration={primaryButton.shimmerDuration}
+                background={primaryButton.background}
+                borderRadius={primaryButton.borderRadius}
+                textColor={primaryButton.textColor}
+                className={cn(
+                  primaryButton.className,
+                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                )}
+                asChild
+              >
+                <Link href="/docs-hub">
                   <span className="flex items-center gap-2">
                     <ArrowUpRight className="h-4 w-4" />
                     Launch docs hub
                   </span>
-                </ShimmerButton>
-              </Link>
-              <Link href="#resource-atlas">
-                <ShimmerButton
-                  shimmerColor={secondaryButton.shimmerColor}
-                  shimmerDuration={secondaryButton.shimmerDuration}
-                  background={secondaryButton.background}
-                  borderRadius={secondaryButton.borderRadius}
-                  className={cn(
-                    secondaryButton.className,
-                    "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
-                  )}
-                >
+                </Link>
+              </ShimmerButton>
+              <ShimmerButton
+                shimmerColor={secondaryButton.shimmerColor}
+                shimmerDuration={secondaryButton.shimmerDuration}
+                background={secondaryButton.background}
+                borderRadius={secondaryButton.borderRadius}
+                className={cn(
+                  secondaryButton.className,
+                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                )}
+                asChild
+              >
+                <Link href="#resource-atlas">
                   <span className="flex items-center gap-2">
                     <Sparkles className="h-4 w-4" />
                     Browse sampler
                   </span>
-                </ShimmerButton>
-              </Link>
+                </Link>
+              </ShimmerButton>
             </div>
           </div>
 
@@ -181,23 +184,24 @@ export default function ResourcesPage() {
                     You can self-serve or have updates dropped into your preferred channel.
                   </p>
                   <div className="flex flex-wrap items-center gap-3">
-                    <Link href="/docs-hub?focus=changelog">
-                      <ShimmerButton
-                        shimmerColor={primaryButton.shimmerColor}
-                        shimmerDuration={primaryButton.shimmerDuration}
-                        background={primaryButton.background}
-                        borderRadius={primaryButton.borderRadius}
-                        className={cn(
-                          primaryButton.className,
-                          "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-9 md:py-4 md:text-sm",
-                        )}
-                      >
+                    <ShimmerButton
+                      shimmerColor={primaryButton.shimmerColor}
+                      shimmerDuration={primaryButton.shimmerDuration}
+                      background={primaryButton.background}
+                      borderRadius={primaryButton.borderRadius}
+                      className={cn(
+                        primaryButton.className,
+                        "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-9 md:py-4 md:text-sm",
+                      )}
+                      asChild
+                    >
+                      <Link href="/docs-hub?focus=changelog">
                         <span className="flex items-center gap-2">
                           <ArrowUpRight className="h-4 w-4" />
                           Open changelog
                         </span>
-                      </ShimmerButton>
-                    </Link>
+                      </Link>
+                    </ShimmerButton>
                     <Link
                       href="/contact?topic=docs-hub"
                       className="text-xs uppercase tracking-[0.3em] text-white/45 transition-colors duration-300 hover:text-white/80 md:text-sm"

@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/lib/cn'
+import { cn } from '@/lib/utils'
 import { CSSProperties } from 'react'
 
 interface ShinyTextProps {

@@ -1,9 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import type { ReactNode } from 'react'
+import Image from 'next/image'
+import type { ReactNode, CSSProperties } from 'react'
 import { motion } from 'framer-motion'
-import { Youtube, Instagram, Video, TrendingUp, BarChart3, Users, Play, Eye, ArrowUpRight } from 'lucide-react'
+import { Youtube, Instagram, Video, TrendingUp, BarChart3, Users, Play, Eye, ArrowUpRight } from '@/components/ui/lucide-safe'
 
 import Container from '@/components/ui/Container'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
@@ -361,10 +362,12 @@ export default function SocialHubPage() {
                         className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-5 sm:px-5 sm:py-6 text-left shadow-[0_18px_45px_rgba(0,0,0,0.45)] backdrop-blur"
                       >
                         <span
-                          className="pointer-events-none absolute inset-0 opacity-70"
+                          suppressHydrationWarning
+                          className="pointer-events-none absolute inset-0 opacity-70 [background:linear-gradient(135deg,var(--highlight-from),var(--highlight-to))]"
                           style={{
-                            background: `linear-gradient(135deg, ${highlight.accentFrom}1a, ${highlight.accentTo}24)`,
-                          }}
+                            '--highlight-from': `${highlight.accentFrom}1a`,
+                            '--highlight-to': `${highlight.accentTo}24`,
+                          } as CSSProperties}
                         />
                         <div className="relative flex flex-col gap-2">
                           <span className="flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-white/70">
@@ -564,13 +567,16 @@ export default function SocialHubPage() {
                       </CardItem>
                     </div>
                     <CardItem translateZ="50" className="w-full overflow-hidden rounded-2xl">
-                      <img
-                        src={video.thumbnail}
-                        height="1000"
-                        width="1000"
-                        className="h-60 w-full object-cover transition duration-500 group-hover/card:scale-[1.03]"
-                        alt={video.title}
-                      />
+                      <div className="relative h-60 w-full">
+                        <Image
+                          src={video.thumbnail}
+                          alt={video.title}
+                          fill
+                          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 320px"
+                          className="object-cover transition duration-500 group-hover/card:scale-[1.03]"
+                          suppressHydrationWarning
+                        />
+                      </div>
                     </CardItem>
                     <div className="flex flex-col items-center gap-4">
                       <CardItem
@@ -745,13 +751,13 @@ export default function SocialHubPage() {
                     className="text-center text-2xl font-bold capitalize"
                     shineColor={["#FFD700", "#FF9D2E", "#FFED4E"]}
                   >
-                    <a
-                      href="mailto:contact@anbu.ai?subject=Marketing Studio Production Inquiry"
+                    <Link
+                      href="/contact?intent=marketing-studio"
                       className="block px-12 py-5 text-lg font-bold uppercase tracking-[0.18em] text-anbu-gold transition-colors hover:text-white min-h-[44px]"
                       style={{ touchAction: 'manipulation' }}
                     >
                       Start Your Project
-                    </a>
+                    </Link>
                   </ShineBorder>
                 </div>
               </Magnet>

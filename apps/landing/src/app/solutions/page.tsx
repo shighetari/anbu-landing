@@ -9,7 +9,7 @@ import {
   BookOpen,
   Cpu,
   ArrowUpRight
-} from 'lucide-react'
+} from '@/components/ui/lucide-safe'
 
 import Container from '@/components/ui/Container'
 import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
@@ -201,7 +201,7 @@ export default function SolutionsPage() {
                     </div>
 
                     <div className="relative mt-6 flex items-center gap-3">
-                      <span className={cn('flex h-12 w-12 items-center justify-center rounded-2xl text-black shadow-lg', `bg-gradient-to-br ${suite.gradient}`)}>
+                      <span className={cn('flex h-12 w-12 items-center justify-center rounded-2xl text-anbu-ink shadow-lg', `bg-gradient-to-br ${suite.gradient}`)}>
                         <Icon className="h-6 w-6" />
                       </span>
                       <h3 className="text-xl font-semibold text-white">

@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Search, Bot, Zap, Database, Code, BookOpen } from 'lucide-react'
+import { Search, Bot, Zap, Database, Code, BookOpen } from '@/components/ui/lucide-safe'
+import { siteConfig } from '@/lib/site-config'
 
 import Container from '@/components/ui/Container'
 import { TypewriterEffectSmooth } from '@/components/aceternity/typewriter-effect'
@@ -154,26 +155,33 @@ export default function DocsHubLanding() {
                 transition={{ delay: 0.8 }}
                 className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6 sm:pt-8"
               >
-                <Link href="/contact?topic=docs-hub">
-                  <ShimmerButton
-                    className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-black"
-                    background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
-                    borderRadius="0.75rem"
-                  >
-                    Get Early Access
-                  </ShimmerButton>
-                </Link>
+                <ShimmerButton
+                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-ink"
+                  background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+                  borderRadius="0.75rem"
+                  textColor="var(--anbu-ink, #0B0500)"
+                  asChild
+                >
+                  <Link href="/contact?topic=docs-hub">
+                    <span className="flex items-center gap-2 text-anbu-ink">
+                      Get Early Access
+                    </span>
+                  </Link>
+                </ShimmerButton>
 
-                <Link href="/">
-                  <ShimmerButton
-                    className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-gold"
-                    background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
-                    borderRadius="0.75rem"
-                    shimmerColor="#FFD700"
-                  >
-                    Return to Main Site
-                  </ShimmerButton>
-                </Link>
+                <ShimmerButton
+                  className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-gold"
+                  background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
+                  borderRadius="0.75rem"
+                  shimmerColor="#FFD700"
+                  asChild
+                >
+                  <Link href="/">
+                    <span className="flex items-center gap-2">
+                      Return to Main Site
+                    </span>
+                  </Link>
+                </ShimmerButton>
               </motion.div>
             </motion.div>
           </div>
@@ -306,13 +314,22 @@ export default function DocsHubLanding() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: 0.2,
+                ease: [0.25, 0.1, 0.25, 1] // Custom easing for smoother animation
+              }}
               viewport={{ once: true }}
-              className="w-full max-w-[95vw] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-2 sm:px-4 flex justify-center"
+              className="w-full max-w-[95vw] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto px-2 sm:px-4 flex justify-center motion-reduce:y-0"
+              style={{
+                willChange: 'transform, opacity',
+                contain: 'layout style paint', // Prevent layout shifts from propagating
+                contentVisibility: 'auto'
+              }}
             >
-              <Terminal className="border border-white/10 bg-black/90 shadow-2xl w-full max-w-full overflow-x-auto">
+              <Terminal className="border border-white/10 bg-black/90 shadow-2xl w-full max-w-full">
                 <TypingAnimation className="font-mono text-xs sm:text-sm text-anbu-gold/80" startOnView>
                   $ ask-anbu "How do I implement authentication with Next.js?"
                 </TypingAnimation>
@@ -362,15 +379,19 @@ export default function DocsHubLanding() {
               </div>
 
               <div className="flex justify-center">
-                <Link href="mailto:contact@anbu.ai?subject=Docs Hub Early Access Request">
-                  <ShimmerButton
-                    className="px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-black"
-                    background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
-                    borderRadius="0.75rem"
-                  >
-                    Request Early Access
-                  </ShimmerButton>
-                </Link>
+                <ShimmerButton
+                  className="px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-anbu-ink"
+                  background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+                  borderRadius="0.75rem"
+                  textColor="var(--anbu-ink, #0B0500)"
+                  asChild
+                >
+                  <Link href={`mailto:${siteConfig.contactEmail}?subject=Docs Hub Early Access Request`}>
+                    <span className="flex items-center gap-2 text-anbu-ink">
+                      Request Early Access
+                    </span>
+                  </Link>
+                </ShimmerButton>
               </div>
             </motion.div>
           </Container>

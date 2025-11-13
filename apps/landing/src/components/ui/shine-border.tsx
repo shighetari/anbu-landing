@@ -23,32 +23,28 @@ export function ShineBorder({
   ...props
 }: ShineBorderProps) {
   const gradient = Array.isArray(shineColor) ? shineColor.join(",") : shineColor
+  const cssVariables = React.useMemo(
+    () =>
+      ({
+        "--shine-border-width": `${borderWidth}px`,
+        "--shine-border-duration": `${duration}s`,
+        "--shine-border-gradient": `radial-gradient(transparent, transparent, ${gradient}, transparent, transparent)`,
+      }) as React.CSSProperties,
+    [borderWidth, duration, gradient],
+  )
 
   return (
     <div
-      className={cn("relative overflow-hidden", className)}
-      style={style}
+      className={cn("shine-border relative overflow-hidden", className)}
+      style={{ ...cssVariables, ...style }}
+      suppressHydrationWarning
       {...props}
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-[inherit]"
-        style={{
-          padding: `${borderWidth}px`,
-        }}
+        className="shine-border__padding pointer-events-none absolute inset-0 rounded-[inherit]"
       >
-        <div
-          className="pointer-events-none absolute inset-0 rounded-[inherit] will-change-[background-position] motion-safe:animate-shine"
-          style={{
-            backgroundImage: `radial-gradient(transparent, transparent, ${gradient}, transparent, transparent)`,
-            backgroundSize: "300% 300%",
-            animationDuration: `${duration}s`,
-            mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-            WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-            WebkitMaskComposite: "xor",
-            maskComposite: "exclude",
-          }}
-        />
+        <div className="shine-border__glow pointer-events-none absolute inset-0 rounded-[inherit]" />
       </div>
 
       <div className="relative z-[1] h-full w-full">

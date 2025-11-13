@@ -18,6 +18,47 @@
   }
 }
 
+/* Fix for framer-motion transforms causing layout shifts */
+[style*="transform"] {
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Hardware acceleration for smooth animations */
+.will-change-transform-gpu {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Smooth meteors animation to prevent jarring effects */
+.animate-meteor-effect {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Reduce motion for performance */
+@media (prefers-reduced-motion: reduce) {
+  .animate-meteor-effect {
+    animation: none !important;
+  }
+}
+
+/* Fix for motion animations causing layout shifts */
+.motion-reduce\:y-0 {
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-reduce\:y-0 {
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
@@ -25,6 +66,7 @@
     --anbu-black: #000000;
     --anbu-gold: #FFD700;
     --anbu-gold-accent: #FFA500;
+    --anbu-ink: #0B0500;
     --anbu-marble: #F8F8F8;
     --anbu-gray: #2C2C2C;
     --background: #000000;
@@ -168,6 +210,33 @@
   /* Radial gradient for better visibility */
   .bg-radial-gradient {
     background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+  }
+
+  .shine-border {
+    --shine-border-width: 1px;
+    --shine-border-duration: 14s;
+    --shine-border-gradient: radial-gradient(transparent, transparent, rgba(255, 215, 0, 0.85), transparent, transparent);
+  }
+
+  .shine-border__padding {
+    padding: var(--shine-border-width);
+  }
+
+  .shine-border__glow {
+    will-change: background-position;
+    background-image: var(--shine-border-gradient);
+    background-size: 300% 300%;
+    animation: shine var(--shine-border-duration) linear infinite;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shine-border__glow {
+      animation: none;
+    }
   }
 
   /* Container with responsive padding */

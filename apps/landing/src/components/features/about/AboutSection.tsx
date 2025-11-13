@@ -1,6 +1,6 @@
 'use client'
 
-import { ShieldCheck, Sparkles, Trophy, Zap } from 'lucide-react'
+import { ShieldCheck, Sparkles, Trophy, Zap } from '@/components/ui/lucide-safe'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 

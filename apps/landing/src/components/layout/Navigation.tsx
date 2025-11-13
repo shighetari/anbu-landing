@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Menu, X, ArrowUpRight, ChevronDown } from 'lucide-react'
+import { Menu, X, ArrowUpRight, ChevronDown } from '@/components/ui/lucide-safe'
 import {
   IconBrandCodesandbox,
   IconBook,
@@ -22,6 +22,7 @@ import type { FocusEvent as ReactFocusEvent, PointerEvent as ReactPointerEvent, 
 import type { ComponentType } from 'react'
 
 import { cn } from '@/lib/utils'
+import { siteConfig } from '@/lib/site-config'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
 import { useFocusTrap } from '@/hooks/useFocusTrap'
@@ -62,6 +63,16 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   {
+    label: 'Command Console',
+    href: '/solutions/command-console',
+    description: 'Orchestrate delivery with our real-time control center.',
+  },
+  {
+    label: 'Marketing Studio',
+    href: '/solutions/marketing-studio',
+    description: 'Watch the brand film and explore campaign packages.',
+  },
+  {
     label: 'Services',
     href: '/solutions',
     description: 'What we build for your business.',
@@ -84,8 +95,8 @@ const NAV_ITEMS: NavItem[] = [
       },
       {
         title: 'Content Production',
-        description: 'Campaign films, social drops, and launch assets.',
-        href: '/solutions/marketing-studio',
+        description: 'Campaign films, social drops, and launch assets with packaged pricing.',
+        href: '/solutions/marketing-studio#pricing',
         icon: IconSparkles,
         gradient: 'from-rose-500 to-violet-500',
         bgGradient: 'from-rose-500/15 via-rose-500/5 to-violet-500/10',
@@ -107,16 +118,6 @@ const NAV_ITEMS: NavItem[] = [
         gradient: 'from-purple-500 to-cyan-500',
       },
     ],
-  },
-  {
-    label: 'Marketing Studio',
-    href: '/solutions/marketing-studio',
-    description: 'Watch the brand film and explore campaign packages.',
-  },
-  {
-    label: 'Command Console',
-    href: '/solutions/command-console',
-    description: 'Orchestrate delivery with our real-time control center.',
   },
   {
     label: 'Docs Hub',
@@ -253,21 +254,22 @@ export default function Navigation() {
           <motion.div
             whileHover={{
               scale: 1.05,
-              boxShadow: '0 0 25px rgba(255,215,0,0.25)',
+              boxShadow: '0 20px 45px rgba(255,195,71,0.35)',
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.96 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
           >
-            <Link
-              href="/contact"
-              className="relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-[#FFD700]/60 px-5 lg:px-7 py-2 lg:py-2.5 text-xs font-semibold uppercase tracking-[0.12em] lg:tracking-[0.15em] text-anbu-gold transition-colors duration-300 hover:border-[#FFC347] hover:text-[#FFC347] ml-1"
+            <a
+              href={siteConfig.calLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative inline-flex items-center gap-1.5 rounded-full border border-transparent bg-gradient-to-r from-[#FFD700] via-[#FFC347] to-[#FF9C2E] px-4 sm:px-5 lg:px-6 py-1.5 lg:py-2 text-[0.65rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-anbu-ink shadow-[0_10px_26px_rgba(255,181,71,0.35)] min-h-[40px] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#FFD700] focus-visible:ring-offset-black touch-manipulation"
             >
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FFD7001a] via-[#FFB3471a] to-transparent opacity-0 transition-opacity duration-300 hover:opacity-100" />
-              <span className="relative z-10 flex items-center gap-2">
-                Get Started
-                <ArrowUpRight className="h-4 w-4" />
+              <span className="flex items-center gap-2">
+                Book a Call
+                <ArrowUpRight className="h-3.5 w-3.5" />
               </span>
-            </Link>
+            </a>
           </motion.div>
         </div>
 
@@ -318,7 +320,7 @@ export default function Navigation() {
                 ref={(node) => {
                   // I'm properly setting both refs to the same element
                   mobileMenuRef.current = node
-                  focusTrapRef.current = node
+                  focusTrapRef(node)
                 }}
                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -485,7 +487,7 @@ export default function Navigation() {
                     <Link
                       href="/contact"
                       onClick={handleNavigate}
-                      className="flex items-center justify-center gap-2 rounded-full bg-anbu-gold px-6 py-3 text-sm font-semibold text-black shadow-[0_12px_30px_rgba(255,215,0,0.35)] transition-all duration-300 hover:bg-anbu-gold-accent hover:scale-[1.05] active:scale-[0.95]"
+                      className="flex items-center justify-center gap-2 rounded-full bg-anbu-gold px-6 py-3 text-sm font-semibold text-anbu-ink shadow-[0_12px_30px_rgba(255,215,0,0.35)] transition-all duration-300 hover:bg-anbu-gold-accent hover:scale-[1.05] active:scale-[0.95]"
                     >
                       Get Started
                       <ArrowUpRight className="h-4 w-4" />
@@ -512,6 +514,7 @@ function DesktopMenuItem({
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const menuRef = useRef<HTMLDivElement | null>(null)
+  const [menuOffset, setMenuOffset] = useState(0)
 
   const isActive = active === item.label
   const hasMega = Boolean(item.mega && item.mega.length > 0)
@@ -591,6 +594,36 @@ function DesktopMenuItem({
     }
   }
 
+  useEffect(() => {
+    if (!isActive) {
+      setMenuOffset(0)
+      return
+    }
+
+    const updatePosition = () => {
+      if (typeof window === 'undefined' || !menuRef.current) {
+        return
+      }
+
+      const rect = menuRef.current.getBoundingClientRect()
+      const viewportWidth = window.innerWidth
+      const safePadding = 16
+      let nextOffset = 0
+
+      if (rect.left < safePadding) {
+        nextOffset = safePadding - rect.left
+      } else if (rect.right > viewportWidth - safePadding) {
+        nextOffset = (viewportWidth - safePadding) - rect.right
+      }
+
+      setMenuOffset(nextOffset)
+    }
+
+    updatePosition()
+    window.addEventListener('resize', updatePosition)
+    return () => window.removeEventListener('resize', updatePosition)
+  }, [isActive])
+
   return (
     <div
       ref={containerRef}
@@ -634,6 +667,7 @@ function DesktopMenuItem({
             exit={{ opacity: 0, scale: 0.95, y: 8 }}
             transition={TRANSITION}
             className="absolute left-1/2 top-[calc(100%+0.5rem)] z-40 w-[min(92vw,clamp(420px,48vw,620px))] -translate-x-1/2"
+            style={{ x: menuOffset }}
             onPointerEnter={openMenu}
             onPointerLeave={handlePointerLeave}
             role="menu"

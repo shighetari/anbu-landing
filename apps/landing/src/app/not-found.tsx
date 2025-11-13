@@ -18,26 +18,29 @@ export default function NotFound() {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Link href="/">
-            <ShimmerButton
-              className="px-8 py-4 text-base font-bold uppercase tracking-wide text-black"
-              background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
-              borderRadius="0.75rem"
-            >
-              Go Home
-            </ShimmerButton>
-          </Link>
+          <ShimmerButton
+            className="px-8 py-4 text-base font-bold uppercase tracking-wide text-anbu-ink"
+            background="linear-gradient(110deg, #FFD700 0%, #FFED4E 45%, #FFD700 100%)"
+            borderRadius="0.75rem"
+            asChild
+            textColor="var(--anbu-ink, #0B0500)"
+          >
+            <Link href="/">
+              <span>Go Home</span>
+            </Link>
+          </ShimmerButton>
 
-          <Link href="/contact">
-            <ShimmerButton
-              className="px-8 py-4 text-base font-bold uppercase tracking-wide text-anbu-gold"
-              background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
-              borderRadius="0.75rem"
-              shimmerColor="#FFD700"
-            >
-              Contact Us
-            </ShimmerButton>
-          </Link>
+          <ShimmerButton
+            className="px-8 py-4 text-base font-bold uppercase tracking-wide text-anbu-gold"
+            background="linear-gradient(110deg, #2C2C2C 0%, #1A1A1A 45%, #2C2C2C 100%)"
+            borderRadius="0.75rem"
+            shimmerColor="#FFD700"
+            asChild
+          >
+            <Link href="/contact">
+              <span>Contact Us</span>
+            </Link>
+          </ShimmerButton>
         </div>
 
         <div className="mt-12">

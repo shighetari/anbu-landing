@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "@/lib/cn"
+import { cn } from "@/lib/utils"
 import React, { useRef, useState, useCallback, useEffect } from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { useScrolling } from "@/hooks/useScrolling"
