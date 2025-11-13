@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import * as React from "react"
+import * as React from 'react';
 
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils';
 
 interface ShineBorderProps extends React.HTMLAttributes<HTMLDivElement> {
-  borderWidth?: number
-  duration?: number
-  shineColor?: string | string[]
+  borderWidth?: number;
+  duration?: number;
+  shineColor?: string | string[];
 }
 
 /**
@@ -16,26 +16,26 @@ interface ShineBorderProps extends React.HTMLAttributes<HTMLDivElement> {
 export function ShineBorder({
   borderWidth = 1,
   duration = 14,
-  shineColor = "#000000",
+  shineColor = '#000000',
   className,
   style,
   children,
   ...props
 }: ShineBorderProps) {
-  const gradient = Array.isArray(shineColor) ? shineColor.join(",") : shineColor
+  const gradient = Array.isArray(shineColor) ? shineColor.join(',') : shineColor;
   const cssVariables = React.useMemo(
     () =>
       ({
-        "--shine-border-width": `${borderWidth}px`,
-        "--shine-border-duration": `${duration}s`,
-        "--shine-border-gradient": `radial-gradient(transparent, transparent, ${gradient}, transparent, transparent)`,
+        '--shine-border-width': `${borderWidth}px`,
+        '--shine-border-duration': `${duration}s`,
+        '--shine-border-gradient': `radial-gradient(transparent, transparent, ${gradient}, transparent, transparent)`,
       }) as React.CSSProperties,
-    [borderWidth, duration, gradient],
-  )
+    [borderWidth, duration, gradient]
+  );
 
   return (
     <div
-      className={cn("shine-border relative overflow-hidden", className)}
+      className={cn('shine-border relative overflow-hidden', className)}
       style={{ ...cssVariables, ...style }}
       suppressHydrationWarning
       {...props}
@@ -47,9 +47,7 @@ export function ShineBorder({
         <div className="shine-border__glow pointer-events-none absolute inset-0 rounded-[inherit]" />
       </div>
 
-      <div className="relative z-[1] h-full w-full">
-        {children}
-      </div>
+      <div className="relative z-[1] h-full w-full">{children}</div>
     </div>
-  )
+  );
 }

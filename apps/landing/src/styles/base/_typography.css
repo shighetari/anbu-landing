@@ -31,7 +31,12 @@ body {
 /* =================================
    HEADING STYLES
    ================================= */
-h1, h2, h3, h4, h5, h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 .heading {
   font-family: 'Montserrat', sans-serif;
   font-weight: var(--font-bold);
@@ -39,35 +44,41 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: var(--tracking-tight);
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-size: var(--text-6xl);
   font-weight: var(--font-extrabold);
   letter-spacing: var(--tracking-tighter);
   line-height: var(--leading-none);
 }
 
-h2, .h2 {
+h2,
+.h2 {
   font-size: var(--text-5xl);
   font-weight: var(--font-bold);
   line-height: var(--leading-tight);
 }
 
-h3, .h3 {
+h3,
+.h3 {
   font-size: var(--text-4xl);
   font-weight: var(--font-bold);
 }
 
-h4, .h4 {
+h4,
+.h4 {
   font-size: var(--text-3xl);
   font-weight: var(--font-semibold);
 }
 
-h5, .h5 {
+h5,
+.h5 {
   font-size: var(--text-2xl);
   font-weight: var(--font-semibold);
 }
 
-h6, .h6 {
+h6,
+.h6 {
   font-size: var(--text-xl);
   font-weight: var(--font-medium);
 }
@@ -103,10 +114,12 @@ h6, .h6 {
 /* =================================
    MONOSPACE STYLES
    ================================= */
-.mono, code, pre {
+.mono,
+code,
+pre {
   font-family: var(--font-jetbrains-mono), monospace;
   font-variant-ligatures: contextual;
-  font-feature-settings: 
+  font-feature-settings:
     'liga' 1,
     'calt' 1,
     'ss01' 1,
@@ -116,7 +129,7 @@ h6, .h6 {
 
 .mono-no-ligatures {
   font-variant-ligatures: none;
-  font-feature-settings: 
+  font-feature-settings:
     'liga' 0,
     'calt' 0;
 }
@@ -133,7 +146,7 @@ h6, .h6 {
 }
 
 .text-glow {
-  text-shadow: 
+  text-shadow:
     0 0 10px rgba(255, 215, 0, 0.5),
     0 0 20px rgba(255, 215, 0, 0.3),
     0 0 30px rgba(255, 215, 0, 0.2);
@@ -162,22 +175,54 @@ h6, .h6 {
 }
 
 /* Common Nerd Font Icons */
-.nf-dev-git::before { content: '\f1d3'; }
-.nf-dev-github::before { content: '\f113'; }
-.nf-dev-react::before { content: '\e7ba'; }
-.nf-dev-nodejs::before { content: '\e718'; }
-.nf-dev-terminal::before { content: '\f120'; }
-.nf-fa-code::before { content: '\f121'; }
-.nf-fa-server::before { content: '\f233'; }
-.nf-fa-database::before { content: '\f1c0'; }
-.nf-fa-shield::before { content: '\f132'; }
-.nf-fa-rocket::before { content: '\f135'; }
-.nf-fa-bolt::before { content: '\f0e7'; }
-.nf-fa-users::before { content: '\f0c0'; }
-.nf-mdi-chevron_right::before { content: '\f054'; }
-.nf-mdi-chevron_down::before { content: '\f078'; }
-.nf-mdi-menu::before { content: '\f0c9'; }
-.nf-mdi-close::before { content: '\f00d'; }
+.nf-dev-git::before {
+  content: '\f1d3';
+}
+.nf-dev-github::before {
+  content: '\f113';
+}
+.nf-dev-react::before {
+  content: '\e7ba';
+}
+.nf-dev-nodejs::before {
+  content: '\e718';
+}
+.nf-dev-terminal::before {
+  content: '\f120';
+}
+.nf-fa-code::before {
+  content: '\f121';
+}
+.nf-fa-server::before {
+  content: '\f233';
+}
+.nf-fa-database::before {
+  content: '\f1c0';
+}
+.nf-fa-shield::before {
+  content: '\f132';
+}
+.nf-fa-rocket::before {
+  content: '\f135';
+}
+.nf-fa-bolt::before {
+  content: '\f0e7';
+}
+.nf-fa-users::before {
+  content: '\f0c0';
+}
+.nf-mdi-chevron_right::before {
+  content: '\f054';
+}
+.nf-mdi-chevron_down::before {
+  content: '\f078';
+}
+.nf-mdi-menu::before {
+  content: '\f0c9';
+}
+.nf-mdi-close::before {
+  content: '\f00d';
+}
 
 /* =================================
    RESPONSIVE TYPOGRAPHY
@@ -186,8 +231,9 @@ h6, .h6 {
   html {
     font-size: 14px;
   }
-  
-  h1, .h1 {
+
+  h1,
+  .h1 {
     letter-spacing: var(--tracking-tight);
   }
 }

@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import { AnimatePresence, motion } from 'framer-motion'
-import { ReactNode, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion';
+import { ReactNode, useState } from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 interface AnimatedTooltipProps {
-  label: string
-  children: ReactNode
-  className?: string
+  label: string;
+  children: ReactNode;
+  className?: string;
 }
 
 export function AnimatedTooltip({ label, children, className }: AnimatedTooltipProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div
@@ -37,5 +37,5 @@ export function AnimatedTooltip({ label, children, className }: AnimatedTooltipP
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }

@@ -1,46 +1,45 @@
-'use client'
+'use client';
 
-import { useRef, useState } from 'react'
-import type React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { ArrowUpRight, BookOpen, Bot, Sparkles } from '@/components/ui/lucide-safe'
+import { useRef, useState } from 'react';
+import type React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { ArrowUpRight, BookOpen, Bot, Sparkles } from '@/components/ui/lucide-safe';
 
-import { SparklesCore } from '@/components/aceternity/sparkles'
-import { HeroVideoDialog } from '@/components/ui/hero-video-dialog'
-import { ShimmerButton } from '@/components/ui/shimmer-button'
-import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect'
-import Container from '@/components/ui/Container'
-import { BlurFadeText } from '@/components/magicui/blur-fade-text'
-import { ShinyText } from '@/components/magicui/shiny-text'
-import WordRotate from '@/components/magicui/word-rotate'
-import AnimatedGradientText from '@/components/magicui/animated-gradient-text'
-import SparklesText from '@/components/magicui/sparkles-text'
-import TypingAnimation from '@/components/magicui/typing-animation'
-import { cn } from '@/lib/utils'
-import { brandButton } from '@/lib/brand'
+import { SparklesCore } from '@/components/aceternity/sparkles';
+import { HeroVideoDialog } from '@/components/ui/hero-video-dialog';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
+import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect';
+import Container from '@/components/ui/Container';
+import { BlurFadeText } from '@/components/magicui/blur-fade-text';
+import { ShinyText } from '@/components/magicui/shiny-text';
+import WordRotate from '@/components/magicui/word-rotate';
+import AnimatedGradientText from '@/components/magicui/animated-gradient-text';
+import SparklesText from '@/components/magicui/sparkles-text';
+import TypingAnimation from '@/components/magicui/typing-animation';
+import { cn } from '@/lib/utils';
+import { brandButton } from '@/lib/brand';
 
 type PortalDestination = {
-  id: string
-  title: string
-  subtitle: string
-  description: string
-  href: string
-  status: string
-  statusTone: 'emerald' | 'amber' | 'violet'
-  accent: string
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
-  shimmer: string[]
-}
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  href: string;
+  status: string;
+  statusTone: 'emerald' | 'amber' | 'violet';
+  accent: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  shimmer: string[];
+};
 
 const portalDestinations: PortalDestination[] = [
   {
     id: 'docs-hub',
     title: 'Docs Intelligence',
     subtitle: 'Knowledge Graph & API Guides',
-    description:
-      'Vector-search SDKs. Automation recipes. Engineering enablement.',
+    description: 'Vector-search SDKs. Automation recipes. Engineering enablement.',
     href: '/docs-hub',
     status: 'Live preview',
     statusTone: 'emerald',
@@ -52,8 +51,7 @@ const portalDestinations: PortalDestination[] = [
     id: 'marketing',
     title: 'Marketing Studio',
     subtitle: 'Campaign Systems & Brand Motion',
-    description:
-      'Premium campaigns. Cinematic storytelling. Full service stack.',
+    description: 'Premium campaigns. Cinematic storytelling. Full service stack.',
     href: '/solutions/marketing-studio',
     status: 'Client ready',
     statusTone: 'amber',
@@ -65,8 +63,7 @@ const portalDestinations: PortalDestination[] = [
     id: 'command-console',
     title: 'Command Console',
     subtitle: 'Automation & Delivery Ops',
-    description:
-      'Unified console. Orchestrating pods. Full observability.',
+    description: 'Unified console. Orchestrating pods. Full observability.',
     href: '/solutions/command-console',
     status: 'In build',
     statusTone: 'violet',
@@ -74,17 +71,17 @@ const portalDestinations: PortalDestination[] = [
     icon: Bot,
     shimmer: ['#c084fc', '#a855f7', '#6366f1'],
   },
-]
+];
 
 const statusToneStyles: Record<PortalDestination['statusTone'], string> = {
   emerald: 'border-emerald-400/40 bg-emerald-400/15 text-emerald-200',
   amber: 'border-amber-400/40 bg-amber-400/15 text-amber-200',
   violet: 'border-violet-400/40 bg-violet-400/15 text-violet-200',
-}
+};
 
 function PortalCard({ portal }: { portal: PortalDestination }) {
-  const StatusTone = statusToneStyles[portal.statusTone]
-  const [isHovered, setIsHovered] = useState(false)
+  const StatusTone = statusToneStyles[portal.statusTone];
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
@@ -99,9 +96,9 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
             type: 'spring',
             stiffness: 260,
             damping: 24,
-            duration: 0.6
-          }
-        }
+            duration: 0.6,
+          },
+        },
       }}
       whileHover={{ y: -8 }}
       whileTap={{ scale: 0.98 }}
@@ -116,17 +113,17 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
         aria-label={`Open ${portal.title}`}
       >
         {/* Animated border gradient */}
-        <div className="absolute -inset-[1px] rounded-[25px] opacity-60 blur-sm"
+        <div
+          className="absolute -inset-[1px] rounded-[25px] opacity-60 blur-sm"
           style={{
             background: `linear-gradient(135deg, ${portal.accent}, transparent, ${portal.accent})`,
             animation: 'gradient-shift 8s ease infinite',
-            backgroundSize: '200% 200%'
+            backgroundSize: '200% 200%',
           }}
         />
 
         {/* Main card container */}
-        <div className="relative flex h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[320px] w-full max-w-full sm:max-w-[340px] md:max-w-[320px] lg:max-w-[360px] xl:max-w-[380px] flex-col overflow-hidden rounded-[20px] sm:rounded-[24px] border border-white/10 bg-gradient-to-br from-black/95 via-black/90 to-black/85 p-4 sm:p-5 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:shadow-[0_30px_80px_rgba(0,0,0,0.7)]">
-
+        <div className="relative flex h-full min-h-[280px] w-full max-w-full flex-col overflow-hidden rounded-[20px] border border-white/10 bg-gradient-to-br from-black/95 via-black/90 to-black/85 p-4 shadow-[0_20px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-500 hover:border-white/20 hover:shadow-[0_30px_80px_rgba(0,0,0,0.7)] sm:min-h-[300px] sm:max-w-[340px] sm:rounded-[24px] sm:p-5 md:max-w-[320px] lg:min-h-[320px] lg:max-w-[360px] xl:max-w-[380px]">
           {/* Background effects layer */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[24px]">
             {/* Accent gradient */}
@@ -137,7 +134,7 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
               }}
               animate={{
                 scale: isHovered ? 1.1 : 1,
-                opacity: isHovered ? 0.8 : 0.5
+                opacity: isHovered ? 0.8 : 0.5,
               }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             />
@@ -172,11 +169,11 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
           {/* Content */}
           <div className="relative z-10 flex h-full flex-col items-center text-center">
             {/* Status Badge */}
-            <div className="mb-4 w-full flex justify-center">
+            <div className="mb-4 flex w-full justify-center">
               <span
                 className={cn(
                   'inline-flex items-center rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-[0.25em]',
-                  StatusTone,
+                  StatusTone
                 )}
               >
                 {portal.status}
@@ -185,9 +182,11 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
 
             {/* Icon */}
             <motion.div
-              className="relative grid size-12 place-items-center rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent mb-4"
+              className="relative mb-4 grid size-12 place-items-center rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent"
               style={{
-                boxShadow: isHovered ? `0 0 30px ${portal.accent}25` : `0 0 15px ${portal.accent}10`
+                boxShadow: isHovered
+                  ? `0 0 30px ${portal.accent}25`
+                  : `0 0 15px ${portal.accent}10`,
               }}
               animate={{
                 rotate: isHovered ? [0, 5, 0] : 0,
@@ -196,10 +195,11 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
             >
               <portal.icon className="h-5 w-5" style={{ color: portal.accent }} />
               {/* Icon glow */}
-              <div className="absolute inset-0 rounded-xl"
+              <div
+                className="absolute inset-0 rounded-xl"
                 style={{
                   background: `radial-gradient(circle, ${portal.accent}20, transparent)`,
-                  filter: 'blur(6px)'
+                  filter: 'blur(6px)',
                 }}
               />
             </motion.div>
@@ -210,18 +210,18 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
                 className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/50"
                 animate={{
                   letterSpacing: isHovered ? '0.35em' : '0.3em',
-                  opacity: isHovered ? 0.8 : 0.5
+                  opacity: isHovered ? 0.8 : 0.5,
                 }}
                 transition={{ duration: 0.3 }}
               >
                 {portal.subtitle}
               </motion.p>
 
-              <h3 className="text-2xl font-display font-bold text-white sm:text-3xl">
+              <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
                 {isHovered ? (
                   <TextGenerateEffect
                     words={portal.title}
-                    className="text-2xl sm:text-3xl font-bold"
+                    className="text-2xl font-bold sm:text-3xl"
                     duration={0.3}
                   />
                 ) : (
@@ -234,7 +234,7 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
               <motion.p
                 className="text-balance text-[13px] leading-relaxed text-white/60"
                 animate={{
-                  opacity: isHovered ? 0.9 : 0.6
+                  opacity: isHovered ? 0.9 : 0.6,
                 }}
                 transition={{ duration: 0.3 }}
               >
@@ -244,10 +244,15 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
 
             {/* CTA */}
             <motion.div
-              className={brandButton({ variant: 'ghost', size: 'sm', className: 'mt-6 border-white/20 bg-black/40 px-4 py-1.5 tracking-[0.18em] text-anbu-gold/85' })}
+              className={brandButton({
+                variant: 'ghost',
+                size: 'sm',
+                className:
+                  'mt-6 border-white/20 bg-black/40 px-4 py-1.5 tracking-[0.18em] text-anbu-gold/85',
+              })}
               animate={{
                 x: isHovered ? 8 : 0,
-                letterSpacing: isHovered ? '0.2em' : '0.16em'
+                letterSpacing: isHovered ? '0.2em' : '0.16em',
               }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
@@ -261,28 +266,33 @@ function PortalCard({ portal }: { portal: PortalDestination }) {
       {/* CSS animation for gradient shift */}
       <style jsx>{`
         @keyframes gradient-shift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
+          0%,
+          100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
         }
       `}</style>
     </motion.div>
-  )
+  );
 }
 
 export default function SolutionsPortalLanding() {
-  const sectionRef = useRef<HTMLElement>(null)
+  const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'end start']
-  })
+    offset: ['start end', 'end start'],
+  });
 
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3])
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.3, 1, 1, 0.3]);
 
   return (
     <main id="main-content" className="min-h-screen bg-black text-anbu-marble">
-      <section className="relative flex min-h-[70vh] sm:min-h-[75vh] lg:min-h-[80vh] items-center justify-center overflow-hidden">
+      <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden sm:min-h-[75vh] lg:min-h-[80vh]">
         <div className="absolute inset-0">
           <Image
             src="/anbu_hero.png"
@@ -303,17 +313,17 @@ export default function SolutionsPortalLanding() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/65 to-black/80" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.18)_0%,_transparent_55%)]" />
 
-        <Container className="relative z-10 flex flex-col items-center gap-6 text-center py-16">
+        <Container className="relative z-10 flex flex-col items-center gap-6 py-16 text-center">
           <AnimatedGradientText className="text-xs uppercase tracking-[0.35em] text-white/60">
             Solutions Portal
           </AnimatedGradientText>
-          <div className="space-y-4 max-w-3xl">
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+          <div className="max-w-3xl space-y-4">
+            <h1 className="font-display text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
               Three enterprise workspaces. One command surface.
             </h1>
-            <p className="text-base sm:text-lg text-white/70">
-              Switch between Docs Intelligence, Marketing Studio, and Command Console without losing momentum. Each
-              workspace is tuned for premium delivery and storytelling.
+            <p className="text-base text-white/70 sm:text-lg">
+              Switch between Docs Intelligence, Marketing Studio, and Command Console without losing
+              momentum. Each workspace is tuned for premium delivery and storytelling.
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -327,9 +337,7 @@ export default function SolutionsPortalLanding() {
               asChild
             >
               <Link href="/contact?topic=solutions-portal">
-                <span className="flex items-center gap-2">
-                  Schedule walkthrough
-                </span>
+                <span className="flex items-center gap-2">Schedule walkthrough</span>
               </Link>
             </ShimmerButton>
             <HeroVideoDialog
@@ -342,7 +350,11 @@ export default function SolutionsPortalLanding() {
         </Container>
       </section>
 
-      <section ref={sectionRef} id="portals" className="relative overflow-hidden py-6 sm:py-8 md:py-10 lg:py-12">
+      <section
+        ref={sectionRef}
+        id="portals"
+        className="relative overflow-hidden py-6 sm:py-8 md:py-10 lg:py-12"
+      >
         <motion.div
           className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[#0c0c0c] to-black"
           style={{ opacity }}
@@ -356,7 +368,7 @@ export default function SolutionsPortalLanding() {
               'radial-gradient(circle at 20% 50%, rgba(255,215,0,0.1) 0%, transparent 50%)',
               'radial-gradient(circle at 80% 50%, rgba(255,215,0,0.1) 0%, transparent 50%)',
               'radial-gradient(circle at 20% 50%, rgba(255,215,0,0.1) 0%, transparent 50%)',
-            ]
+            ],
           }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -373,7 +385,7 @@ export default function SolutionsPortalLanding() {
 
         <Container size="lg">
           <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10">
-            <div className="mx-auto max-w-2xl text-center space-y-2 sm:space-y-3">
+            <div className="mx-auto max-w-2xl space-y-2 text-center sm:space-y-3">
               <BlurFadeText delay={0} duration={0.6}>
                 <AnimatedGradientText className="inline-flex">
                   <SparklesText
@@ -386,11 +398,10 @@ export default function SolutionsPortalLanding() {
               </BlurFadeText>
 
               <BlurFadeText delay={0.1} duration={0.7}>
-                <h2 className="text-balance text-xl font-display font-semibold sm:text-2xl lg:text-3xl">
-                  <span className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                <h2 className="text-balance font-display text-xl font-semibold sm:text-2xl lg:text-3xl">
+                  <span className="animate-gradient bg-gradient-to-r from-white via-white/90 to-white/70 bg-[length:200%_auto] bg-clip-text text-transparent">
                     Your next
-                  </span>
-                  {' '}
+                  </span>{' '}
                   <WordRotate
                     words={[
                       'breakthrough',
@@ -402,13 +413,12 @@ export default function SolutionsPortalLanding() {
                       'market edge',
                       'growth phase',
                       'expansion',
-                      'disruption'
+                      'disruption',
                     ]}
-                    className="bg-gradient-to-r from-anbu-gold via-amber-400 to-anbu-gold bg-clip-text text-transparent inline-block font-bold animate-gradient bg-[length:200%_auto]"
+                    className="inline-block animate-gradient bg-gradient-to-r from-anbu-gold via-amber-400 to-anbu-gold bg-[length:200%_auto] bg-clip-text font-bold text-transparent"
                     duration={2500}
-                  />
-                  {' '}
-                  <span className="bg-gradient-to-r from-white/70 via-white/90 to-white bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                  />{' '}
+                  <span className="animate-gradient bg-gradient-to-r from-white/70 via-white/90 to-white bg-[length:200%_auto] bg-clip-text text-transparent">
                     starts here
                   </span>
                 </h2>
@@ -418,7 +428,7 @@ export default function SolutionsPortalLanding() {
                 <div className="flex flex-col items-center gap-1">
                   <TypingAnimation
                     text="Three paths. Unlimited potential."
-                    className="text-xs sm:text-sm text-transparent bg-clip-text bg-gradient-to-r from-white/50 via-white/70 to-white/50 font-medium"
+                    className="bg-gradient-to-r from-white/50 via-white/70 to-white/50 bg-clip-text text-xs font-medium text-transparent sm:text-sm"
                     duration={0.04}
                     delay={0.5}
                   />
@@ -427,7 +437,10 @@ export default function SolutionsPortalLanding() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.8, duration: 0.5 }}
                   >
-                    <ShinyText className="text-[10px] uppercase tracking-widest text-anbu-gold/60" speed={3}>
+                    <ShinyText
+                      className="text-[10px] uppercase tracking-widest text-anbu-gold/60"
+                      speed={3}
+                    >
                       Select your workspace below
                     </ShinyText>
                   </motion.div>
@@ -445,10 +458,10 @@ export default function SolutionsPortalLanding() {
                   opacity: 1,
                   transition: {
                     staggerChildren: 0.15,
-                  }
-                }
+                  },
+                },
               }}
-              className="grid w-full max-w-7xl mx-auto gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 justify-items-center px-4 sm:px-6 lg:px-8"
+              className="mx-auto grid w-full max-w-7xl justify-items-center gap-4 px-4 sm:gap-6 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 lg:px-8"
             >
               {portalDestinations.map((portal) => (
                 <PortalCard key={portal.id} portal={portal} />
@@ -461,18 +474,18 @@ export default function SolutionsPortalLanding() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, type: 'spring', stiffness: 100 }}
-              className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
+              className="relative mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8"
             >
               {/* Background glow */}
               <div className="absolute inset-0 rounded-[20px] bg-gradient-to-r from-anbu-gold/10 via-transparent to-anbu-gold/10 opacity-30 blur-3xl" />
 
               {/* Metrics Grid */}
-              <div className="relative grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+              <div className="relative grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4 lg:gap-8">
                 {[
                   { value: '12+', label: 'Active Portals', accent: '#38bdf8' },
                   { value: '99.9%', label: 'Uptime SLA', accent: '#f59e0b' },
                   { value: '24/7', label: 'Operations', accent: '#a855f7' },
-                  { value: '<50ms', label: 'Response Time', accent: '#FFD700' }
+                  { value: '<50ms', label: 'Response Time', accent: '#FFD700' },
                 ].map((metric, index) => (
                   <motion.div
                     key={index}
@@ -481,44 +494,44 @@ export default function SolutionsPortalLanding() {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                     whileHover={{ y: -4, scale: 1.02 }}
-                    className="relative group"
+                    className="group relative"
                   >
                     {/* Card background */}
                     <div className="absolute inset-0 rounded-[16px] bg-gradient-to-br from-white/[0.03] to-transparent" />
                     <div
-                      className="absolute inset-0 rounded-[16px] opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                      className="absolute inset-0 rounded-[16px] opacity-0 transition-opacity duration-500 group-hover:opacity-20"
                       style={{
-                        background: `radial-gradient(circle at center, ${metric.accent}, transparent)`
+                        background: `radial-gradient(circle at center, ${metric.accent}, transparent)`,
                       }}
                     />
 
                     {/* Content */}
-                    <div className="relative rounded-[16px] border border-white/[0.08] bg-black/40 backdrop-blur-xl p-4 sm:p-5 lg:p-6 text-center">
+                    <div className="relative rounded-[16px] border border-white/[0.08] bg-black/40 p-4 text-center backdrop-blur-xl sm:p-5 lg:p-6">
                       <motion.div
-                        className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1 sm:mb-2"
+                        className="mb-1 text-2xl font-bold sm:mb-2 sm:text-3xl lg:text-4xl"
                         style={{ color: metric.accent }}
                         animate={{
                           textShadow: [
                             `0 0 20px ${metric.accent}00`,
                             `0 0 30px ${metric.accent}40`,
                             `0 0 20px ${metric.accent}00`,
-                          ]
+                          ],
                         }}
                         transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                       >
                         {metric.value}
                       </motion.div>
-                      <p className="text-[10px] sm:text-xs font-medium uppercase tracking-[0.2em] text-white/50">
+                      <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50 sm:text-xs">
                         {metric.label}
                       </p>
                     </div>
 
                     {/* Animated border */}
                     <motion.div
-                      className="absolute inset-0 rounded-[16px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      className="absolute inset-0 rounded-[16px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                       style={{
                         background: `linear-gradient(135deg, transparent, ${metric.accent}30, transparent)`,
-                        filter: 'blur(1px)'
+                        filter: 'blur(1px)',
                       }}
                     />
                   </motion.div>
@@ -531,9 +544,9 @@ export default function SolutionsPortalLanding() {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-                className="mt-8 sm:mt-10 lg:mt-12 text-center"
+                className="mt-8 text-center sm:mt-10 lg:mt-12"
               >
-                <p className="text-xs sm:text-sm text-white/40 font-medium uppercase tracking-[0.25em]">
+                <p className="text-xs font-medium uppercase tracking-[0.25em] text-white/40 sm:text-sm">
                   Powering digital excellence since deployment
                 </p>
               </motion.div>
@@ -542,5 +555,5 @@ export default function SolutionsPortalLanding() {
         </Container>
       </section>
     </main>
-  )
+  );
 }

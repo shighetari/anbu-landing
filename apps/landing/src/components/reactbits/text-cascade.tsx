@@ -1,18 +1,18 @@
-'use client'
+'use client';
 
-import type { ElementType } from 'react'
-import { motion } from 'framer-motion'
+import type { ElementType } from 'react';
+import { motion } from 'framer-motion';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 interface TextCascadeProps {
-  text: string
-  as?: ElementType
-  className?: string
-  gradientClassName?: string
-  delay?: number
-  stagger?: number
-  viewportAmount?: number
+  text: string;
+  as?: ElementType;
+  className?: string;
+  gradientClassName?: string;
+  delay?: number;
+  stagger?: number;
+  viewportAmount?: number;
 }
 
 const containerVariants = {
@@ -23,7 +23,7 @@ const containerVariants = {
       delayChildren: delay,
     },
   }),
-}
+};
 
 const wordVariants = {
   hidden: { opacity: 0, y: '110%' },
@@ -32,7 +32,7 @@ const wordVariants = {
     y: '0%',
     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
   },
-}
+};
 
 export function TextCascade({
   text,
@@ -44,15 +44,15 @@ export function TextCascade({
   viewportAmount = 0.6,
 }: TextCascadeProps) {
   const MotionComponent = motion.create(as || 'h2', {
-    forwardMotionProps: false
-  })
-  const words = text.split(/\s+/).filter(Boolean)
+    forwardMotionProps: false,
+  });
+  const words = text.split(/\s+/).filter(Boolean);
 
   return (
     <MotionComponent
       className={cn(
-        'relative flex flex-wrap justify-center gap-x-2 gap-y-1 text-center font-display tracking-tight leading-tight text-white drop-shadow-[0_5px_20px_rgba(0,0,0,0.55)]',
-        className,
+        'relative flex flex-wrap justify-center gap-x-2 gap-y-1 text-center font-display leading-tight tracking-tight text-white drop-shadow-[0_5px_20px_rgba(0,0,0,0.55)]',
+        className
       )}
       initial="hidden"
       whileInView="visible"
@@ -71,5 +71,5 @@ export function TextCascade({
         </motion.span>
       ))}
     </MotionComponent>
-  )
+  );
 }

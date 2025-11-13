@@ -1,22 +1,17 @@
-'use client'
+'use client';
 
-import {
-  CircuitBoard,
-  Globe2,
-  Layers3,
-  Sparkles,
-} from '@/components/ui/lucide-safe'
-import { motion } from 'framer-motion'
+import { CircuitBoard, Globe2, Layers3, Sparkles } from '@/components/ui/lucide-safe';
+import { motion } from 'framer-motion';
 
-import Container from '@/components/ui/Container'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { BentoGrid, BentoCard } from '@/components/ui/bento-grid'
-import { Meteors } from '@/components/aceternity/meteors'
-import { SparklesCore } from '@/components/aceternity/sparkles'
-import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section'
-import { BlurFadeText } from '@/components/magicui/blur-fade-text'
-import { ShinyText } from '@/components/magicui/shiny-text'
-import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect'
+import Container from '@/components/ui/Container';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { BentoGrid, BentoCard } from '@/components/ui/bento-grid';
+import { Meteors } from '@/components/aceternity/meteors';
+import { SparklesCore } from '@/components/aceternity/sparkles';
+import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section';
+import { BlurFadeText } from '@/components/magicui/blur-fade-text';
+import { ShinyText } from '@/components/magicui/shiny-text';
+import { TextGenerateEffect } from '@/components/aceternity/text-generate-effect';
 
 const services = [
   {
@@ -59,7 +54,7 @@ const services = [
     tooltip: 'Team',
     accentColor: '#EA580C',
   },
-]
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -67,10 +62,10 @@ const containerVariants = {
     opacity: 1,
     transition: {
       staggerChildren: 0.15,
-      delayChildren: 0.3
-    }
-  }
-}
+      delayChildren: 0.3,
+    },
+  },
+};
 
 const itemVariants = {
   hidden: { y: 30, opacity: 0 },
@@ -78,16 +73,16 @@ const itemVariants = {
     y: 0,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       stiffness: 100,
       damping: 12,
-      duration: 0.6
-    }
-  }
-}
+      duration: 0.6,
+    },
+  },
+};
 
 // I'm creating sick animated gradient backgrounds for each card
-const AnimatedGradientBackground = ({ color, variant }: { color: string, variant: string }) => {
+const AnimatedGradientBackground = ({ color, variant }: { color: string; variant: string }) => {
   const gradientVariants = {
     portal: (
       <motion.div
@@ -103,7 +98,7 @@ const AnimatedGradientBackground = ({ color, variant }: { color: string, variant
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "linear",
+          ease: 'linear',
         }}
       />
     ),
@@ -114,12 +109,12 @@ const AnimatedGradientBackground = ({ color, variant }: { color: string, variant
           background: `radial-gradient(circle at 20% 50%, ${color}25 0%, transparent 50%), radial-gradient(circle at 80% 80%, ${color}20 0%, transparent 50%)`,
         }}
         animate={{
-          backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+          backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
         }}
         transition={{
           duration: 12,
           repeat: Infinity,
-          ease: "easeInOut",
+          ease: 'easeInOut',
         }}
       />
     ),
@@ -135,7 +130,7 @@ const AnimatedGradientBackground = ({ color, variant }: { color: string, variant
         transition={{
           duration: 10,
           repeat: Infinity,
-          ease: "linear",
+          ease: 'linear',
         }}
       />
     ),
@@ -147,12 +142,12 @@ const AnimatedGradientBackground = ({ color, variant }: { color: string, variant
             backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, ${color}15 10px, ${color}15 20px)`,
           }}
           animate={{
-            backgroundPosition: ["0px 0px", "20px 20px"],
+            backgroundPosition: ['0px 0px', '20px 20px'],
           }}
           transition={{
             duration: 1,
             repeat: Infinity,
-            ease: "linear",
+            ease: 'linear',
           }}
         />
         <motion.div
@@ -167,21 +162,21 @@ const AnimatedGradientBackground = ({ color, variant }: { color: string, variant
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
         />
       </div>
     ),
-  }
+  };
 
-  return gradientVariants[variant as keyof typeof gradientVariants] || gradientVariants.portal
-}
+  return gradientVariants[variant as keyof typeof gradientVariants] || gradientVariants.portal;
+};
 
 export default function ServicesSection() {
   return (
     <GradualBlurSection
       id="services"
-      className="relative overflow-hidden py-6 sm:py-10 md:py-14 lg:py-18 xl:py-20 w-full flex justify-center"
+      className="relative flex w-full justify-center overflow-hidden py-6 sm:py-10 md:py-14 lg:py-18 xl:py-20"
     >
       {/* Enhanced background gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505] to-black" />
@@ -190,22 +185,25 @@ export default function ServicesSection() {
           className="absolute inset-0"
           animate={{
             background: [
-              "radial-gradient(circle at 20% 20%, rgba(255,215,0,0.08), transparent 55%)",
-              "radial-gradient(circle at 80% 80%, rgba(255,215,0,0.08), transparent 55%)",
-              "radial-gradient(circle at 50% 50%, rgba(255,215,0,0.08), transparent 55%)",
+              'radial-gradient(circle at 20% 20%, rgba(255,215,0,0.08), transparent 55%)',
+              'radial-gradient(circle at 80% 80%, rgba(255,215,0,0.08), transparent 55%)',
+              'radial-gradient(circle at 50% 50%, rgba(255,215,0,0.08), transparent 55%)',
             ],
           }}
           transition={{
             duration: 10,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
         />
       </div>
 
-      <Container size="lg" className="relative flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">
+      <Container
+        size="lg"
+        className="relative flex flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12"
+      >
         {/* Enhanced header section */}
-        <div className="w-full max-w-3xl text-center flex flex-col items-center space-y-2 sm:space-y-3 md:space-y-4">
+        <div className="flex w-full max-w-3xl flex-col items-center space-y-2 text-center sm:space-y-3 md:space-y-4">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -213,23 +211,19 @@ export default function ServicesSection() {
             transition={{ duration: 0.6 }}
           >
             <ShinyText
-              className="text-[10px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.15em] md:tracking-[0.2em] text-anbu-gold font-medium"
+              className="text-[10px] font-medium uppercase tracking-[0.12em] text-anbu-gold sm:text-xs sm:tracking-[0.15em] md:tracking-[0.2em]"
               speed={6}
             >
               Our Services
             </ShinyText>
           </motion.div>
 
-          <h2 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white">
-            <TextGenerateEffect
-              words="What We Build"
-              className=""
-              duration={0.8}
-            />
+          <h2 className="font-display text-lg font-bold text-white sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+            <TextGenerateEffect words="What We Build" className="" duration={0.8} />
           </h2>
 
           <BlurFadeText delay={0.3} duration={0.7}>
-            <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/70 max-w-xl mx-auto leading-relaxed px-4 sm:px-0">
+            <p className="mx-auto max-w-xl px-4 text-xs leading-relaxed text-white/70 sm:px-0 sm:text-sm md:text-base lg:text-lg">
               Fast, reliable software for growing businesses.
             </p>
           </BlurFadeText>
@@ -243,7 +237,7 @@ export default function ServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
           className="w-full"
         >
-          <BentoGrid className="mt-3 sm:mt-4 md:mt-6 grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+          <BentoGrid className="mt-3 grid-cols-2 gap-3 sm:mt-4 sm:gap-4 md:mt-6 md:gap-5 lg:grid-cols-4">
             {/* Portal Card */}
             <motion.div
               key={services[0].id}
@@ -251,7 +245,7 @@ export default function ServicesSection() {
               whileHover={{
                 y: -12,
                 scale: 1.02,
-                transition: { type: 'spring', stiffness: 220, damping: 18 }
+                transition: { type: 'spring', stiffness: 220, damping: 18 },
               }}
               whileTap={{ scale: 0.97 }}
               className="h-full"
@@ -289,7 +283,7 @@ export default function ServicesSection() {
               whileHover={{
                 y: -12,
                 scale: 1.02,
-                transition: { type: 'spring', stiffness: 220, damping: 18 }
+                transition: { type: 'spring', stiffness: 220, damping: 18 },
               }}
               whileTap={{ scale: 0.97 }}
               className="h-full"
@@ -299,7 +293,10 @@ export default function ServicesSection() {
                 className="col-span-1 h-full"
                 background={
                   <div className="absolute inset-0 overflow-hidden">
-                    <AnimatedGradientBackground color={services[1].accentColor} variant="experience" />
+                    <AnimatedGradientBackground
+                      color={services[1].accentColor}
+                      variant="experience"
+                    />
                     <Meteors number={6} />
                   </div>
                 }
@@ -319,7 +316,7 @@ export default function ServicesSection() {
               whileHover={{
                 y: -12,
                 scale: 1.02,
-                transition: { type: 'spring', stiffness: 220, damping: 18 }
+                transition: { type: 'spring', stiffness: 220, damping: 18 },
               }}
               whileTap={{ scale: 0.97 }}
               className="h-full"
@@ -358,7 +355,7 @@ export default function ServicesSection() {
               whileHover={{
                 y: -12,
                 scale: 1.02,
-                transition: { type: 'spring', stiffness: 220, damping: 18 }
+                transition: { type: 'spring', stiffness: 220, damping: 18 },
               }}
               whileTap={{ scale: 0.97 }}
               className="h-full"
@@ -368,7 +365,10 @@ export default function ServicesSection() {
                 className="col-span-1 h-full"
                 background={
                   <div className="absolute inset-0 overflow-hidden">
-                    <AnimatedGradientBackground color={services[3].accentColor} variant="automation" />
+                    <AnimatedGradientBackground
+                      color={services[3].accentColor}
+                      variant="automation"
+                    />
                     <SparklesCore
                       id="automation-sparkles"
                       background="transparent"
@@ -392,5 +392,5 @@ export default function ServicesSection() {
         </motion.div>
       </Container>
     </GradualBlurSection>
-  )
+  );
 }

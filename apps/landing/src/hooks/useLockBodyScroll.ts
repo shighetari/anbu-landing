@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 /**
  * Hook that locks body scroll when enabled
@@ -7,28 +7,28 @@ import { useEffect } from 'react'
 export function useLockBodyScroll(enabled: boolean = true) {
   useEffect(() => {
     if (!enabled) {
-      return
+      return;
     }
 
     // Save original styles
-    const originalOverflow = document.body.style.overflow
-    const originalPaddingRight = document.body.style.paddingRight
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
 
     // Calculate scrollbar width to prevent layout shift
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
     // Lock scroll by hiding overflow
-    document.body.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden';
 
     // Compensate for scrollbar width to prevent content shift
     if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = `${scrollbarWidth}px`
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
     }
 
     // Cleanup function
     return () => {
-      document.body.style.overflow = originalOverflow || ''
-      document.body.style.paddingRight = originalPaddingRight || ''
-    }
-  }, [enabled])
+      document.body.style.overflow = originalOverflow || '';
+      document.body.style.paddingRight = originalPaddingRight || '';
+    };
+  }, [enabled]);
 }

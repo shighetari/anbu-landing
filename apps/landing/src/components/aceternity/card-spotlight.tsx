@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import { useMotionValue, motion, useMotionTemplate } from 'framer-motion'
-import React, { MouseEvent as ReactMouseEvent, useState } from 'react'
-import { cn } from '@/lib/utils'
+import { useMotionValue, motion, useMotionTemplate } from 'framer-motion';
+import React, { MouseEvent as ReactMouseEvent, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 export const CardSpotlight = ({
   children,
@@ -11,18 +11,18 @@ export const CardSpotlight = ({
   className,
   ...props
 }: {
-  radius?: number
-  color?: string
-  children: React.ReactNode
+  radius?: number;
+  color?: string;
+  children: React.ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>) => {
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const [isHovered, setIsHovered] = useState(false)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   function handleMouseMove({ currentTarget, clientX, clientY }: ReactMouseEvent<HTMLDivElement>) {
-    const { left, top } = currentTarget.getBoundingClientRect()
-    mouseX.set(clientX - left)
-    mouseY.set(clientY - top)
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
   }
 
   return (
@@ -53,5 +53,5 @@ export const CardSpotlight = ({
       />
       <div className="relative z-10">{children}</div>
     </div>
-  )
-}
+  );
+};

@@ -27,8 +27,8 @@ test.describe('Hero Section Button Improvements', () => {
         x: 0,
         y: 0,
         width: 1280,
-        height: 800
-      }
+        height: 800,
+      },
     });
 
     // Take close-up of buttons
@@ -40,8 +40,8 @@ test.describe('Hero Section Button Improvements', () => {
           x: buttonBox.x - 20,
           y: buttonBox.y - 20,
           width: buttonBox.width + 40,
-          height: buttonBox.height + 40
-        }
+          height: buttonBox.height + 40,
+        },
       });
     }
 
@@ -57,8 +57,8 @@ test.describe('Hero Section Button Improvements', () => {
           x: mobileButtonBox.x,
           y: mobileButtonBox.y - 20,
           width: mobileButtonBox.width,
-          height: mobileButtonBox.height + 40
-        }
+          height: mobileButtonBox.height + 40,
+        },
       });
     }
 

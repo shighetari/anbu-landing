@@ -1,24 +1,28 @@
-'use client'
+'use client';
 
-import React, { forwardRef, ButtonHTMLAttributes } from 'react'
-import { motion, HTMLMotionProps } from 'framer-motion'
-import styles from './Button.module.css'
+import React, { forwardRef, ButtonHTMLAttributes } from 'react';
+import { motion, HTMLMotionProps } from 'framer-motion';
+import styles from './Button.module.css';
 
-export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass' | 'danger'
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  fullWidth?: boolean
-  loading?: boolean
-  icon?: React.ReactNode
-  iconPosition?: 'left' | 'right'
-  glow?: boolean
-  ripple?: boolean
-  pulse?: boolean
-  nerdIcon?: string
-  asChild?: boolean
+export interface ButtonProps
+  extends Omit<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag'
+  > {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'glass' | 'danger';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  fullWidth?: boolean;
+  loading?: boolean;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
+  glow?: boolean;
+  ripple?: boolean;
+  pulse?: boolean;
+  nerdIcon?: string;
+  asChild?: boolean;
 }
 
-type CombinedProps = ButtonProps & Omit<HTMLMotionProps<"button">, keyof ButtonProps>
+type CombinedProps = ButtonProps & Omit<HTMLMotionProps<'button'>, keyof ButtonProps>;
 
 const Button = forwardRef<HTMLButtonElement, CombinedProps>(
   (
@@ -43,27 +47,27 @@ const Button = forwardRef<HTMLButtonElement, CombinedProps>(
     },
     ref
   ) => {
-    const [ripples, setRipples] = React.useState<{ x: number; y: number; id: number }[]>([])
+    const [ripples, setRipples] = React.useState<{ x: number; y: number; id: number }[]>([]);
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (ripple && !disabled && !loading) {
-        const button = e.currentTarget
-        const rect = button.getBoundingClientRect()
-        const x = e.clientX - rect.left
-        const y = e.clientY - rect.top
-        const id = Date.now()
+        const button = e.currentTarget;
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const id = Date.now();
 
-        setRipples(prev => [...prev, { x, y, id }])
+        setRipples((prev) => [...prev, { x, y, id }]);
 
         setTimeout(() => {
-          setRipples(prev => prev.filter(r => r.id !== id))
-        }, 600)
+          setRipples((prev) => prev.filter((r) => r.id !== id));
+        }, 600);
       }
 
       if (onClick && !disabled && !loading) {
-        onClick(e)
+        onClick(e);
       }
-    }
+    };
 
     const buttonClasses = [
       styles.button,
@@ -74,8 +78,10 @@ const Button = forwardRef<HTMLButtonElement, CombinedProps>(
       pulse && styles.pulse,
       loading && styles.loading,
       disabled && styles.disabled,
-      className
-    ].filter(Boolean).join(' ')
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ');
 
     const content = (
       <>
@@ -93,26 +99,26 @@ const Button = forwardRef<HTMLButtonElement, CombinedProps>(
             </svg>
           </span>
         )}
-        
+
         {!loading && icon && iconPosition === 'left' && (
           <span className={styles.iconLeft}>{icon}</span>
         )}
-        
+
         {!loading && nerdIcon && iconPosition === 'left' && (
           <span className={`${styles.iconLeft} nf-icon ${nerdIcon}`} />
         )}
-        
+
         <span className={styles.content}>{children}</span>
-        
+
         {!loading && icon && iconPosition === 'right' && (
           <span className={styles.iconRight}>{icon}</span>
         )}
-        
+
         {!loading && nerdIcon && iconPosition === 'right' && (
           <span className={`${styles.iconRight} nf-icon ${nerdIcon}`} />
         )}
-        
-        {ripples.map(ripple => (
+
+        {ripples.map((ripple) => (
           <span
             key={ripple.id}
             className={styles.ripple}
@@ -123,14 +129,14 @@ const Button = forwardRef<HTMLButtonElement, CombinedProps>(
           />
         ))}
       </>
-    )
+    );
 
     if (asChild) {
       return (
-        <span className={buttonClasses} ref={ref as any} {...props as any}>
+        <span className={buttonClasses} ref={ref as any} {...(props as any)}>
           {content}
         </span>
-      )
+      );
     }
 
     return (
@@ -147,10 +153,10 @@ const Button = forwardRef<HTMLButtonElement, CombinedProps>(
       >
         {content}
       </motion.button>
-    )
+    );
   }
-)
+);
 
-Button.displayName = 'Button'
+Button.displayName = 'Button';
 
-export default Button
+export default Button;

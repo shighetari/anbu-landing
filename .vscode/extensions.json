@@ -1,6 +1,3 @@
 {
-    "recommendations": [
-        "upstash.context7-mcp",
-        "ritwickdey.liveserver"
-    ]
+  "recommendations": ["upstash.context7-mcp", "ritwickdey.liveserver"]
 }

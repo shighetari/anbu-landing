@@ -1,17 +1,11 @@
-"use client";
+'use client';
 
-import { cva, type VariantProps } from "class-variance-authority";
-import {
-  motion,
-  MotionValue,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "motion/react";
-import type { MotionProps } from "motion/react";
-import React, { PropsWithChildren, useRef } from "react";
+import { cva, type VariantProps } from 'class-variance-authority';
+import { motion, MotionValue, useMotionValue, useSpring, useTransform } from 'motion/react';
+import type { MotionProps } from 'motion/react';
+import React, { PropsWithChildren, useRef } from 'react';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
 export interface DockProps extends VariantProps<typeof dockVariants> {
   className?: string;
@@ -19,7 +13,7 @@ export interface DockProps extends VariantProps<typeof dockVariants> {
   iconMagnification?: number;
   disableMagnification?: boolean;
   iconDistance?: number;
-  direction?: "top" | "middle" | "bottom";
+  direction?: 'top' | 'middle' | 'bottom';
   children: React.ReactNode;
 }
 
@@ -29,7 +23,7 @@ const DEFAULT_DISTANCE = 140;
 const DEFAULT_DISABLEMAGNIFICATION = false;
 
 const dockVariants = cva(
-  "supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 mx-auto mt-8 flex h-[58px] w-max items-center justify-center gap-3 rounded-2xl border px-4 py-2.5 backdrop-blur-md",
+  'supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 mx-auto mt-8 flex h-[58px] w-max items-center justify-center gap-3 rounded-2xl border px-4 py-2.5 backdrop-blur-md'
 );
 
 const Dock = React.forwardRef<HTMLDivElement, DockProps>(
@@ -41,19 +35,16 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
       iconMagnification = DEFAULT_MAGNIFICATION,
       disableMagnification = DEFAULT_DISABLEMAGNIFICATION,
       iconDistance = DEFAULT_DISTANCE,
-      direction = "middle",
+      direction = 'middle',
       ...props
     },
-    ref,
+    ref
   ) => {
     const mouseX = useMotionValue(Infinity);
 
     const renderChildren = () => {
       return React.Children.map(children, (child) => {
-        if (
-          React.isValidElement<DockIconProps>(child) &&
-          child.type === DockIcon
-        ) {
+        if (React.isValidElement<DockIconProps>(child) && child.type === DockIcon) {
           return React.cloneElement(child, {
             ...child.props,
             mouseX: mouseX,
@@ -74,21 +65,21 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
         onMouseLeave={() => mouseX.set(Infinity)}
         {...props}
         className={cn(dockVariants({ className }), {
-          "items-start": direction === "top",
-          "items-center": direction === "middle",
-          "items-end": direction === "bottom",
+          'items-start': direction === 'top',
+          'items-center': direction === 'middle',
+          'items-end': direction === 'bottom',
         })}
       >
         {renderChildren()}
       </motion.div>
     );
-  },
+  }
 );
 
-Dock.displayName = "Dock";
+Dock.displayName = 'Dock';
 
 export interface DockIconProps
-  extends Omit<MotionProps & React.HTMLAttributes<HTMLDivElement>, "children"> {
+  extends Omit<MotionProps & React.HTMLAttributes<HTMLDivElement>, 'children'> {
   size?: number;
   magnification?: number;
   disableMagnification?: boolean;
@@ -123,7 +114,7 @@ const DockIcon = ({
   const sizeTransform = useTransform(
     distanceCalc,
     [-distance, 0, distance],
-    [size, targetSize, size],
+    [size, targetSize, size]
   );
 
   const scaleSize = useSpring(sizeTransform, {
@@ -137,9 +128,9 @@ const DockIcon = ({
       ref={ref}
       style={{ width: scaleSize, height: scaleSize, padding }}
       className={cn(
-        "flex aspect-square cursor-pointer items-center justify-center rounded-full",
-        disableMagnification && "transition-colors hover:bg-muted-foreground",
-        className,
+        'flex aspect-square cursor-pointer items-center justify-center rounded-full',
+        disableMagnification && 'hover:bg-muted-foreground transition-colors',
+        className
       )}
       {...props}
     >
@@ -148,6 +139,6 @@ const DockIcon = ({
   );
 };
 
-DockIcon.displayName = "DockIcon";
+DockIcon.displayName = 'DockIcon';
 
 export { Dock, DockIcon, dockVariants };

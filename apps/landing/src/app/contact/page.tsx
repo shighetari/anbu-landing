@@ -1,66 +1,67 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import ContactSection from "@/components/features/contact/ContactSection"
-import { ContactQuickActions } from "@/components/features/contact/ContactQuickActions"
-import { SparklesCore } from "@/components/aceternity/sparkles"
-import { WobbleCard } from "@/components/aceternity/wobble-card"
-import Container from "@/components/ui/Container"
-import { AnimatedGradientText } from "@/components/ui/animated-gradient-text"
-import { ShineBorder } from "@/components/ui/shine-border"
-import { ShimmerButton } from "@/components/ui/shimmer-button"
-import { buttonVariants } from "@/lib/button-variants"
-import { cn } from "@/lib/utils"
+import ContactSection from '@/components/features/contact/ContactSection';
+import { ContactQuickActions } from '@/components/features/contact/ContactQuickActions';
+import { SparklesCore } from '@/components/aceternity/sparkles';
+import { WobbleCard } from '@/components/aceternity/wobble-card';
+import Container from '@/components/ui/Container';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { ShineBorder } from '@/components/ui/shine-border';
+import { ShimmerButton } from '@/components/ui/shimmer-button';
+import { buttonVariants } from '@/lib/button-variants';
+import { cn } from '@/lib/utils';
 import {
   ArrowUpRight,
   MessageSquare,
   ShieldCheck,
   Sparkles,
   Users,
-} from "@/components/ui/lucide-safe"
-import { siteConfig } from "@/lib/site-config"
+} from '@/components/ui/lucide-safe';
+import { siteConfig } from '@/lib/site-config';
 
 export const metadata: Metadata = {
-  title: "Connect with ANBU Solutions",
+  title: 'Connect with ANBU Solutions',
   description:
-    "Start a conversation with the ANBU Solutions team. We respond within one business day to craft project plans, partner on strategy, and help teams ship ambitious product experiences.",
+    'Start a conversation with the ANBU Solutions team. We respond within one business day to craft project plans, partner on strategy, and help teams ship ambitious product experiences.',
   openGraph: {
-    title: "Connect with ANBU Solutions",
+    title: 'Connect with ANBU Solutions',
     description:
-      "Get in touch with the ANBU Solutions team to accelerate product, design, and platform initiatives.",
-    url: "https://anbu.ai/contact",
+      'Get in touch with the ANBU Solutions team to accelerate product, design, and platform initiatives.',
+    url: `${siteConfig.website}/contact`,
   },
-}
+};
 
 const heroHighlights = [
   {
     icon: MessageSquare,
-    metric: "<6h reply",
-    title: "Clear next steps",
-    description: "Expect a same-day response with a tailored plan you can take to stakeholders.",
-    accent: { from: "#FFD16A", to: "#FF8C37" },
+    metric: '<6h reply',
+    title: 'Clear next steps',
+    description: 'Expect a same-day response with a tailored plan you can take to stakeholders.',
+    accent: { from: '#FFD16A', to: '#FF8C37' },
   },
   {
     icon: Users,
-    metric: "One team",
-    title: "Operators, not vendors",
-    description: "Design, engineering, and product leads show up on every call to keep momentum.",
-    accent: { from: "#60A5FF", to: "#38D9FF" },
+    metric: 'One team',
+    title: 'Operators, not vendors',
+    description: 'Design, engineering, and product leads show up on every call to keep momentum.',
+    accent: { from: '#60A5FF', to: '#38D9FF' },
   },
   {
     icon: ShieldCheck,
-    metric: "Risk handled",
-    title: "Enterprise ready",
-    description: "Contracts, security reviews, and onboarding handled so you can focus on outcomes.",
-    accent: { from: "#C084FC", to: "#FB7185" },
+    metric: 'Risk handled',
+    title: 'Enterprise ready',
+    description:
+      'Contracts, security reviews, and onboarding handled so you can focus on outcomes.',
+    accent: { from: '#C084FC', to: '#FB7185' },
   },
-]
+];
 
 export default function ContactPage() {
-  const contactEmail = siteConfig.contactEmail
-  const callLink = siteConfig.calLink
-  const primaryButton = buttonVariants.primary
-  const secondaryButton = buttonVariants.secondary
+  const contactEmail = siteConfig.contactEmail;
+  const callLink = siteConfig.calLink;
+  const primaryButton = buttonVariants.primary;
+  const secondaryButton = buttonVariants.secondary;
 
   return (
     <main className="relative min-h-screen bg-black text-anbu-marble">
@@ -82,9 +83,9 @@ export default function ContactPage() {
               Launch-ready product partners
             </h1>
             <p className="max-w-2xl text-base text-white/60 md:text-lg">
-              The product team you can DM at 2am (and trust to deliver). Tell us what needs to ship, who relies on it,
-              and the moments that matter. We&apos;ll architect the path, assemble the squad, and stay in the loop until
-              value hits production.
+              The product team you can DM at 2am (and trust to deliver). Tell us what needs to ship,
+              who relies on it, and the moments that matter. We&apos;ll architect the path, assemble
+              the squad, and stay in the loop until value hits production.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <ShimmerButton
@@ -95,7 +96,7 @@ export default function ContactPage() {
                 textColor={primaryButton.textColor}
                 className={cn(
                   primaryButton.className,
-                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                  'px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm'
                 )}
                 asChild
               >
@@ -113,7 +114,7 @@ export default function ContactPage() {
                 borderRadius={secondaryButton.borderRadius}
                 className={cn(
                   secondaryButton.className,
-                  "px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+                  'px-7 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm'
                 )}
                 asChild
               >
@@ -129,7 +130,7 @@ export default function ContactPage() {
 
           <div className="mt-14 grid gap-5 sm:gap-6 md:grid-cols-3">
             {heroHighlights.map((item) => {
-              const Icon = item.icon
+              const Icon = item.icon;
               return (
                 <WobbleCard
                   key={item.title}
@@ -164,11 +165,11 @@ export default function ContactPage() {
                     <p className="text-sm text-white/60">{item.description}</p>
                   </div>
                   <div className="mt-auto h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                  <span className="text-[0.7rem] text-white/40 uppercase tracking-[0.28em]">
+                  <span className="text-[0.7rem] uppercase tracking-[0.28em] text-white/40">
                     Built for busy teams
                   </span>
                 </WobbleCard>
-              )
+              );
             })}
           </div>
         </Container>
@@ -180,10 +181,12 @@ export default function ContactPage() {
             <AnimatedGradientText className="text-xs uppercase tracking-[0.35em] text-white/60">
               Quality of life extras
             </AnimatedGradientText>
-            <h2 className="font-display text-3xl text-white md:text-4xl">Save time before we even meet</h2>
+            <h2 className="font-display text-3xl text-white md:text-4xl">
+              Save time before we even meet
+            </h2>
             <p className="text-sm text-white/60 md:text-base">
-              Copy our direct inbox, grab a workshop slot, or align on on-site logistics. These shortcuts keep momentum
-              flowing from the first touchpoint.
+              Copy our direct inbox, grab a workshop slot, or align on on-site logistics. These
+              shortcuts keep momentum flowing from the first touchpoint.
             </p>
           </div>
           <ContactQuickActions />
@@ -192,7 +195,11 @@ export default function ContactPage() {
 
       <section className="relative border-b border-white/10 py-16 md:py-20">
         <Container>
-          <ShineBorder borderWidth={1.5} shineColor={["#FFD700", "#FF8A3C"]} className="rounded-[2rem] border-white/5">
+          <ShineBorder
+            borderWidth={1.5}
+            shineColor={['#FFD700', '#FF8A3C']}
+            className="rounded-[2rem] border-white/5"
+          >
             <div className="relative flex flex-col gap-12 overflow-hidden rounded-[2rem] bg-black/70 px-6 py-10 backdrop-blur-xl md:px-12 md:py-14">
               <SparklesCore
                 id="contact-form-bg"
@@ -209,8 +216,9 @@ export default function ContactPage() {
                   Kick off your project with an actionable blueprint
                 </h2>
                 <p className="max-w-2xl text-sm text-white/60 md:text-base">
-                  Fill out the form and we&apos;ll spin up an intake board, assign leads, and outline the first build
-                  sprint. No generic autoresponders — you get a crafted response tailored to your timeline.
+                  Fill out the form and we&apos;ll spin up an intake board, assign leads, and
+                  outline the first build sprint. No generic autoresponders — you get a crafted
+                  response tailored to your timeline.
                 </p>
               </div>
               <ContactSection />
@@ -227,8 +235,8 @@ export default function ContactPage() {
           <div className="space-y-3">
             <h2 className="font-display text-3xl text-white md:text-4xl">Visit the Docs Hub</h2>
             <p className="mx-auto max-w-xl text-sm text-white/60 md:text-base">
-              Browse live documentation, playbooks, and implementation guides in one place while we craft your tailored
-              response.
+              Browse live documentation, playbooks, and implementation guides in one place while we
+              craft your tailored response.
             </p>
           </div>
           <ShimmerButton
@@ -239,7 +247,7 @@ export default function ContactPage() {
             textColor={primaryButton.textColor}
             className={cn(
               primaryButton.className,
-              "px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm",
+              'px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] md:px-10 md:py-4 md:text-sm'
             )}
             asChild
           >
@@ -253,5 +261,5 @@ export default function ContactPage() {
         </Container>
       </section>
     </main>
-  )
+  );
 }

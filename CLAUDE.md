@@ -130,6 +130,7 @@ Always run these before considering a task complete:
 **NEVER take full-page screenshots** - they create massive files that get rejected by the Claude API.
 
 **Correct approach**:
+
 - ✅ **ALWAYS use viewport-only screenshots**: `mcp__chrome-devtools__take_screenshot` (default)
 - ✅ **Scroll and capture multiple viewport screenshots** to see different sections
 - ✅ **Trigger lazy loading** by scrolling through page before capturing screenshots
@@ -167,15 +168,16 @@ I've organized components into three tiers for maximum reusability and consisten
 ```typescript
 // Container sizes I've established for consistent spacing:
 const containerSizes = {
-  sm: 'max-w-3xl',   // 48rem - Tight content areas
-  md: 'max-w-5xl',   // 64rem - Standard content (avoid for complex grids)
-  lg: 'max-w-7xl',   // 80rem - Primary layout container
+  sm: 'max-w-3xl', // 48rem - Tight content areas
+  md: 'max-w-5xl', // 64rem - Standard content (avoid for complex grids)
+  lg: 'max-w-7xl', // 80rem - Primary layout container
   xl: 'max-w-[1440px]', // Custom - Wide sections
-  full: 'max-w-full'    // Edge-to-edge layouts
-}
+  full: 'max-w-full', // Edge-to-edge layouts
+};
 ```
 
 **Best Practices:**
+
 - Use `lg` for sections with grid layouts (learned from About section fix)
 - Always include responsive padding: `px-4 sm:px-6 lg:px-8`
 - Avoid nested containers that might conflict
@@ -193,6 +195,7 @@ The BentoGrid system I've refined for flexible card layouts:
 ```
 
 **Lessons Learned:**
+
 - Don't override grid-cols in the instantiation - let BentoGrid handle it
 - Use simple col-span-1 for cards, avoid col-span-2 on mobile
 - Remove fixed heights (min-h) for better content adaptation
@@ -207,16 +210,17 @@ const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
-  transition: { duration: 0.5 }
-}
+  transition: { duration: 0.5 },
+};
 
 const scaleOnHover = {
   whileHover: { scale: 1.05 },
-  transition: { duration: 0.3 }
-}
+  transition: { duration: 0.3 },
+};
 ```
 
 **Performance Guidelines:**
+
 - Use `viewport: { once: true }` to prevent re-triggering
 - Keep durations between 0.3s - 0.8s for smooth feel
 - Avoid complex parallax on mobile (removed from About section)
@@ -226,14 +230,15 @@ const scaleOnHover = {
 
 ```css
 /* Core ANBU palette I'm maintaining: */
---anbu-black: #000000;      /* Primary background */
---anbu-gold: #FFD700;        /* Primary accent - CTAs, highlights */
---anbu-gold-accent: #FFA500; /* Secondary gold for hover states */
---anbu-marble: #F8F8F8;      /* Text on dark backgrounds */
---anbu-gray: #2C2C2C;        /* Subtle backgrounds */
+--anbu-black: #000000; /* Primary background */
+--anbu-gold: #ffd700; /* Primary accent - CTAs, highlights */
+--anbu-gold-accent: #ffa500; /* Secondary gold for hover states */
+--anbu-marble: #f8f8f8; /* Text on dark backgrounds */
+--anbu-gray: #2c2c2c; /* Subtle backgrounds */
 ```
 
 **Typography Scale (Fluid):**
+
 - Uses CSS clamp() for responsive sizing
 - Maintains readability across all devices
 - Font families: 'Inter' for body, 'Montserrat' for headings
@@ -243,22 +248,24 @@ const scaleOnHover = {
 ```typescript
 // Breakpoint approach I'm following:
 const breakpoints = {
-  xs: '375px',    // Minimum mobile support
-  sm: '640px',    // Large phones
-  md: '768px',    // Tablets
-  lg: '1024px',   // Laptops
-  xl: '1280px',   // Desktops
+  xs: '375px', // Minimum mobile support
+  sm: '640px', // Large phones
+  md: '768px', // Tablets
+  lg: '1024px', // Laptops
+  xl: '1280px', // Desktops
   laptop: '1440px', // 15" MacBook specific
-  '2xl': '1536px'   // Large monitors
-}
+  '2xl': '1536px', // Large monitors
+};
 ```
 
 **Layout Patterns:**
+
 1. **Mobile (375-639px)**: 2-column grids for cards, tighter spacing, reduced padding
 2. **Tablet (640-1023px)**: 2-column grids maintained, increased spacing
 3. **Desktop (1024px+)**: 4-column grids, full spacing, side navigation
 
 **Mobile Optimization Strategy (2024 Update):**
+
 - **Always 2 columns minimum on mobile** for service/feature cards - maximizes content density
 - **Reduce hero title size**: Start at `text-[1.25rem]` (20px) on smallest screens
 - **Compact button padding**: `py-2 px-4` on mobile vs `py-3.5 px-9` on desktop
@@ -289,11 +296,11 @@ const breakpoints = {
 ```javascript
 // Responsive testing workflow I follow:
 const testBreakpoints = [
-  { width: 375, height: 812 },   // Mobile
-  { width: 768, height: 1024 },  // Tablet
-  { width: 1280, height: 800 },  // Desktop
-  { width: 1920, height: 1080 }  // Full HD
-]
+  { width: 375, height: 812 }, // Mobile
+  { width: 768, height: 1024 }, // Tablet
+  { width: 1280, height: 800 }, // Desktop
+  { width: 1920, height: 1080 }, // Full HD
+];
 
 // Always test with Playwright for visual verification
 ```
@@ -325,6 +332,7 @@ apps/landing/src/components/
 #### Development Workflow for ANBU Landing
 
 1. **Component Development**
+
    ```javascript
    // Start with mobile view, enhance for desktop
    // Test in isolation first, then integrate
@@ -345,6 +353,7 @@ apps/landing/src/components/
 #### Future Enhancement Guidelines
 
 **Areas Open for Improvement:**
+
 - **Animation Library**: Consider consolidating animation patterns
 - **Component Variants**: Build more flexible prop-based variants
 - **Accessibility**: Enhance keyboard navigation and screen reader support
@@ -352,6 +361,7 @@ apps/landing/src/components/
 - **Testing**: Add visual regression tests for critical UI states
 
 **Innovation Encouraged In:**
+
 - New motion patterns that enhance user experience
 - Creative solutions for responsive challenges
 - Performance optimizations that maintain visual quality
@@ -359,6 +369,7 @@ apps/landing/src/components/
 - Accessibility improvements that don't compromise aesthetics
 
 **Maintain Consistency In:**
+
 - Color palette and gold accent usage
 - Typography scale and font choices
 - Spacing system and container patterns
@@ -396,6 +407,7 @@ pnpm lint                        # Check code quality
 **Problem**: Container elements with `mx-auto` not centering, content sticking to left side of screen.
 
 **Root Causes Found**:
+
 1. **Wrong Tailwind imports in globals.css**:
    - ❌ WRONG: `@import "tailwindcss/preflight"; @import "tailwindcss/utilities";`
    - ✅ CORRECT: `@tailwind base; @tailwind components; @tailwind utilities;`
@@ -409,6 +421,7 @@ pnpm lint                        # Check code quality
    - Keep Container as block-level element for proper centering
 
 **Solution Applied**:
+
 ```typescript
 // Container.tsx with inline styles fallback
 export default function Container({
@@ -442,15 +455,17 @@ export default function Container({
 ```
 
 **Correct Usage Pattern**:
+
 ```jsx
-<Container size="lg">  // Block element with mx-auto
-  <div className="flex flex-col items-center">  // Flex only on inner div
-    // Content here
-  </div>
+<Container size="lg">
+  {' '}
+  // Block element with mx-auto
+  <div className="flex flex-col items-center"> // Flex only on inner div // Content here</div>
 </Container>
 ```
 
 **Debugging Steps**:
+
 1. Check computed styles with browser DevTools - look for `margin-left: auto`
 2. Verify Tailwind CSS is properly imported in globals.css
 3. Check for global CSS resets that might override margins
@@ -460,6 +475,7 @@ export default function Container({
 #### When to Break the Rules
 
 These guidelines are meant to help, not hinder. Break them when:
+
 - User experience would significantly improve
 - Performance gains justify the change
 - A creative solution better serves the project goals
@@ -503,6 +519,7 @@ Remember: I'm building this to be premium, fluid, and delightful. If something i
    - Chrome DevTools MCP instances
 
 6. **Detecting orphaned dev servers**:
+
    ```bash
    # Check for running Next.js/Node processes
    ps aux | grep -E "(pnpm|npm|node)" | grep -v grep

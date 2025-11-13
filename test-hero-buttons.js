@@ -2,12 +2,13 @@
 const { chromium } = require('playwright');
 
 const DEFAULT_PORT = process.env.APP_PORT || process.env.PORT || 3000;
-const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
+const BASE_URL =
+  process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
 
 (async () => {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage({
-    viewport: { width: 1440, height: 900 }
+    viewport: { width: 1440, height: 900 },
   });
 
   try {
@@ -25,13 +26,13 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     const heroSection = await page.locator('#home');
     await heroSection.screenshot({
       path: 'hero-section-full.png',
-      fullPage: false
+      fullPage: false,
     });
 
     // Take a screenshot focusing on just the buttons area
     const buttonsContainer = await page.locator('.fluid-gap-xl').first();
     await buttonsContainer.screenshot({
-      path: 'hero-buttons-close-up.png'
+      path: 'hero-buttons-close-up.png',
     });
 
     // Test hover states
@@ -39,21 +40,21 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     await requestButton.hover();
     await page.waitForTimeout(500);
     await buttonsContainer.screenshot({
-      path: 'hero-buttons-hover-request.png'
+      path: 'hero-buttons-hover-request.png',
     });
 
     const exploreButton = await page.locator('button:has-text("Explore Offerings")');
     await exploreButton.hover();
     await page.waitForTimeout(500);
     await buttonsContainer.screenshot({
-      path: 'hero-buttons-hover-explore.png'
+      path: 'hero-buttons-hover-explore.png',
     });
 
     // Test mobile view
     await page.setViewportSize({ width: 390, height: 844 }); // iPhone 14 Pro
     await page.waitForTimeout(1000);
     await buttonsContainer.screenshot({
-      path: 'hero-buttons-mobile.png'
+      path: 'hero-buttons-mobile.png',
     });
 
     console.log('Screenshots captured successfully!');
@@ -63,7 +64,6 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     console.log('  - hero-buttons-hover-request.png');
     console.log('  - hero-buttons-hover-explore.png');
     console.log('  - hero-buttons-mobile.png');
-
   } catch (error) {
     console.error('Error during testing:', error);
   } finally {

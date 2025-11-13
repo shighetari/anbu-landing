@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -9,12 +9,12 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      'xs': '375px',
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
-      'laptop': '1440px', // I'm adding 15.5" MacBook Pro breakpoint
+      xs: '375px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      laptop: '1440px', // I'm adding 15.5" MacBook Pro breakpoint
       '2xl': '1536px',
       '3xl': '1920px',
     },
@@ -33,14 +33,14 @@ const config: Config = {
       },
       animation: {
         'marble-flow': 'marbleFlow 15s ease infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'glow': 'glow 2s ease-in-out infinite',
-        'shimmer': 'shimmer 2s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
+        glow: 'glow 2s ease-in-out infinite',
+        shimmer: 'shimmer 2s ease-in-out infinite',
         'pulse-gold': 'pulseGold 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'spin-slow': 'spin 8s linear infinite',
         'meteor-effect': 'meteor 5s linear infinite',
         'shiny-text': 'shiny-text 8s infinite',
-        'gradient': 'gradient 8s linear infinite',
+        gradient: 'gradient 8s linear infinite',
       },
       keyframes: {
         gradient: {
@@ -85,8 +85,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        'sans': ['Inter', 'system-ui', 'sans-serif'],
-        'display': ['Montserrat', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Montserrat', 'sans-serif'],
       },
       spacing: {
         '18': '4.5rem',
@@ -129,5 +129,5 @@ const config: Config = {
     },
   },
   plugins: [],
-}
-export default config
+};
+export default config;

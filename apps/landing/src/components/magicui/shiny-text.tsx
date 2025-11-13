@@ -1,23 +1,18 @@
-'use client'
+'use client';
 
-import { cn } from '@/lib/utils'
-import { CSSProperties } from 'react'
+import { cn } from '@/lib/utils';
+import { CSSProperties } from 'react';
 
 interface ShinyTextProps {
-  children: React.ReactNode
-  className?: string
-  speed?: number
-  disabled?: boolean
+  children: React.ReactNode;
+  className?: string;
+  speed?: number;
+  disabled?: boolean;
 }
 
-export const ShinyText = ({
-  children,
-  className,
-  speed = 8,
-  disabled = false,
-}: ShinyTextProps) => {
+export const ShinyText = ({ children, className, speed = 8, disabled = false }: ShinyTextProps) => {
   if (disabled) {
-    return <span className={className}>{children}</span>
+    return <span className={className}>{children}</span>;
   }
 
   return (
@@ -36,5 +31,5 @@ export const ShinyText = ({
     >
       {children}
     </span>
-  )
-}
+  );
+};

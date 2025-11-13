@@ -1,26 +1,26 @@
-"use client"
+'use client';
 
-import React, { useRef } from "react"
-import { motion } from "framer-motion"
-import { cn } from "@/lib/utils"
+import React, { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 export const BackgroundBeams = React.memo(({ className }: { className?: string }) => {
   // Reduced number of beams for better performance
   const beams = [
     { initialX: 10, translateX: 10, duration: 7, repeatDelay: 3, delay: 2 },
     { initialX: 480, translateX: 480, duration: 5, repeatDelay: 4, delay: 4 },
-    { initialX: 820, translateX: 820, duration: 9, repeatDelay: 3, className: "h-14" },
-  ]
+    { initialX: 820, translateX: 820, duration: 9, repeatDelay: 3, className: 'h-14' },
+  ];
 
   return (
     <div
       className={cn(
-        "absolute inset-0 flex h-full w-full items-center justify-center overflow-hidden pointer-events-none",
+        'pointer-events-none absolute inset-0 flex h-full w-full items-center justify-center overflow-hidden',
         className
       )}
       style={{
         contain: 'layout style paint',
-        willChange: 'transform'
+        willChange: 'transform',
       }}
     >
       {beams.map((beam, index) => (
@@ -32,46 +32,48 @@ export const BackgroundBeams = React.memo(({ className }: { className?: string }
         </div>
       ))}
     </div>
-  )
-})
+  );
+});
 
-BackgroundBeams.displayName = 'BackgroundBeams'
+BackgroundBeams.displayName = 'BackgroundBeams';
 
-const Beam = React.memo(({
-  initialX,
-  translateX,
-  duration,
-  repeatDelay = 0,
-  delay = 0,
-  className,
-}: {
-  initialX: number
-  translateX: number
-  duration: number
-  repeatDelay?: number
-  delay?: number
-  className?: string
-}) => {
-  return (
-    <motion.div
-      initial={{ x: initialX, opacity: 0 }}
-      animate={{
-        x: translateX,
-        opacity: [0, 1, 0]
-      }}
-      transition={{
-        duration,
-        repeat: Infinity,
-        repeatDelay,
-        delay,
-        ease: "linear",
-      }}
-      className={cn(
-        "absolute left-0 top-1/2 h-10 w-px -translate-y-1/2 bg-gradient-to-t from-transparent via-anbu-gold/50 to-transparent blur-sm",
-        className
-      )}
-    />
-  )
-})
+const Beam = React.memo(
+  ({
+    initialX,
+    translateX,
+    duration,
+    repeatDelay = 0,
+    delay = 0,
+    className,
+  }: {
+    initialX: number;
+    translateX: number;
+    duration: number;
+    repeatDelay?: number;
+    delay?: number;
+    className?: string;
+  }) => {
+    return (
+      <motion.div
+        initial={{ x: initialX, opacity: 0 }}
+        animate={{
+          x: translateX,
+          opacity: [0, 1, 0],
+        }}
+        transition={{
+          duration,
+          repeat: Infinity,
+          repeatDelay,
+          delay,
+          ease: 'linear',
+        }}
+        className={cn(
+          'absolute left-0 top-1/2 h-10 w-px -translate-y-1/2 bg-gradient-to-t from-transparent via-anbu-gold/50 to-transparent blur-sm',
+          className
+        )}
+      />
+    );
+  }
+);
 
-Beam.displayName = 'Beam'
+Beam.displayName = 'Beam';

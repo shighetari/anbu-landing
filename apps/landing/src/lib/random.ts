@@ -2,8 +2,7 @@ const LCG_A = 1664525;
 const LCG_C = 1013904223;
 const LCG_M = 2 ** 32;
 
-const normalizeSeed = (value: number) =>
-  Math.abs(Math.floor(value)) % LCG_M;
+const normalizeSeed = (value: number) => Math.abs(Math.floor(value)) % LCG_M;
 
 /**
  * Deterministic pseudo-random number generator (0 <= n < 1)

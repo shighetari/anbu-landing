@@ -11,7 +11,7 @@
 /* =================================
    TAILWIND
    ================================= */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* =================================
    CUSTOM UTILITIES
@@ -22,12 +22,18 @@ html {
   font-size: 100%;
 }
 
-@media (min-width: 768px) { /* md */
-  html { font-size: 93%; }
+@media (min-width: 768px) {
+  /* md */
+  html {
+    font-size: 93%;
+  }
 }
 
-@media (min-width: 1024px) { /* lg+ */
-  html { font-size: 90%; }
+@media (min-width: 1024px) {
+  /* lg+ */
+  html {
+    font-size: 90%;
+  }
 }
 
 /* Container */
@@ -83,7 +89,7 @@ html {
 }
 
 .text-glow-gold {
-  text-shadow: 
+  text-shadow:
     0 0 10px rgba(255, 215, 0, 0.5),
     0 0 20px rgba(255, 215, 0, 0.3),
     0 0 30px rgba(255, 215, 0, 0.2);
@@ -91,7 +97,12 @@ html {
 
 /* Marble background effect */
 .marble-bg {
-  background: linear-gradient(135deg, var(--color-black) 0%, var(--color-gray-800) 50%, var(--color-black) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-black) 0%,
+    var(--color-gray-800) 50%,
+    var(--color-black) 100%
+  );
   background-size: 200% 200%;
   animation: marbleFlow 15s ease infinite;
 }
@@ -105,9 +116,21 @@ html {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: 
-    repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.01) 35px, rgba(255, 255, 255, 0.01) 70px),
-    repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255, 255, 255, 0.01) 35px, rgba(255, 255, 255, 0.01) 70px);
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 35px,
+      rgba(255, 255, 255, 0.01) 35px,
+      rgba(255, 255, 255, 0.01) 70px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 35px,
+      rgba(255, 255, 255, 0.01) 35px,
+      rgba(255, 255, 255, 0.01) 70px
+    );
   pointer-events: none;
   opacity: 0.5;
 }
@@ -128,7 +151,7 @@ html {
 
 /* Grid background */
 .grid-bg {
-  background-image: 
+  background-image:
     linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -286,7 +309,7 @@ html {
     background: white;
     color: black;
   }
-  
+
   .no-print {
     display: none;
   }

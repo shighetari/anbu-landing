@@ -51,7 +51,7 @@ Multiple compounding issues:
 ```tsx
 <pre
   className="relative mt-3 overflow-y-scroll overflow-x-hidden rounded-xl bg-gradient-to-b from-black/50 to-black/30 px-4 py-5 pr-6 text-[13px] font-mono scrollbar-thin scrollbar-track-transparent scrollbar-thumb-anbu-gold/20 hover:scrollbar-thumb-anbu-gold/30"
-  style={{ 
+  style={{
     height: '260px', // Fixed height - critical for preventing layout shifts
     minHeight: '260px',
     maxHeight: '260px',
@@ -67,9 +67,9 @@ Multiple compounding issues:
 **Code Element:**
 
 ```tsx
-<code 
-  className="relative grid gap-y-2 whitespace-pre-wrap break-words" 
-  style={{ 
+<code
+  className="relative grid gap-y-2 whitespace-pre-wrap break-words"
+  style={{
     contain: 'layout style',
     minHeight: '100%',
     display: 'grid'
@@ -83,8 +83,8 @@ Multiple compounding issues:
 <motion.div
   initial={{ opacity: 0, y: 8 }}
   whileInView={{ opacity: 1, y: 0 }}
-  transition={{ 
-    duration: 0.5, 
+  transition={{
+    duration: 0.5,
     delay: 0.2,
     ease: [0.25, 0.1, 0.25, 1]
   }}
@@ -135,4 +135,3 @@ Testing with Chrome DevTools Performance Observer API confirmed:
 5. Small, frequent layout shifts are more problematic than large infrequent ones
 
 ---
-

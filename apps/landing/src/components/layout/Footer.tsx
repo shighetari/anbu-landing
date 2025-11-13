@@ -1,19 +1,27 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Twitter, Linkedin, Mail, Heart, ArrowUpRight, Zap } from '@/components/ui/lucide-safe'
-import Container from '@/components/ui/Container'
-import { Magnet } from '@/components/reactbits/magnet'
-import { SparklesCore } from '@/components/aceternity/sparkles'
-import { siteConfig } from '@/lib/site-config'
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Github,
+  Twitter,
+  Linkedin,
+  Mail,
+  Heart,
+  ArrowUpRight,
+  Zap,
+} from '@/components/ui/lucide-safe';
+import Container from '@/components/ui/Container';
+import { Magnet } from '@/components/reactbits/magnet';
+import { SparklesCore } from '@/components/aceternity/sparkles';
+import { siteConfig } from '@/lib/site-config';
 
 const socialLinks = [
   { name: 'GitHub', icon: Github, href: siteConfig.github },
   { name: 'Twitter', icon: Twitter, href: siteConfig.twitter },
   { name: 'LinkedIn', icon: Linkedin, href: siteConfig.linkedin },
   { name: 'Email', icon: Mail, href: `mailto:${siteConfig.contactEmail}` },
-]
+];
 
 const quickLinks = [
   { name: 'Discover', href: '/#home' },
@@ -22,17 +30,17 @@ const quickLinks = [
   { name: 'Marketing Studio', href: '/solutions/marketing-studio' },
   { name: 'Command Console', href: '/solutions/command-console' },
   { name: 'Contact', href: '/contact' },
-]
+];
 
 // Social icon with micro animations
-function SocialIcon({ social }: { social: typeof socialLinks[0] }) {
-  const [isHovered, setIsHovered] = useState(false)
-  const Icon = social.icon
+function SocialIcon({ social }: { social: (typeof socialLinks)[0] }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const Icon = social.icon;
 
   return (
     <motion.a
       href={social.href}
-      className="relative group"
+      className="group relative"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{ scale: 1.05 }}
@@ -71,13 +79,13 @@ function SocialIcon({ social }: { social: typeof socialLinks[0] }) {
         </AnimatePresence>
       </div>
     </motion.a>
-  )
+  );
 }
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
-  const [emailHovered, setEmailHovered] = useState(false)
-  const [showLegalModal, setShowLegalModal] = useState(false)
+  const currentYear = new Date().getFullYear();
+  const [emailHovered, setEmailHovered] = useState(false);
+  const [showLegalModal, setShowLegalModal] = useState(false);
 
   return (
     <footer className="relative border-t border-anbu-gold/10 bg-black">
@@ -112,7 +120,8 @@ export default function Footer() {
               </span>
 
               <p className="max-w-sm text-sm text-white/55">
-                Premium digital craft for teams shipping ambitious product experiences with precision and pace.
+                Premium digital craft for teams shipping ambitious product experiences with
+                precision and pace.
               </p>
 
               <div className="flex items-center gap-3">
@@ -166,7 +175,8 @@ export default function Footer() {
                 className="flex w-full flex-col items-start gap-3 lg:max-w-md lg:items-end"
               >
                 <p className="text-sm text-white/50 lg:max-w-xs">
-                  We collaborate with founders and product teams to ship expressive, resilient interfaces.
+                  We collaborate with founders and product teams to ship expressive, resilient
+                  interfaces.
                 </p>
 
                 <motion.a
@@ -225,7 +235,7 @@ export default function Footer() {
                   transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                   className="inline-flex"
                 >
-                  <Heart className="h-3 w-3 text-anbu-gold fill-anbu-gold" />
+                  <Heart className="h-3 w-3 fill-anbu-gold text-anbu-gold" />
                 </motion.span>
                 by Francisco
               </span>
@@ -278,7 +288,10 @@ export default function Footer() {
                 </p>
                 <p className="text-xs text-white/50">
                   Questions? Reach out to{' '}
-                  <a href={`mailto:${siteConfig.contactEmail}`} className="text-anbu-gold hover:text-anbu-gold-accent transition-colors">
+                  <a
+                    href={`mailto:${siteConfig.contactEmail}`}
+                    className="text-anbu-gold transition-colors hover:text-anbu-gold-accent"
+                  >
                     the team
                   </a>
                 </p>
@@ -297,5 +310,5 @@ export default function Footer() {
         )}
       </AnimatePresence>
     </footer>
-  )
+  );
 }

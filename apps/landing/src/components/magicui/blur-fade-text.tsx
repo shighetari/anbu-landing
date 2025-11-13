@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { cn } from '@/lib/utils'
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+import { cn } from '@/lib/utils';
 
 interface BlurFadeTextProps {
-  children: React.ReactNode
-  className?: string
-  delay?: number
-  inView?: boolean
-  duration?: number
-  yOffset?: number
-  blur?: string
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  inView?: boolean;
+  duration?: number;
+  yOffset?: number;
+  blur?: string;
 }
 
 export const BlurFadeText = ({
@@ -23,9 +23,9 @@ export const BlurFadeText = ({
   yOffset = 6,
   blur = '6px',
 }: BlurFadeTextProps) => {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '-50px' })
-  const shouldAnimate = inView ? isInView : true
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+  const shouldAnimate = inView ? isInView : true;
 
   return (
     <motion.div
@@ -53,5 +53,5 @@ export const BlurFadeText = ({
     >
       {children}
     </motion.div>
-  )
-}
+  );
+};

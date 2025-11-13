@@ -1,16 +1,23 @@
-import type { Metadata, Viewport } from "next";
-import localFont from 'next/font/local'
-import "../styles/globals.css";
-import Navigation from '@/components/layout/Navigation'
-import Footer from '@/components/layout/Footer'
-import SkipNav from '@/components/layout/SkipNav'
-import { ScrollProgress } from '@/components/ui/scroll-progress'
-import { GlobalDock } from '@/components/layout/GlobalDock'
-import { ClickSparkOverlay } from '@/components/reactbits/click-spark-overlay'
-import { ArrowRight, BookOpen, Compass, Home, MessagesSquare, Sparkles } from '@/components/ui/lucide-safe'
-import { ScrollReset } from '@/components/layout/ScrollReset'
-import { HashScrollManager } from '@/components/layout/HashScrollManager'
-import { siteConfig } from '@/lib/site-config'
+import type { Metadata, Viewport } from 'next';
+import localFont from 'next/font/local';
+import '../styles/globals.css';
+import Navigation from '@/components/layout/Navigation';
+import Footer from '@/components/layout/Footer';
+import SkipNav from '@/components/layout/SkipNav';
+import { ScrollProgress } from '@/components/ui/scroll-progress';
+import { GlobalDock } from '@/components/layout/GlobalDock';
+import { ClickSparkOverlay } from '@/components/reactbits/click-spark-overlay';
+import {
+  ArrowRight,
+  BookOpen,
+  Compass,
+  Home,
+  MessagesSquare,
+  Sparkles,
+} from '@/components/ui/lucide-safe';
+import { ScrollReset } from '@/components/layout/ScrollReset';
+import { HashScrollManager } from '@/components/layout/HashScrollManager';
+import { siteConfig } from '@/lib/site-config';
 
 // I'm loading the Nerd Font locally for optimal performance
 const jetbrainsMono = localFont({
@@ -28,34 +35,36 @@ const jetbrainsMono = localFont({
   ],
   variable: '--font-jetbrains-mono',
   display: 'swap',
-})
+});
 
-const ogImageUrl = `${siteConfig.website}/og-image.png`
+const ogImageUrl = `${siteConfig.website}/og-image.png`;
 
 export const metadata: Metadata = {
-  title: "ANBU Solutions - Innovative Digital Solutions",
-  description: "ANBU Solutions delivers cutting-edge digital transformation, custom software development, and enterprise solutions for the modern era.",
-  keywords: "ANBU, digital solutions, software development, web development, cloud services, enterprise solutions",
-  authors: [{ name: "Francisco" }],
+  title: 'ANBU Solutions - Innovative Digital Solutions',
+  description:
+    'ANBU Solutions delivers cutting-edge digital transformation, custom software development, and enterprise solutions for the modern era.',
+  keywords:
+    'ANBU, digital solutions, software development, web development, cloud services, enterprise solutions',
+  authors: [{ name: 'Francisco' }],
   openGraph: {
-    title: "ANBU Solutions - Innovative Digital Solutions",
-    description: "Elevating businesses through cutting-edge technology",
+    title: 'ANBU Solutions - Innovative Digital Solutions',
+    description: 'Elevating businesses through cutting-edge technology',
     url: siteConfig.website,
-    siteName: "ANBU Solutions",
-    type: "website",
+    siteName: 'ANBU Solutions',
+    type: 'website',
     images: [
       {
         url: ogImageUrl,
         width: 1200,
         height: 630,
-        alt: "ANBU Solutions - Innovative Digital Solutions",
+        alt: 'ANBU Solutions - Innovative Digital Solutions',
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "ANBU Solutions - Innovative Digital Solutions",
-    description: "Elevating businesses through cutting-edge technology",
+    card: 'summary_large_image',
+    title: 'ANBU Solutions - Innovative Digital Solutions',
+    description: 'Elevating businesses through cutting-edge technology',
     images: [ogImageUrl],
   },
   robots: {
@@ -64,18 +73,18 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
   },
 };
 
 export const viewport: Viewport = {
-  width: "device-width",
+  width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#FFD700",
+  themeColor: '#FFD700',
 };
 
 export default function RootLayout({
@@ -85,9 +94,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${jetbrainsMono.variable} font-sans antialiased bg-black text-anbu-marble`}
-      >
+      <body className={`${jetbrainsMono.variable} bg-black font-sans text-anbu-marble antialiased`}>
         <ScrollReset />
         <HashScrollManager />
         <SkipNav />
@@ -98,34 +105,34 @@ export default function RootLayout({
         <GlobalDock
           items={[
             {
-              title: "Discover",
+              title: 'Discover',
               icon: <Home className="h-full w-full" />,
-              href: "/#home",
+              href: '/#home',
             },
             {
-              title: "Solutions",
+              title: 'Solutions',
               icon: <Compass className="h-full w-full" />,
-              href: "/solutions",
+              href: '/solutions',
             },
             {
-              title: "Docs Hub",
+              title: 'Docs Hub',
               icon: <BookOpen className="h-full w-full" />,
-              href: "/docs-hub",
+              href: '/docs-hub',
             },
             {
-              title: "Marketing",
+              title: 'Marketing',
               icon: <Sparkles className="h-full w-full" />,
-              href: "/solutions/marketing-studio",
+              href: '/solutions/marketing-studio',
             },
             {
-              title: "Engage",
+              title: 'Engage',
               icon: <MessagesSquare className="h-full w-full" />,
-              href: "/contact",
+              href: '/contact',
             },
             {
-              title: "Command",
+              title: 'Command',
               icon: <ArrowRight className="h-full w-full" />,
-              href: "/solutions/command-console",
+              href: '/solutions/command-console',
             },
           ]}
         />

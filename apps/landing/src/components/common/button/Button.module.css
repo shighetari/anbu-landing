@@ -61,7 +61,7 @@
 /* Primary variant */
 .primary {
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  color: var(--color-ink, #0B0500);
+  color: var(--color-ink, #0b0500);
   font-weight: var(--font-bold);
   box-shadow: var(--shadow-md), var(--shadow-glow-sm);
 }
@@ -161,7 +161,9 @@
 
 .danger:hover:not(.disabled):not(.loading) {
   background: linear-gradient(135deg, hsl(0, 72%, 55%), hsl(0, 72%, 45%));
-  box-shadow: var(--shadow-lg), 0 0 20px rgba(239, 68, 68, 0.4);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 20px rgba(239, 68, 68, 0.4);
 }
 
 .danger:active:not(.disabled):not(.loading) {
@@ -196,7 +198,8 @@
 }
 
 @keyframes buttonGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: var(--shadow-md), var(--shadow-glow-md);
   }
   50% {
@@ -210,7 +213,8 @@
 }
 
 @keyframes buttonPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -330,15 +334,15 @@
   .button {
     letter-spacing: var(--tracking-normal);
   }
-  
+
   .md {
     padding: var(--space-xs) var(--space-sm);
   }
-  
+
   .lg {
     padding: var(--space-sm) var(--space-md);
   }
-  
+
   .xl {
     padding: var(--space-md) var(--space-lg);
   }

@@ -1,31 +1,41 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import Image from 'next/image'
-import type { ReactNode, CSSProperties } from 'react'
-import { motion } from 'framer-motion'
-import { Youtube, Instagram, Video, TrendingUp, BarChart3, Users, Play, Eye, ArrowUpRight } from '@/components/ui/lucide-safe'
+import Link from 'next/link';
+import Image from 'next/image';
+import type { ReactNode, CSSProperties } from 'react';
+import { motion } from 'framer-motion';
+import {
+  Youtube,
+  Instagram,
+  Video,
+  TrendingUp,
+  BarChart3,
+  Users,
+  Play,
+  Eye,
+  ArrowUpRight,
+} from '@/components/ui/lucide-safe';
 
-import Container from '@/components/ui/Container'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { HeroVideoDialog } from '@/components/ui/hero-video-dialog'
-import { CardContainer, CardBody, CardItem } from '@/components/aceternity/3d-card'
-import { FloatingDock } from '@/components/aceternity/floating-dock'
-import { InfiniteMovingCards } from '@/components/aceternity/infinite-moving-cards'
-import { ShinyText } from '@/components/magicui/shiny-text'
-import { BlurFadeText } from '@/components/magicui/blur-fade-text'
-import { TextCascade } from '@/components/reactbits/text-cascade'
-import { ShineBorder } from '@/components/ui/shine-border'
-import { Magnet } from '@/components/reactbits/magnet'
-import { NumberTicker } from '@/components/ui/number-ticker'
-import { BackgroundBeams } from '@/components/aceternity/background-beams'
-import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section'
-import { Sparkles } from '@/components/aceternity/sparkles'
-import { Meteors } from '@/components/aceternity/meteors'
-import SocialPricingCards from '@/components/features/social/SocialPricingCards'
-import AdditionalServices from '@/components/features/social/AdditionalServices'
-import { cn } from '@/lib/utils'
-import { brandButton } from '@/lib/brand'
+import Container from '@/components/ui/Container';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { HeroVideoDialog } from '@/components/ui/hero-video-dialog';
+import { CardContainer, CardBody, CardItem } from '@/components/aceternity/3d-card';
+import { FloatingDock } from '@/components/aceternity/floating-dock';
+import { InfiniteMovingCards } from '@/components/aceternity/infinite-moving-cards';
+import { ShinyText } from '@/components/magicui/shiny-text';
+import { BlurFadeText } from '@/components/magicui/blur-fade-text';
+import { TextCascade } from '@/components/reactbits/text-cascade';
+import { ShineBorder } from '@/components/ui/shine-border';
+import { Magnet } from '@/components/reactbits/magnet';
+import { NumberTicker } from '@/components/ui/number-ticker';
+import { BackgroundBeams } from '@/components/aceternity/background-beams';
+import { GradualBlurSection } from '@/components/reactbits/gradual-blur-section';
+import { Sparkles } from '@/components/aceternity/sparkles';
+import { Meteors } from '@/components/aceternity/meteors';
+import SocialPricingCards from '@/components/features/social/SocialPricingCards';
+import AdditionalServices from '@/components/features/social/AdditionalServices';
+import { cn } from '@/lib/utils';
+import { brandButton } from '@/lib/brand';
 
 const socialPlatforms = [
   {
@@ -53,36 +63,41 @@ const socialPlatforms = [
     icon: <Play className="h-full w-full" />,
     href: 'https://vimeo.com',
   },
-]
+];
 
 const testimonials = [
   {
-    quote: "ANBU's video content increased our engagement by 300%. The production quality is absolutely stunning.",
-    name: "Sarah Chen",
-    title: "Marketing Director at TechFlow",
+    quote:
+      "ANBU's video content increased our engagement by 300%. The production quality is absolutely stunning.",
+    name: 'Sarah Chen',
+    title: 'Marketing Director at TechFlow',
   },
   {
-    quote: "Their ability to translate complex technical concepts into compelling visual stories is unmatched.",
-    name: "Marcus Rodriguez",
-    title: "VP of Product at DataSync",
+    quote:
+      'Their ability to translate complex technical concepts into compelling visual stories is unmatched.',
+    name: 'Marcus Rodriguez',
+    title: 'VP of Product at DataSync',
   },
   {
-    quote: "The campaign blueprints they provided transformed our entire content strategy. Pure genius.",
-    name: "Emily Watson",
-    title: "Content Lead at InnovateLabs",
+    quote:
+      'The campaign blueprints they provided transformed our entire content strategy. Pure genius.',
+    name: 'Emily Watson',
+    title: 'Content Lead at InnovateLabs',
   },
   {
-    quote: "Working with ANBU feels like having a world-class film studio as part of your marketing team.",
-    name: "David Park",
-    title: "CMO at CloudScale",
+    quote:
+      'Working with ANBU feels like having a world-class film studio as part of your marketing team.',
+    name: 'David Park',
+    title: 'CMO at CloudScale',
   },
-]
+];
 
 const videoShowcase = [
   {
     title: 'Product Launch Campaign',
     description: 'Multi-platform rollout with custom assets for each channel',
-    thumbnail: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=600&q=80',
+    thumbnail:
+      'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=600&q=80',
     category: 'Campaign',
     views: '2.4M',
     engagement: '15.2%',
@@ -90,7 +105,8 @@ const videoShowcase = [
   {
     title: 'Technical Documentation',
     description: 'Developer-focused explainer with interactive code demos',
-    thumbnail: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
+    thumbnail:
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
     category: 'Educational',
     views: '850K',
     engagement: '22.8%',
@@ -98,19 +114,20 @@ const videoShowcase = [
   {
     title: 'Brand Storytelling',
     description: 'Cinematic narrative showcasing company values and mission',
-    thumbnail: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=600&q=80',
+    thumbnail:
+      'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=600&q=80',
     category: 'Brand',
     views: '3.1M',
     engagement: '18.7%',
   },
-]
+];
 
 const stats = [
   { value: 50, suffix: 'M+', label: 'Total Views' },
   { value: 95, suffix: '%', label: 'Client Satisfaction' },
   { value: 200, suffix: '+', label: 'Videos Produced' },
   { value: 15, suffix: '%', label: 'Avg. Engagement' },
-]
+];
 
 const heroHighlights = [
   {
@@ -134,12 +151,13 @@ const heroHighlights = [
     accentFrom: '#a855f7',
     accentTo: '#fb7185',
   },
-]
+];
 
 const workflowHighlights = [
   {
     title: 'Campaign blueprints',
-    description: 'Figma storyboards, narrative prompts, and edit templates keep every launch aligned with product and revenue goals.',
+    description:
+      'Figma storyboards, narrative prompts, and edit templates keep every launch aligned with product and revenue goals.',
     icon: BarChart3,
     accentFrom: '#FFD16A',
     accentTo: '#FF8C37',
@@ -149,7 +167,8 @@ const workflowHighlights = [
   },
   {
     title: 'Content production pods',
-    description: 'Hybrid producers and editors capture footage, cut hero films, and deliver platform-specific variations in a single sprint.',
+    description:
+      'Hybrid producers and editors capture footage, cut hero films, and deliver platform-specific variations in a single sprint.',
     icon: Video,
     accentFrom: '#C084FC',
     accentTo: '#FB7185',
@@ -159,7 +178,8 @@ const workflowHighlights = [
   },
   {
     title: 'Insights console',
-    description: 'Live dashboards connect platform analytics, CRM data, and MQL triggers so every drop feeds the next optimization cycle.',
+    description:
+      'Live dashboards connect platform analytics, CRM data, and MQL triggers so every drop feeds the next optimization cycle.',
     icon: TrendingUp,
     accentFrom: '#38BDF8',
     accentTo: '#14B8A6',
@@ -167,9 +187,9 @@ const workflowHighlights = [
     href: '/solutions/command-console',
     cta: 'See command console',
   },
-]
+];
 
-const sectionBase = 'relative py-16 sm:py-24 lg:py-32 w-full flex justify-center'
+const sectionBase = 'relative py-16 sm:py-24 lg:py-32 w-full flex justify-center';
 
 function SectionWrapper({
   children,
@@ -177,18 +197,21 @@ function SectionWrapper({
   containerClassName = 'space-y-12 sm:space-y-16 lg:space-y-20',
   id,
 }: {
-  children: ReactNode
-  className?: string
-  containerClassName?: string
-  id?: string
+  children: ReactNode;
+  className?: string;
+  containerClassName?: string;
+  id?: string;
 }) {
   return (
     <GradualBlurSection id={id} className={cn(sectionBase, className)}>
-      <Container size="lg" className={cn('flex flex-col items-center justify-center text-center', containerClassName)}>
+      <Container
+        size="lg"
+        className={cn('flex flex-col items-center justify-center text-center', containerClassName)}
+      >
         {children}
       </Container>
     </GradualBlurSection>
-  )
+  );
 }
 
 function SectionHeading({
@@ -198,11 +221,11 @@ function SectionHeading({
   className,
   delay = 0.1,
 }: {
-  eyebrow?: ReactNode
-  title: ReactNode
-  description?: ReactNode
-  className?: string
-  delay?: number
+  eyebrow?: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  className?: string;
+  delay?: number;
 }) {
   return (
     <motion.div
@@ -210,30 +233,33 @@ function SectionHeading({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay }}
       viewport={{ once: true, amount: 0.4 }}
-      className={cn('mx-auto w-full max-w-3xl space-y-6 sm:space-y-8 text-center mb-10 sm:mb-12 lg:mb-16', className)}
+      className={cn(
+        'mx-auto mb-10 w-full max-w-3xl space-y-6 text-center sm:mb-12 sm:space-y-8 lg:mb-16',
+        className
+      )}
     >
       {eyebrow ? <div className="flex justify-center">{eyebrow}</div> : null}
       {typeof title === 'string' ? (
         <TextCascade
           as="h2"
           text={title}
-          className="text-balance text-3xl sm:text-4xl font-semibold"
+          className="text-balance text-3xl font-semibold sm:text-4xl"
           delay={delay + 0.05}
           stagger={0.06}
           viewportAmount={0.55}
         />
       ) : (
-        <BlurFadeText className="text-3xl sm:text-4xl font-display font-bold tracking-tight">
+        <BlurFadeText className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
           {title}
         </BlurFadeText>
       )}
       {description ? (
-        <p className="mx-auto w-full max-w-4xl text-center text-base sm:text-lg text-white/85 leading-[1.85] px-6 sm:px-8">
+        <p className="mx-auto w-full max-w-4xl px-6 text-center text-base leading-[1.85] text-white/85 sm:px-8 sm:text-lg">
           {description}
         </p>
       ) : null}
     </motion.div>
-  )
+  );
 }
 
 export default function SocialHubPage() {
@@ -254,7 +280,7 @@ export default function SocialHubPage() {
         </div>
 
         {/* Hero Section */}
-        <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden pt-20 sm:pt-24 lg:pt-32 pb-16 sm:pb-20 lg:pb-28">
+        <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden pb-16 pt-20 sm:pb-20 sm:pt-24 lg:pb-28 lg:pt-32">
           <div className="pointer-events-none absolute inset-0">
             <Meteors number={15} className="opacity-45" />
           </div>
@@ -270,7 +296,7 @@ export default function SocialHubPage() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
-                className="mx-auto flex w-full max-w-3xl flex-col items-center space-y-8 sm:space-y-12 lg:space-y-14 text-center"
+                className="mx-auto flex w-full max-w-3xl flex-col items-center space-y-8 text-center sm:space-y-12 lg:space-y-14"
               >
                 <div className="flex flex-col items-center space-y-6 sm:space-y-8 lg:space-y-10">
                   <motion.div
@@ -279,7 +305,7 @@ export default function SocialHubPage() {
                     transition={{ delay: 0.2 }}
                   >
                     <AnimatedGradientText
-                      className="mx-auto inline-flex items-center justify-center text-xs sm:text-sm uppercase tracking-[0.24em] sm:tracking-[0.32em] text-anbu-gold"
+                      className="mx-auto inline-flex items-center justify-center text-xs uppercase tracking-[0.24em] text-anbu-gold sm:text-sm sm:tracking-[0.32em]"
                       colorFrom="#FFED4E"
                       colorTo="#FF9D2E"
                     >
@@ -312,8 +338,8 @@ export default function SocialHubPage() {
                     transition={{ delay: 0.6 }}
                     className="mx-auto max-w-2xl px-4 text-center text-sm leading-[1.75] text-white/90 sm:px-6 sm:text-base sm:leading-[1.85] lg:text-lg"
                   >
-                    Cinematic edits engineered with conversion psychology, automation, and analytics—so every drop opens
-                    pipeline, not just eyes.
+                    Cinematic edits engineered with conversion psychology, automation, and
+                    analytics—so every drop opens pipeline, not just eyes.
                   </motion.p>
 
                   <motion.div
@@ -327,7 +353,8 @@ export default function SocialHubPage() {
                       className={brandButton({
                         variant: 'primary',
                         size: 'lg',
-                        className: 'w-full sm:w-auto shadow-[0_18px_45px_rgba(255,173,51,0.35)] min-h-[44px]',
+                        className:
+                          'min-h-[44px] w-full shadow-[0_18px_45px_rgba(255,173,51,0.35)] sm:w-auto',
                       })}
                       style={{ touchAction: 'manipulation' }}
                     >
@@ -338,7 +365,8 @@ export default function SocialHubPage() {
                       className={brandButton({
                         variant: 'secondary',
                         size: 'lg',
-                        className: 'w-full sm:w-auto text-white/85 hover:text-anbu-gold min-h-[44px]',
+                        className:
+                          'min-h-[44px] w-full text-white/85 hover:text-anbu-gold sm:w-auto',
                       })}
                       style={{ touchAction: 'manipulation' }}
                     >
@@ -350,7 +378,7 @@ export default function SocialHubPage() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.85, duration: 0.6 }}
-                    className="grid w-full max-w-3xl gap-3 sm:gap-4 sm:grid-cols-3"
+                    className="grid w-full max-w-3xl gap-3 sm:grid-cols-3 sm:gap-4"
                   >
                     {heroHighlights.map((highlight, index) => (
                       <motion.li
@@ -359,15 +387,17 @@ export default function SocialHubPage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ delay: index * 0.12, duration: 0.6 }}
-                        className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-5 sm:px-5 sm:py-6 text-left shadow-[0_18px_45px_rgba(0,0,0,0.45)] backdrop-blur"
+                        className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-5 text-left shadow-[0_18px_45px_rgba(0,0,0,0.45)] backdrop-blur sm:px-5 sm:py-6"
                       >
                         <span
                           suppressHydrationWarning
                           className="pointer-events-none absolute inset-0 opacity-70 [background:linear-gradient(135deg,var(--highlight-from),var(--highlight-to))]"
-                          style={{
-                            '--highlight-from': `${highlight.accentFrom}1a`,
-                            '--highlight-to': `${highlight.accentTo}24`,
-                          } as CSSProperties}
+                          style={
+                            {
+                              '--highlight-from': `${highlight.accentFrom}1a`,
+                              '--highlight-to': `${highlight.accentTo}24`,
+                            } as CSSProperties
+                          }
                         />
                         <div className="relative flex flex-col gap-2">
                           <span className="flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-white/70">
@@ -390,16 +420,22 @@ export default function SocialHubPage() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.95, duration: 0.6, type: 'spring', stiffness: 120, damping: 20 }}
+                  transition={{
+                    delay: 0.95,
+                    duration: 0.6,
+                    type: 'spring',
+                    stiffness: 120,
+                    damping: 20,
+                  }}
                   className="flex flex-wrap justify-center gap-3 text-[0.65rem] uppercase tracking-[0.28em] text-white/75 sm:gap-4"
                 >
-                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
+                  <span className="from-white/12 via-white/6 rounded-full border border-white/15 bg-gradient-to-r to-transparent px-7 py-3 backdrop-blur">
                     Launch Blueprints
                   </span>
-                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
+                  <span className="from-white/12 via-white/6 rounded-full border border-white/15 bg-gradient-to-r to-transparent px-7 py-3 backdrop-blur">
                     Sales Enablement Cuts
                   </span>
-                  <span className="rounded-full border border-white/15 bg-gradient-to-r from-white/12 via-white/6 to-transparent px-7 py-3 backdrop-blur">
+                  <span className="from-white/12 via-white/6 rounded-full border border-white/15 bg-gradient-to-r to-transparent px-7 py-3 backdrop-blur">
                     Performance Dashboards
                   </span>
                 </motion.div>
@@ -416,7 +452,7 @@ export default function SocialHubPage() {
         >
           <SectionHeading
             eyebrow={
-              <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
+              <ShinyText className="text-xs font-medium uppercase tracking-[0.3em] text-anbu-gold">
                 Signature Work
               </ShinyText>
             }
@@ -434,7 +470,7 @@ export default function SocialHubPage() {
           >
             <ShineBorder
               className="relative overflow-hidden rounded-3xl border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.65)]"
-              shineColor={["#FFD700", "#FF9D2E", "#FFED4E"]}
+              shineColor={['#FFD700', '#FF9D2E', '#FFED4E']}
             >
               <HeroVideoDialog
                 videoSrc="https://www.youtube.com/embed/JkSxvdglLRs"
@@ -448,10 +484,13 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Stats Section */}
-        <SectionWrapper className="mt-12 sm:mt-16 lg:mt-20" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
+        <SectionWrapper
+          className="mt-12 sm:mt-16 lg:mt-20"
+          containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20"
+        >
           <SectionHeading
             eyebrow={
-              <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
+              <ShinyText className="text-xs font-medium uppercase tracking-[0.3em] text-anbu-gold">
                 Impact Metrics
               </ShinyText>
             }
@@ -474,9 +513,9 @@ export default function SocialHubPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="rounded-2xl border border-white/12 bg-white/[0.04] px-8 py-10 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur"
+                className="border-white/12 rounded-2xl border bg-white/[0.04] px-8 py-10 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)] backdrop-blur"
               >
-                <div className="text-3xl lg:text-4xl font-bold">
+                <div className="text-3xl font-bold lg:text-4xl">
                   <ShinyText className="text-anbu-gold">
                     <NumberTicker
                       value={stat.value}
@@ -499,7 +538,7 @@ export default function SocialHubPage() {
         <SectionWrapper id="pricing" className="mt-12 sm:mt-16 lg:mt-20">
           <SectionHeading
             eyebrow={
-              <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
+              <ShinyText className="text-xs font-medium uppercase tracking-[0.3em] text-anbu-gold">
                 Social Media Services
               </ShinyText>
             }
@@ -511,10 +550,10 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Additional Services */}
-        <SectionWrapper className="relative mt-16 sm:mt-20 lg:mt-24 overflow-visible">
+        <SectionWrapper className="relative mt-16 overflow-visible sm:mt-20 lg:mt-24">
           <SectionHeading
             eyebrow={
-              <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
+              <ShinyText className="text-xs font-medium uppercase tracking-[0.3em] text-anbu-gold">
                 Specialized Add-ons
               </ShinyText>
             }
@@ -522,25 +561,28 @@ export default function SocialHubPage() {
             description="Live production. Commerce support. On-brand analytics. Mix and match."
             className=""
           />
-          <div className="pt-8 sm:pt-10 lg:pt-12 pb-8 sm:pb-10 lg:pb-12">
+          <div className="pb-8 pt-8 sm:pb-10 sm:pt-10 lg:pb-12 lg:pt-12">
             <AdditionalServices />
           </div>
         </SectionWrapper>
 
         {/* Video Gallery */}
-        <SectionWrapper className="mt-20 sm:mt-24 lg:mt-32" containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24">
+        <SectionWrapper
+          className="mt-20 sm:mt-24 lg:mt-32"
+          containerClassName="text-center space-y-16 sm:space-y-20 lg:space-y-24"
+        >
           <SectionHeading
             eyebrow={
-              <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
+              <ShinyText className="text-xs font-medium uppercase tracking-[0.3em] text-anbu-gold">
                 Portfolio Showcase
               </ShinyText>
             }
             title="Launch films"
             description="Recent work. Platform-optimized. Always premium."
-            className="mx-auto w-full max-w-3xl space-y-8 sm:space-y-10 text-center"
+            className="mx-auto w-full max-w-3xl space-y-8 text-center sm:space-y-10"
           />
 
-          <div className="mx-auto grid w-full max-w-6xl gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+          <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 lg:gap-10">
             {videoShowcase.map((video, index) => (
               <motion.div
                 key={video.title}
@@ -549,19 +591,19 @@ export default function SocialHubPage() {
                 transition={{ duration: 0.6, delay: index * 0.12 }}
                 viewport={{ once: true }}
               >
-                <CardContainer className="inter-var max-w-sm mx-auto h-full">
-                  <CardBody className="relative flex h-full min-h-[460px] sm:min-h-[500px] flex-col justify-between gap-5 rounded-[26px] border border-white/12 bg-black/60 p-6 sm:p-8 lg:p-9 shadow-[0_16px_60px_rgba(0,0,0,0.55)] backdrop-blur">
+                <CardContainer className="inter-var mx-auto h-full max-w-sm">
+                  <CardBody className="border-white/12 relative flex h-full min-h-[460px] flex-col justify-between gap-5 rounded-[26px] border bg-black/60 p-6 shadow-[0_16px_60px_rgba(0,0,0,0.55)] backdrop-blur sm:min-h-[500px] sm:p-8 lg:p-9">
                     <div className="flex flex-col gap-4">
                       <CardItem
                         translateZ="50"
-                        className="text-xl font-semibold text-white text-center"
+                        className="text-center text-xl font-semibold text-white"
                       >
                         {video.title}
                       </CardItem>
                       <CardItem
                         as="p"
                         translateZ="60"
-                        className="mx-auto max-w-xs text-sm text-white/75 text-center leading-[1.85] min-h-[3rem]"
+                        className="mx-auto min-h-[3rem] max-w-xs text-center text-sm leading-[1.85] text-white/75"
                       >
                         {video.description}
                       </CardItem>
@@ -604,10 +646,13 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Campaign Blueprints & Analytics */}
-        <SectionWrapper className="mt-16 sm:mt-20 lg:mt-24" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
+        <SectionWrapper
+          className="mt-16 sm:mt-20 lg:mt-24"
+          containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20"
+        >
           <SectionHeading
             eyebrow={
-              <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
+              <ShinyText className="text-xs font-medium uppercase tracking-[0.3em] text-anbu-gold">
                 Full-Service Production
               </ShinyText>
             }
@@ -618,7 +663,7 @@ export default function SocialHubPage() {
 
           <div className="mx-auto grid w-full max-w-6xl gap-6 sm:gap-7 lg:grid-cols-3 lg:gap-8">
             {workflowHighlights.map((workflow, index) => {
-              const Icon = workflow.icon
+              const Icon = workflow.icon;
               return (
                 <motion.article
                   key={workflow.title}
@@ -661,7 +706,7 @@ export default function SocialHubPage() {
                       {workflow.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center justify-center rounded-full border border-white/18 bg-black/45 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-white/65 sm:text-[0.7rem]"
+                          className="border-white/18 inline-flex items-center justify-center rounded-full border bg-black/45 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.25em] text-white/65 sm:text-[0.7rem]"
                           style={{
                             backgroundImage: `linear-gradient(135deg, ${workflow.accentFrom}16, ${workflow.accentTo}0d)`,
                           }}
@@ -677,21 +722,24 @@ export default function SocialHubPage() {
                         className="group inline-flex w-fit items-center gap-2 text-[0.8rem] font-semibold text-anbu-gold transition-colors duration-300 hover:text-[#FFE27A]"
                       >
                         {workflow.cta}
-                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
                       </Link>
                     ) : null}
                   </div>
                 </motion.article>
-              )
+              );
             })}
           </div>
         </SectionWrapper>
 
         {/* Testimonials */}
-        <SectionWrapper className="mt-16 sm:mt-20 lg:mt-24" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
+        <SectionWrapper
+          className="mt-16 sm:mt-20 lg:mt-24"
+          containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20"
+        >
           <SectionHeading
             eyebrow={
-              <ShinyText className="text-xs uppercase tracking-[0.3em] text-anbu-gold font-medium">
+              <ShinyText className="text-xs font-medium uppercase tracking-[0.3em] text-anbu-gold">
                 Client Testimonials
               </ShinyText>
             }
@@ -701,16 +749,15 @@ export default function SocialHubPage() {
           />
 
           <div className="mx-auto max-w-4xl">
-            <InfiniteMovingCards
-              items={testimonials}
-              direction="right"
-              speed="slow"
-            />
+            <InfiniteMovingCards items={testimonials} direction="right" speed="slow" />
           </div>
         </SectionWrapper>
 
         {/* CTA Section */}
-        <SectionWrapper className="mt-16 sm:mt-20 lg:mt-24" containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20">
+        <SectionWrapper
+          className="mt-16 sm:mt-20 lg:mt-24"
+          containerClassName="text-center space-y-12 sm:space-y-16 lg:space-y-20"
+        >
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -729,31 +776,31 @@ export default function SocialHubPage() {
                 <TextCascade
                   as="h3"
                   text="Ready to create something unforgettable?"
-                  className="text-3xl sm:text-4xl font-semibold"
+                  className="text-3xl font-semibold sm:text-4xl"
                   delay={0.1}
                   stagger={0.05}
                 />
-                <p className="mx-auto max-w-2xl text-base sm:text-lg text-white/80 leading-[1.85]">
+                <p className="mx-auto max-w-2xl text-base leading-[1.85] text-white/80 sm:text-lg">
                   Book your strategy session. Map your campaign. Hit your revenue goals.
                 </p>
               </div>
             </Sparkles>
 
-            <div className="mt-16 sm:mt-20 flex justify-center">
+            <div className="mt-16 flex justify-center sm:mt-20">
               <Magnet>
                 <div
                   className="relative inline-block cursor-pointer"
                   onClick={() => {
-                    console.log('🎉 Confetti!')
+                    console.log('🎉 Confetti!');
                   }}
                 >
                   <ShineBorder
                     className="text-center text-2xl font-bold capitalize"
-                    shineColor={["#FFD700", "#FF9D2E", "#FFED4E"]}
+                    shineColor={['#FFD700', '#FF9D2E', '#FFED4E']}
                   >
                     <Link
                       href="/contact?intent=marketing-studio"
-                      className="block px-12 py-5 text-lg font-bold uppercase tracking-[0.18em] text-anbu-gold transition-colors hover:text-white min-h-[44px]"
+                      className="block min-h-[44px] px-12 py-5 text-lg font-bold uppercase tracking-[0.18em] text-anbu-gold transition-colors hover:text-white"
                       style={{ touchAction: 'manipulation' }}
                     >
                       Start Your Project
@@ -766,7 +813,7 @@ export default function SocialHubPage() {
         </SectionWrapper>
 
         {/* Social Media Dock */}
-        <div className="pointer-events-none fixed bottom-16 sm:bottom-20 left-1/2 z-50 -translate-x-1/2">
+        <div className="pointer-events-none fixed bottom-16 left-1/2 z-50 -translate-x-1/2 sm:bottom-20">
           <div className="pointer-events-auto">
             <FloatingDock
               desktopClassName="border border-anbu-gold/50 bg-black/70 backdrop-blur-3xl shadow-[0_16px_60px_rgba(0,0,0,0.65)]"
@@ -777,5 +824,5 @@ export default function SocialHubPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { motion } from 'framer-motion'
-import { Video, Users, ShoppingBag, Shield, Mic, BarChart3 } from '@/components/ui/lucide-safe'
+import { motion } from 'framer-motion';
+import { Video, Users, ShoppingBag, Shield, Mic, BarChart3 } from '@/components/ui/lucide-safe';
 
-import { CardContainer, CardBody, CardItem } from '@/components/aceternity/3d-card'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { cn } from '@/lib/utils'
+import { CardContainer, CardBody, CardItem } from '@/components/aceternity/3d-card';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { cn } from '@/lib/utils';
 
 const additionalServices = [
   {
@@ -98,11 +98,11 @@ const additionalServices = [
       glow: 'hover:shadow-[0_18px_55px_rgba(14,165,233,0.35)]',
     },
   },
-]
+];
 
 export default function AdditionalServices() {
   return (
-    <div className="grid auto-rows-fr justify-items-center gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+    <div className="grid auto-rows-fr grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 lg:gap-12">
       {additionalServices.map((service, index) => (
         <motion.div
           key={service.title}
@@ -112,7 +112,7 @@ export default function AdditionalServices() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <CardContainer className="inter-var mx-auto w-full max-w-sm">
-            <CardBody className="relative flex h-full min-h-[420px] sm:min-h-[460px] flex-col items-center justify-between gap-6 sm:gap-8 overflow-hidden rounded-[26px] border border-white/12 bg-black/60 p-6 sm:p-8 lg:p-9 shadow-[0_14px_50px_rgba(0,0,0,0.55)] backdrop-blur">
+            <CardBody className="border-white/12 relative flex h-full min-h-[420px] flex-col items-center justify-between gap-6 overflow-hidden rounded-[26px] border bg-black/60 p-6 shadow-[0_14px_50px_rgba(0,0,0,0.55)] backdrop-blur sm:min-h-[460px] sm:gap-8 sm:p-8 lg:p-9">
               <div
                 className={cn(
                   'pointer-events-none absolute inset-0 opacity-90',
@@ -148,7 +148,7 @@ export default function AdditionalServices() {
                 <CardItem
                   as="p"
                   translateZ="60"
-                  className="mx-auto max-w-xs text-xs text-white/80 leading-[1.8] sm:text-sm"
+                  className="mx-auto max-w-xs text-xs leading-[1.8] text-white/80 sm:text-sm"
                 >
                   {service.description}
                 </CardItem>
@@ -161,7 +161,7 @@ export default function AdditionalServices() {
                       key={feature}
                       whileHover={{ scale: 1.02 }}
                       className={cn(
-                        'group flex w-full max-w-xs items-center justify-center gap-3 rounded-full border border-white/12 bg-white/[0.04] px-4 py-3 text-center text-xs text-white/80 transition-all duration-300 hover:border-white/25 hover:bg-white/[0.08] sm:text-sm',
+                        'border-white/12 group flex w-full max-w-xs items-center justify-center gap-3 rounded-full border bg-white/[0.04] px-4 py-3 text-center text-xs text-white/80 transition-all duration-300 hover:border-white/25 hover:bg-white/[0.08] sm:text-sm',
                         service.accent.glow
                       )}
                     >
@@ -173,9 +173,7 @@ export default function AdditionalServices() {
                       >
                         •
                       </span>
-                      <span className="flex-1 text-center leading-relaxed">
-                        {feature}
-                      </span>
+                      <span className="flex-1 text-center leading-relaxed">{feature}</span>
                     </motion.li>
                   ))}
                 </ul>
@@ -195,7 +193,7 @@ export default function AdditionalServices() {
                 <CardItem
                   translateZ={20}
                   as="button"
-                  className="rounded-full bg-gradient-to-r from-white/15 via-white/10 to-white/5 px-6 py-3 min-h-[44px] text-xs font-semibold uppercase tracking-[0.25em] text-white transition-colors duration-300 hover:from-white/22 hover:via-white/16 hover:to-white/9"
+                  className="hover:from-white/22 hover:via-white/16 hover:to-white/9 min-h-[44px] rounded-full bg-gradient-to-r from-white/15 via-white/10 to-white/5 px-6 py-3 text-xs font-semibold uppercase tracking-[0.25em] text-white transition-colors duration-300"
                   style={{ touchAction: 'manipulation' } as React.CSSProperties}
                 >
                   Learn More →
@@ -206,5 +204,5 @@ export default function AdditionalServices() {
         </motion.div>
       ))}
     </div>
-  )
+  );
 }

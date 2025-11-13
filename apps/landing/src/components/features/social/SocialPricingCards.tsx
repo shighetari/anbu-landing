@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { motion } from 'framer-motion'
-import { Check, Sparkles, Zap, Crown } from '@/components/ui/lucide-safe'
+import { motion } from 'framer-motion';
+import { Check, Sparkles, Zap, Crown } from '@/components/ui/lucide-safe';
 
-import { WobbleCard } from '@/components/aceternity/wobble-card'
-import { ShinyText } from '@/components/magicui/shiny-text'
-import { AnimatedGradientText } from '@/components/ui/animated-gradient-text'
-import { BorderBeam } from '@/components/ui/border-beam'
-import { cn } from '@/lib/utils'
+import { WobbleCard } from '@/components/aceternity/wobble-card';
+import { ShinyText } from '@/components/magicui/shiny-text';
+import { AnimatedGradientText } from '@/components/ui/animated-gradient-text';
+import { BorderBeam } from '@/components/ui/border-beam';
+import { cn } from '@/lib/utils';
 
 const pricingTiers = [
   {
@@ -89,7 +89,7 @@ const pricingTiers = [
       glow: 'shadow-[0_16px_45px_rgba(251,191,36,0.35)]',
     },
   },
-]
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -100,7 +100,7 @@ const containerVariants = {
       delayChildren: 0.1,
     },
   },
-}
+};
 
 const cardVariants = {
   hidden: { y: 30, opacity: 0 },
@@ -113,7 +113,7 @@ const cardVariants = {
       damping: 20,
     },
   },
-}
+};
 
 export default function SocialPricingCards() {
   return (
@@ -122,7 +122,7 @@ export default function SocialPricingCards() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
-      className="grid justify-items-center gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10"
+      className="grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 lg:gap-10"
     >
       {pricingTiers.map((tier, index) => (
         <motion.div
@@ -223,7 +223,7 @@ export default function SocialPricingCards() {
                     transition={{ delay: index * 0.1 + featureIndex * 0.05, duration: 0.4 }}
                     whileHover={{ scale: 1.02 }}
                     className={cn(
-                      'group relative flex w-full max-w-sm items-center gap-3 rounded-full border border-white/12 bg-white/[0.03] px-4 py-3.5 text-center text-xs leading-relaxed text-white/85 transition-all duration-300 hover:border-white/25 hover:bg-white/[0.07]',
+                      'border-white/12 group relative flex w-full max-w-sm items-center gap-3 rounded-full border bg-white/[0.03] px-4 py-3.5 text-center text-xs leading-relaxed text-white/85 transition-all duration-300 hover:border-white/25 hover:bg-white/[0.07]',
                       tier.accent.glow
                     )}
                   >
@@ -246,10 +246,10 @@ export default function SocialPricingCards() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
                 className={cn(
-                  'w-full rounded-full px-6 py-3.5 min-h-[44px] text-sm font-semibold uppercase tracking-[0.24em] text-white transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black shadow-[0_12px_35px_rgba(0,0,0,0.45)]',
+                  'min-h-[44px] w-full rounded-full px-6 py-3.5 text-sm font-semibold uppercase tracking-[0.24em] text-white shadow-[0_12px_35px_rgba(0,0,0,0.45)] transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-black',
                   tier.highlighted
                     ? 'bg-gradient-to-r from-[#FFD16A] via-[#FFB347] to-[#FF8C37] text-anbu-ink shadow-[0_18px_60px_rgba(255,173,51,0.45)] hover:shadow-[0_20px_65px_rgba(255,173,51,0.6)]'
-                    : 'bg-gradient-to-r from-white/15 via-white/10 to-white/5 hover:from-white/20 hover:via-white/14 hover:to-white/8'
+                    : 'hover:via-white/14 hover:to-white/8 bg-gradient-to-r from-white/15 via-white/10 to-white/5 hover:from-white/20'
                 )}
                 style={{ touchAction: 'manipulation' }}
               >
@@ -260,5 +260,5 @@ export default function SocialPricingCards() {
         </motion.div>
       ))}
     </motion.div>
-  )
+  );
 }

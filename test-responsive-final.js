@@ -2,7 +2,8 @@
 const { chromium } = require('@playwright/test');
 
 const DEFAULT_PORT = process.env.APP_PORT || process.env.PORT || 3000;
-const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
+const BASE_URL =
+  process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || `http://localhost:${DEFAULT_PORT}`;
 
 (async () => {
   const browser = await chromium.launch({ headless: false });
@@ -14,7 +15,7 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     const viewports = [
       { name: 'mobile', width: 390, height: 844 },
       { name: 'tablet', width: 768, height: 1024 },
-      { name: 'desktop', width: 1440, height: 900 }
+      { name: 'desktop', width: 1440, height: 900 },
     ];
 
     for (const viewport of viewports) {
@@ -25,7 +26,7 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
       // Capture full page
       await page.screenshot({
         path: `improved-${viewport.name}-full.png`,
-        fullPage: true
+        fullPage: true,
       });
       console.log(`✅ Captured ${viewport.name} full page`);
 
@@ -42,7 +43,6 @@ const BASE_URL = process.env.APP_BASE_URL || process.env.NEXT_PUBLIC_APP_URL || 
     console.log('  ✓ Contact: Reduced from py-28 to responsive py-16/20/24');
     console.log('  ✓ Navigation: More compact with smaller padding');
     console.log('\n🎯 Result: Better content density and improved readability');
-
   } catch (error) {
     console.error('Error:', error);
   } finally {

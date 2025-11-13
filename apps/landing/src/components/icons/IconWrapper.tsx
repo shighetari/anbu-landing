@@ -1,9 +1,9 @@
-import React from 'react'
-import { cn } from '@/lib/utils'
+import React from 'react';
+import { cn } from '@/lib/utils';
 
 interface IconWrapperProps extends React.SVGProps<SVGSVGElement> {
-  children: React.ReactNode
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  children: React.ReactNode;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const sizeClasses = {
@@ -12,7 +12,7 @@ const sizeClasses = {
   md: 'w-5 h-5',
   lg: 'w-6 h-6',
   xl: 'w-8 h-8',
-}
+};
 
 export const IconWrapper: React.FC<IconWrapperProps> = ({
   children,
@@ -27,5 +27,5 @@ export const IconWrapper: React.FC<IconWrapperProps> = ({
         fill: 'currentColor',
       })}
     </div>
-  )
-}
+  );
+};

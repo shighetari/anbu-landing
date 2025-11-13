@@ -1,22 +1,22 @@
-'use client'
+'use client';
 
-import type { ReactNode } from 'react'
-import { usePathname } from 'next/navigation'
+import type { ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 
-import { FloatingDock } from '@/components/aceternity/floating-dock'
-import { cn } from '@/lib/utils'
+import { FloatingDock } from '@/components/aceternity/floating-dock';
+import { cn } from '@/lib/utils';
 
 interface DockItem {
-  title: string
-  icon: ReactNode
-  href: string
+  title: string;
+  icon: ReactNode;
+  href: string;
 }
 
 interface GlobalDockProps {
-  items: DockItem[]
-  className?: string
-  desktopClassName?: string
-  mobileClassName?: string
+  items: DockItem[];
+  className?: string;
+  desktopClassName?: string;
+  mobileClassName?: string;
 }
 
 export function GlobalDock({
@@ -25,14 +25,19 @@ export function GlobalDock({
   desktopClassName,
   mobileClassName,
 }: GlobalDockProps) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   if (pathname?.startsWith('/social-hub') || pathname?.startsWith('/solutions/marketing-studio')) {
-    return null
+    return null;
   }
 
   return (
-    <div className={cn('pointer-events-none fixed bottom-6 left-0 right-0 z-40 flex justify-center', className)}>
+    <div
+      className={cn(
+        'pointer-events-none fixed bottom-6 left-0 right-0 z-40 flex justify-center',
+        className
+      )}
+    >
       <div className="pointer-events-auto">
         <FloatingDock
           desktopClassName={desktopClassName}
@@ -41,5 +46,5 @@ export function GlobalDock({
         />
       </div>
     </div>
-  )
+  );
 }
