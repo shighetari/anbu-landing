@@ -34,6 +34,6 @@ test.describe('ANBU landing experience', () => {
     await page.setViewportSize({ width: 1440, height: 900 })
     const hero = page.locator('section#home')
     await expect(hero).toBeVisible()
-    await hero.screenshot({ path: 'apps/landing/tests/e2e/__screenshots__/hero-desktop.png', fullPage: false })
+    await hero.screenshot({ path: 'apps/landing/tests/e2e/__screenshots__/hero-desktop.png' })
   })
 })

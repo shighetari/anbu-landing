@@ -228,8 +228,7 @@ test.describe('Visual Regression - Core Capabilities', () => {
       await page.waitForTimeout(1000)
 
       await servicesSection.screenshot({
-        path: `apps/landing/tests/e2e/__screenshots__/services-${viewport.name}.png`,
-        fullPage: false
+        path: `apps/landing/tests/e2e/__screenshots__/services-${viewport.name}.png`
       })
     })
   }

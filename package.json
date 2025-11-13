@@ -1,5 +1,6 @@
 {
   "name": "anbu-landing",
+  "type": "module",
   "private": true,
   "version": "1.0.0",
   "description": "ANBU Solutions Landing Page - Monorepo",

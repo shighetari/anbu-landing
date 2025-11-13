@@ -2,10 +2,15 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import globals from 'globals';
 import prettier from 'eslint-config-prettier';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default [
   {
-    ignores: ['node_modules/**', 'dist/**'],
+    ignores: ['node_modules/**', 'dist/**', '*.config.js'],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -13,9 +18,12 @@ export default [
   {
     files: ['**/*.{ts,js}'],
     languageOptions: {
+      parser: tseslint.parser,
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
+        tsconfigRootDir: __dirname,
+        project: './tsconfig.json',
       },
       globals: {
         ...globals.es2022,
