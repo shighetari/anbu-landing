@@ -141,7 +141,7 @@ export async function POST(request: NextRequest) {
     await resend.emails.send({
       from: resendFromEmail,
       to: [contactRecipient],
-      reply_to: [normalized.email],
+      replyTo: [normalized.email],
       subject: `ANBU Inquiry – ${normalized.company ?? normalized.name ?? 'New Lead'}`,
       text,
       html,
