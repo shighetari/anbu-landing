@@ -4,6 +4,124 @@
 
 ---
 
+## 2025-11-13 — Navbar Brand Mark & Trim
+
+### ✅ Configuration Complete
+
+**What Was Updated**
+
+1. **Brand Pill in Navigation** (`apps/landing/src/components/layout/Navigation.tsx`, `globals.css`)
+   - Replaced the simple “ANBU” label with a compact logomark + wordmark lockup sized via clamps so the navbar height stays consistent on every breakpoint.
+   - Added lightweight global helpers (`nav-brand-*`) to keep the icon glow, text spacing, and responsive subtitle (hidden on very small screens) aligned with the hero aesthetic, and introduced a crest backdrop so the black logo remains visible on dark nav backgrounds.
+2. **Lean Header Layout**
+   - Removed the “Book a Call” CTA from the desktop nav and aggressively trimmed container padding, link `min-h`, and button sizing so the navbar now matches a compact pill silhouette on every viewport.
+   - Tuned the brand lockup clamps and spacing so the stacked mark no longer dictates bar height on phones while still looking sharp on desktop.
+
+### 🎯 How to Validate
+
+```bash
+pnpm --filter landing dev
+# Inspect the navbar on desktop + mobile
+```
+
+- Hover/focus the brand pill to confirm the logomark glow and stacked text respond smoothly while staying compact.
+- Resize the viewport from mobile → desktop to confirm the navbar height and padding remain consistent and that no orphan CTA appears on desktop.
+
+---
+
+## 2025-11-13 — Hero Logo Responsive Spacing
+
+### ✅ Configuration Complete
+
+**What Was Updated**
+
+1. **Hero Stack Layout** (`apps/landing/src/components/features/hero/HeroSection.tsx`, `globals.css`)
+   - Replaced breakpoint-only `space-y` utilities with a `hero-stack` class that uses CSS `row-gap` + `clamp()` to smooth spacing across all breakpoints.
+   - Added tokenized `hero-logo-offset` variables so the logomark lifts into unused headroom on every viewport without compressing the rest of the hero.
+2. **Logo ↔︎ Caption Separation**
+   - Introduced a `hero-logo-caption` helper that sets a fluid margin between the emblem and the “Strategize / Build / Scale” type to avoid crowding.
+   - Removed ad-hoc Tailwind margins so the new variables own the spacing contract.
+
+### 🎯 How to Validate
+
+```bash
+pnpm --filter landing dev
+# Inspect http://localhost:3000/ on mobile (<480px), tablet (~768px), and desktop (≥1280px)
+```
+
+- Confirm the logo consistently rides higher in the hero while keeping CTAs in view.
+- Check that the typewriter caption now has comfortable breathing room beneath the logomark without overlapping the headline, regardless of zoom level.
+
+---
+
+## 2025-11-13 — Hero Logo Lift
+
+### ✅ Configuration Complete
+
+**What Was Updated**
+
+1. **Hero Logo Positioning** (`apps/landing/src/components/features/hero/HeroSection.tsx`)
+   - Added responsive negative top margins to the animated logo container so it floats higher within the hero without impacting the surrounding copy or CTAs.
+   - Keeps the existing negative bottom margins for tight stack density while using the unused headroom above the mark.
+
+### 🎯 How to Validate
+
+```bash
+pnpm --filter landing dev
+# Visit http://localhost:3000/
+```
+
+- On mobile, tablet, and desktop widths confirm the logo sits higher and no longer crowds the typewriter line.
+- Ensure the rest of the hero layout (headline, paragraph, CTAs) retains its vertical positioning and the logo animation remains smooth.
+
+---
+
+## 2025-11-13 — Command Console Hydration + Motion Guardrails
+
+### ✅ Configuration Complete
+
+**What Was Updated**
+
+1. **Client Boundary & Metadata** (`apps/landing/src/app/solutions/command-console/page.tsx`, `metadata.ts`)
+   - Promoted the Command Console page to an explicit client component so interactive effects (`CardSpotlight`, `BorderBeam`, `NeonGradientCard`, sparkles) hydrate without runtime warnings.
+   - Moved the route metadata into the new colocated `metadata.ts` file to preserve static SEO output while keeping the page eligible for client-only hooks.
+2. **Navigation Grid Accessibility + Typography**
+   - Extracted navigation card configs into a `navigationCards` constant for easier testing and reuse.
+   - Added descriptive `aria-label`s to every navigation link and removed the no-op animation delay style.
+   - Replaced inline `clamp()` styles with custom properties (`--command-console-card-title/body`) defined in `globals.css`, plus utility classes (`command-console-nav-title/description`) so typography follows the shared system.
+3. **Motion Preference Handling** (`apps/landing/src/components/ui/border-beam.tsx`)
+   - BorderBeam now respects `prefers-reduced-motion` via `useReducedMotion`, falling back to a static gradient when users opt out of animations.
+   - Keeps existing customization hooks (size, delay, transition) intact for motion-friendly contexts.
+
+### 🎯 How to Validate
+
+```bash
+pnpm --filter landing dev
+# Visit http://localhost:3000/solutions/command-console
+```
+
+- Confirm there are no hydration warnings in the browser console.
+- Hover navigation cards: spotlight and shimmer animate; toggle OS “reduce motion” and reload to see BorderBeam freeze gracefully.
+- Use a screen reader (or DevTools Accessibility pane) to verify the new `aria-label` content on each navigation link.
+- Inspect typography in DevTools → Computed styles to ensure the font sizes resolve from the custom properties (no inline `clamp` remnants).
+
+### 🔒 Quality Status
+
+| Check      | Status | Details                                            |
+| ---------- | ------ | -------------------------------------------------- |
+| Lint       | ✅     | `pnpm --filter landing lint`                       |
+| Build      | ⚪️     | Not re-run (no server-only changes beyond metadata) |
+| Accessibility | ✅  | aria-label coverage verified via manual inspection |
+| Motion     | ✅     | `prefers-reduced-motion` now honored in BorderBeam |
+
+### 🚀 Next Steps
+
+1. Add unit coverage for `navigationCards` rendering once component testing utilities are in place.
+2. Consider snapshotting both motion states (default vs. reduced) in CI Storybook.
+3. Monitor Lighthouse / WebPageTest for any impact on animation-related CLS after deployment.
+
+---
+
 ## 2025-11-13 — Command Console UI/UX Overhaul + Responsive Typography
 
 ### ✅ Configuration Complete

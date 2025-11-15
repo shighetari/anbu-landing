@@ -213,8 +213,8 @@ export default function Navigation() {
   return (
     <motion.header
       className={cn(
-        'fluid-top-nav fixed inset-x-0 z-[55] flex justify-center px-4 transition-all duration-500',
-        isScrolled && 'translate-y-[-0.25rem]'
+        'fluid-top-nav fixed inset-x-0 z-[55] flex justify-center px-1.5 transition-all duration-500 sm:px-2.5',
+        isScrolled && 'translate-y-[-0.12rem]'
       )}
       style={{
         backdropFilter: `blur(${isScrolled ? 20 : 16}px)`,
@@ -228,8 +228,8 @@ export default function Navigation() {
         onMouseLeave={() => setActive(null)}
         className={cn(
           'will-change-transform',
-          'relative flex w-full max-w-6xl items-center justify-between gap-3 rounded-full border border-white/15 bg-black/65 px-4 py-2 shadow-[0_16px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 lg:px-6 lg:py-3',
-          isScrolled && 'border-white/15 bg-black/70 shadow-[0_16px_80px_rgba(0,0,0,0.55)]'
+          'relative flex w-full max-w-5xl items-center justify-between gap-1 rounded-full border border-white/12 bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.15),_rgba(0,0,0,0.85))] px-2 py-[0.3rem] shadow-[0_5px_20px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 sm:px-3 sm:py-[0.55rem] lg:px-4 lg:py-[0.65rem]',
+          isScrolled && 'border-white/20 bg-black/80 shadow-[0_10px_38px_rgba(0,0,0,0.5)]'
         )}
         animate={{
           scale: isScrolled ? 0.98 : 1,
@@ -238,42 +238,34 @@ export default function Navigation() {
       >
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold uppercase tracking-[0.2em] text-anbu-gold transition-all duration-300 hover:scale-105 hover:text-anbu-gold/90"
+          className="nav-brand group flex items-center gap-1.5 rounded-full px-1.5 py-0.25 text-white/85 transition-colors duration-300 sm:px-2"
         >
-          <span className="h-2.5 w-2.5 rounded-full bg-anbu-gold shadow-[0_0_15px_rgba(255,215,0,0.8)]" />
-          ANBU
+          <span className="nav-brand-crest">
+            <span aria-hidden className="nav-brand-crest-glow" />
+            <span aria-hidden className="nav-brand-crest-backdrop" />
+            <img
+              src="/logos/anbu_logo_no_text.svg"
+              alt="ANBU Solutions mark"
+              className="nav-brand-crest-icon"
+              loading="lazy"
+            />
+          </span>
+          <span className="nav-brand-wordmark">
+            <span className="nav-brand-title">ANBU</span>
+            <span className="nav-brand-subtitle">SOLUTIONS</span>
+          </span>
         </Link>
 
-        <div className="hidden items-center gap-4 md:flex lg:gap-6">
-          <div className="flex items-center gap-2 lg:gap-3">
+        <div className="hidden items-center gap-2.5 md:flex lg:gap-3.5">
+          <div className="flex items-center gap-1.5 lg:gap-2">
             {NAV_ITEMS.map((item) => (
               <DesktopMenuItem key={item.label} item={item} active={active} setActive={setActive} />
             ))}
           </div>
-          <motion.div
-            whileHover={{
-              scale: 1.05,
-              boxShadow: '0 20px 45px rgba(255,195,71,0.35)',
-            }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-          >
-            <a
-              href={siteConfig.calLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative inline-flex min-h-[40px] touch-manipulation items-center gap-1.5 rounded-full border border-transparent bg-gradient-to-r from-[#FFD700] via-[#FFC347] to-[#FF9C2E] px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-anbu-ink shadow-[0_10px_26px_rgba(255,181,71,0.35)] transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD700] focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-5 sm:text-[0.7rem] lg:px-6 lg:py-2"
-            >
-              <span className="flex items-center gap-2">
-                Book a Call
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </span>
-            </a>
-          </motion.div>
         </div>
 
         <button
-          className="flex h-11 w-11 touch-manipulation items-center justify-center rounded-full border border-white/10 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-anbu-gold/10 md:hidden"
+          className="flex h-8 w-8 touch-manipulation items-center justify-center rounded-full border border-white/10 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-anbu-gold/10 md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle navigation"
           aria-expanded={mobileOpen}
@@ -646,7 +638,7 @@ function DesktopMenuItem({
         aria-haspopup={hasMenu ? 'true' : undefined}
         aria-expanded={hasMenu ? isActive : undefined}
         className={cn(
-          'group relative inline-flex min-h-[44px] touch-manipulation items-center rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.15)] lg:px-6 lg:py-2.5 lg:tracking-[0.15em]',
+          'group relative inline-flex min-h-[32px] touch-manipulation items-center rounded-full px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_12px_rgba(255,215,0,0.15)] sm:px-3 sm:py-1 lg:px-4 lg:py-1.5 lg:text-[0.72rem] lg:tracking-[0.13em]',
           isActive && 'bg-white/5 text-anbu-gold'
         )}
         onKeyDown={handleKeyDown}

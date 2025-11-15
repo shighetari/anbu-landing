@@ -28,14 +28,16 @@
     "react": "19.1.0",
     "react-countup": "^6.5.3",
     "react-dom": "19.1.0",
-    "react-is": "19.0.0",
     "react-element-to-jsx-string": "^17.0.1",
+    "react-is": "19.0.0",
+    "resend": "^6.4.2",
     "tailwind-merge": "^2.6.0",
-    "three": "^0.169.0"
+    "three": "^0.169.0",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "15.5.0",
     "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "15.5.0",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.1.5",

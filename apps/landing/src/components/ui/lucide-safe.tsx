@@ -37,10 +37,12 @@ import {
   Mail as RawMail,
   MapPin as RawMapPin,
   Menu as RawMenu,
+  MessageCircle as RawMessageCircle,
   MessageSquare as RawMessageSquare,
   MessagesSquare as RawMessagesSquare,
   Mic as RawMic,
   Palette as RawPalette,
+  PhoneCall as RawPhoneCall,
   Play as RawPlay,
   Rocket as RawRocket,
   Search as RawSearch,
@@ -272,6 +274,12 @@ export const MessagesSquare = forwardRef<SVGSVGElement, LucideProps>(
   }
 );
 
+export const MessageCircle = forwardRef<SVGSVGElement, LucideProps>(
+  function HydrationSafeMessageCircle(props, ref) {
+    return <RawMessageCircle ref={ref} suppressHydrationWarning {...props} />;
+  }
+);
+
 export const Mic = forwardRef<SVGSVGElement, LucideProps>(function HydrationSafeMic(props, ref) {
   return <RawMic ref={ref} suppressHydrationWarning {...props} />;
 });
@@ -279,6 +287,12 @@ export const Mic = forwardRef<SVGSVGElement, LucideProps>(function HydrationSafe
 export const Palette = forwardRef<SVGSVGElement, LucideProps>(
   function HydrationSafePalette(props, ref) {
     return <RawPalette ref={ref} suppressHydrationWarning {...props} />;
+  }
+);
+
+export const PhoneCall = forwardRef<SVGSVGElement, LucideProps>(
+  function HydrationSafePhoneCall(props, ref) {
+    return <RawPhoneCall ref={ref} suppressHydrationWarning {...props} />;
   }
 );
 
