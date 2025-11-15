@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { motion, MotionStyle, Transition } from 'motion/react';
+import { motion, MotionStyle, Transition, useReducedMotion } from 'motion/react';
 
 interface BorderBeamProps {
   /**
@@ -63,6 +63,26 @@ export const BorderBeam = ({
   initialOffset = 0,
   borderWidth = 1,
 }: BorderBeamProps) => {
+  const shouldReduceMotion = useReducedMotion();
+
+  const animate = shouldReduceMotion
+    ? { offsetDistance: `${initialOffset}%` }
+    : {
+        offsetDistance: reverse
+          ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
+          : [`${initialOffset}%`, `${100 + initialOffset}%`],
+      };
+
+  const motionTransition = shouldReduceMotion
+    ? { duration: 0 }
+    : {
+        repeat: Infinity,
+        ease: 'linear',
+        duration,
+        delay: -delay,
+        ...transition,
+      };
+
   return (
     <div
       className="border-(length:--border-beam-width) pointer-events-none absolute inset-0 rounded-[inherit] border-transparent [mask-clip:padding-box,border-box] [mask-composite:intersect] [mask-image:linear-gradient(transparent,transparent),linear-gradient(#000,#000)]"
@@ -89,18 +109,8 @@ export const BorderBeam = ({
           } as MotionStyle
         }
         initial={{ offsetDistance: `${initialOffset}%` }}
-        animate={{
-          offsetDistance: reverse
-            ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
-            : [`${initialOffset}%`, `${100 + initialOffset}%`],
-        }}
-        transition={{
-          repeat: Infinity,
-          ease: 'linear',
-          duration,
-          delay: -delay,
-          ...transition,
-        }}
+        animate={animate}
+        transition={motionTransition}
       />
     </div>
   );

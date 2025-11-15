@@ -2,6 +2,7 @@
 
 import { cn } from '@/lib/utils';
 import { IconLayoutNavbarCollapse } from '@tabler/icons-react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   AnimatePresence,
@@ -12,6 +13,8 @@ import {
   useTransform,
 } from 'motion/react';
 import { useRef, useState } from 'react';
+
+const MotionLink = motion.create(Link);
 
 export const FloatingDock = ({
   items,
@@ -71,7 +74,7 @@ const FloatingDockMobile = ({
                 {items.map((item, idx) => {
                   const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
                   return (
-                    <motion.a
+                    <MotionLink
                       key={item.title}
                       href={item.href}
                       initial={{ opacity: 0, scale: 0 }}
@@ -106,6 +109,7 @@ const FloatingDockMobile = ({
                       role="menuitem"
                       target={item.href.startsWith('http') ? '_blank' : undefined}
                       rel={item.href.startsWith('http') ? 'noreferrer noopener' : undefined}
+                      prefetch={item.href.startsWith('http') ? false : true}
                     >
                       <div
                         className={cn(
@@ -124,7 +128,7 @@ const FloatingDockMobile = ({
                       >
                         {item.title}
                       </motion.span>
-                    </motion.a>
+                    </MotionLink>
                   );
                 })}
               </div>
@@ -228,8 +232,9 @@ function IconContainer({
   const isExternal = href.startsWith('http');
 
   return (
-    <a
+    <Link
       href={href}
+      prefetch={isExternal ? false : true}
       aria-label={title}
       aria-current={isActive ? 'page' : undefined}
       target={isExternal ? '_blank' : undefined}
@@ -271,6 +276,6 @@ function IconContainer({
           {icon}
         </motion.div>
       </motion.div>
-    </a>
+    </Link>
   );
 }

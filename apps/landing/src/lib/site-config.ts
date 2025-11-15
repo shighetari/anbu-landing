@@ -25,5 +25,7 @@ export const siteConfig = {
   github: 'https://github.com/shighetari',
   twitter: 'https://x.com/anbu_ai',
   linkedin: 'https://www.linkedin.com/company/anbu-solutions/',
+  slackInvite: process.env.NEXT_PUBLIC_SLACK_INVITE?.trim() || null,
+  whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_LINK?.trim() || null,
   website: getBaseUrl(),
 };

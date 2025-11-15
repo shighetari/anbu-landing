@@ -87,12 +87,58 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex w-full flex-col items-center space-y-2 text-center sm:space-y-3 md:space-y-4 lg:space-y-6 xl:space-y-8"
+            className="hero-stack flex w-full flex-col items-center text-center"
           >
-            <div className="mt-1 sm:mt-3 md:mt-4">
+            {/* ANBU Logo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{
+                opacity: 1,
+                scale: [1, 1.015, 1],
+                boxShadow: [
+                  '0 0 50px rgba(255,215,0,0.5)',
+                  '0 0 60px rgba(255,215,0,0.6)',
+                  '0 0 50px rgba(255,215,0,0.5)',
+                ],
+              }}
+              transition={{
+                opacity: { duration: 0.8, delay: 0.1 },
+                scale: {
+                  duration: 4,
+                  delay: 0.8,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                },
+                boxShadow: {
+                  duration: 4,
+                  delay: 0.8,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                },
+              }}
+              className="hero-logo-wrapper flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-[1.5px] sm:h-28 sm:w-28 md:h-32 md:w-32 lg:h-40 lg:w-40"
+              style={{
+                borderColor: 'rgba(188, 149, 64, 0.35)',
+                background: `
+                  radial-gradient(circle at center, rgba(255,215,0,0.15) 0%, transparent 70%),
+                  linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #FFD700 50%, #FF9D2E 75%, #0a0a0a 100%)
+                `,
+                backgroundSize: '100% 100%, 250% 250%',
+                animation: 'logoShine 8s ease-in-out infinite',
+              }}
+            >
+              <img
+                src="/logos/anbu_logo_no_text.svg"
+                alt="ANBU Solutions Logo"
+                className="scale-[1.8]"
+                style={{ width: '100%', height: '100%' }}
+              />
+            </motion.div>
+
+            <div className="hero-logo-caption">
               <TypewriterEffectSmooth
                 words={typewriterWords}
-                className="mx-auto my-2 flex origin-center scale-[0.7] items-center justify-center uppercase tracking-[0.14em] text-anbu-gold sm:scale-[0.72] sm:tracking-[0.18em] md:scale-[0.46] md:tracking-[0.26em] lg:scale-[0.47] lg:tracking-[0.28em]"
+                className="mx-auto flex origin-center scale-[0.7] items-center justify-center uppercase tracking-[0.14em] text-anbu-gold sm:scale-[0.72] sm:tracking-[0.18em] md:scale-[0.46] md:tracking-[0.26em] lg:scale-[0.47] lg:tracking-[0.28em]"
               />
             </div>
 
@@ -252,13 +298,13 @@ export default function HeroSection() {
                 neonColors={{ firstColor: '#FFD700', secondColor: '#FF9D2E' }}
                 borderSize={2}
               >
-                <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+                <div className="grid grid-cols-1 gap-2 xs:grid-cols-2 sm:gap-3 md:grid-cols-3 md:gap-4 lg:gap-6">
                   {heroHighlights.map((item) => (
                     <motion.div
                       key={item.label}
                       whileHover={{ scale: 1.03 }}
                       transition={{ type: 'spring', stiffness: 220, damping: 18 }}
-                      className="flex flex-col items-center gap-0.5 rounded-xl bg-white/5 px-2 py-1.5 text-center sm:gap-1 sm:px-3 sm:py-2"
+                      className="flex h-full flex-col items-center gap-0.5 rounded-xl bg-white/5 px-2 py-1.5 text-center sm:gap-1 sm:px-3 sm:py-2"
                     >
                       <div className="mb-0.5 flex items-center justify-center gap-1 sm:mb-1 sm:gap-2">
                         <item.icon className="h-3 w-3 text-anbu-gold/60 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />

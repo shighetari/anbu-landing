@@ -400,7 +400,7 @@ export default function AboutSection() {
               fadeEdges
             />
 
-            <BentoGrid className="mt-3 grid-cols-2 gap-3 sm:mt-4 sm:gap-4 md:mt-6 md:gap-5 lg:mt-8 lg:grid-cols-4">
+            <BentoGrid className="mt-3 sm:mt-4 md:mt-6 lg:mt-8">
               {differentiators.map((item, index) => (
                 <EnhancedBentoCard
                   key={item.title}

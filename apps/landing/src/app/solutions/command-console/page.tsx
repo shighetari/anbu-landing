@@ -1,4 +1,5 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -27,30 +28,24 @@ import {
   Sparkles,
 } from '@/components/ui/lucide-safe';
 
-export const metadata: Metadata = {
-  title: 'Command Console — Executive Delivery Control',
-  description:
-    'Monitor every squad, unlock playbooks, and trigger deployment rituals from a single real-time console engineered for ANBU partners.',
-};
-
 const featureCards = [
   {
     icon: Gauge,
-    title: 'Live delivery telemetry',
-    body: 'Watch pods, burndown, QA status, and blockers stream into one surface with alerting baked in.',
-    badge: 'Realtime data',
+    title: 'Live status',
+    body: 'Pods, QA, and blockers update in seconds so no one wonders where things stand.',
+    badge: 'Live feed',
   },
   {
     icon: Workflow,
-    title: 'Automated runbooks',
-    body: 'Spin up launch, hypercare, and incident workflows with preassigned owners and linked docs.',
-    badge: 'Preset rituals',
+    title: 'One-click steps',
+    body: 'Launch, fix, or escalate using tiny guided checklists everyone understands.',
+    badge: 'Easy rituals',
   },
   {
     icon: ShieldCheck,
-    title: 'Guardrails & approvals',
-    body: 'Enforce review gates, capture decisions, and notify stakeholders before anything reaches prod.',
-    badge: 'Risk controls',
+    title: 'Built-in guardrails',
+    body: 'Approvals and decisions sit next to the work so releases stay safe.',
+    badge: 'Safe changes',
   },
 ];
 
@@ -64,20 +59,80 @@ const telemetry = [
 const playbookStages = [
   {
     name: 'Sense',
-    description:
-      'Consolidate deploy health, incident noise, and approvals into one prioritized feed.',
+    description: 'Every alert, deadline, or ask lands in one calm queue.',
   },
   {
     name: 'Decide',
-    description:
-      'Trigger playbooks or route tasks with single-click actions tied to the right squad.',
+    description: 'Assign the right pod and trigger the checklist with a tap.',
   },
   {
     name: 'Act',
-    description:
-      'Broadcast updates, log decisions, and push fixes or comms instantly across channels.',
+    description: 'Updates, notes, and sign-offs broadcast automatically.',
   },
 ];
+
+const navigationCards = [
+  {
+    id: 'apps',
+    label: 'Apps',
+    title: 'Custom builds',
+    href: '/solutions',
+    icon: Rocket,
+    description: 'Launch-ready web and mobile products.',
+    gradient: 'from-pink-500/20 to-pink-600/20',
+    iconBg: 'bg-gradient-to-br from-pink-500 to-pink-600',
+  },
+  {
+    id: 'studio',
+    label: 'Studio',
+    title: 'Marketing media',
+    href: '/solutions/marketing-studio',
+    icon: Video,
+    description: 'Video, campaigns, and launch kits.',
+    gradient: 'from-cyan-500/20 to-blue-500/20',
+    iconBg: 'bg-gradient-to-br from-cyan-400 to-blue-500',
+  },
+  {
+    id: 'docs',
+    label: 'Docs',
+    title: 'Knowledge hub',
+    href: '/docs-hub',
+    icon: BookOpen,
+    description: 'Playbooks and resources to share.',
+    gradient: 'from-orange-500/20 to-amber-500/20',
+    iconBg: 'bg-gradient-to-br from-orange-400 to-amber-500',
+  },
+  {
+    id: 'integrations',
+    label: 'Integrations',
+    title: 'Connect tools',
+    href: '/solutions#integrations',
+    icon: Cpu,
+    description: 'Wire up data, auth, and automation.',
+    gradient: 'from-emerald-500/20 to-green-600/20',
+    iconBg: 'bg-gradient-to-br from-emerald-400 to-green-500',
+  },
+  {
+    id: 'teams',
+    label: 'Pods',
+    title: 'Dedicated team',
+    href: '/solutions#pods',
+    icon: Users,
+    description: 'Flexible engineers on call.',
+    gradient: 'from-red-500/20 to-pink-600/20',
+    iconBg: 'bg-gradient-to-br from-red-400 to-pink-600',
+  },
+  {
+    id: 'contact',
+    label: 'Start',
+    title: 'Talk to us',
+    href: '/contact',
+    icon: Sparkles,
+    description: 'Share your scope in a minute.',
+    gradient: 'from-purple-500/20 to-indigo-600/20',
+    iconBg: 'bg-gradient-to-br from-purple-500 to-indigo-600',
+  },
+] as const;
 
 export default function CommandConsolePage() {
   return (
@@ -95,14 +150,12 @@ export default function CommandConsolePage() {
           <AnimatedGradientText className="text-xs uppercase tracking-[0.35em] text-white/60">
             Command Console
           </AnimatedGradientText>
-          <div className="max-w-4xl space-y-4">
+          <div className="max-w-3xl space-y-3">
             <h1 className="font-display text-4xl leading-tight text-white sm:text-5xl lg:text-6xl">
-              The mission control for every ANBU engagement
+              Your project mission control
             </h1>
-            <p className="mx-auto max-w-3xl text-base text-white/65 sm:text-lg">
-              Orchestrate pods, approvals, and automations from a single pane of glass. The Command
-              Console keeps leadership, delivery, and operations aligned without hopping across
-              tools.
+            <p className="mx-auto text-base text-white/70 sm:text-lg">
+              Track pods, handoffs, and approvals in one calm view—no extra tabs, no jargon.
             </p>
           </div>
         </Container>
@@ -178,91 +231,39 @@ export default function CommandConsolePage() {
               contentClassName="p-6 sm:p-8"
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {[
-                  {
-                    id: 'apps',
-                    title: 'Build Custom Apps',
-                    href: '/solutions',
-                    icon: Rocket,
-                    description: 'Web & mobile applications',
-                    gradient: 'from-pink-500/20 to-pink-600/20',
-                    iconBg: 'bg-gradient-to-br from-pink-500 to-pink-600',
-                  },
-                  {
-                    id: 'studio',
-                    title: 'Marketing Studio',
-                    href: '/solutions/marketing-studio',
-                    icon: Video,
-                    description: 'Cinematic content & campaigns',
-                    gradient: 'from-cyan-500/20 to-blue-500/20',
-                    iconBg: 'bg-gradient-to-br from-cyan-400 to-blue-500',
-                  },
-                  {
-                    id: 'docs',
-                    title: 'Documentation Hub',
-                    href: '/docs-hub',
-                    icon: BookOpen,
-                    description: 'Knowledge & playbooks',
-                    gradient: 'from-orange-500/20 to-amber-500/20',
-                    iconBg: 'bg-gradient-to-br from-orange-400 to-amber-500',
-                  },
-                  {
-                    id: 'integrations',
-                    title: 'Integrations',
-                    href: '/solutions#integrations',
-                    icon: Cpu,
-                    description: 'Connect your tools',
-                    gradient: 'from-emerald-500/20 to-green-600/20',
-                    iconBg: 'bg-gradient-to-br from-emerald-400 to-green-500',
-                  },
-                  {
-                    id: 'teams',
-                    title: 'Dedicated Teams',
-                    href: '/solutions#pods',
-                    icon: Users,
-                    description: 'On-demand developers',
-                    gradient: 'from-red-500/20 to-pink-600/20',
-                    iconBg: 'bg-gradient-to-br from-red-400 to-pink-600',
-                  },
-                  {
-                    id: 'contact',
-                    title: 'Get Started',
-                    href: '/contact',
-                    icon: Sparkles,
-                    description: 'Begin your project',
-                    gradient: 'from-purple-500/20 to-indigo-600/20',
-                    iconBg: 'bg-gradient-to-br from-purple-500 to-indigo-600',
-                  },
-                ].map((item, index) => (
+                {navigationCards.map((item, index) => (
                   <Link
                     key={item.id}
                     href={item.href}
-                    className={`group relative block transition-all duration-300 hover:scale-[1.02]`}
-                    style={{
-                      animationDelay: `${index * 0.1}s`,
-                    }}
+                    aria-label={`Navigate to ${item.title}`}
+                    className="group relative block transition-all duration-300 hover:scale-[1.02]"
                   >
-                    <CardSpotlight
-                      className="h-full"
-                      color="#FFD700"
-                      radius={350}
-                    >
-                      <div className={`absolute inset-0 rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br ${item.gradient}`} />
-                      <div className="relative z-10 flex flex-col gap-3 h-full">
-                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center ${item.iconBg} text-white flex-shrink-0 transition-transform duration-300 group-hover:scale-110`}>
-                          <item.icon className="h-5 w-5 sm:h-6 sm:w-6" />
+                    <CardSpotlight className="h-full" color="#FFD700" radius={350}>
+                      <div
+                        className={`absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br ${item.gradient}`}
+                      />
+                      <div className="relative z-10 flex h-full flex-col rounded-2xl border border-white/5 bg-white/[0.02] p-4 text-left sm:p-5">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="text-[0.55rem] font-semibold uppercase tracking-[0.35em] text-white/55 sm:text-[0.6rem]">
+                            {item.label}
+                          </p>
+                          <div
+                            className={`flex h-9 w-9 items-center justify-center rounded-lg text-white transition-transform duration-300 group-hover:scale-110 sm:h-11 sm:w-11 ${item.iconBg}`}
+                          >
+                            <item.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                          </div>
                         </div>
-                        <div className="flex-grow space-y-1.5">
-                          <h3 style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)' }} className="font-semibold leading-snug text-white/95 transition-colors duration-300 group-hover:text-anbu-gold line-clamp-2 tracking-wide">
+                        <div className="mt-3 space-y-1">
+                          <h3 className="command-console-nav-title text-balance font-semibold text-white transition-colors duration-300 group-hover:text-anbu-gold">
                             {item.title}
                           </h3>
-                          <p style={{ fontSize: 'clamp(0.65rem, 2vw, 0.75rem)' }} className="leading-tight text-white/55 transition-colors duration-300 group-hover:text-white/70 line-clamp-2">
+                          <p className="command-console-nav-description text-sm text-white/65 transition-colors duration-300 group-hover:text-white/80">
                             {item.description}
                           </p>
                         </div>
-                        <div className="flex items-center gap-1.5 pt-1 text-[0.6rem] sm:text-[0.65rem] lg:text-xs font-semibold text-anbu-gold/70 transition-colors duration-300 group-hover:text-anbu-gold mt-auto">
-                          <span>Explore</span>
-                          <ArrowUpRight className="h-2.5 w-2.5 sm:h-3 sm:w-3 lg:h-3.5 lg:w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        <div className="mt-auto flex items-center gap-1 text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-anbu-gold/75 transition-colors duration-300 group-hover:text-anbu-gold sm:text-[0.65rem]">
+                          <span>Open</span>
+                          <ArrowUpRight className="h-2.5 w-2.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                         </div>
                       </div>
                       <BorderBeam size={200} duration={12} delay={index * 1} />
@@ -279,14 +280,14 @@ export default function CommandConsolePage() {
         <Container className="space-y-10">
           <div className="space-y-3 text-center">
             <AnimatedGradientText className="text-xs uppercase tracking-[0.3em] text-white/55">
-              Operational clarity
+              Why teams use it
             </AnimatedGradientText>
             <h2 className="font-display text-3xl text-white md:text-4xl">
-              Everything you need to steer delivery
+              Clarity without extra meetings
             </h2>
             <p className="mx-auto max-w-2xl text-sm text-white/60 md:text-base">
-              Each module inside the Command Console is wired for transparency, accountability, and
-              pace. No more digging through Slack to understand what ships next.
+              Everyone can see what is shipping, who owns it, and what is blocking progress in plain
+              language.
             </p>
           </div>
 
@@ -329,14 +330,14 @@ export default function CommandConsolePage() {
               <div className="relative z-10 grid gap-10 lg:grid-cols-[3fr_2fr] lg:items-center">
                 <div className="space-y-4">
                   <AnimatedGradientText className="text-xs uppercase tracking-[0.35em] text-white/55">
-                    Telemetry stack
+                    Signals at a glance
                   </AnimatedGradientText>
                   <h2 className="font-display text-3xl text-white md:text-4xl">
-                    See every signal without context switching
+                    Every tool, one window
                   </h2>
                   <p className="text-sm text-white/60 md:text-base">
-                    Tie Jira, Linear, PagerDuty, and notion docs into a single normalized feed. AI
-                    summaries keep execs informed while engineers drill into the detail they need.
+                    Jira, Linear, PagerDuty, docs, and chat updates plug into a single feed so leaders
+                    and makers see the same truth.
                   </p>
                   <div className="grid gap-4 sm:grid-cols-2">
                     {telemetry.map((item) => (
@@ -386,9 +387,8 @@ export default function CommandConsolePage() {
             Bring the console into your next sprint
           </h2>
           <p className="mx-auto max-w-2xl text-sm text-white/60 md:text-base">
-            We set up the Command Console alongside kickoff so your team inherits rituals,
-            automations, and reporting from day one. Connect with us to see your data inside the
-            workspace.
+            We drop the console in during kickoff, connect your tools, and let you see your own data
+            inside the workspace immediately.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <ShimmerButton

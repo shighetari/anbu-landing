@@ -27,12 +27,15 @@ interface BentoCardProps extends ComponentPropsWithoutRef<'div'> {
   ctaOnClick?: () => void;
 }
 
+const MotionLink = motion.create(Link);
+
 const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
   return (
     <div
       className={cn(
         'grid w-full',
-        'auto-rows-[11rem] sm:auto-rows-[12rem] md:auto-rows-[13rem] lg:auto-rows-[14rem] xl:auto-rows-[16rem]',
+        'grid-cols-1 xs:grid-cols-2 lg:grid-cols-4',
+        'gap-3 sm:gap-4 md:gap-5',
         className
       )}
       {...props}
@@ -68,18 +71,51 @@ const BentoCard = ({
     onClick?.();
   };
 
+  const CtaContent = () => (
+    <>
+      <motion.div
+        className="absolute inset-0 opacity-0"
+        style={{
+          background: `linear-gradient(135deg, ${accentColor}15, transparent, ${accentColor}10)`,
+        }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
+      <motion.div
+        className="absolute inset-0 opacity-0"
+        style={{
+          background: `radial-gradient(circle at center, ${accentColor}20, transparent 70%)`,
+        }}
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+      />
+      <motion.span
+        className="relative z-10 flex items-center justify-center gap-2 text-white/90"
+        whileHover={{ color: '#FFD700' }}
+        transition={{ duration: 0.3 }}
+      >
+        {cta}
+        <motion.span
+          animate={{ x: [0, 3, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 rtl:rotate-180" />
+        </motion.span>
+      </motion.span>
+    </>
+  );
+
   return (
     <div
       key={name}
       className={cn(
-        'group relative flex flex-col justify-between overflow-hidden',
+        'group relative flex h-full flex-col justify-between overflow-hidden',
         'rounded-xl sm:rounded-2xl',
         'border border-white/[0.08] bg-gradient-to-br from-neutral-950/95 via-neutral-900/90 to-neutral-950/95',
         'shadow-[0_10px_30px_rgba(0,0,0,0.3)] lg:shadow-[0_15px_40px_rgba(0,0,0,0.4)]',
         'transition-all duration-500 ease-out',
         'hover:scale-[1.02] hover:shadow-[0_18px_40px_rgba(255,215,0,0.18)] motion-safe:hover:-translate-y-2',
         'hover:border-anbu-gold/40',
-        'min-h-[11rem] sm:min-h-[12rem] md:min-h-[13rem] lg:min-h-[14rem] xl:min-h-[16rem]',
         'backdrop-blur-sm',
         onClick && 'cursor-pointer',
         className
@@ -180,64 +216,31 @@ const BentoCard = ({
         <div className="relative z-20 mt-auto p-3 sm:p-4 md:p-5 lg:p-5">
           <div className="block w-full">
             {hasHref ? (
-              <Link
+              <MotionLink
                 href={href as string}
-                className="block w-full"
+                className={cn(
+                  'relative block w-full overflow-hidden',
+                  'text-[10px] xs:text-[11px] sm:text-xs md:text-sm lg:text-sm',
+                  'px-3 py-2 xs:px-4 xs:py-2.5 sm:px-6 sm:py-3 md:px-7 lg:py-3.5',
+                  'rounded-full font-semibold',
+                  'border border-white/20',
+                  'bg-black/60 backdrop-blur-sm',
+                  'shadow-lg',
+                  'transition-all duration-300',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-anbu-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black'
+                )}
                 onClick={(e) => onClick && e.stopPropagation()}
+                initial={{ opacity: 0.9, y: 0 }}
+                whileHover={{
+                  opacity: 1,
+                  y: -2,
+                  borderColor: 'rgba(255, 215, 0, 0.6)',
+                  boxShadow: '0 0 30px rgba(255, 215, 0, 0.3), 0 10px 40px rgba(0, 0, 0, 0.4)',
+                }}
+                transition={{ duration: 0.3 }}
               >
-                <motion.button
-                  className={cn(
-                    'relative w-full overflow-hidden',
-                    'text-[10px] xs:text-[11px] sm:text-xs md:text-sm lg:text-sm',
-                    'px-3 py-2 xs:px-4 xs:py-2.5 sm:px-6 sm:py-3 md:px-7 lg:py-3.5',
-                    'rounded-full font-semibold',
-                    'border border-white/20',
-                    'bg-black/60 backdrop-blur-sm',
-                    'shadow-lg',
-                    'transition-all duration-300',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-anbu-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black'
-                  )}
-                  initial={{ opacity: 0.9, y: 0 }}
-                  whileHover={{
-                    opacity: 1,
-                    y: -2,
-                    borderColor: 'rgba(255, 215, 0, 0.6)',
-                    boxShadow: '0 0 30px rgba(255, 215, 0, 0.3), 0 10px 40px rgba(0, 0, 0, 0.4)',
-                  }}
-                  transition={{ duration: 0.3 }}
-                  type="button"
-                >
-                  <motion.div
-                    className="absolute inset-0 opacity-0"
-                    style={{
-                      background: `linear-gradient(135deg, ${accentColor}15, transparent, ${accentColor}10)`,
-                    }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.div
-                    className="absolute inset-0 opacity-0"
-                    style={{
-                      background: `radial-gradient(circle at center, ${accentColor}20, transparent 70%)`,
-                    }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.4 }}
-                  />
-                  <motion.span
-                    className="relative z-10 flex items-center justify-center gap-2 text-white/90"
-                    whileHover={{ color: '#FFD700' }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {cta}
-                    <motion.span
-                      animate={{ x: [0, 3, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                    >
-                      <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 rtl:rotate-180" />
-                    </motion.span>
-                  </motion.span>
-                </motion.button>
-              </Link>
+                <CtaContent />
+              </MotionLink>
             ) : (
               <motion.button
                 className={cn(
@@ -262,35 +265,7 @@ const BentoCard = ({
                 type="button"
                 onClick={handleButtonClick}
               >
-                <motion.div
-                  className="absolute inset-0 opacity-0"
-                  style={{
-                    background: `linear-gradient(135deg, ${accentColor}15, transparent, ${accentColor}10)`,
-                  }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-                <motion.div
-                  className="absolute inset-0 opacity-0"
-                  style={{
-                    background: `radial-gradient(circle at center, ${accentColor}20, transparent 70%)`,
-                  }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.4 }}
-                />
-                <motion.span
-                  className="relative z-10 flex items-center justify-center gap-2 text-white/90"
-                  whileHover={{ color: '#FFD700' }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {cta}
-                  <motion.span
-                    animate={{ x: [0, 3, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                  >
-                    <ArrowRightIcon className="h-4 w-4 sm:h-5 sm:w-5 rtl:rotate-180" />
-                  </motion.span>
-                </motion.span>
+                <CtaContent />
               </motion.button>
             )}
           </div>

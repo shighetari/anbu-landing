@@ -237,7 +237,7 @@ export default function ServicesSection() {
           viewport={{ once: true, amount: 0.2 }}
           className="w-full"
         >
-          <BentoGrid className="mt-3 grid-cols-2 gap-3 sm:mt-4 sm:gap-4 md:mt-6 md:gap-5 lg:grid-cols-4">
+          <BentoGrid className="mt-3 sm:mt-4 md:mt-6">
             {/* Portal Card */}
             <motion.div
               key={services[0].id}

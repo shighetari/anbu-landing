@@ -6,9 +6,11 @@ import {
   MessageSquare,
   Sparkles,
   ChevronDown,
+  PhoneCall,
+  MessageCircle,
 } from '@/components/ui/lucide-safe';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 
 import Container from '@/components/ui/Container';
@@ -70,12 +72,8 @@ export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [isClientReady, setIsClientReady] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    setIsClientReady(true);
-  }, []);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -85,6 +83,10 @@ export default function ContactSection() {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email)) {
       newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!formState.projectFocus.trim() || formState.projectFocus.trim().length < 10) {
+      newErrors.projectFocus = 'Tell us a bit more about your project';
     }
 
     setErrors(newErrors);
@@ -106,54 +108,67 @@ export default function ContactSection() {
     }
   };
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
 
     if (isSubmitting) {
       return;
     }
 
-    setIsSubmitting(true);
-
-    const lines = [
-      `Name: ${formState.name || 'N/A'}`,
-      `Email: ${formState.email || 'N/A'}`,
-      `Company: ${formState.company || 'N/A'}`,
-      `Team Size: ${formState.teamSize || 'N/A'}`,
-      `Budget: ${formState.budget || 'N/A'}`,
-      `Timeline: ${formState.timeline || 'N/A'}`,
-      `Project Type: ${formState.projectType || 'N/A'}`,
-      '',
-      'Project Focus:',
-      formState.projectFocus || 'N/A',
-    ].join('\n');
-
-    const params = new URLSearchParams();
-    params.set(
-      'subject',
-      `ANBU Project Inquiry - ${formState.company || formState.name || 'New Lead'}`
-    );
-    params.set('body', lines);
-
-    const mailtoUrl = `mailto:${siteConfig.contactEmail}?${params.toString()}`;
-
-    if (typeof window !== 'undefined') {
-      window.location.href = mailtoUrl;
+    if (!validateForm()) {
+      return;
     }
 
-    setSubmitted(true);
-    setFormState(initialFormState);
+    setIsSubmitting(true);
+    setServerError(null);
 
-    setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 3000);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
 
-    setTimeout(() => {
+      if (!response.ok) {
+        let details: Record<string, string[] | undefined> | undefined;
+        try {
+          const body = await response.json();
+          if (body?.details) {
+            details = body.details;
+          }
+          setServerError(body?.error ?? 'We could not send your message. Try again in a moment.');
+        } catch {
+          setServerError('We could not send your message. Try again in a moment.');
+        }
+
+        if (details) {
+          setErrors((prev) => {
+            const next = { ...prev };
+            Object.entries(details as Record<string, string[]>).forEach(([field, messages]) => {
+              if (messages && messages.length > 0) {
+                next[field] = messages[0];
+              }
+            });
+            return next;
+          });
+        }
+
+        return;
+      }
+
+      setSubmitted(true);
+      setFormState(initialFormState);
+      setErrors({});
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 3000);
+    } catch (error) {
+      console.error('[contact:submit]', error);
+      setServerError(`Something unexpected happened. Email us at ${siteConfig.contactEmail} instead.`);
+    } finally {
       setIsSubmitting(false);
-    }, 400);
+    }
   };
 
   const handleContactClick = () => {
@@ -205,33 +220,30 @@ export default function ContactSection() {
     </motion.div>
   );
 
-  const skeleton = (
-    <div className="mx-auto grid w-full max-w-5xl gap-6 sm:gap-7 md:gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-10">
-      <div className="flex animate-pulse flex-col gap-4 rounded-3xl border border-white/10 bg-gradient-to-br from-black/85 via-black/70 to-black/60 px-5 py-6 text-left shadow-[0_30px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl sm:px-7 sm:py-7 md:px-9 md:py-10">
-        <div className="space-y-4">
-          <div className="h-8 w-40 rounded-full bg-white/10" />
-          <div className="h-6 w-3/4 rounded bg-white/10" />
-          <div className="h-4 w-2/3 rounded bg-white/10" />
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <div key={index} className="h-14 rounded-xl bg-white/10" />
-            ))}
-          </div>
-          <div className="h-24 rounded-2xl bg-white/10" />
-          <div className="h-12 w-40 rounded-full bg-anbu-gold/40" />
-        </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        {Array.from({ length: 2 }).map((_, index) => (
-          <div
-            key={index}
-            className="h-40 rounded-2xl border border-white/10 bg-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
-          />
-        ))}
-        <div className="h-28 rounded-2xl border border-white/10 bg-white/5" />
-      </div>
-    </div>
-  );
+  const realtimeChannels = [
+    {
+      title: 'Slack Community',
+      label: siteConfig.slackInvite ? 'Join Slack' : 'Request Slack Invite',
+      href:
+        siteConfig.slackInvite ??
+        `mailto:${siteConfig.contactEmail}?subject=Slack%20Invite&body=Please%20send%20me%20an%20invite`,
+      description: siteConfig.slackInvite
+        ? 'Chat with us instantly when you need eyes on something.'
+        : 'Ask for a Slack invite in one tap—no waiting once we reply.',
+      icon: MessageCircle,
+    },
+    {
+      title: 'WhatsApp',
+      label: siteConfig.whatsapp ? 'Message us' : 'Request WhatsApp link',
+      href:
+        siteConfig.whatsapp ??
+        `mailto:${siteConfig.contactEmail}?subject=WhatsApp%20Intro&body=Please%20add%20me%20to%20the%20WhatsApp%20thread`,
+      description: siteConfig.whatsapp
+        ? 'Quick async updates and deployment nudges right on your phone.'
+        : 'Prefer WhatsApp? We will reply with the private thread link.',
+      icon: PhoneCall,
+    },
+  ];
 
   return (
     <GradualBlurSection
@@ -250,13 +262,12 @@ export default function ContactSection() {
       >
         {contactIntro}
 
-        {isClientReady ? (
+        
           <div className="mx-auto grid w-full max-w-5xl gap-4 sm:gap-5 md:gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-6">
             <motion.form
               onSubmit={handleFormSubmit}
               initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-gradient-to-br from-black/85 via-black/70 to-black/60 px-6 py-6 text-left shadow-[0_30px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl sm:px-7 sm:py-7 md:px-10 md:py-10"
             >
@@ -282,6 +293,11 @@ export default function ContactSection() {
                 {submitted ? (
                   <p className="mt-2 rounded-lg border border-emerald-400/30 bg-emerald-500/10 px-3 py-2 text-xs text-emerald-200 shadow-[0_20px_60px_rgba(16,185,129,0.25)]">
                     Thanks for reaching out! I'll respond with next steps soon.
+                  </p>
+                ) : null}
+                {serverError && !submitted ? (
+                  <p className="mt-2 rounded-lg border border-red-400/40 bg-red-500/10 px-3 py-2 text-xs text-red-100 shadow-[0_20px_60px_rgba(239,68,68,0.25)]">
+                    {serverError}
                   </p>
                 ) : null}
               </div>
@@ -336,12 +352,15 @@ export default function ContactSection() {
                       }`}
                       autoComplete="email"
                       required
+                      aria-invalid={errors.email ? 'true' : 'false'}
+                      aria-describedby={errors.email ? 'contact-email-error' : undefined}
                     />
                     {errors.email && (
                       <motion.span
                         initial={{ opacity: 0, y: -4 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="text-xs text-red-400/80"
+                        id="contact-email-error"
                       >
                         {errors.email}
                       </motion.span>
@@ -523,9 +542,46 @@ export default function ContactSection() {
                     onChange={handleInputChange}
                     placeholder="Example: Build a customer portal, connect Stripe to our database, create an analytics dashboard."
                     rows={3}
-                    className="bg-white/8 resize-none rounded-lg border border-white/15 px-3 py-2.5 text-sm leading-relaxed text-white/95 transition-all duration-200 placeholder:text-white/40 hover:border-white/25 focus:border-anbu-gold focus:shadow-[0_0_15px_rgba(255,215,0,0.2)] focus:outline-none focus:ring-2 focus:ring-anbu-gold/40"
+                    className={`bg-white/8 resize-none rounded-lg border px-3 py-2.5 text-sm leading-relaxed text-white/95 transition-all duration-200 placeholder:text-white/40 focus:outline-none focus:ring-2 ${
+                      errors.projectFocus
+                        ? 'border-red-500/60 focus:border-red-500 focus:shadow-[0_0_15px_rgba(239,68,68,0.2)] focus:ring-red-500/40'
+                        : 'border-white/15 hover:border-white/25 focus:border-anbu-gold focus:shadow-[0_0_15px_rgba(255,215,0,0.2)] focus:ring-anbu-gold/40'
+                    }`}
+                    required
+                    aria-invalid={errors.projectFocus ? 'true' : 'false'}
+                    aria-describedby={errors.projectFocus ? 'project-focus-error' : undefined}
                   />
+                  {errors.projectFocus && (
+                    <motion.span
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs text-red-400/80"
+                      id="project-focus-error"
+                    >
+                      {errors.projectFocus}
+                    </motion.span>
+                  )}
                 </label>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-white/70">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-anbu-gold/80">
+                  What happens next
+                </p>
+                <ol className="mt-3 space-y-2 text-sm text-white/60">
+                  <li className="flex gap-3">
+                    <span className="font-semibold text-anbu-gold">1</span>
+                    <span>We review your brief and flag any quick questions.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-semibold text-anbu-gold">2</span>
+                    <span>You receive a response within 24 hours with timelines + scope check.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-semibold text-anbu-gold">3</span>
+                    <span>We hop on Slack/WhatsApp or a call to move into production.</span>
+                  </li>
+                </ol>
               </div>
 
               <div className="flex flex-col gap-2 pt-0.5 sm:flex-row sm:items-center sm:justify-between">
@@ -543,6 +599,11 @@ export default function ContactSection() {
                   I respond within 24 hours.
                 </p>
               </div>
+
+              <p className="text-[11px] leading-relaxed text-white/35">
+                Privacy note: your details stay in-house and are only used to follow up on this
+                request. Prefer not to wait? Use the alternate channels on the right.
+              </p>
             </motion.form>
 
             <div className="flex flex-col gap-3">
@@ -562,9 +623,10 @@ export default function ContactSection() {
                       href={option.href}
                       target={option.href.startsWith('http') ? '_blank' : undefined}
                       rel={option.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="group relative block h-full p-5 sm:p-6 md:p-7"
+                      className="group relative block h-full rounded-2xl p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-anbu-gold/60 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:p-6 md:p-7"
                       onClick={option.href.startsWith('mailto') ? handleContactClick : undefined}
                       whileHover={{ scale: 1.015 }}
+                      whileFocus={{ scale: 1.015 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                     >
                       <div
@@ -639,11 +701,49 @@ export default function ContactSection() {
                   Prefer email? <span className="text-anbu-gold/60">{siteConfig.contactEmail}</span>
                 </p>
               </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.24 }}
+                className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 text-left"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/40">
+                    Instant Channels
+                  </span>
+                  <span className="text-[10px] text-white/30">SLA: &lt;24h</span>
+                </div>
+                <div className="mt-3 space-y-2">
+                  {realtimeChannels.map((channel, index) => (
+                    <motion.a
+                      key={channel.title}
+                      href={channel.href}
+                      target={channel.href.startsWith('http') ? '_blank' : undefined}
+                      rel={channel.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-sm text-white/80 transition-all duration-300 hover:border-anbu-gold/40 hover:text-anbu-gold"
+                      whileHover={{ scale: 1.01, x: 2 }}
+                      transition={{ duration: 0.2, delay: index * 0.05 }}
+                      onClick={channel.href.startsWith('mailto:') ? handleContactClick : undefined}
+                    >
+                      <div className="flex items-center gap-3">
+                        <channel.icon className="h-5 w-5 text-anbu-gold" />
+                        <div>
+                          <p className="text-sm font-semibold text-white/85">{channel.title}</p>
+                          <p className="text-xs text-white/40">{channel.description}</p>
+                        </div>
+                      </div>
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-anbu-gold/80">
+                        {channel.label}
+                      </span>
+                    </motion.a>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </div>
-        ) : (
-          skeleton
-        )}
+        
 
         <Confetti isActive={showConfetti} />
       </Container>

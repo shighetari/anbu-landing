@@ -87,6 +87,12 @@
     /* Compact hero spacing for better viewport utilization */
     --hero-top-spacing: clamp(2rem, 4vh + 1rem, 4rem);
     --hero-content-spacing: clamp(0.5rem, 1vh + 0.25rem, 1rem);
+    --hero-logo-offset-top: clamp(-4.5rem, -8vw, -2rem);
+    --hero-logo-offset-bottom: clamp(0.75rem, 1.5vw, 2.25rem);
+    --hero-logo-type-gap: clamp(1.25rem, 3vw, 3.25rem);
+    --hero-stack-gap-mobile: clamp(0.75rem, 1.8vw, 1.75rem);
+    --hero-stack-gap-desktop: clamp(1rem, 2vw, 2.75rem);
+    --hero-stack-gap-xl: clamp(1.25rem, 2vw, 3.25rem);
 
     /* Sleeker navbar positioning */
     --navbar-top: clamp(0.25rem, 0.5vh, 1rem);
@@ -106,6 +112,10 @@
 
     /* Mobile-optimized hero text - more aggressive scaling for phones */
     --text-hero-mobile: clamp(1.25rem, 5vw + 0.5rem, 2.5rem);
+
+    /* Command Console navigation cards */
+    --command-console-card-title: clamp(0.7rem, 1.5vw, 0.85rem);
+    --command-console-card-body: clamp(0.6rem, 1.2vw, 0.7rem);
 
     /* Mobile-optimized button sizing */
     --button-padding-x-mobile: clamp(0.875rem, 2vw, 1.5rem);
@@ -178,11 +188,142 @@
     background-size: cover;
   }
 
+  .nav-brand {
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-size: 0.55rem;
+  }
+
+  .nav-brand-crest {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(1.25rem, 2.2vw, 1.85rem);
+    height: clamp(1.25rem, 2.2vw, 1.85rem);
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+  }
+
+  .nav-brand-crest-glow,
+  .nav-brand-crest-backdrop {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    transition: opacity 250ms ease, transform 300ms ease;
+    pointer-events: none;
+  }
+
+  .nav-brand-crest-glow {
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.35), transparent 70%);
+    opacity: 0.85;
+  }
+
+  .nav-brand-crest-backdrop {
+    background: linear-gradient(160deg, rgba(15, 15, 15, 0.4), rgba(32, 32, 32, 0.95));
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.75);
+  }
+
+  .nav-brand:hover .nav-brand-crest-glow {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  .nav-brand:hover .nav-brand-crest-backdrop {
+    opacity: 0.95;
+  }
+
+  .nav-brand-crest-icon {
+    position: relative;
+    z-index: 1;
+    height: 65%;
+    width: 65%;
+    object-fit: contain;
+  }
+
+  .nav-brand-wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+    line-height: 1;
+  }
+
+  .nav-brand-title {
+    font-size: clamp(0.42rem, 0.75vw, 0.58rem);
+    letter-spacing: 0.36em;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .nav-brand-subtitle {
+    font-size: clamp(0.3rem, 0.55vw, 0.42rem);
+    letter-spacing: 0.22em;
+    color: rgba(255, 215, 0, 0.85);
+  }
+
+  .nav-brand:hover .nav-brand-title {
+    color: rgba(255, 255, 255, 0.98);
+  }
+
+  .nav-brand:hover .nav-brand-subtitle {
+    color: var(--anbu-gold);
+  }
+
+  @media (max-width: 500px) {
+    .nav-brand-subtitle {
+      display: none;
+    }
+    .nav-brand-title {
+      letter-spacing: 0.28em;
+      }
+  }
+
+
+  .hero-stack {
+    row-gap: var(--hero-stack-gap-mobile);
+  }
+
+  @media (min-width: 768px) {
+    .hero-stack {
+      row-gap: var(--hero-stack-gap-desktop);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero-stack {
+      row-gap: var(--hero-stack-gap-xl);
+    }
+  }
+
+  .hero-logo-wrapper {
+    margin-top: var(--hero-logo-offset-top);
+    margin-bottom: var(--hero-logo-offset-bottom);
+  }
+
+  .hero-logo-caption {
+    margin-top: var(--hero-logo-type-gap);
+  }
+
+  /* legacy nav-book-button styles removed */
+
   /* Marble texture gradient - I love this effect */
   .marble-bg {
     background: linear-gradient(135deg, #000000 0%, #2c2c2c 50%, #000000 100%);
     background-size: 200% 200%;
     animation: marbleFlow 15s ease infinite;
+  }
+
+  /* Fluid typography helpers for Command Console promo cards */
+  .command-console-nav-title {
+    font-size: var(--command-console-card-title);
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+  }
+
+  .command-console-nav-description {
+    font-size: var(--command-console-card-body);
+    line-height: 1.5;
   }
 
   /* Gold glow effect - sick hover animation */
@@ -712,6 +853,19 @@
     }
     50% {
       box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+    }
+  }
+
+  /* Subtle rotating shine effect for the logo */
+  @keyframes logoShine {
+    0% {
+      background-position: center, 0% 50%;
+    }
+    50% {
+      background-position: center, 100% 50%;
+    }
+    100% {
+      background-position: center, 0% 50%;
     }
   }
 
