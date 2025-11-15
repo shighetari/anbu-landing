@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { motion, MotionStyle, Transition, useReducedMotion } from 'motion/react';
+import { motion, MotionStyle, TargetAndTransition, Transition, useReducedMotion } from 'motion/react';
 
 interface BorderBeamProps {
   /**
@@ -65,7 +65,7 @@ export const BorderBeam = ({
 }: BorderBeamProps) => {
   const shouldReduceMotion = useReducedMotion();
 
-  const animate = shouldReduceMotion
+  const animate: TargetAndTransition = shouldReduceMotion
     ? { offsetDistance: `${initialOffset}%` }
     : {
         offsetDistance: reverse
@@ -73,7 +73,7 @@ export const BorderBeam = ({
           : [`${initialOffset}%`, `${100 + initialOffset}%`],
       };
 
-  const motionTransition = shouldReduceMotion
+  const motionTransition: Transition = shouldReduceMotion
     ? { duration: 0 }
     : {
         repeat: Infinity,

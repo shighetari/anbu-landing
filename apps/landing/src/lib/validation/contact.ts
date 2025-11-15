@@ -8,13 +8,16 @@ const optionalText = (maxLength: number) =>
     .optional()
     .default('');
 
+const requiredText = (message: string) =>
+  z
+    .string()
+    .trim()
+    .min(1, message);
+
 export const contactFormSchema = z
   .object({
     name: optionalText(80),
-    email: z
-      .string({ required_error: 'Email is required' })
-      .trim()
-      .min(1, 'Email is required')
+    email: requiredText('Email is required')
       .email('Please provide a valid email address')
       .max(120, 'Email must be 120 characters or fewer'),
     company: optionalText(120),
@@ -22,9 +25,7 @@ export const contactFormSchema = z
     budget: optionalText(40),
     timeline: optionalText(40),
     projectType: optionalText(80),
-    projectFocus: z
-      .string({ required_error: 'Tell us about your project' })
-      .trim()
+    projectFocus: requiredText('Tell us about your project')
       .min(10, 'Give us a short overview of your project')
       .max(2000, 'Project focus is limited to 2000 characters'),
   })
