@@ -89,6 +89,7 @@ temp/
 *.claude.*
 .copilot/
 .cursor/
+.codacy/
 .vscode-server/
 *.code-workspace
 
