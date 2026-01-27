@@ -267,7 +267,7 @@ export default function SocialHubPage() {
     <div className="min-h-screen bg-black">
       <main
         id="main-content"
-        className="relative overflow-hidden bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
+        className="relative bg-gradient-to-b from-black via-black/95 to-black text-anbu-marble"
         style={{
           overscrollBehaviorY: 'contain',
           touchAction: 'pan-y',
