@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meteor Test</title>
+    <style>
+        .animate-meteor-effect {
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            animation: meteor 5s linear infinite;
+        }
+        
+        .meteor {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 2px;
+            height: 2px;
+            background: #FFD700;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .meteor::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(to right, #FFD70064, transparent);
+        }
+        
+        @keyframes meteor {
+            0% { 
+                transform: rotate(215deg) translateX(0); 
+                opacity: 1; 
+            }
+            70% { 
+                opacity: 1; 
+            }
+            100% { 
+                transform: rotate(215deg) translateX(-500px); 
+                opacity: 0; 
+            }
+        }
+    </style>
+</head>
+<body style="background: black; min-height: 100vh; position: relative;">
+    <div style="color: white; text-align: center; padding: 20px;">
+        <h1>Meteor Animation Test</h1>
+        <p>If working, you should see golden meteors flying diagonally across the page</p>
+    </div>
+    
+    <div class="meteor animate-meteor-effect" style="left: 100px; animation-delay: 0s;"></div>
+    <div class="meteor animate-meteor-effect" style="left: 200px; animation-delay: 1s;"></div>
+    <div class="meteor animate-meteor-effect" style="left: 300px; animation-delay: 2s;"></div>
+    <div class="meteor animate-meteor-effect" style="left: 400px; animation-delay: 3s;"></div>
+</body>
+</html>

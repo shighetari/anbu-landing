@@ -1,0 +1,24 @@
+# Docker Compose Override for Windows Development
+# Use this file for Windows-specific optimizations
+# Run: docker-compose -f docker-compose.yml -f docker-compose.windows.yml up
+
+version: '3.8'
+
+services:
+  landing:
+    environment:
+      # Windows requires polling for file watching
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=1000
+      - WATCHPACK_POLL=1000
+      # Windows-specific Node options
+      - NODE_OPTIONS=--max-old-space-size=4096
+    volumes:
+      # Windows-specific volume configuration
+      - ./apps/landing:/app/apps/landing
+      - ./packages:/app/packages
+      # Use named volumes for better performance on Windows
+      - /app/node_modules
+      - /app/apps/landing/node_modules
+      - pnpm-store:/root/.local/share/pnpm/store

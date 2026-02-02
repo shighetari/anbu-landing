@@ -1,0 +1,80 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ],
+      "env": {}
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@context7/mcp-server-context7"
+      ],
+      "env": {}
+    },
+    "tavily": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@tavily/mcp-server-tavily"
+      ],
+      "env": {
+        "TAVILY_API_KEY": "your-tavily-api-key-here"
+      }
+    },
+        "@magicuidesign/mcp": {
+      "command": "npx",
+      "args": ["-y", "@magicuidesign/mcp@latest"]
+    },
+    "notion": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "notion-mcp-server"
+      ],
+      "env": {
+        "NOTION_TOKEN": "your-notion-integration-token-here"
+      }
+    }
+  }
+}
+
+{
+  "mcpServers": {
+    "tavily": {
+      "type": "http",
+      "url": "https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}"
+    },
+    "magic": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@21st-dev/magic@latest"
+      ],
+      "env": {
+        "API_KEY": "39525d648a71e06cc614cf8f6e84509478d703a88ad6f0eb4616ea9f8d94f491"
+      }
+    }
+  }
+}
+
+
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com/"
+    }
+  }
+}
+
+

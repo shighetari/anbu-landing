@@ -1,0 +1,28 @@
+# Docker Compose Override for macOS/Linux Development
+# Use this file for Unix-specific optimizations
+# Run: docker-compose -f docker-compose.yml -f docker-compose.unix.yml up
+
+version: '3.8'
+
+services:
+  landing:
+    environment:
+      # Unix systems can use native file watching (no polling needed)
+      - WATCHPACK_POLLING=false
+      - CHOKIDAR_USEPOLLING=false
+      # Unix-specific Node options
+      - NODE_OPTIONS=--max-old-space-size=4096
+    volumes:
+      # macOS benefits from delegated mounts for better performance
+      # Linux works best with default settings
+      - ./apps/landing:/app/apps/landing:cached
+      - ./packages:/app/packages:cached
+      # Use named volumes for node_modules
+      - /app/node_modules
+      - /app/apps/landing/node_modules
+      - pnpm-store:/root/.local/share/pnpm/store
+    # Additional Unix-specific settings
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536

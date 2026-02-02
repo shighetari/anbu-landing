@@ -1,0 +1,349 @@
+/* I'm creating comprehensive button styles with all variants */
+
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal) var(--ease-out);
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  outline: none;
+  border: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* =================================
+   SIZE VARIANTS
+   ================================= */
+.xs {
+  padding: var(--space-2xs) var(--space-xs);
+  font-size: var(--text-2xs);
+  min-height: 28px;
+}
+
+.sm {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--text-xs);
+  min-height: 32px;
+}
+
+.md {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--text-sm);
+  min-height: 40px;
+}
+
+.lg {
+  padding: var(--space-md) var(--space-lg);
+  font-size: var(--text-base);
+  min-height: 48px;
+}
+
+.xl {
+  padding: var(--space-lg) var(--space-xl);
+  font-size: var(--text-lg);
+  min-height: 56px;
+}
+
+/* =================================
+   VARIANT STYLES
+   ================================= */
+
+/* Primary variant */
+.primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--color-ink, #0b0500);
+  font-weight: var(--font-bold);
+  box-shadow: var(--shadow-md), var(--shadow-glow-sm);
+}
+
+.primary:hover:not(.disabled):not(.loading) {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-secondary-light));
+  box-shadow: var(--shadow-lg), var(--shadow-glow-md);
+  transform: translateY(-2px);
+}
+
+.primary:active:not(.disabled):not(.loading) {
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-secondary-dark));
+  box-shadow: var(--shadow-sm), var(--shadow-glow-sm);
+  transform: translateY(0);
+}
+
+/* Secondary variant */
+.secondary {
+  background: var(--color-gray-800);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.secondary:hover:not(.disabled):not(.loading) {
+  background: var(--color-gray-700);
+  border-color: var(--color-primary-light);
+  box-shadow: var(--shadow-md), var(--shadow-glow-sm);
+}
+
+.secondary:active:not(.disabled):not(.loading) {
+  background: var(--color-gray-900);
+  border-color: var(--color-primary-dark);
+}
+
+/* Outline variant */
+.outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  font-weight: var(--font-medium);
+}
+
+.outline:hover:not(.disabled):not(.loading) {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: var(--color-primary-light);
+  box-shadow: var(--shadow-glow-sm);
+}
+
+.outline:active:not(.disabled):not(.loading) {
+  background: rgba(255, 215, 0, 0.2);
+  border-color: var(--color-primary);
+}
+
+/* Ghost variant */
+.ghost {
+  background: transparent;
+  color: var(--color-white);
+  font-weight: var(--font-medium);
+}
+
+.ghost:hover:not(.disabled):not(.loading) {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-primary);
+}
+
+.ghost:active:not(.disabled):not(.loading) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Glass variant */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.glass:hover:not(.disabled):not(.loading) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg), var(--shadow-glow-sm);
+}
+
+.glass:active:not(.disabled):not(.loading) {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Danger variant */
+.danger {
+  background: linear-gradient(135deg, var(--color-error), hsl(0, 72%, 41%));
+  color: var(--color-white);
+  font-weight: var(--font-bold);
+}
+
+.danger:hover:not(.disabled):not(.loading) {
+  background: linear-gradient(135deg, hsl(0, 72%, 55%), hsl(0, 72%, 45%));
+  box-shadow:
+    var(--shadow-lg),
+    0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+.danger:active:not(.disabled):not(.loading) {
+  background: linear-gradient(135deg, hsl(0, 72%, 45%), hsl(0, 72%, 35%));
+}
+
+/* =================================
+   STATE MODIFIERS
+   ================================= */
+
+/* Full width */
+.fullWidth {
+  width: 100%;
+}
+
+/* Disabled state */
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Loading state */
+.loading {
+  cursor: wait;
+  pointer-events: none;
+}
+
+/* Glow effect */
+.glow {
+  animation: buttonGlow 2s ease-in-out infinite;
+}
+
+@keyframes buttonGlow {
+  0%,
+  100% {
+    box-shadow: var(--shadow-md), var(--shadow-glow-md);
+  }
+  50% {
+    box-shadow: var(--shadow-lg), var(--shadow-glow-lg);
+  }
+}
+
+/* Pulse effect */
+.pulse {
+  animation: buttonPulse 2s ease-in-out infinite;
+}
+
+@keyframes buttonPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* =================================
+   BUTTON CONTENT
+   ================================= */
+
+.content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Icons */
+.iconLeft,
+.iconRight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.iconLeft {
+  margin-right: var(--space-xs);
+}
+
+.iconRight {
+  margin-left: var(--space-xs);
+}
+
+/* Nerd Font icons */
+.iconLeft.nf-icon::before,
+.iconRight.nf-icon::before {
+  font-size: 1.2em;
+}
+
+/* =================================
+   LOADING SPINNER
+   ================================= */
+
+.spinner {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  z-index: 3;
+}
+
+.spinnerIcon {
+  width: 20px;
+  height: 20px;
+  animation: spin 0.7s linear infinite;
+}
+
+.spinnerCircle {
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-dasharray: 42;
+  stroke-dashoffset: 14;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =================================
+   RIPPLE EFFECT
+   ================================= */
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: rippleEffect 0.6s ease-out;
+  z-index: 1;
+}
+
+@keyframes rippleEffect {
+  from {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  to {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+/* =================================
+   FOCUS STYLES
+   ================================= */
+
+.button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* =================================
+   RESPONSIVE ADJUSTMENTS
+   ================================= */
+
+@media (max-width: 768px) {
+  .button {
+    letter-spacing: var(--tracking-normal);
+  }
+
+  .md {
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .lg {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .xl {
+    padding: var(--space-md) var(--space-lg);
+  }
+}

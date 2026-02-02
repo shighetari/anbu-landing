@@ -18,15 +18,28 @@ This is a monorepo containing the ANBU Solutions landing page and related applic
 
 ### 📦 Applications
 
-- **`apps/landing`** - Main ANBU.ai landing page with Letter Glitch background
-- **`apps/docs-hub`** - ANBU Solutions Documentation Hub
-- **`apps/solutions-portal`** - Official ANBU Solutions Portal
+- **`apps/landing`** – Main ANBU.ai landing page with Letter Glitch background and premium motion system
+
+> ℹ️ `docs-hub` and `solutions-portal` remain roadmap items; they stay documented but are not yet present in the workspace so new contributors can focus on the landing experience.
 
 ### 📚 Shared Packages
 
 - **`packages/ui`** - Shared UI components library
 - **`packages/config`** - Shared configuration files
 - **`packages/utils`** - Shared utility functions
+
+### 🗂️ Knowledge Docs
+
+- **`docs/design/landing-ui-decisions.md`** – Detailed component rationale, motion guidelines, and integration tips.
+- **`docs/changelog/landing.md`** – Running log of landing redesign milestones and component installs.
+
+## ✅ UX Navigation To-Do
+
+- [ ] Validate new journey routes (`/solutions`, `/resources`, `/contact`) in browser and capture polish issues.
+- [ ] Confirm mega menu + mobile nav microinteractions meet performance and accessibility targets.
+- [ ] Align CTA copy and section headings across new pages with brand voice.
+- [ ] Add analytics/events for journey CTAs before launch.
+- [ ] Update Playwright coverage for journey navigation paths once UI stabilizes.
 
 ## 🎨 Design System
 
@@ -48,57 +61,124 @@ Our design system features a sophisticated **black and gold with marble aestheti
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/shighetari/anbu-landing.git
 cd anbu-landing
 ```
 
 2. Install dependencies:
+
 ```bash
 pnpm install
 ```
 
 3. Copy environment variables:
+
 ```bash
 cp .env.example .env.local
 ```
 
 4. Start development server:
+
 ```bash
 pnpm dev
 ```
 
 ### Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start all apps in development mode |
-| `pnpm build` | Build all apps for production |
-| `pnpm test` | Run tests across all apps |
-| `pnpm lint` | Lint all apps and packages |
-| `pnpm typecheck` | Type check all TypeScript files |
-| `pnpm format` | Format code with Prettier |
-| `pnpm docker:dev` | Start development with Docker |
-| `pnpm docker:prod` | Start production with Docker |
+| Script           | Description                                |
+| ---------------- | ------------------------------------------ |
+| `pnpm dev`       | Start all apps in development mode         |
+| `pnpm build`     | Build all apps for production              |
+| `pnpm test`      | Run tests across all apps                  |
+| `pnpm lint`      | Lint all apps and packages                 |
+| `pnpm typecheck` | Type check all TypeScript files            |
+| `pnpm format`    | Format code with Prettier                  |
+| `pnpm clean`     | Clean all build artifacts and node_modules |
 
 ## 🐳 Docker Support
 
-### Development with Docker
+I've optimized our Docker setup for cross-platform development with hot reload enabled for Windows, macOS, and Linux.
+
+### Quick Start with Docker
 
 ```bash
-# Start all services
-pnpm docker:dev
+# First-time setup (detects your platform automatically)
+pnpm docker:setup
 
-# Stop all services
-pnpm docker:down
+# Start just the landing page with hot reload
+pnpm docker:landing  # Note: it's pnpm, not pnmp
+
+# View logs in real-time
+pnpm docker:landing:logs
+
+# Access the container shell for debugging
+pnpm docker:landing:shell
 ```
 
-### Production Deployment
+📚 **[Full Docker Development Guide](docs/DOCKER_GUIDE.md)** - Comprehensive platform-specific instructions
+
+### Docker Commands
+
+| Command                       | Description                                     |
+| ----------------------------- | ----------------------------------------------- |
+| `pnpm docker:landing`         | Start landing app with hot reload               |
+| `pnpm docker:landing:build`   | Rebuild landing container (no cache)            |
+| `pnpm docker:landing:rebuild` | Rebuild and start landing app                   |
+| `pnpm docker:landing:logs`    | View landing app logs                           |
+| `pnpm docker:landing:shell`   | Access landing container shell                  |
+| `pnpm docker:dev`             | Start all services in detached mode             |
+| `pnpm docker:stop`            | Stop all containers                             |
+| `pnpm docker:down`            | Stop and remove containers                      |
+| `pnpm docker:clean`           | Remove everything (containers, volumes, images) |
+| `pnpm docker:prune`           | Clean up all unused Docker resources            |
+
+### Windows Hot Reload Setup
+
+The Docker configuration is optimized for Windows with:
+
+- `WATCHPACK_POLLING=true` for file watching
+- Delegated volume mounts for better performance
+- Proper node_modules exclusion to avoid conflicts
+
+### Local Development Customization
+
+I've included a `docker-compose.override.yml.example` file for local customization:
 
 ```bash
-# Build and run production containers
-pnpm docker:prod
+# Copy the example to create your local override
+cp docker-compose.override.yml.example docker-compose.override.yml
+
+# Edit to add your local environment variables or port changes
 ```
+
+### Troubleshooting Docker
+
+If you experience issues with hot reload on Windows:
+
+1. **Ensure Docker Desktop is using WSL 2**:
+   - Open Docker Desktop Settings
+   - Go to General → Use WSL 2 based engine
+
+2. **File watching not working**:
+
+   ```bash
+   # Rebuild the container
+   pnpm docker:landing:rebuild
+   ```
+
+3. **Port conflicts**:
+   - Edit `docker-compose.override.yml` to use a different port
+
+4. **Clean slate**:
+
+   ```bash
+   # Remove everything and start fresh
+   pnpm docker:clean
+   pnpm docker:landing:build
+   pnpm docker:landing
+   ```
 
 ## 🌳 Git Workflow
 
@@ -168,22 +248,21 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
 
 ```
 anbu-landing/
-├── apps/                    # Application packages
-│   ├── landing/            # Main landing page
-│   ├── docs-hub/          # Documentation hub
-│   └── solutions-portal/   # Solutions portal
-├── packages/               # Shared packages
-│   ├── ui/                # UI components
-│   ├── config/            # Configurations
-│   └── utils/             # Utilities
-├── docker/                 # Docker configurations
-│   ├── development/       # Dev Dockerfiles
-│   └── production/        # Prod Dockerfiles
-├── .github/               # GitHub configurations
-│   └── workflows/         # CI/CD workflows
-├── scripts/               # Build scripts
-├── docs/                  # Documentation
-└── [config files]         # Root configuration
+├── apps/
+│   └── landing/               # Next.js app currently in production
+├── packages/
+│   ├── ui/                    # Shared UI kit
+│   ├── config/                # ESLint/Tailwind/TS presets
+│   └── utils/                 # Cross-cutting helpers
+├── docs/
+│   ├── design/landing-ui-decisions.md
+│   ├── changelog/landing.md
+│   └── *.md                   # Additional runbooks & guides
+├── docker/
+│   └── development|production # Container images
+├── scripts/                   # Automation + platform helpers
+├── .github/workflows/         # CI/CD configuration
+└── [config files]             # Root configs (.env.example, eslint, turbo, etc.)
 ```
 
 ## 🔒 Security
@@ -209,7 +288,7 @@ This project is proprietary software owned by ANBU Solutions. All rights reserve
 ## 📞 Contact
 
 - Website: [anbu.ai](https://anbu.ai)
-- Email: contact@anbu.ai
+- Email: <contact@anbu.ai>
 
 ## 🙏 Acknowledgments
 

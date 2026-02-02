@@ -1,0 +1,258 @@
+/* I'm setting up the Nerd Font typography system */
+
+/* =================================
+   FONT FACE DECLARATIONS
+   ================================= */
+/* Nerd Fonts are loaded via Next.js font optimization in layout.tsx */
+
+/* Montserrat for display */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+/* =================================
+   BASE TYPOGRAPHY
+   ================================= */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern' 1;
+  font-kerning: normal;
+}
+
+body {
+  font-family: var(--font-jetbrains-mono), 'Courier New', monospace;
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-white);
+}
+
+/* =================================
+   HEADING STYLES
+   ================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1,
+.h1 {
+  font-size: var(--text-6xl);
+  font-weight: var(--font-extrabold);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-none);
+}
+
+h2,
+.h2 {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+}
+
+h3,
+.h3 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+}
+
+h4,
+.h4 {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-semibold);
+}
+
+h5,
+.h5 {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-semibold);
+}
+
+h6,
+.h6 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-medium);
+}
+
+/* =================================
+   BODY TEXT STYLES
+   ================================= */
+.text-body-xl {
+  font-size: var(--text-xl);
+  line-height: var(--leading-relaxed);
+}
+
+.text-body-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.text-body {
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+}
+
+.text-body-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.text-body-xs {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+}
+
+/* =================================
+   MONOSPACE STYLES
+   ================================= */
+.mono,
+code,
+pre {
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-variant-ligatures: contextual;
+  font-feature-settings:
+    'liga' 1,
+    'calt' 1,
+    'ss01' 1,
+    'ss02' 1,
+    'zero' 1;
+}
+
+.mono-no-ligatures {
+  font-variant-ligatures: none;
+  font-feature-settings:
+    'liga' 0,
+    'calt' 0;
+}
+
+/* =================================
+   TEXT UTILITIES
+   ================================= */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.text-glow {
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.5),
+    0 0 20px rgba(255, 215, 0, 0.3),
+    0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* =================================
+   NERD FONT ICONS
+   ================================= */
+.nf-icon::before {
+  font-family: var(--font-jetbrains-mono);
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Common Nerd Font Icons */
+.nf-dev-git::before {
+  content: '\f1d3';
+}
+.nf-dev-github::before {
+  content: '\f113';
+}
+.nf-dev-react::before {
+  content: '\e7ba';
+}
+.nf-dev-nodejs::before {
+  content: '\e718';
+}
+.nf-dev-terminal::before {
+  content: '\f120';
+}
+.nf-fa-code::before {
+  content: '\f121';
+}
+.nf-fa-server::before {
+  content: '\f233';
+}
+.nf-fa-database::before {
+  content: '\f1c0';
+}
+.nf-fa-shield::before {
+  content: '\f132';
+}
+.nf-fa-rocket::before {
+  content: '\f135';
+}
+.nf-fa-bolt::before {
+  content: '\f0e7';
+}
+.nf-fa-users::before {
+  content: '\f0c0';
+}
+.nf-mdi-chevron_right::before {
+  content: '\f054';
+}
+.nf-mdi-chevron_down::before {
+  content: '\f078';
+}
+.nf-mdi-menu::before {
+  content: '\f0c9';
+}
+.nf-mdi-close::before {
+  content: '\f00d';
+}
+
+/* =================================
+   RESPONSIVE TYPOGRAPHY
+   ================================= */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  h1,
+  .h1 {
+    letter-spacing: var(--tracking-tight);
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+/* =================================
+   SELECTION STYLES
+   ================================= */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-black);
+}
+
+::-moz-selection {
+  background-color: var(--color-primary);
+  color: var(--color-black);
+}

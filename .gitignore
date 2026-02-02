@@ -35,6 +35,18 @@ lerna-debug.log*
 .env.development
 .env.production
 
+# MCP Configuration (contains API keys)
+.mcp.json
+
+# Platform-specific environment files
+.env.windows
+.env.macos
+.env.linux
+
+# Playwright test artifacts
+.playwright-mcp/
+test-results/
+
 # Vercel
 .vercel
 
@@ -77,6 +89,7 @@ temp/
 *.claude.*
 .copilot/
 .cursor/
+.codacy/
 .vscode-server/
 *.code-workspace
 
@@ -93,3 +106,11 @@ scratch/
 .session-notes/
 .workspace/
 .tools/
+
+# Context documentation
+docs/CONTEXT_SUMMARY.md
+docs/*-context.md
+docs/*.context.md
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md

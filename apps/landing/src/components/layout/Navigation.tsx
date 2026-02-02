@@ -1,0 +1,899 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X, ArrowUpRight, ChevronDown } from '@/components/ui/lucide-safe';
+import {
+  IconBrandCodesandbox,
+  IconBook,
+  IconCompass,
+  IconHeadset,
+  IconMessage2,
+  IconRocket,
+  IconTimeline,
+  IconRoute,
+  IconSparkles,
+  IconUsersGroup,
+  IconChecklist,
+} from '@tabler/icons-react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import type {
+  FocusEvent as ReactFocusEvent,
+  PointerEvent as ReactPointerEvent,
+  KeyboardEvent as ReactKeyboardEvent,
+} from 'react';
+import type { ComponentType } from 'react';
+
+import { cn } from '@/lib/utils';
+import { siteConfig } from '@/lib/site-config';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
+
+type JourneyItem = {
+  stage: string;
+  title: string;
+  description: string;
+  href: string;
+};
+
+type MegaItem = {
+  title: string;
+  description: string;
+  href: string;
+  icon?: ComponentType<{ className?: string }>;
+  gradient: string;
+  bgGradient?: string;
+  badge?: string;
+  status?: string;
+};
+
+type AuxiliaryLink = {
+  label: string;
+  href: string;
+  icon?: ComponentType<{ className?: string }>;
+  gradient?: string;
+};
+
+type NavItem = {
+  label: string;
+  href: string;
+  description?: string;
+  journey?: JourneyItem[];
+  mega?: MegaItem[];
+  auxLinks?: AuxiliaryLink[];
+};
+
+const NAV_ITEMS: NavItem[] = [
+  {
+    label: 'Command Console',
+    href: '/solutions/command-console',
+    description: 'Orchestrate delivery with our real-time control center.',
+  },
+  {
+    label: 'Marketing Studio',
+    href: '/solutions/marketing-studio',
+    description: 'Watch the brand film and explore campaign packages.',
+  },
+  {
+    label: 'Services',
+    href: '/solutions',
+    description: 'What we build for your business.',
+    mega: [
+      {
+        title: 'Web Apps',
+        description: 'Custom software for your business needs.',
+        href: '/solutions',
+        icon: IconRocket,
+        gradient: 'from-cyan-500 to-violet-500',
+        bgGradient: 'from-cyan-500/15 via-cyan-500/5 to-violet-500/10',
+      },
+      {
+        title: 'Marketing Studio',
+        description: 'Immersive launch films and campaign systems.',
+        href: '/solutions/marketing-studio',
+        icon: IconBrandCodesandbox,
+        gradient: 'from-amber-500 to-pink-500',
+        bgGradient: 'from-amber-500/15 via-amber-500/5 to-pink-500/10',
+      },
+      {
+        title: 'Content Production',
+        description: 'Campaign films, social drops, and launch assets with packaged pricing.',
+        href: '/solutions/marketing-studio#pricing',
+        icon: IconSparkles,
+        gradient: 'from-rose-500 to-violet-500',
+        bgGradient: 'from-rose-500/15 via-rose-500/5 to-violet-500/10',
+      },
+      {
+        title: 'Documentation',
+        description: 'Help centers and knowledge bases.',
+        href: '/docs-hub',
+        icon: IconBook,
+        gradient: 'from-indigo-500 to-sky-500',
+        bgGradient: 'from-indigo-500/15 via-indigo-500/5 to-sky-500/10',
+      },
+    ],
+    auxLinks: [
+      {
+        label: 'View all services',
+        href: '/solutions',
+        icon: IconCompass,
+        gradient: 'from-purple-500 to-cyan-500',
+      },
+    ],
+  },
+  {
+    label: 'Docs Hub',
+    href: '/docs-hub',
+    description: 'Read product knowledge, playbooks, and release notes.',
+  },
+  {
+    label: 'About',
+    href: '/#about',
+    description: 'Learn about our approach and process.',
+  },
+  {
+    label: 'Contact',
+    href: '/contact',
+    description: 'Start a project in under a minute.',
+  },
+];
+
+const TRANSITION = {
+  type: 'spring',
+  mass: 0.8,
+  damping: 30,
+  stiffness: 300,
+};
+
+const STAGGER_DELAY = 0.05;
+
+export default function Navigation() {
+  const pathname = usePathname();
+  const [active, setActive] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [scrollVelocity, setScrollVelocity] = useState(0);
+  const prevY = useRef(0);
+
+  const mobileMenuRef = useClickOutside<HTMLDivElement>(() => setMobileOpen(false), mobileOpen);
+  const focusTrapRef = useFocusTrap<HTMLDivElement>(mobileOpen);
+  useLockBodyScroll(mobileOpen);
+
+  useEffect(() => {
+    const handler = () => {
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 24);
+      const velocity = scrollY - prevY.current;
+      setScrollVelocity(velocity);
+      prevY.current = scrollY;
+    };
+    handler();
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  useEffect(() => {
+    setMobileOpen(false);
+    setMobileExpanded(null);
+    setActive(null);
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  }, [pathname]);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (mobileExpanded) {
+          setMobileExpanded(null);
+        } else {
+          setMobileOpen(false);
+          setActive(null);
+        }
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [mobileOpen, mobileExpanded]);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, []);
+
+  const handleNavigate = () => {
+    setMobileOpen(false);
+    setActive(null);
+  };
+
+  return (
+    <motion.header
+      className={cn(
+        'fluid-top-nav fixed inset-x-0 z-[55] flex justify-center px-1.5 transition-all duration-500 sm:px-2.5',
+        isScrolled && 'translate-y-[-0.12rem]'
+      )}
+      style={{
+        backdropFilter: `blur(${isScrolled ? 20 : 16}px)`,
+      }}
+      animate={{
+        y: scrollVelocity > 10 && isScrolled && !mobileOpen ? -100 : 0,
+      }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    >
+      <motion.nav
+        onMouseLeave={() => setActive(null)}
+        className={cn(
+          'will-change-transform',
+          'relative flex w-full max-w-5xl items-center justify-between gap-1 rounded-full border border-white/12 bg-[radial-gradient(circle_at_top,_rgba(255,215,0,0.15),_rgba(0,0,0,0.85))] px-2 py-[0.3rem] shadow-[0_5px_20px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-[background-color,border-color,box-shadow] duration-500 sm:px-3 sm:py-[0.55rem] lg:px-4 lg:py-[0.65rem]',
+          isScrolled && 'border-white/20 bg-black/80 shadow-[0_10px_38px_rgba(0,0,0,0.5)]'
+        )}
+        animate={{
+          scale: isScrolled ? 0.98 : 1,
+        }}
+        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      >
+        <Link
+          href="/"
+          className="nav-brand group flex items-center gap-1.5 rounded-full px-1.5 py-0.25 text-white/85 transition-colors duration-300 sm:px-2"
+        >
+          <span className="nav-brand-crest">
+            <span aria-hidden className="nav-brand-crest-glow" />
+            <span aria-hidden className="nav-brand-crest-backdrop" />
+            <img
+              src="/logos/anbu_logo_no_text.svg"
+              alt="ANBU Solutions mark"
+              className="nav-brand-crest-icon"
+              loading="lazy"
+            />
+          </span>
+          <span className="nav-brand-wordmark">
+            <span className="nav-brand-title">ANBU</span>
+            <span className="nav-brand-subtitle">SOLUTIONS</span>
+          </span>
+        </Link>
+
+        <div className="hidden items-center gap-2.5 md:flex lg:gap-3.5">
+          <div className="flex items-center gap-1.5 lg:gap-2">
+            {NAV_ITEMS.map((item) => (
+              <DesktopMenuItem key={item.label} item={item} active={active} setActive={setActive} />
+            ))}
+          </div>
+        </div>
+
+        <button
+          className="flex h-8 w-8 touch-manipulation items-center justify-center rounded-full border border-white/10 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-anbu-gold/10 md:hidden"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle navigation"
+          aria-expanded={mobileOpen}
+        >
+          <AnimatePresence mode="wait">
+            {mobileOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X className="h-5 w-5" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="menu"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Menu className="h-5 w-5" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </button>
+
+        <AnimatePresence>
+          {mobileOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.75 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm md:hidden"
+                onClick={() => setMobileOpen(false)}
+                aria-hidden="true"
+              />
+              <motion.div
+                ref={(node) => {
+                  // I'm properly setting both refs to the same element
+                  mobileMenuRef.current = node;
+                  focusTrapRef(node);
+                }}
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 25,
+                  duration: 0.3,
+                }}
+                className="absolute left-1/2 top-[calc(100%+0.75rem)] z-40 w-[min(92vw,380px)] -translate-x-1/2 md:hidden"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile navigation menu"
+              >
+                <div className="border-white/12 scrollbar-thin scrollbar-track-white/5 scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30 max-h-[calc(100vh-7rem)] space-y-3 overflow-y-auto rounded-3xl border bg-black/95 p-4 shadow-[0_32px_70px_rgba(0,0,0,0.55)] backdrop-blur-2xl">
+                  {NAV_ITEMS.map((item, index) => {
+                    const hasNested = Boolean(item.journey || item.mega);
+                    const isExpanded = mobileExpanded === item.label;
+
+                    return (
+                      <motion.div
+                        key={item.label}
+                        className="space-y-2"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        <div className="flex items-stretch gap-2">
+                          <Link
+                            href={item.href}
+                            onClick={handleNavigate}
+                            className="flex flex-1 flex-col gap-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left"
+                          >
+                            <span className="flex items-center justify-between text-sm font-semibold text-anbu-marble">
+                              {item.label}
+                              <span className="text-[10px] uppercase tracking-[0.2em] text-anbu-gold/70">
+                                Go
+                              </span>
+                            </span>
+                            {item.description ? (
+                              <span className="text-xs leading-relaxed text-white/55">
+                                {item.description}
+                              </span>
+                            ) : null}
+                          </Link>
+
+                          {hasNested && (
+                            <button
+                              onClick={() => setMobileExpanded(isExpanded ? null : item.label)}
+                              className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-3 text-anbu-gold transition-all duration-300 hover:border-anbu-gold/40 hover:bg-white/10"
+                              aria-label={
+                                isExpanded ? `Collapse ${item.label}` : `Expand ${item.label}`
+                              }
+                              aria-expanded={isExpanded}
+                            >
+                              <motion.div
+                                animate={{ rotate: isExpanded ? 180 : 0 }}
+                                transition={{ duration: 0.3 }}
+                              >
+                                <ChevronDown className="h-4 w-4" />
+                              </motion.div>
+                            </button>
+                          )}
+                        </div>
+
+                        <AnimatePresence>
+                          {isExpanded && item.journey && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="space-y-2 border-l border-white/10 pl-3 pt-2">
+                                {item.journey.map((step) => (
+                                  <Link
+                                    key={step.stage}
+                                    href={step.href}
+                                    onClick={handleNavigate}
+                                    className="group flex items-start gap-2 rounded-xl px-3 py-2 transition-all duration-300 hover:bg-white/5"
+                                  >
+                                    <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.28em] text-anbu-gold/80">
+                                      {step.stage}
+                                    </span>
+                                    <div className="min-w-0 flex-1">
+                                      <span className="block text-xs font-medium text-white">
+                                        {step.title}
+                                      </span>
+                                      <span className="text-[11px] leading-relaxed text-white/55">
+                                        {step.description}
+                                      </span>
+                                    </div>
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+
+                          {isExpanded && item.mega && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="space-y-2 border-l border-white/10 pl-3 pt-2">
+                                {item.mega.map((mega) => {
+                                  const IconComponent = mega.icon;
+                                  return (
+                                    <Link
+                                      key={mega.title}
+                                      href={mega.href}
+                                      onClick={handleNavigate}
+                                      className="group relative block rounded-xl px-3 py-2 transition-all duration-300 hover:bg-white/5"
+                                    >
+                                      <div className="flex items-start gap-2">
+                                        <div className="mt-1 flex flex-col items-center gap-1">
+                                          {mega.badge && (
+                                            <span
+                                              className={cn(
+                                                'rounded-full px-2 py-0.5 text-[9px] uppercase tracking-[0.2em] text-white/80',
+                                                'bg-gradient-to-r',
+                                                mega.gradient
+                                              )}
+                                            >
+                                              {mega.badge}
+                                            </span>
+                                          )}
+                                          {IconComponent && (
+                                            <div
+                                              className={cn(
+                                                'rounded-md bg-gradient-to-br p-1 text-white',
+                                                mega.gradient
+                                              )}
+                                            >
+                                              <IconComponent className="h-3.5 w-3.5" />
+                                            </div>
+                                          )}
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                          <span className="block text-xs font-medium text-white">
+                                            {mega.title}
+                                          </span>
+                                          <span className="text-[11px] leading-relaxed text-white/55">
+                                            {mega.description}
+                                          </span>
+                                          {mega.status && (
+                                            <span className="mt-1 inline-flex items-center rounded-full border border-white/15 px-2 py-0.5 text-[9px] uppercase tracking-[0.2em] text-white/60">
+                                              {mega.status}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </Link>
+                                  );
+                                })}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+                    );
+                  })}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: NAV_ITEMS.length * 0.05 + 0.1 }}
+                  >
+                    <Link
+                      href="/contact"
+                      onClick={handleNavigate}
+                      className="flex items-center justify-center gap-2 rounded-full bg-anbu-gold px-6 py-3 text-sm font-semibold text-anbu-ink shadow-[0_12px_30px_rgba(255,215,0,0.35)] transition-all duration-300 hover:scale-[1.05] hover:bg-anbu-gold-accent active:scale-[0.95]"
+                    >
+                      Get Started
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Link>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </motion.header>
+  );
+}
+
+function DesktopMenuItem({
+  item,
+  active,
+  setActive,
+}: {
+  item: NavItem;
+  active: string | null;
+  setActive: (value: string | null) => void;
+}) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const [menuOffset, setMenuOffset] = useState(0);
+
+  const isActive = active === item.label;
+  const hasMega = Boolean(item.mega && item.mega.length > 0);
+  const hasJourney = Boolean(item.journey && item.journey.length > 0);
+  const hasMenu = hasMega || hasJourney;
+
+  const pointerTargetsContain = useCallback((target: EventTarget | null) => {
+    if (!target) {
+      return false;
+    }
+    if (typeof window === 'undefined' || typeof Node === 'undefined') {
+      return false;
+    }
+    if (!(target instanceof Node)) {
+      return false;
+    }
+    if (containerRef.current?.contains(target)) {
+      return true;
+    }
+    if (menuRef.current?.contains(target)) {
+      return true;
+    }
+    return false;
+  }, []);
+
+  const openMenu = useCallback(() => {
+    if (hasMenu) {
+      setActive(item.label);
+    }
+  }, [hasMenu, item.label, setActive]);
+
+  const closeMenu = useCallback(() => {
+    if (hasMenu) {
+      setActive(null);
+    }
+  }, [hasMenu, setActive]);
+
+  const handlePointerLeave = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      if (!hasMenu) {
+        return;
+      }
+      if (pointerTargetsContain(event.relatedTarget)) {
+        return;
+      }
+      setActive(null);
+    },
+    [hasMenu, pointerTargetsContain, setActive]
+  );
+
+  const handleBlur = useCallback(
+    (event: ReactFocusEvent<HTMLDivElement>) => {
+      if (!hasMenu) {
+        return;
+      }
+      if (pointerTargetsContain(event.relatedTarget)) {
+        return;
+      }
+      setActive(null);
+    },
+    [hasMenu, pointerTargetsContain, setActive]
+  );
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLAnchorElement>) => {
+    if (!hasMenu) {
+      return;
+    }
+
+    if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      openMenu();
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeMenu();
+    }
+  };
+
+  useEffect(() => {
+    if (!isActive) {
+      setMenuOffset(0);
+      return;
+    }
+
+    const updatePosition = () => {
+      if (typeof window === 'undefined' || !menuRef.current) {
+        return;
+      }
+
+      const rect = menuRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+      const safePadding = 16;
+      let nextOffset = 0;
+
+      if (rect.left < safePadding) {
+        nextOffset = safePadding - rect.left;
+      } else if (rect.right > viewportWidth - safePadding) {
+        nextOffset = viewportWidth - safePadding - rect.right;
+      }
+
+      setMenuOffset(nextOffset);
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    return () => window.removeEventListener('resize', updatePosition);
+  }, [isActive]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative mx-1 lg:mx-2"
+      onPointerEnter={openMenu}
+      onPointerLeave={handlePointerLeave}
+      onFocus={openMenu}
+      onBlur={handleBlur}
+    >
+      <Link
+        href={item.href}
+        onClick={() => setActive(null)}
+        aria-haspopup={hasMenu ? 'true' : undefined}
+        aria-expanded={hasMenu ? isActive : undefined}
+        className={cn(
+          'group relative inline-flex min-h-[32px] touch-manipulation items-center rounded-full px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-white/80 transition-all duration-300 hover:bg-white/10 hover:text-anbu-gold hover:shadow-[0_0_12px_rgba(255,215,0,0.15)] sm:px-3 sm:py-1 lg:px-4 lg:py-1.5 lg:text-[0.72rem] lg:tracking-[0.13em]',
+          isActive && 'bg-white/5 text-anbu-gold'
+        )}
+        onKeyDown={handleKeyDown}
+      >
+        <motion.span
+          whileHover={{ y: -2 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          className="inline-flex items-center"
+        >
+          {item.label}
+        </motion.span>
+        <span className="absolute inset-x-0 -bottom-1 h-[2px] origin-center scale-x-0 rounded-full bg-gradient-to-r from-[#FFD700] to-[#FFB347] transition-transform duration-300 group-hover:scale-x-100" />
+      </Link>
+
+      {hasMenu && isActive ? (
+        <div className="pointer-events-none absolute left-0 right-0 top-full z-30 h-6" />
+      ) : null}
+
+      <AnimatePresence>
+        {hasMenu && isActive && (
+          <motion.div
+            ref={menuRef}
+            initial={{ opacity: 0, scale: 0.95, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 8 }}
+            transition={TRANSITION}
+            className="absolute left-1/2 top-[calc(100%+0.5rem)] z-40 w-[min(92vw,clamp(420px,48vw,620px))] -translate-x-1/2"
+            style={{ x: menuOffset }}
+            onPointerEnter={openMenu}
+            onPointerLeave={handlePointerLeave}
+            role="menu"
+            aria-label={`${item.label} submenu`}
+          >
+            <div className="border-white/12 bg-black/92 overflow-hidden rounded-2xl border shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur-2xl">
+              {hasJourney ? (
+                <motion.div
+                  className="flex flex-col gap-3 p-6"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    visible: {
+                      transition: {
+                        staggerChildren: STAGGER_DELAY,
+                      },
+                    },
+                  }}
+                >
+                  {item.journey?.map((step) => (
+                    <motion.div
+                      key={step.stage}
+                      variants={{
+                        hidden: { opacity: 0, y: 20 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            type: 'spring',
+                            stiffness: 300,
+                            damping: 25,
+                          },
+                        },
+                      }}
+                    >
+                      <Link
+                        href={step.href}
+                        className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 transition-all duration-300 hover:border-anbu-gold/40 hover:bg-white/[0.08]"
+                      >
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-black/40 text-[11px] font-semibold uppercase tracking-[0.32em] text-anbu-gold">
+                          {step.stage}
+                        </div>
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-white group-hover:text-anbu-gold">
+                            {step.title}
+                          </p>
+                          <p className="text-xs leading-relaxed text-white/60">
+                            {step.description}
+                          </p>
+                        </div>
+                        <ArrowUpRight className="h-4 w-4 text-white/50 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-anbu-gold" />
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              ) : null}
+
+              {hasMega ? (
+                <motion.div
+                  className="grid gap-4 p-6 sm:grid-cols-2 lg:gap-5 lg:p-8"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    visible: {
+                      transition: {
+                        staggerChildren: STAGGER_DELAY,
+                      },
+                    },
+                  }}
+                >
+                  {item.mega?.map((mega) => {
+                    const IconComponent = mega.icon;
+                    return (
+                      <motion.div
+                        key={mega.title}
+                        variants={{
+                          hidden: { opacity: 0, y: 20 },
+                          visible: {
+                            opacity: 1,
+                            y: 0,
+                            transition: {
+                              type: 'spring',
+                              stiffness: 300,
+                              damping: 25,
+                            },
+                          },
+                        }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <Link
+                          href={mega.href}
+                          className={cn(
+                            'group relative flex h-full flex-col gap-4 rounded-xl border border-white/[0.08] bg-white/[0.05] p-5 transition-all duration-300 lg:p-6',
+                            'backdrop-blur-sm hover:border-white/20 hover:bg-white/[0.08] hover:shadow-lg',
+                            'focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-black'
+                          )}
+                        >
+                          <div
+                            className={cn(
+                              'absolute inset-0 rounded-xl bg-gradient-to-br opacity-0 transition-opacity duration-300 group-hover:opacity-100',
+                              mega.bgGradient || mega.gradient
+                            )}
+                          />
+
+                          <div className="relative flex items-start justify-between gap-2">
+                            {mega.badge ? (
+                              <span
+                                className={cn(
+                                  'inline-flex items-center justify-center rounded-full px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-white/90',
+                                  'bg-gradient-to-r',
+                                  mega.gradient
+                                )}
+                              >
+                                {mega.badge}
+                              </span>
+                            ) : null}
+                            {mega.status ? (
+                              <span className="rounded-full border border-white/15 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.25em] text-white/60">
+                                {mega.status}
+                              </span>
+                            ) : null}
+                            {IconComponent ? (
+                              <div
+                                className={cn(
+                                  'absolute -right-2 -top-2 rounded-xl bg-gradient-to-br p-2 text-white shadow-lg transition-transform duration-300',
+                                  mega.gradient
+                                )}
+                              >
+                                <IconComponent className="h-4 w-4" />
+                              </div>
+                            ) : null}
+                          </div>
+
+                          <div className="relative space-y-2 pt-2">
+                            <p className="text-base font-semibold text-white">{mega.title}</p>
+                            <p className="text-sm leading-relaxed text-white/70">
+                              {mega.description}
+                            </p>
+                          </div>
+
+                          <div className="relative mt-auto flex items-center gap-2">
+                            <span
+                              className={cn(
+                                'text-xs font-medium uppercase tracking-[0.2em] text-white/70 transition-colors duration-300',
+                                'group-hover:text-anbu-gold'
+                              )}
+                            >
+                              Explore
+                            </span>
+                            <ArrowUpRight className="h-4 w-4 text-white/60 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-anbu-gold" />
+                          </div>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              ) : null}
+
+              {item.auxLinks && item.auxLinks.length > 0 ? (
+                <motion.div
+                  className="border-t border-white/5 bg-gradient-to-b from-black/60 to-black/80 backdrop-blur-xl"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <div className="flex items-center justify-center gap-4 px-6 py-4">
+                    {item.auxLinks.map((aux, index) => {
+                      const IconComponent = aux.icon;
+                      return (
+                        <motion.div
+                          key={aux.label}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{
+                            delay: 0.35 + index * 0.05,
+                            type: 'spring',
+                            stiffness: 300,
+                            damping: 25,
+                          }}
+                        >
+                          <Link
+                            href={aux.href}
+                            className={cn(
+                              'group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full',
+                              'border border-white/10 px-5 py-2.5 text-[11px]',
+                              'font-semibold uppercase tracking-[0.15em]',
+                              'text-white/80 transition-all duration-300',
+                              'hover:scale-105 hover:border-anbu-gold/40 hover:bg-anbu-gold/5 hover:text-anbu-gold',
+                              'hover:shadow-[0_0_20px_rgba(255,215,0,0.15)]',
+                              'min-w-[160px] justify-center backdrop-blur-sm',
+                              'focus:outline-none focus:ring-2 focus:ring-anbu-gold/50 focus:ring-offset-1 focus:ring-offset-black'
+                            )}
+                          >
+                            <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                            <div
+                              className={cn(
+                                'absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300',
+                                aux.gradient || 'from-anbu-gold/20 to-anbu-gold/10'
+                              )}
+                            />
+                            <div className="relative z-10 flex items-center gap-2.5">
+                              {IconComponent && (
+                                <motion.div
+                                  className={cn(
+                                    'rounded-full bg-gradient-to-br p-1.5',
+                                    aux.gradient || 'from-anbu-gold/20 to-anbu-gold/10'
+                                  )}
+                                  whileHover={{ rotate: 180 }}
+                                  transition={{ duration: 0.3 }}
+                                >
+                                  <IconComponent className="h-3.5 w-3.5 text-white transition-colors duration-300 group-hover:text-anbu-gold" />
+                                </motion.div>
+                              )}
+                              <span className="font-semibold">{aux.label}</span>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              ) : null}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}

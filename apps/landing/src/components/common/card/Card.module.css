@@ -1,0 +1,322 @@
+/* I'm creating beautiful card styles with glassmorphism and other variants */
+
+.card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-slow) var(--ease-out);
+  contain: layout;
+}
+
+/* =================================
+   VARIANT STYLES
+   ================================= */
+
+/* Default variant */
+.default {
+  background: var(--color-gray-900);
+  border: 1px solid var(--color-gray-800);
+  box-shadow: var(--shadow-md);
+}
+
+/* Glass morphism variant */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    var(--shadow-md),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  pointer-events: none;
+}
+
+/* Gradient variant */
+.gradient {
+  background: linear-gradient(
+    135deg,
+    var(--color-gray-900) 0%,
+    var(--color-gray-800) 50%,
+    var(--color-gray-900) 100%
+  );
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Outlined variant */
+.outlined {
+  background: transparent;
+  border: 2px solid var(--color-gray-700);
+}
+
+/* Elevated variant */
+.elevated {
+  background: var(--color-gray-900);
+  border: 1px solid var(--color-gray-800);
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+/* =================================
+   PADDING VARIANTS
+   ================================= */
+
+.padding-none {
+  padding: 0;
+}
+
+.padding-sm {
+  padding: var(--space-sm);
+}
+
+.padding-md {
+  padding: var(--space-md);
+}
+
+.padding-lg {
+  padding: var(--space-lg);
+}
+
+.padding-xl {
+  padding: var(--space-xl);
+}
+
+/* =================================
+   CARD SECTIONS
+   ================================= */
+
+.header {
+  padding: var(--space-md);
+  /* Add a touch more horizontal breathing room to avoid edge clipping */
+  padding-left: calc(var(--space-md) + var(--space-xs));
+  padding-right: calc(var(--space-md) + var(--space-xs));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-lg);
+  color: var(--color-white);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+.footer {
+  padding: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+}
+
+/* =================================
+   IMAGE VARIATIONS
+   ================================= */
+
+.imageTop,
+.imageBottom {
+  margin: calc(var(--space-md) * -1);
+  margin-bottom: var(--space-md);
+  overflow: hidden;
+}
+
+.imageBottom {
+  margin-top: var(--space-md);
+  margin-bottom: calc(var(--space-md) * -1);
+}
+
+.imageTop img,
+.imageBottom img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.backgroundImage {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.backgroundImage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+}
+
+.hasBackgroundImage .content {
+  position: relative;
+  z-index: 2;
+}
+
+/* =================================
+   HOVER EFFECTS
+   ================================= */
+
+.hover {
+  cursor: pointer;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.hover:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-2xl);
+}
+
+.hover:hover.glass {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-2xl), var(--shadow-glow-sm);
+}
+
+.hover:hover.gradient {
+  animation-play-state: paused;
+  background-size: 100% 100%;
+}
+
+.hover:hover.outlined {
+  border-color: var(--color-primary);
+  background: rgba(255, 215, 0, 0.05);
+  box-shadow: var(--shadow-glow-sm);
+}
+
+/* =================================
+   GLOW EFFECT
+   ================================= */
+
+.glow {
+  box-shadow: var(--shadow-lg), var(--shadow-glow-sm);
+}
+
+.glow:hover {
+  box-shadow: var(--shadow-xl), var(--shadow-glow-md);
+}
+
+/* =================================
+   INTERACTIVE STYLES
+   ================================= */
+
+.interactive {
+  cursor: pointer;
+  user-select: none;
+}
+
+.interactive:active {
+  transform: scale(0.98);
+}
+
+/* =================================
+   NEON BORDER EFFECT
+   ================================= */
+
+.neon {
+  position: relative;
+}
+
+.neonBorder {
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--color-secondary),
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  background-size: 400% 400%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: neonGlow 3s ease-in-out infinite;
+  filter: blur(4px);
+  opacity: 0.8;
+}
+
+.neon::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--color-secondary),
+    var(--color-primary),
+    var(--color-secondary)
+  );
+  background-size: 400% 400%;
+  border-radius: inherit;
+  z-index: -2;
+  animation: neonGlow 3s ease-in-out infinite;
+}
+
+@keyframes neonGlow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    filter: blur(4px) brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: blur(6px) brightness(1.2);
+  }
+}
+
+/* =================================
+   SKELETON LOADING STATE
+   ================================= */
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-gray-800);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* =================================
+   RESPONSIVE ADJUSTMENTS
+   ================================= */
+
+@media (max-width: 768px) {
+  .padding-lg {
+    padding: var(--space-md);
+  }
+
+  .padding-xl {
+    padding: var(--space-lg);
+  }
+
+  .header,
+  .footer {
+    padding: var(--space-sm);
+  }
+}

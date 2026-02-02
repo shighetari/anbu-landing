@@ -1,0 +1,276 @@
+/* I'm creating a modern CSS reset with best practices */
+
+/* =================================
+   BOX SIZING RESET
+   ================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* =================================
+   DOCUMENT SETUP
+   ================================= */
+html {
+  /* Prevent font size inflation */
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+
+  /* Smooth scrolling removed - handled in globals.css */
+  /* scroll-behavior: smooth; */
+
+  /* Better font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Improve text rendering */
+  text-rendering: optimizeLegibility;
+
+  /* Prevent overflow on x-axis */
+  overflow-x: hidden;
+}
+
+/* =================================
+   BODY DEFAULTS
+   ================================= */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* =================================
+   TYPOGRAPHY RESET
+   ================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Balance text wrapping */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+/* =================================
+   LIST RESET
+   ================================= */
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+/* =================================
+   ANCHOR RESET
+   ================================= */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* =================================
+   MEDIA RESET
+   ================================= */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Maintain aspect ratio */
+img,
+video {
+  object-fit: cover;
+}
+
+/* =================================
+   FORM RESET
+   ================================= */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* Remove spinner from number inputs */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* =================================
+   TEXTAREA RESET
+   ================================= */
+textarea {
+  resize: vertical;
+}
+
+textarea:not([rows]) {
+  min-height: 10em;
+}
+
+/* =================================
+   TABLE RESET
+   ================================= */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* =================================
+   DIALOG RESET
+   ================================= */
+dialog {
+  max-width: 100%;
+  max-height: 100%;
+  border: none;
+  padding: 0;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* =================================
+   DETAILS/SUMMARY RESET
+   ================================= */
+details > summary {
+  cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* =================================
+   ACCESSIBILITY
+   ================================= */
+
+/* Remove animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Remove focus for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* =================================
+   UTILITY CLASSES
+   ================================= */
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Skip to content link */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1em;
+  background-color: var(--color-primary);
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1rem;
+}
+
+/* =================================
+   PERFORMANCE OPTIMIZATIONS
+   ================================= */
+
+/* Optimize rendering for elements that will change */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* GPU acceleration hint */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Contain layout for better performance */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: strict;
+}
